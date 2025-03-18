@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily & Weekly Performance Logs</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f8ff; /* Light blue background */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #007BFF; /* Blue header */
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            width: 100%;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 800px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .top-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .welcome {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #007BFF; /* Blue links */
+            font-weight: bold;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        h2 {
+            background-color: #007BFF; /* Blue background for headings */
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        form {
+            margin-top: 20px;
+            background: #f9f9f9; /* Light gray background for forms */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            border-color: #007BFF;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+
+        button {
+            background: #007BFF; /* Blue button */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #0056b3; /* Darker blue on hover */
+        }
+
+        .log-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .log-table th, .log-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .log-table th {
+            background-color: #007BFF;
+            color: white;
+        }
+
+        .log-table tr:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        Daily & Weekly Performance Logs
+    </header>
+    <div class="container">
+        <!-- Top Section: Welcome and Navigation Links -->
+        <div class="top-section">
+            <div class="welcome">Welcome!</div>
+            <div class="nav-links">
+                <a href="#daily">Daily Logs</a>
+                <a href="#weekly">Weekly Logs</a>
+                <a href="#progress">Progress</a>
+                <a href="#feedback">Feedback</a>
+            </div>
+        </div>
+
+        <!-- Daily Logs Section -->
+        <h2 id="daily">Daily Logs</h2>
+        <form id="dailyForm">
+            <label>Task Name:</label>
+            <input type="text" id="taskName" placeholder="Enter task name" required>
+            <label>Description:</label>
+            <textarea id="taskDescription" placeholder="Enter description" required></textarea>
+            <label>Start Time:</label>
+            <input type="time" id="startTime" required>
+            <label>End Time:</label>
+            <input type="time" id="endTime" required>
+            <label>Status:</label>
+            <select id="taskStatus" required>
+                <option>Completed</option>
+                <option>In Progress</option>
+                <option>Pending</option>
+            </select>
+            <label>Notes/Comments:</label>
+            <textarea id="taskNotes" placeholder="Additional notes"></textarea>
+            <button type="submit">Submit</button>
+        </form>
+
+        <!-- Display Daily Logs -->
+        <h3>Daily Logs</h3>
+        <table class="log-table" id="dailyLogTable">
+            <thead>
+                <tr>
+                    <th>Task Name</th>
+                    <th>Description</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Status</th>
+                    <th>Notes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Daily logs will be dynamically added here -->
+            </tbody>
+        </table>
+
+        <!-- Weekly Logs Section -->
+        <h2 id="weekly">Weekly Logs</h2>
+        <form id="weeklyForm">
+            <label>Weekly Goals:</label>
+            <textarea id="weeklyGoals" placeholder="Enter weekly goals" required></textarea>
+            <label>Achievements:</label>
+            <textarea id="weeklyAchievements" placeholder="Enter achievements" required></textarea>
+            <label>Challenges Faced:</label>
+            <textarea id="weeklyChallenges" placeholder="Enter challenges"></textarea>
+            <label>Lessons Learned:</label>
+            <textarea id="weeklyLessons" placeholder="Enter lessons learned"></textarea>
+            <label>Supervisor Feedback (Optional):</label>
+            <textarea id="weeklyFeedback" placeholder="Feedback from supervisor"></textarea>
+            <button type="submit">Submit</button>
+        </form>
+
+        <!-- Display Weekly Logs -->
+        <h3>Weekly Logs</h3>
+        <table class="log-table" id="weeklyLogTable">
+            <thead>
+                <tr>
+                    <th>Goals</th>
+                    <th>Achievements</th>
+                    <th>Challenges</th>
+                    <th>Lessons</th>
+                    <th>Feedback</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Weekly logs will be dynamically added here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // JavaScript to handle form submissions and display logs
+
+        // Daily Logs
+        const dailyForm = document.getElementById('dailyForm');
+        const dailyLogTable = document.getElementById('dailyLogTable').getElementsByTagName('tbody')[0];
+
+        dailyForm.addEventListener('submit', function (e) {
+            e.preventDefault(); // Prevent form submission
+
+            // Get form values
+            const taskName = document.getElementById('taskName').value;
+            const taskDescription = document.getElementById('taskDescription').value;
+            const startTime = document.getElementById('startTime').value;
+            const endTime = document.getElementById('endTime').value;
+            const taskStatus = document.getElementById('taskStatus').value;
+            const taskNotes = document.getElementById('taskNotes').value;
+
+            // Add a new row to the daily logs table
+            const newRow = dailyLogTable.insertRow();
+            newRow.innerHTML = `
+                <td>${taskName}</td>
+                <td>${taskDescription}</td>
+                <td>${startTime}</td>
+                <td>${endTime}</td>
+                <td>${taskStatus}</td>
+                <td>${taskNotes}</td>
+            `;
+
+            // Clear the form
+            dailyForm.reset();
+        });
+
+        // Weekly Logs
+        const weeklyForm = document.getElementById('weeklyForm');
+        const weeklyLogTable = document.getElementById('weeklyLogTable').getElementsByTagName('tbody')[0];
+
+        weeklyForm.addEventListener('submit', function (e) {
+            e.preventDefault(); // Prevent form submission
+
+            // Get form values
+            const weeklyGoals = document.getElementById('weeklyGoals').value;
+            const weeklyAchievements = document.getElementById('weeklyAchievements').value;
+            const weeklyChallenges = document.getElementById('weeklyChallenges').value;
+            const weeklyLessons = document.getElementById('weeklyLessons').value;
+            const weeklyFeedback = document.getElementById('weeklyFeedback').value;
+
+            // Add a new row to the weekly logs table
+            const newRow = weeklyLogTable.insertRow();
+            newRow.innerHTML = `
+                <td>${weeklyGoals}</td>
+                <td>${weeklyAchievements}</td>
+                <td>${weeklyChallenges}</td>
+                <td>${weeklyLessons}</td>
+                <td>${weeklyFeedback}</td>
+            `;
+
+            // Clear the form
+            weeklyForm.reset();
+        });
+    </script>
+</body>
+</html>
