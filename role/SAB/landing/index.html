@@ -545,10 +545,11 @@
 
                                 <p class="text-white" style="text-align: justify; width: 100%; max-width: 900px; margin: 0 auto; font-size: 18px; line-height: 1.6;">Although this system is custom-built and still in development, your feedback is always welcome! While we’re not handling general inquiries at this time, feel free to submit a ticket if you encounter any issues or have suggestions. Your input helps us improve—thank you for your support!</p>
 
-                                <input type="email" name="subscribe-email" id="subscribe-email" pattern="[^ @]*@[^ @]*" class="form-control mt-3" placeholder="Email Address" required="">
+                                <!-- Email & Subscribe button in one row with perfect alignment -->
+                                <div class="input-group mt-3">
+                                    <input type="email" name="subscribe-email" id="subscribe-email" pattern="[^ @]*@[^ @]*" class="form-control" placeholder="Email Address" required="" style="height: 50px; border-radius: 25px 0 0 25px;">
 
-                                <div class="col-12 mt-3">
-                                    <button type="submit" class="form-control">Subscribe</button>
+                                    <button type="submit" class="btn btn-primary" style="height: 50px; border-radius: 0 25px 25px 0; padding: 0 20px; display: flex; align-items: center; justify-content: center;">Subscribe</button>
                                 </div>
 
                             </form>
@@ -557,6 +558,8 @@
                     </div>
                 </div>
             </section>
+
+
 
         </main>
 
