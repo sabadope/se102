@@ -5,42 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Final Evaluation & Hiring Recommendation</title>
     <link rel="stylesheet" href="style.css">
+    <script defer src="script.js"></script>
 </head>
+
 <body>
+    <h1>Final Evaluation & Hiring Recommendation</h1>
+       <div class="containerr">
+        <div class="details">
+            <label>Intern's Name:</label>
+            <input type="text" id="internName">
+            <label>Experience</label>
+            <input type="number" id="experience">
+            <label>Technical Skills</label>
+            <input type="number" id="techskill">
+            <label>Soft Skills</label>
+            <input type="number" id="softskill">
+        </div>
+       
+        
+        <button onclick="addIntern()">Evaluate Intern</button>
+    </div>
     <div class="container">
-        <h1>Final Evaluation & Hiring Recommendation</h1>
         <table>
+        <thread>
             <tr>
-                <th>Candidate Name</th>
+                <th>Intern's Name</th>
                 <th>Experience</th>
                 <th>Technical Skills</th>
                 <th>Soft Skills</th>
                 <th>Overall Score</th>
+                <th>Interpretation</th>
             </tr>
-            <tr>
-                <td>John Doe</td>
-                <td>5 Years</td>
-                <td>Excellent</td>
-                <td>Good</td>
-                <td>9/10</td>
-            </tr>
-            <tr>
-                <td>Jane Smith</td>
-                <td>3 Years</td>
-                <td>Good</td>
-                <td>Excellent</td>
-                <td>8/10</td>
-            </tr>
+        </thread>
+            <tbody id="internTableBody">
+            </tbody>
         </table>
-
-        <div class="progress-container">
+    </div>
+    
+        <!--<div class="progress-container">*/
             <div class="progress" style="--offset: 62;">
                 <svg width="120" height="120" viewBox="0 0 100 100">
                     <circle class="bg" cx="50" cy="50" r="45"></circle>
                     <circle class="fg" cx="50" cy="50" r="45"></circle>
                 </svg>
                 <div class="progress-text">80%</div>
-                <p>Overall Performance</p>
+                <p>Experience</p>
             </div>
             <div class="progress" style="--offset: 31;">
                 <svg width="120" height="120" viewBox="0 0 100 100">
@@ -48,7 +57,7 @@
                     <circle class="fg" cx="50" cy="50" r="45"></circle>
                 </svg>
                 <div class="progress-text">90%</div>
-                <p>Learning Ability</p>
+                <p>Technical Skills</p>
             </div>
             <div class="progress" style="--offset: 47;">
                 <svg width="120" height="120" viewBox="0 0 100 100">
@@ -56,7 +65,7 @@
                     <circle class="fg" cx="50" cy="50" r="45"></circle>
                 </svg>
                 <div class="progress-text">85%</div>
-                <p>Management</p>
+                <p>Soft Skills</p>
             </div>
             <div class="progress" style="--offset: 78;">
                 <svg width="120" height="120" viewBox="0 0 100 100">
@@ -66,13 +75,11 @@
                 <div class="progress-text">75%</div>
                 <p>Proactive</p>
             </div>
-        </div>
+        </div> -->
         
         <div class="recommendation">
             <h3>Hiring Recommendation:</h3>
-            <p>Based on the evaluation, we recommend proceeding with John Doe as the preferred candidate due to his overall strong performance.</p>
-
+            <ul id="recommendationList"></ul> <!-- Use a list to store multiple recommendations -->
         </div>
-    </div>
 </body>
 </html>
