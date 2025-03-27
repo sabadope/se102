@@ -1,0 +1,91 @@
+/* Global Styles */
+body {
+    font-family: 'Poppins', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to right, #2196F3, #6EC6FF);
+    color: #333;
+}
+
+/* Container for the content */
+.container {
+    max-width: 600px;
+    margin: 40px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    transition: transform 0.3s ease-in-out;
+}
+.container:hover {
+    transform: scale(1.02);
+}
+
+/* Navigation Bar */
+nav {
+    background: #0056b3;
+    padding: 12px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+}
+nav ul li {
+    display: inline;
+}
+nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 1.1em;
+    font-weight: bold;
+    padding: 10px 18px;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+nav ul li a:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* Task Tracker Styles */
+.progress-bar {
+    width: 100%;
+    background: #e0e0e0;
+    border-radius: 15px;
+    overflow: hidden;
+    margin: 15px 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.progress {
+    height: 30px;
+    background: linear-gradient(to right, #4CAF50, #81C784);
+    text-align: center;
+    color: white;
+    line-height: 30px;
+    font-weight: bold;
+    font-size: 1.1em;
+    border-radius: 15px;
+}
+
+/* Ranking System */
+.ranking {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+.ranking li {
+    background: #fff;
+    padding: 18px;
+    margin: 10px 0;
+    border-radius: 10px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+    display: flex;
+    justify-content: space-between; /* Fix the incomplete line */
+    align-items: center; /* Optional for better alignment */
+}
