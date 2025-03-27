@@ -58,6 +58,8 @@ $result = $conn->query($sql);
                 </select>
             </div>
             <button type="submit">Save Daily Log</button>
+            <button onclick="window.location.href='weekly_summary.php'" style="margin-bottom: 20px; background: #1e40af; color: white; border: none; padding: 12px; cursor: pointer; border-radius: 6px; font-size: 16px; transition: background 0.3s ease; width: 100%;">📊 View Weekly Summary</button>
+
         </form>
 
         <!-- Weekly Log Form -->
