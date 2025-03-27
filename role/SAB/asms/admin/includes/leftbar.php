@@ -97,6 +97,17 @@
                 <li>
                     <a href="change-password.php"><i class="fa fa-lock"></i> <span>Admin Change Password</span></a>
                 </li>
+                <br>
+                <li class="nav-header">
+                    <span>Role</span>
+                </li>
+                <li class="has-children">
+                    <a href="#"><i class="fa fa-envelope"></i> <span>Tracker</span> <i class="fa fa-angle-right arrow"></i></a>
+                    <ul class="child-nav">
+                        <li><a href="cha.php"><i class="fa fa-paper-plane"></i> <span>Link 1..</span></a></li>
+                        <li><a href="#"><i class="fa fa-inbox"></i> <span>Link 2..</span></a></li>
+                    </ul>
+                </li>
             </ul>
         </div>
         <!-- /.sidebar-nav -->
