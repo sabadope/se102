@@ -32,8 +32,8 @@
                 <li class="has-children">
                     <a href="#"><i class="fa fa-user"></i> <span>CHA</span> <i class="fa fa-angle-right arrow"></i></a>
                     <ul class="child-nav">
-                        <li><a href="#"><i class="fa fa-hashtag"></i> <span>Link 1..</span></a></li>
-                        <li><a href="#"><i class="fa fa-hashtag"></i> <span>Link 2..</span></a></li>
+                        <li><a href="cha-intern.php"><i class="fa fa-hashtag"></i> <span>Link 1..</span></a></li>
+                        <li><a href="add-students.php"><i class="fa fa-hashtag"></i> <span>Link 2..</span></a></li>
                     </ul>
                 </li>
                 <li class="has-children">
