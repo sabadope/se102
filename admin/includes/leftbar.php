@@ -20,97 +20,14 @@
         <div class="sidebar-nav">
             <ul class="side-nav color-gray">
                 <li class="nav-header">
-                    <span>Main Category</span>
+                    <span>Dashboard</span>
                 </li>
                 <li>
-                    <a href="dashboard.php"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
+                    <a href="dashboard.php"><i class="fa fa-home"></i> <span>Home</span></a>
                 </li>
 
                 <li class="nav-header">
                     <span>Appearance</span>
-                </li>
-                <li class="has-children">
-                    <a href="#"><i class="fa fa-user-graduate"></i> <span>Students</span> <i class="fa fa-angle-right arrow"></i></a>
-                    <ul class="child-nav">
-                        <li><a href="add-students.php"><i class="fa fa-user-plus"></i> <span>Add Students</span></a></li>
-                        <li><a href="manage-students.php"><i class="fa fa-users-cog"></i> <span>Manage Students</span></a></li>
-                    </ul>
-                </li>
-                <li class="has-children">
-                    <a href="#"><i class="fa fa-bank"></i> <span>Classes</span> <i class="fa fa-angle-right arrow"></i></a>
-                    <ul class="child-nav">
-                        <li><a href="create-class.php"><i class="fa fa-plus-circle"></i> <span>Create Class</span></a></li>
-                        <li><a href="manage-classes.php"><i class="fa fa-list"></i> <span>Manage Classes</span></a></li>
-                    </ul>
-                </li>
-                <li class="has-children">
-                    <a href="#"><i class="fa fa-book"></i> <span>Subjects</span> <i class="fa fa-angle-right arrow"></i></a>
-                    <ul class="child-nav">
-                        <li><a href="create-subject.php"><i class="fa fa-plus"></i> <span>Create Subject</span></a></li>
-                        <li><a href="manage-subjects.php"><i class="fa fa-cogs"></i> <span>Manage Subjects</span></a></li>
-                        <li><a href="create-subject-combination.php"><i class="fa fa-code-branch"></i> <span>Create Subject Combination Code</span></a></li>
-                        <li><a href="add-subjectcombination.php"><i class="fa fa-plus-square"></i> <span>Add Subject Combination</span></a></li>
-                        <li><a href="manage-subjectcombination.php"><i class="fa fa-th-list"></i> <span>Manage Subject Combination</span></a></li>
-                    </ul>
-                </li>
-                <li class="has-children">
-                    <a href="#"><i class="fa fa-calendar-alt"></i> <span>TimeTable</span> <i class="fa fa-angle-right arrow"></i></a>
-                    <ul class="child-nav">
-                        <li><a href="add-timetable-entry.php"><i class="fa fa-calendar-plus"></i> <span>Add TimeTable Entry</span></a></li>
-                        <li><a href="manage-timetable.php"><i class="fa fa-calendar-check"></i> <span>Manage Timetable Entry</span></a></li>
-                    </ul>
-                </li>
-                <li class="has-children">
-                    <a href="#"><i class="fa fa-calendar-day"></i> <span>Attendance</span> <i class="fa fa-angle-right arrow"></i></a>
-                    <ul class="child-nav">
-                        <li><a href="view-attendance.php"><i class="fa fa-eye"></i> <span>View Attendance</span></a></li>
-                        <li><a href="mark-attendance.php"><i class="fa fa-pencil-alt"></i> <span>Mark Attendance</span></a></li>
-                    </ul>
-                </li>
-                <li class="has-children">
-                    <a href="#"><i class="fa fa-clock"></i> <span>School Period</span> <i class="fa fa-angle-right arrow"></i></a>
-                    <ul class="child-nav">
-                        <li><a href="add-school-period.php"><i class="fa fa-clock"></i> <span>Add School Period</span></a></li>
-                        <li><a href="manage-school-period.php"><i class="fa fa-cogs"></i> <span>Manage School Period</span></a></li>
-                    </ul>
-                </li>
-                <li class="has-children">
-                    <a href="#"><i class="fa fa-pen"></i> <span>Exam</span> <i class="fa fa-angle-right arrow"></i></a>
-                    <ul class="child-nav">
-                        <li><a href="add-exam-period.php"><i class="fa fa-calendar-plus"></i> <span>Add Exam Period</span></a></li>
-                        <li><a href="manage-exam-period.php"><i class="fa fa-calendar-check"></i> <span>Manage Exam Period</span></a></li>
-                        <li><a href="exam-results.php"><i class="fa fa-chart-line"></i> <span>Exam Results</span></a></li>
-                    </ul>
-                </li>
-                <li class="has-children">
-                    <a href="#"><i class="fa fa-chalkboard-teacher"></i> <span>Teachers</span> <i class="fa fa-angle-right arrow"></i></a>
-                    <ul class="child-nav">
-                        <li><a href="add-teachers.php"><i class="fa fa-user-plus"></i> <span>Add Teachers</span></a></li>
-                        <li><a href="manage-teachers.php"><i class="fa fa-users-cog"></i> <span>Manage Teachers</span></a></li>
-                    </ul>
-                </li>
-
-                <li class="has-children">
-                    <a href="#"><i class="fa fa-envelope"></i> <span>Messages</span> <i class="fa fa-angle-right arrow"></i></a>
-                    <ul class="child-nav">
-                        <li><a href="add-recipients.php"><i class="fa fa-paper-plane"></i> <span>Send Message</span></a></li>
-                        <li><a href="manage-messages.php"><i class="fa fa-inbox"></i> <span>Manage Messages</span></a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="change-password.php"><i class="fa fa-lock"></i> <span>Admin Change Password</span></a>
-                </li>
-                <br>
-                <li class="nav-header">
-                    <span>Role</span>
-                </li>
-               
-                <li class="has-children">
-                    <a href="#"><i class="fa fa-user"></i> <span>SAB</span> <i class="fa fa-angle-right arrow"></i></a>
-                    <ul class="child-nav">
-                        <li><a href="extra-dashboard.php"><i class="fa fa-hashtag"></i> <span>Link 1..</span></a></li>
-                        <li><a href="#"><i class="fa fa-hashtag"></i> <span>Link 2..</span></a></li>
-                    </ul>
                 </li>
                 <li class="has-children">
                     <a href="#"><i class="fa fa-user"></i> <span>CHA</span> <i class="fa fa-angle-right arrow"></i></a>
@@ -133,7 +50,29 @@
                         <li><a href="#"><i class="fa fa-hashtag"></i> <span>Link 2..</span></a></li>
                     </ul>
                 </li>
-               
+                <li class="has-children">
+                    <a href="#"><i class="fa fa-user"></i> <span>SUD</span> <i class="fa fa-angle-right arrow"></i></a>
+                    <ul class="child-nav">
+                        <li><a href="#"><i class="fa fa-hashtag"></i> <span>Link 1..</span></a></li>
+                        <li><a href="#"><i class="fa fa-hashtag"></i> <span>Link 2..</span></a></li>
+                    </ul>
+                </li>
+                <li class="has-children">
+                    <a href="#"><i class="fa fa-user"></i> <span>MARY</span> <i class="fa fa-angle-right arrow"></i></a>
+                    <ul class="child-nav">
+                        <li><a href="#"><i class="fa fa-hashtag"></i> <span>Link 1..</span></a></li>
+                        <li><a href="#"><i class="fa fa-hashtag"></i> <span>Link 2..</span></a></li>
+                    </ul>
+                </li>
+                <li class="has-children">
+                    <a href="#"><i class="fa fa-user"></i> <span>KYLA</span> <i class="fa fa-angle-right arrow"></i></a>
+                    <ul class="child-nav">
+                        <li><a href="#"><i class="fa fa-hashtag"></i> <span>Link 1..</span></a></li>
+                        <li><a href="#"><i class="fa fa-hashtag"></i> <span>Link 2..</span></a></li>
+                    </ul>
+                </li>
+
+                
                 
             </ul>
         </div>
