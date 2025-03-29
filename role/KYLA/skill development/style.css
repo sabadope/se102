@@ -1,0 +1,122 @@
+/* General Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f4f9;
+    color: #333;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header */
+header {
+    background: #007BFF;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    font-size: 26px;
+    font-weight: bold;
+    box-shadow: 0 4px 10px #ccc;
+}
+
+/* Container */
+.container {
+    width: 90%;
+    margin: 30px auto;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+/* Card Style */
+.card {
+    background: white;
+    box-shadow: 0 0 15px #ccc;
+    border-radius: 10px;
+    width: 48%;
+    margin-bottom: 30px;
+    padding: 25px;
+    transition: 0.3s;
+    border-left: 5px solid #007BFF;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+}
+
+/* Headings */
+h2, h3 {
+    color: #333;
+    margin-bottom: 15px;
+}
+
+/* Labels and Inputs */
+label {
+    display: block;
+    font-weight: bold;
+    margin: 10px 0 5px;
+}
+
+input, select, textarea, button {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+input:focus, select:focus, textarea:focus {
+    border: 1px solid #007BFF;
+    outline: none;
+}
+
+/* Buttons */
+button {
+    background: #28a745;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+    border: none;
+    padding: 12px;
+    font-size: 16px;
+}
+
+button:hover {
+    background: #218838;
+}
+
+/* Progress Bar */
+.progress-bar {
+    background: #e0e0e0;
+    border-radius: 5px;
+    overflow: hidden;
+    height: 25px;
+    margin: 15px 0;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.progress {
+    height: 100%;
+    background: #4caf50;
+    color: white;
+    text-align: center;
+    line-height: 25px;
+    transition: width 0.5s;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .card {
+        width: 100%;
+    }
+}
