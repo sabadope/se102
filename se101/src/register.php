@@ -3,29 +3,43 @@ session_start();
 require_once '../src/config.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $name = trim($_POST['name']);
+    $username = trim($_POST['username']); // Change 'name' to 'username'
     $email = trim($_POST['email']);
     $password = trim($_POST['password']);
     $confirm_password = trim($_POST['confirm_password']);
     $role = $_POST['role'];
 
-    if (empty($name) || empty($email) || empty($password) || empty($confirm_password)) {
+    if (empty($username) || empty($email) || empty($password) || empty($confirm_password)) {
         $error = "All fields are required!";
     } elseif ($password !== $confirm_password) {
         $error = "Passwords do not match!";
     } else {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-        $stmt = $pdo->prepare("INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)");
-        if ($stmt->execute([$name, $email, $hashed_password, $role])) {
-            $_SESSION['success'] = "Registration successful! Please log in.";
-            header("Location: login.php");
+        // Insert user into database (update the column name accordingly)
+        $stmt = $pdo->prepare("INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, ?)");
+        if ($stmt->execute([$username, $email, $hashed_password, $role])) {
+            // Automatically log in the user
+            $_SESSION['user_id'] = $pdo->lastInsertId();
+            $_SESSION['username'] = $username; // Store username in session
+            $_SESSION['email'] = $email;
+            $_SESSION['role'] = $role;
+
+            // Redirect based on role
+            if ($role === 'Student') {
+                header("Location: student-dashboard.php");
+            } elseif ($role === 'Supervisor') {
+                header("Location: supervisor-dashboard.php");
+            } elseif ($role === 'Client') {
+                header("Location: client-dashboard.php");
+            }
             exit();
         } else {
             $error = "Error creating account. Try again.";
         }
     }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -158,8 +172,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <?php endif; ?>
 
             <div class="input-group">
-                <label for="name">Full Name</label>
-                <input type="text" id="name" name="name" required>
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
             </div>
             <div class="input-group">
                 <label for="email">Email</label>
@@ -176,10 +190,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="input-group">
                 <label for="role">Role</label>
                 <select id="role" name="role" required>
+                    <option value="" disabled selected>-- Select Role --</option>
                     <option value="Student">Student</option>
                     <option value="Supervisor">Supervisor</option>
                     <option value="Client">Client</option>
-                    
                 </select>
             </div>
             <button type="submit" class="btn">Register</button>

@@ -6,6 +6,8 @@
 
 	<!-- Boxicons -->
 	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+	<link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
 	<!-- My CSS -->
 	<style>
 		
@@ -57,9 +59,6 @@
 			overflow-x: hidden;
 		}
 
-
-
-
 		/* SIDEBAR */
 		#sidebar {
 			position: fixed;
@@ -93,7 +92,6 @@
 			left: 0;
 			background: var(--light);
 			z-index: 500;
-			padding-bottom: 20px;
 			box-sizing: content-box;
 		}
 		#sidebar .brand .bx {
@@ -171,9 +169,6 @@
 		/* SIDEBAR */
 
 
-
-
-
 		/* CONTENT */
 		#content {
 			position: relative;
@@ -185,9 +180,6 @@
 			width: calc(100% - 60px);
 			left: 60px;
 		}
-
-
-
 
 		/* NAVBAR */
 		#content nav {
@@ -611,7 +603,7 @@
 	<!-- SIDEBAR -->
 	<section id="sidebar">
 		<a href="#" class="brand">
-			<i class='bx bxs-smile'></i>
+			<i class='bx bxs-user'></i>
 			<span class="text">Admin Panel</span>
 		</a>
 		<ul class="side-menu top">
@@ -654,7 +646,7 @@
 				</a>
 			</li>
 			<li>
-				<a href="#" class="logout">
+				<a href="admin-logout.php" class="logout">
 					<i class='bx bxs-log-out-circle' ></i>
 					<span class="text">Logout</span>
 				</a>

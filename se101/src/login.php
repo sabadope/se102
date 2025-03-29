@@ -1,3 +1,60 @@
+<?php
+session_start();
+require_once '../src/config.php';
+
+// Hardcoded Admin Credentials
+$valid_username = 'admin';
+$valid_email = 'admin@gmail.com';
+$valid_password = 'admin1230';
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $email = trim($_POST['email']);
+    $password = trim($_POST['password']);
+
+    if (empty($email) || empty($password)) {
+        $error = "All fields are required!";
+    } else {
+        // Check if user is logging in as the hardcoded Admin
+        if ($email === $valid_email && $password === $valid_password) {
+            $_SESSION['user_id'] = 1; // Set a dummy ID for Admin
+            $_SESSION['username'] = $valid_username;
+            $_SESSION['email'] = $valid_email;
+            $_SESSION['role'] = 'Admin';
+
+            header("Location: ../admin/admin-dashboard.php");
+            exit();
+        }
+
+        // Otherwise, check the database
+        $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
+        $stmt->execute([$email]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($user && password_verify($password, $user['password'])) {
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['username'] = $user['username'];
+            $_SESSION['email'] = $user['email'];
+            $_SESSION['role'] = $user['role'];
+
+            // Redirect based on role
+            if ($user['role'] === 'Admin') {
+                header("Location: admin-dashboard.php");
+            } elseif ($user['role'] === 'Student') {
+                header("Location: student-dashboard.php");
+            } elseif ($user['role'] === 'Supervisor') {
+                header("Location: supervisor_dashboard.php");
+            } elseif ($user['role'] === 'Client') {
+                header("Location: client-dashboard.php");
+            }
+            exit();
+        } else {
+            $error = "Invalid email or password!";
+        }
+    }
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,7 +91,7 @@
             --orange: #FD7238;
             --light-orange: #FFE0D3;
         }
-        
+
         body {
             font-family: var(--poppins);
             background: var(--grey);

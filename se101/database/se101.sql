@@ -1,11 +1,14 @@
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    email VARCHAR(255) UNIQUE NOT NULL,
+    username VARCHAR(255) NOT NULL UNIQUE,
+    email VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
-    role ENUM('Student', 'Supervisor', 'Client', 'Admin') NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    role ENUM('Admin', 'Student', 'Supervisor', 'Client') NOT NULL
 );
 
-ALTER TABLE users MODIFY COLUMN role ENUM('Student', 'Supervisor', 'Client', 'Admin') NOT NULL;
+-- Insert default Admin account
+INSERT INTO users (username, email, password, role) 
+VALUES ('Admin', 'admin@gmail.com', '$2y$10$E6bXzjEjZztZ4S6pOxsaFOHQJ6FwG/iV4DhE5Z5INpylIztMJQ5eG', 'Admin');
+
+
 
