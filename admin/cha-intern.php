@@ -399,6 +399,8 @@ $result = $conn->query($sql);
         <footer></footer>
     </div>
 
+
+
     <!-- ========== COMMON JS FILES ========== -->
     <script src="js/jquery/jquery-2.2.4.min.js"></script>
     <script src="js/bootstrap/bootstrap.min.js"></script>
@@ -451,6 +453,200 @@ $result = $conn->query($sql);
                 window.location.href = `delete_log.php?id=${id}`;
             }
         }
+    </script>
+
+    <script>
+    jQuery(document).ready(function() {
+        jQuery('#example').DataTable();
+    });
+
+    </script>
+
+    <script>
+        $(function() {
+        // Counter for dashboard stats
+            $('.counter').counterUp({
+                delay: 10,
+                time: 1000
+            });
+
+        // Welcome notification
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+            toastr["success"]("Welcome to ASMS!");
+        });
+    </script>
+
+    <script>
+    // Initialize JustGage.js
+    var averageResultsGauge = new JustGage({
+        id: "average-results-gauge",
+        value: <?php echo $averageResults; ?>,
+        min: 0,
+        max: 100,
+        title: "<?php echo htmlentities($latestExamPeriodName); ?>",
+        label: "Average Results",
+        gaugeWidthScale: 0.5,
+        counter: true,
+        pointer: true,
+        pointerOptions: {
+            toplength: -15,
+            bottomlength: 10,
+            bottomwidth: 12,
+            color: '#8e8e93',
+            stroke: '#ffffff',
+            stroke_width: 2,
+            stroke_linecap: 'round'
+        },
+        gaugeColor: "#E9ECEF",
+        levelColors: ["#F5365C", "#FFD600", "#2DCE89"],
+        relativeGaugeSize: true,
+        customSectors: [],
+        formatNumber: true,
+        textRenderer: function(value) {
+            return Math.round(value) + '%';
+        }
+    });
+
+    // Calculate Attendance Percentage
+    var presentCount = <?php echo $presentCount; ?>;
+    var totalStudents = <?php echo $totalstudents; ?>;
+    var notSubmittedCount = <?php echo $notSubmittedCount; ?>;
+
+    var attendancePercentage = 0;
+    if (totalStudents - notSubmittedCount > 0) {
+        attendancePercentage = (presentCount / (totalStudents - notSubmittedCount)) * 100;
+    }
+
+
+    attendancePercentage = Math.round(attendancePercentage);
+    markedAttendance = (totalStudents - notSubmittedCount);
+
+    // Initialize Attendance Percentage Gauge
+    var attendancePercentageGauge = new JustGage({
+        id: "attendance-percentage-gauge",
+        value: attendancePercentage,
+        min: 0,
+        max: 100,
+        title: "Attendance Percentage",
+        label: presentCount + "/" + markedAttendance + " Students",
+        gaugeWidthScale: 0.5,
+        counter: true,
+        pointer: true,
+        pointerOptions: {
+            toplength: -15,
+            bottomlength: 10,
+            bottomwidth: 12,
+            color: '#8e8e93',
+            stroke: '#ffffff',
+            stroke_width: 2,
+            stroke_linecap: 'round'
+        },
+        gaugeColor: "#E9ECEF",
+        levelColors: ["#F5365C", "#FFD600", "#2DCE89"],
+        relativeGaugeSize: true,
+        customSectors: [],
+        formatNumber: true,
+        textRenderer: function(value) {
+            return Math.round(value) + '%';
+        }
+    });
+
+    // Initialize Attendance Marked Gauge
+    var attendanceMarkedGauge = new JustGage({
+        id: "attendance-marked-gauge",
+        value: <?php echo ($totalStudents - $notSubmittedCount) / $totalStudents * 100; ?>,
+        min: 0,
+        max: 100,
+        title: "Attendance Marked",
+        label: "<?php echo htmlentities($totalstudents - $notSubmittedCount); ?>/<?php echo htmlentities($totalstudents); ?> Students",
+        gaugeWidthScale: 0.5,
+        counter: true,
+        pointer: true,
+        pointerOptions: {
+            toplength: -15,
+            bottomlength: 10,
+            bottomwidth: 12,
+            color: '#8e8e93',
+            stroke: '#ffffff',
+            stroke_width: 2,
+            stroke_linecap: 'round'
+        },
+        gaugeColor: "#E9ECEF",
+        levelColors: ["#F5365C", "#FFD600", "#2DCE89"],
+        relativeGaugeSize: true,
+        customSectors: [],
+        formatNumber: true,
+        textRenderer: function(value) {
+            return Math.round(value) + '%';
+        }
+    });
+
+    </script>
+
+
+    <script>
+        // Replace the following comments with the actual PHP data from the card
+        var classAverageData = <?php echo json_encode($resultAvgResultsByClass); ?>;
+
+        // Extract class names and average marks from the PHP result
+        var classNames = classAverageData.map(function (data) {
+            return data.ClassName;
+        });
+
+        var averageMarks = classAverageData.map(function (data) {
+            return parseFloat(data.avgMarks.toFixed(2));
+        });
+
+        // Create chart for Average Results by Class
+        var chart = AmCharts.makeChart("classAverageChart", {
+            "type": "serial",
+            "theme": "light",
+            "dataProvider": classAverageData,
+            "valueAxes": [{
+                "gridColor": "#ddd",
+                "gridAlpha": 1,
+                "dashLength": 0
+            }],
+            "gridAboveGraphs": true,
+            "startDuration": 1,
+            "graphs": [{
+                "balloonText": "[[category]]: <b>[[value]]</b>",
+                "fillAlphas": 0.8,
+                "lineAlpha": 0.2,
+                "type": "column",
+                "valueField": "avgMarks",
+                "labelText": "[[value]]"
+            }],
+            "chartCursor": {
+                "categoryBalloonEnabled": false,
+                "cursorAlpha": 0,
+                "zoomable": false
+            },
+            "categoryField": "ClassName",
+            "categoryAxis": {
+                "gridPosition": "start",
+                "gridAlpha": 0
+            },
+            "export": {
+                "enabled": false
+            }
+        });
     </script>
 
 

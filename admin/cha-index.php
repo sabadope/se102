@@ -11,21 +11,66 @@ if ($conn->connect_error) {
 $sql = "SELECT * FROM logs ORDER BY id DESC";
 $result = $conn->query($sql);
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Intern Performance Logs</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SRMS System | Dashboard</title>
+    <!-- ========== CSS ========== -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" media="screen">
+    <link rel="stylesheet" href="css/fontawesome/css/all.min.css" media="screen">
+    <link rel="stylesheet" href="css/animate-css/animate.min.css" media="screen">
+    <link rel="stylesheet" href="css/lobipanel/lobipanel.min.css" media="screen">
+    <link rel="stylesheet" href="css/toastr/toastr.min.css" media="screen">
+    <link rel="stylesheet" href="css/icheck/skins/line/blue.css">
+    <link rel="stylesheet" href="css/icheck/skins/line/red.css">
+    <link rel="stylesheet" href="css/icheck/skins/line/green.css">
+    <link rel="stylesheet" href="css/main.css" media="screen">
+    <!-- ========== JS ========== -->
+    <script src="js/modernizr/modernizr.min.js"></script>
+
     <style>
-        
+        body{
+            background-color: #f4dcd2;
+        }
+        /* Switch between tables and cards */
+        @media (max-width: 768px) {
+            .dashboard-table {
+                display: none;
+            }
+            .dashboard-card {
+                display: block;
+                margin-bottom: -24px;
+            }
+            .dashboard-card-top {
+                padding: 0 20px;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .dashboard-table {
+                display: block;
+                margin-bottom: -24px;
+            }
+            .dashboard-card {
+                display: none;
+            }
+        }
+
+        .section {
+            padding: 20px;
+        }
+
         .container {
-            max-width: 600px;
-            margin: auto;
-            background: white;
+            max-width: 100%;
+            background: white;            
             padding: 30px;
             box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.05); /* Subtle shadow */
-            border-radius: 12px;
+            border-radius: 0px;
             border: 1px solid #e5e7eb; /* Light gray border */
         }
 
@@ -235,88 +280,262 @@ $result = $conn->query($sql);
         form button:hover {
             background: #3b82f6;
         }
-
     </style>
 </head>
-<body>
-    <div class="container">
-        <h1>Intern Performance Logs</h1>
-        <p>Update your daily and weekly tasks here.</p>
 
-        <!-- Tabs for Daily and Weekly Logs -->
-        <div class="tabs">
-            <button class="tab-button active" onclick="openTab('daily')">Daily Log</button>
-            <button class="tab-button" onclick="openTab('weekly')">Weekly Log</button>
-        </div>
+<body class="top-navbar-fixed">
+    <div class="main-wrapper">
+        <?php include('includes/topbar.php'); ?>
+        <div class="content-wrapper">
+            <div class="content-container">
+                <?php include('includes/leftbar.php'); ?>
+                <div class="main-page">
+                    <div class="container-fluid">
+                        <div class="row page-title-div">
+                            <div class="col-sm-6">
+                                <h2 class="title">CHA</h2>
+                            </div>
+                        </div>
+                        <div class="row breadcrumb-div">
+                            <div class="col-md-6">
+                                <ul class="breadcrumb">
+                                    <li><a href="dashboard.php"><i class="fa fa-home"></i> Home</a></li>
+                                    <li> Intern Performance</li>
+                                    
+                                </ul>
+                            </div>
+                        </div>
 
-        <!-- Daily Log Form -->
-        <form action="save_log.php" method="POST" id="daily-log-form" class="tab-content active">
-            <input type="hidden" name="type" value="Daily Log">
-            <div class="form-group">
-                <label>Task Name:</label>
-                <input type="text" name="task_name" required>
-            </div>
-            <div class="form-group">
-                <label>Task Description:</label>
-                <textarea name="task_desc" required></textarea>
-            </div>
-            <div class="form-group">
-                <label>Start Time:</label>
-                <input type="time" name="start_time" required>
-            </div>
-            <div class="form-group">
-                <label>End Time:</label>
-                <input type="time" name="end_time" required>
-            </div>
-            <div class="form-group">
-                <label>Status:</label>
-                <select name="status" required>
-                    <option>Completed</option>
-                    <option>In Progress</option>
-                    <option>Pending</option>
-                </select>
-            </div>
-            <button type="submit">Save Daily Log</button>
-            <button onclick="window.location.href='weekly_summary.php'" style="margin-bottom: 20px; background: #1e40af; color: white; border: none; padding: 12px; cursor: pointer; border-radius: 6px; font-size: 16px; transition: background 0.3s ease; width: 100%;">📊 View Weekly Summary</button>
+                        <!-- /.row -->
+                    </div>
+                    <!-- /.container-fluid -->
 
-        </form>
+                    <section class="section">
+                        
+                        <div class="container">
+                            <h1>Intern Performance Logs</h1>
+                            <p>Update your daily and weekly tasks here.</p>
 
-        <!-- Weekly Log Form -->
-        <form action="save_log.php" method="POST" id="weekly-log-form" class="tab-content">
-            <input type="hidden" name="type" value="Weekly Log">
-            <div class="form-group">
-                <label>Weekly Goals:</label>
-                <textarea name="weekly_goals" required></textarea>
-            </div>
-            <div class="form-group">
-                <label>Achievements:</label>
-                <textarea name="achievements" required></textarea>
-            </div>
-            <div class="form-group">
-                <label>Challenges:</label>
-                <textarea name="challenges" required></textarea>
-            </div>
-            <div class="form-group">
-                <label>Lessons Learned:</label>
-                <textarea name="lessons" required></textarea>
-            </div>
-            <button type="submit">Save Weekly Log</button>
-        </form>
+                            <!-- Tabs for Daily and Weekly Logs -->
+                            <div class="tabs">
+                                <button class="tab-button active" onclick="openTab('daily')">Daily Log</button>
+                                <button class="tab-button" onclick="openTab('weekly')">Weekly Log</button>
+                            </div>
 
-        <!-- Saved Logs -->
-        <h2>Saved Logs</h2>
-        <button onclick="window.location.href='export_logs.php'" class="export-btn">📤 Export Logs</button>
-        <div id="saved-logs">
-            <?php while ($row = $result->fetch_assoc()) : ?>
-                <div class="log-entry">
-                    <h3><?= $row['type'] ?> - <?= $row['timestamp'] ?></h3>
-                    <?= $row['task_name'] ? "<p><strong>Task:</strong> {$row['task_name']}</p>" : "" ?>
-                    <?= $row['weekly_goals'] ? "<p><strong>Weekly Goals:</strong> {$row['weekly_goals']}</p>" : "" ?>
-                    <button onclick="deleteLog(<?= $row['id'] ?>)">🗑 Delete</button>
+                            <!-- Daily Log Form -->
+                            <form action="save_log.php" method="POST" id="daily-log-form" class="tab-content active">
+                                <input type="hidden" name="type" value="Daily Log">
+                                <div class="form-group">
+                                    <label>Task Name:</label>
+                                    <input type="text" name="task_name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Task Description:</label>
+                                    <textarea name="task_desc" required></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>Start Time:</label>
+                                    <input type="time" name="start_time" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>End Time:</label>
+                                    <input type="time" name="end_time" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Status:</label>
+                                    <select name="status" required>
+                                        <option>Completed</option>
+                                        <option>In Progress</option>
+                                        <option>Pending</option>
+                                    </select>
+                                </div>
+                                <button type="submit">Save Daily Log</button>
+                                <button onclick="window.location.href='weekly_summary.php'" style="margin-bottom: 20px; background: #1e40af; color: white; border: none; padding: 12px; cursor: pointer; border-radius: 6px; font-size: 16px; transition: background 0.3s ease; width: 100%;">📊 View Weekly Summary</button>
+
+                            </form>
+
+                            <!-- Weekly Log Form -->
+                            <form action="save_log.php" method="POST" id="weekly-log-form" class="tab-content">
+                                <input type="hidden" name="type" value="Weekly Log">
+                                <div class="form-group">
+                                    <label>Weekly Goals:</label>
+                                    <textarea name="weekly_goals" required></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>Achievements:</label>
+                                    <textarea name="achievements" required></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>Challenges:</label>
+                                    <textarea name="challenges" required></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>Lessons Learned:</label>
+                                    <textarea name="lessons" required></textarea>
+                                </div>
+                                <button type="submit">Save Weekly Log</button>
+                            </form>
+
+                            <!-- Saved Logs -->
+                            <h2>Saved Logs</h2>
+                            <button onclick="window.location.href='export_logs.php'" class="export-btn">📤 Export Logs</button>
+                            <div id="saved-logs">
+                                <?php while ($row = $result->fetch_assoc()) : ?>
+                                    <div class="log-entry">
+                                        <h3><?= $row['type'] ?> - <?= $row['timestamp'] ?></h3>
+                                        <?= $row['task_name'] ? "<p><strong>Task:</strong> {$row['task_name']}</p>" : "" ?>
+                                        <?= $row['weekly_goals'] ? "<p><strong>Weekly Goals:</strong> {$row['weekly_goals']}</p>" : "" ?>
+                                        <button onclick="deleteLog(<?= $row['id'] ?>)">🗑 Delete</button>
+                                    </div>
+                                <?php endwhile; ?>
+                            </div>
+                        </div>
+                    </section>
                 </div>
-            <?php endwhile; ?>
+            </div>
         </div>
     </div>
+    <div class="foot">
+        <footer></footer>
+    </div>
+
+    <!-- ========== COMMON JS FILES ========== -->
+    <script src="js/jquery/jquery-2.2.4.min.js"></script>
+    <script src="js/bootstrap/bootstrap.min.js"></script>
+    <script src="js/pace/pace.min.js"></script>
+    <script src="js/lobipanel/lobipanel.min.js"></script>
+    <script src="js/iscroll/iscroll.js"></script>
+    <script src="js/chart.js/chart.umd.js"></script>
+    <script src="js/echarts/echarts.min.js"></script>
+    <script src="js/apexcharts/apexcharts.min.js"></script>
+
+    <!-- ========== PAGE JS FILES ========== -->
+    <script src="js/prism/prism.js"></script>
+    <script src="js/waypoint/waypoints.min.js"></script>
+    <script src="js/counterUp/jquery.counterup.min.js"></script>
+    <script src="js/amcharts/amcharts.js"></script>
+    <script src="js/amcharts/serial.js"></script>
+    <script src="js/amcharts/plugins/export/export.min.js"></script>
+    <link rel="stylesheet" href="js/amcharts/plugins/export/export.css" type="text/css" media="all" />
+    <script src="js/amcharts/themes/light.js"></script>
+    <script src="js/toastr/toastr.min.js"></script>
+    <script src="js/icheck/icheck.min.js"></script>
+
+    <!-- ========== THEME JS ========== -->
+    <script src="js/main.js"></script>
+    <script src="js/production-chart.js"></script>
+    <script src="js/traffic-chart.js"></script>
+    <script src="js/task-list.js"></script>
+
+    <!-- ========== JUST GAGE ========== -->
+    <script src="js/justgage.js"></script>
+    <script src="js/raphael-2.1.4.min.js"></script>
+
+    <!-- ========== AMCHARTS ========== -->
+    <script src="js/amcharts/amcharts.js"></script>
+    <script src="js/amcharts/pie.js"></script>
+    <script src="js/amcharts/themes/light.js"></script>
+
+
+    <script src="js/prism/prism.js"></script>
+    <script src="js/select2/select2.min.js"></script>
+
+    <script src="js/bootstrap-timepicker.min.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        $(function($) {
+            $(".js-states").select2();
+            $(".js-states-limit").select2({
+                maximumSelectionLength: 2
+            });
+            $(".js-states-hide").select2({
+                minimumResultsForSearch: Infinity
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            populateDropdown();
+            populateCheckboxes();
+            syncCheckboxesWithDropdown();
+        });
+
+        function populateDropdown() {
+            const dropdown = document.getElementById('sccode');
+            subjectCombinations.forEach(code => {
+                const option = document.createElement('option');
+                option.value = code;
+                option.textContent = code;
+                dropdown.appendChild(option);
+            });
+        }
+
+        function populateCheckboxes() {
+            const container = document.getElementById('subjects-container');
+            subjectMap.forEach((subject, code) => {
+                const label = document.createElement('label');
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.value = code;
+                checkbox.id = `subject-${code}`;
+                checkbox.checked = selectedSubjects.includes(code);
+                checkbox.disabled = true; // Disable the checkbox
+                label.appendChild(checkbox);
+                label.appendChild(document.createTextNode(subject.name));
+                container.appendChild(label);
+                container.appendChild(document.createElement('br'));
+            });
+        }
+
+        function syncCheckboxesWithDropdown() {
+            const selectedCode = document.getElementById('sccode').value;
+            const checkboxes = document.querySelectorAll('#subjects-container input[type="checkbox"]');
+            checkboxes.forEach(checkbox => checkbox.checked = false); // Uncheck all
+            subjectMap.forEach((subject, code) => {
+                if (subject.codes.includes(selectedCode)) {
+                    document.getElementById(`subject-${code}`).checked = true;
+                }
+            });
+        }
+
+        function updateSelection() {
+            const selectedCode = document.getElementById('sccode').value;
+            const checkboxes = document.querySelectorAll('#subjects-container input[type="checkbox"]');
+            const checkedSubjects = Array.from(checkboxes)
+                .filter(checkbox => checkbox.checked)
+                .map(checkbox => checkbox.value);
+
+            // Update session or handle form submission here
+            console.log("Selected Code:", selectedCode);
+            console.log("Selected Subjects:", checkedSubjects);
+
+            // For demonstration: reload the page to simulate form submission
+            document.getElementById('subject-form').submit();
+        }
+
+        document.getElementById('sccode').addEventListener('change', syncCheckboxesWithDropdown);
+
+        // Listen for checkbox changes to update the dropdown
+        document.querySelectorAll('#subjects-container input[type="checkbox"]').forEach(checkbox => {
+            checkbox.addEventListener('change', updateDropdownFromCheckboxes);
+        });
+
+        function updateDropdownFromCheckboxes() {
+            const checkedSubjects = Array.from(document.querySelectorAll('#subjects-container input[type="checkbox"]:checked'))
+                .map(checkbox => checkbox.value);
+            let matchedCode = '';
+            subjectCombinations.forEach(code => {
+                const combinationSubjects = Array.from(subjectMap.values()).filter(subject => subject.codes.includes(code)).map(subject => subject.SubjectCode);
+                if (checkedSubjects.length === combinationSubjects.length &&
+                    checkedSubjects.every(subject => combinationSubjects.includes(subject))) {
+                    matchedCode = code;
+                }
+            });
+            document.getElementById('sccode').value = matchedCode;
+        }
+    </script>
+
+    <!-- ========== CHA INTERN ========== -->
     <script>
         
         function openTab(tabName) {
@@ -332,5 +551,8 @@ $result = $conn->query($sql);
             }
         }
     </script>
+
+
 </body>
+
 </html>
