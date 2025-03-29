@@ -461,7 +461,7 @@ $result = $conn->query($sql);
     });
 
     </script>
-
+    
     <script>
         $(function() {
         // Counter for dashboard stats
