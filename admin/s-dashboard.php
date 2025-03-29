@@ -29,7 +29,7 @@ if(strlen($_SESSION['alogin'])== "")
     </head>
     <body class="top-navbar-fixed">
         <div class="main-wrapper">
-              <?php include('includes/s-topbar.php');?>
+            <?php include('includes/s-topbar.php');?>
             <div class="content-wrapper">
                 <div class="content-container">
 

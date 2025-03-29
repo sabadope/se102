@@ -2,26 +2,35 @@
 session_start();
 require_once '../src/config.php';
 
+// Debugging: Check if form is submitted
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $username = trim($_POST['username']); // Change 'name' to 'username'
+    $username = trim($_POST['username']);
     $email = trim($_POST['email']);
     $password = trim($_POST['password']);
     $confirm_password = trim($_POST['confirm_password']);
     $role = $_POST['role'];
 
-    if (empty($username) || empty($email) || empty($password) || empty($confirm_password)) {
-        $error = "All fields are required!";
-    } elseif ($password !== $confirm_password) {
-        $error = "Passwords do not match!";
-    } else {
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+    // Debugging: Check if all fields are received
+    if (empty($username) || empty($email) || empty($password) || empty($confirm_password) || empty($role)) {
+        die("All fields are required!");
+    }
 
-        // Insert user into database (update the column name accordingly)
+    if ($password !== $confirm_password) {
+        die("Passwords do not match!");
+    }
+
+    // Hash the password
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+    // Debugging: Display the query before executing
+    try {
         $stmt = $pdo->prepare("INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, ?)");
-        if ($stmt->execute([$username, $email, $hashed_password, $role])) {
-            // Automatically log in the user
+        $stmt->execute([$username, $email, $hashed_password, $role]);
+
+        // Debugging: Check if the user was inserted successfully
+        if ($stmt->rowCount() > 0) {
             $_SESSION['user_id'] = $pdo->lastInsertId();
-            $_SESSION['username'] = $username; // Store username in session
+            $_SESSION['username'] = $username;
             $_SESSION['email'] = $email;
             $_SESSION['role'] = $role;
 
@@ -35,11 +44,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
             exit();
         } else {
-            $error = "Error creating account. Try again.";
+            die("Error: Unable to register user.");
         }
+    } catch (PDOException $e) {
+        die("Database Error: " . $e->getMessage());
     }
 }
-
 ?>
 
 <!DOCTYPE html>

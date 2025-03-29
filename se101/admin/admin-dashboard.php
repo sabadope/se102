@@ -1,3 +1,65 @@
+<?php
+require_once '../src/config.php'; // Include DB connection
+
+// Fetch the count of each role
+$stmt = $pdo->prepare("
+    SELECT role, COUNT(*) as count FROM users 
+    WHERE role IN ('Student', 'Supervisor', 'Client') 
+    GROUP BY role
+");
+$stmt->execute();
+$roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Initialize counts
+$students_count = 0;
+$supervisors_count = 0;
+$clients_count = 0;
+
+// Assign counts based on role
+foreach ($roles as $role) {
+    if ($role['role'] === 'Student') {
+        $students_count = $role['count'];
+    } elseif ($role['role'] === 'Supervisor') {
+        $supervisors_count = $role['count'];
+    } elseif ($role['role'] === 'Client') {
+        $clients_count = $role['count'];
+    }
+}
+
+function timeAgo($timestamp) {
+    $time_difference = time() - strtotime($timestamp); // Get time difference in seconds
+
+    if ($time_difference < 60) {
+        return "Just now"; // Less than a minute
+    } elseif ($time_difference < 3600) {
+        $minutes = floor($time_difference / 60);
+        return $minutes . " min" . ($minutes > 1 ? "s" : "") . " ago"; // 1 min, 2 mins, etc.
+    } elseif ($time_difference < 86400) {
+        $hours = floor($time_difference / 3600);
+        return $hours . " hour" . ($hours > 1 ? "s" : "") . " ago"; // 1 hour, 2 hours, etc.
+    } else {
+        $days = floor($time_difference / 86400);
+        return $days . " day" . ($days > 1 ? "s" : "") . " ago"; // 1 day, 2 days, etc.
+    }
+}
+
+// Fetch the 4 most recent users
+$stmt = $pdo->query("SELECT username, role, created_at FROM users ORDER BY created_at DESC LIMIT 4");
+$recent_users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Fetch the count of each user role
+$stmt = $pdo->query("SELECT role, COUNT(*) as count FROM users WHERE role != 'Admin' GROUP BY role");
+$users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+$roles = [];
+$counts = [];
+
+foreach ($users as $user) {
+    $roles[] = $user['role'];
+    $counts[] = $user['count'];
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -615,8 +677,8 @@
 			</li>
 			<li>
 				<a href="#">
-					<i class='bx bxs-shopping-bag-alt' ></i>
-					<span class="text">My Store</span>
+					<i class='bx bxs-check-circle' ></i>
+					<span class="text">Task</span>
 				</a>
 			</li>
 			<li>
@@ -703,117 +765,63 @@
 			</div>
 
 			<ul class="box-info">
-				<li>
-					<i class='bx bxs-calendar-check' ></i>
-					<span class="text">
-						<h3>1020</h3>
-						<p>New Order</p>
-					</span>
-				</li>
-				<li>
-					<i class='bx bxs-group' ></i>
-					<span class="text">
-						<h3>2834</h3>
-						<p>Visitors</p>
-					</span>
-				</li>
-				<li>
-					<i class='bx bxs-dollar-circle' ></i>
-					<span class="text">
-						<h3>$2543</h3>
-						<p>Total Sales</p>
-					</span>
-				</li>
+			    <li>
+			        <i class='bx bxs-group'></i>
+			        <span class="text">
+			            <h3><?php echo $students_count; ?></h3>
+			            <p>Students</p>
+			        </span>
+			    </li>
+			    <li>
+			        <i class='bx bxs-group'></i>
+			        <span class="text">
+			            <h3><?php echo $supervisors_count; ?></h3>
+			            <p>Supervisors</p>
+			        </span>
+			    </li>
+			    <li>
+			        <i class='bx bxs-group'></i>
+			        <span class="text">
+			            <h3><?php echo $clients_count; ?></h3>
+			            <p>Clients</p>
+			        </span>
+			    </li>
 			</ul>
 
 
 			<div class="table-data">
-				<div class="order">
-					<div class="head">
-						<h3>Recent Orders</h3>
-						<i class='bx bx-search' ></i>
-						<i class='bx bx-filter' ></i>
-					</div>
-					<table>
-						<thead>
-							<tr>
-								<th>User</th>
-								<th>Date Order</th>
-								<th>Status</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>
-									<img src="img/people.png">
-									<p>John Doe</p>
-								</td>
-								<td>01-10-2021</td>
-								<td><span class="status completed">Completed</span></td>
-							</tr>
-							<tr>
-								<td>
-									<img src="img/people.png">
-									<p>John Doe</p>
-								</td>
-								<td>01-10-2021</td>
-								<td><span class="status pending">Pending</span></td>
-							</tr>
-							<tr>
-								<td>
-									<img src="img/people.png">
-									<p>John Doe</p>
-								</td>
-								<td>01-10-2021</td>
-								<td><span class="status process">Process</span></td>
-							</tr>
-							<tr>
-								<td>
-									<img src="img/people.png">
-									<p>John Doe</p>
-								</td>
-								<td>01-10-2021</td>
-								<td><span class="status pending">Pending</span></td>
-							</tr>
-							<tr>
-								<td>
-									<img src="img/people.png">
-									<p>John Doe</p>
-								</td>
-								<td>01-10-2021</td>
-								<td><span class="status completed">Completed</span></td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-				<div class="todo">
-					<div class="head">
-						<h3>Todos</h3>
-						<i class='bx bx-plus' ></i>
-						<i class='bx bx-filter' ></i>
-					</div>
-					<ul class="todo-list">
-						<li class="completed">
-							<p>Todo List</p>
-							<i class='bx bx-dots-vertical-rounded' ></i>
-						</li>
-						<li class="completed">
-							<p>Todo List</p>
-							<i class='bx bx-dots-vertical-rounded' ></i>
-						</li>
-						<li class="not-completed">
-							<p>Todo List</p>
-							<i class='bx bx-dots-vertical-rounded' ></i>
-						</li>
-						<li class="completed">
-							<p>Todo List</p>
-							<i class='bx bx-dots-vertical-rounded' ></i>
-						</li>
-						<li class="not-completed">
-							<p>Todo List</p>
-							<i class='bx bx-dots-vertical-rounded' ></i>
-						</li>
-					</ul>
+			    <div class="order">
+			        <div class="head">
+			            <h3>Recent Accounts</h3>
+			            <i class='bx bx-search'></i>
+			            <i class='bx bx-filter'></i>
+			        </div>
+			        <table>
+			            <thead>
+			                <tr>
+			                    <th>User Name</th>
+			                    <th>Role</th>
+			                    <th>Status</th>
+			                </tr>
+			            </thead>
+			            <tbody>
+			                <?php foreach ($recent_users as $user): ?>
+			                    <tr>
+			                        <td>
+			                            <img src="img/people.png">
+			                            <p><?= htmlspecialchars($user['username']) ?></p>
+			                        </td>
+			                        <td><?= htmlspecialchars($user['role']) ?></td>
+			                        <!-- Store timestamp in data attribute -->
+			                        <td class="registered-time" data-time="<?= htmlspecialchars($user['created_at']) ?>"></td>
+			                    </tr>
+			                <?php endforeach; ?>
+			            </tbody>
+			        </table>
+			    </div>
+				<div class="chart-container">
+				    <h3>User Distribution</h3>
+				    <canvas id="userChart"></canvas>
 				</div>
 			</div>
 		</main>
@@ -875,8 +883,64 @@
 		        }
 		    }
 		});
-
-
 	</script>
+
+	<script>
+	    function timeAgo(time) {
+	        const now = new Date();
+	        const createdAt = new Date(time);
+	        const diff = Math.floor((now - createdAt) / 1000); // Time difference in seconds
+
+	        if (diff < 60) {
+	            return "Just now";
+	        } else if (diff < 3600) {
+	            const minutes = Math.floor(diff / 60);
+	            return minutes + " min" + (minutes > 1 ? "s" : "") + " ago";
+	        } else if (diff < 86400) {
+	            const hours = Math.floor(diff / 3600);
+	            return hours + " hour" + (hours > 1 ? "s" : "") + " ago";
+	        } else {
+	            const days = Math.floor(diff / 86400);
+	            return days + " day" + (days > 1 ? "s" : "") + " ago";
+	        }
+	    }
+
+	    function updateTimes() {
+	        document.querySelectorAll('.registered-time').forEach(el => {
+	            const time = el.getAttribute('data-time');
+	            el.textContent = timeAgo(time);
+	        });
+	    }
+
+	    // Update every 30 seconds
+	    updateTimes();
+	    setInterval(updateTimes, 30000);
+	</script>
+
+	<script>
+	    document.addEventListener("DOMContentLoaded", function () {
+	        var ctx = document.getElementById('userChart').getContext('2d');
+	        var userChart = new Chart(ctx, {
+	            type: 'pie',
+	            data: {
+	                labels: <?php echo json_encode($roles); ?>,
+	                datasets: [{
+	                    data: <?php echo json_encode($counts); ?>,
+	                    backgroundColor: ['#ff6384', '#36a2eb', '#ffcd56', '#4bc0c0']
+	                }]
+	            },
+	            options: {
+	                responsive: true,
+	                plugins: {
+	                    legend: {
+	                        position: 'top'
+	                    }
+	                }
+	            }
+	        });
+	    });
+	</script>
+
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Load Chart.js -->
 </body>
 </html>
