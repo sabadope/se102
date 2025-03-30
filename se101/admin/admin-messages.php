@@ -942,15 +942,29 @@ foreach ($users as $user) {
                             </div>
                         </div>
 
-                        <!-- Hidden Message Notifications (Expands inside container) -->
+                        <!-- Message Notifications Panel -->
                         <div class="message-notifications" id="messageNotifications">
                             <h4>Message Notifications</h4>
-                            <ul>
-                                <li class="message-item" onclick="changeChat('Alice')">New message from Alice</li>
-                                <li class="message-item" onclick="changeChat('John')">John sent you a reply</li>
-                                <li class="message-item">Reminder: Meeting at 3 PM</li>
+
+                            <!-- Role Toggle Buttons -->
+                            <div class="role-toggle">
+                                <button class="role-btn active" data-role="client">Clients</button>
+                                <button class="role-btn" data-role="supervisor">Supervisors</button>
+                            </div>
+
+                            <!-- Client Messages -->
+                            <ul class="message-list" data-role="client">
+                                <li class="message-item">New message from Alice (Client)</li>
+                                <li class="message-item">John (Client) sent you a reply</li>
+                            </ul>
+
+                            <!-- Supervisor Messages -->
+                            <ul class="message-list" data-role="supervisor" style="display: none;">
+                                <li class="message-item">Reminder: Meeting at 3 PM (Supervisor)</li>
+                                <li class="message-item">Supervisor Mike sent an update</li>
                             </ul>
                         </div>
+
                     </div>
                 </div>
             </div>
