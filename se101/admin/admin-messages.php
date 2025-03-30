@@ -745,24 +745,21 @@ foreach ($users as $user) {
             margin-left: 8px;
         }
 
-        /* Smooth Slide-In for Message Notifications */
+        /* Message Notifications - Sidebar */
         .message-notifications {
-            width: 0;
-            opacity: 0;
+            width: 0; /* Hidden by default */
             overflow: hidden;
             background: #f9f9f9;
             border-left: 1px solid #ddd;
-            transition: width 0.4s ease-in-out, opacity 0.3s ease-in-out;
-            position: absolute;
-            right: 0;
-            top: 0;
+            transition: width 0.3s ease-in-out, padding 0.3s ease-in-out;
+            padding: 0;
             height: 100%;
         }
 
-        /* When Open - Expand & Fade In */
+        /* When Open - Expand */
         .message-notifications.open {
             width: 220px;
-            opacity: 1;
+            padding: 10px;
         }
 
         /* Sidebar Title */
