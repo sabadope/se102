@@ -948,12 +948,13 @@ foreach ($users as $user) {
                             <div class="chat-box" id="chatBox">
                                 <div class="message received">
                                     <p>Hey! How’s it going?</p>
-                                    <span class="timestamp">2 mins ago</span>
                                 </div>
+                                <span class="timestamp">2 mins ago</span>  <!-- Timestamp below the message -->
+
                                 <div class="message sent">
                                     <p>All good! You?</p>
-                                    <span class="timestamp">Just now</span>
                                 </div>
+                                <span class="timestamp">Just now</span>  <!-- Timestamp below the message -->
                             </div>
 
                             <!-- Chat Input -->
