@@ -717,16 +717,13 @@ foreach ($users as $user) {
             align-self: flex-end;
         }
 
-        /* Chat Input */
+        /* Chat Input - Stays at Bottom */
         .chat-input {
             display: flex;
             width: 100%;
             padding: 12px;
             border-top: 1px solid #ddd;
             background: #fff;
-            position: absolute;
-            bottom: 0;
-            left: 0;
         }
 
         .chat-input input {
@@ -789,6 +786,11 @@ foreach ($users as $user) {
 
         .message-item:hover {
             background: #eee;
+        }
+
+        /* Shrink Chat Content when Notifications Open */
+        .chat-container.open .chat-content {
+            width: calc(100% - 220px); /* Adjust chat width */
         }
 
 
