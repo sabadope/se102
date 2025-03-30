@@ -660,7 +660,7 @@ foreach ($users as $user) {
 	    .recent-accounts {
 	        width: 100%;
 	        max-width: 100%;
-	        height: 400px; /* Fixed height to prevent stretching */
+	        height: 330px; /* Fixed height to prevent stretching */
 	        overflow: hidden; /* Prevent content from overflowing */
 	        position: relative;
 	    }
@@ -675,17 +675,20 @@ foreach ($users as $user) {
 	        position: absolute;
 	        top: 0;
 	        left: 0;
+	        
 	    }
 
 	    /* Hide Pie Chart Initially */
 	    .chart-container {
 	        display: none;
+	        
 	    }
 
 	    /* Ensure the Pie Chart adjusts inside the container */
 	    canvas {
 	        max-width: 100% !important;
 	        max-height: 100% !important;
+	        
 	    }
 	</style>
 
@@ -824,7 +827,7 @@ foreach ($users as $user) {
 			<div class="table-data">
 			    <div class="order">
 			        <div class="head">
-			            <h3>Recent Accounts</h3>
+			            <h3 id="section-title">Recent Accounts</h3> <!-- Title Changes Dynamically -->
 			            <i class='bx bx-filter'></i>
 			            <i class='bx bxs-pie-chart-alt-2 chart-toggle'></i> <!-- Toggle Button -->
 			        </div>
@@ -857,8 +860,7 @@ foreach ($users as $user) {
 			            </div>
 
 			            <!-- Pie Chart View (Hidden by Default) -->
-			            <div class="chart-container" style="display: none;">
-			                <h3>User Distribution</h3>
+			            <div class="chart-container">
 			                <canvas id="userChart"></canvas>
 			            </div>
 			        </div>
@@ -955,7 +957,7 @@ foreach ($users as $user) {
 		});
 	</script>
 
-	<!-- JavaScript for Toggle & Time Update -->
+	<!-- JavaScript for Toggle, Title Update & Pie Chart -->
 	<script>
 	    // Function to calculate "time ago"
 	    function timeAgo(time) {
@@ -966,14 +968,11 @@ foreach ($users as $user) {
 	        if (diff < 60) {
 	            return "Just now";
 	        } else if (diff < 3600) {
-	            const minutes = Math.floor(diff / 60);
-	            return minutes + " min" + (minutes > 1 ? "s" : "") + " ago";
+	            return Math.floor(diff / 60) + " min ago";
 	        } else if (diff < 86400) {
-	            const hours = Math.floor(diff / 3600);
-	            return hours + " hour" + (hours > 1 ? "s" : "") + " ago";
+	            return Math.floor(diff / 3600) + " hour ago";
 	        } else {
-	            const days = Math.floor(diff / 86400);
-	            return days + " day" + (days > 1 ? "s" : "") + " ago";
+	            return Math.floor(diff / 86400) + " day ago";
 	        }
 	    }
 
@@ -992,36 +991,50 @@ foreach ($users as $user) {
 	    // Wait for the page to load
 	    document.addEventListener("DOMContentLoaded", function () {
 	        var chartToggle = document.querySelector(".chart-toggle");
+	        var sectionTitle = document.getElementById("section-title");
 	        var tableView = document.querySelector(".table-view");
 	        var chartContainer = document.querySelector(".chart-container");
 
 	        // Pie Chart Configuration
 	        var ctx = document.getElementById('userChart').getContext('2d');
 	        var userChart = new Chart(ctx, {
-	            type: 'pie',
-	            data: {
-	                labels: <?php echo json_encode($roles); ?>,
-	                datasets: [{
-	                    data: <?php echo json_encode($counts); ?>,
-	                    backgroundColor: ['#ff6384', '#36a2eb', '#ffcd56', '#4bc0c0']
-	                }]
-	            },
-	            options: {
-	                responsive: true,
-	                plugins: {
-	                    legend: { position: 'top' }
-	                }
-	            }
-	        });
+			    type: 'pie',
+			    data: {
+			        labels: <?php echo json_encode($roles); ?>,
+			        datasets: [{
+			            data: <?php echo json_encode($counts); ?>,
+			            backgroundColor: ['#ff6384', '#36a2eb', '#ffcd56', '#4bc0c0']
+			        }]
+			    },
+			    options: {
+			        responsive: true,
+			        layout: {
+			            padding: {
+			                bottom: 35 // Adds space between the chart and labels
+			            }
+			        },
+			        plugins: {
+			            legend: {
+			                position: 'left',
+			                labels: {
+			                    boxWidth: 15, // Smaller legend boxes
+			                    padding: 40,  // Adds spacing between legend items
+			                }
+			            }
+			        }
+			    }
+			});
 
-	        // Toggle between table and pie chart
+	        // Toggle between Table and Pie Chart
 	        chartToggle.addEventListener("click", function () {
 	            if (tableView.style.display === "none") {
-	                tableView.style.display = "block";
+	                tableView.style.display = "flex";
 	                chartContainer.style.display = "none";
+	                sectionTitle.textContent = "Recent Accounts"; // Update title back
 	            } else {
 	                tableView.style.display = "none";
-	                chartContainer.style.display = "block";
+	                chartContainer.style.display = "flex";
+	                sectionTitle.textContent = "Total Users"; // Update title to Pie Chart
 	            }
 	        });
 	    });
