@@ -697,20 +697,24 @@ foreach ($users as $user) {
             flex-direction: column;
         }
 
-        /* Message */
+        /* Message Styling */
         .message {
-            max-width: 75%;
-            padding: 8px 12px;
+            background: #f1f1f1;
+            padding: 10px;
             border-radius: 8px;
-            margin-bottom: 8px;
-            font-size: 14px;
+            max-width: 75%;
+            word-wrap: break-word;
+            position: relative;
+            margin-bottom: 5px; /* Add spacing between messages */
         }
 
+        /* Received Messages (Left Aligned) */
         .message.received {
-            background: #e0e0e0;
+            background: #ddd;
             align-self: flex-start;
         }
 
+        /* Sent Messages (Right Aligned) */
         .message.sent {
             background: #4CAF50;
             color: white;
@@ -815,6 +819,15 @@ foreach ($users as $user) {
         .role-btn.active {
             background: #4CAF50;
             color: white;
+        }
+
+        /* Timestamp Styling - Small & Beneath the Message */
+        .timestamp {
+            font-size: 12px;
+            color: #888;
+            margin-top: 2px;
+            display: block;
+            text-align: right; /* Aligns timestamp under the message */
         }
 
     </style>
