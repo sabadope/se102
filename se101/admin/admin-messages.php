@@ -794,7 +794,28 @@ foreach ($users as $user) {
         }
 
 
+        /* Role Toggle Buttons */
+        .role-toggle {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
 
+        .role-btn {
+            flex: 1;
+            padding: 6px 12px;
+            border: 1px solid #4CAF50;
+            background: white;
+            color: #4CAF50;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: 0.3s;
+        }
+
+        .role-btn.active {
+            background: #4CAF50;
+            color: white;
+        }
 
     </style>
 
