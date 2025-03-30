@@ -1148,17 +1148,14 @@ foreach ($users as $user) {
             }
         });
 
-        // Function to Change Chat Name on Click
-        function changeChat(name) {
-            document.getElementById("chatPerson").textContent = "Chat with " + name;
-        }
-
-        // ✅ Toggle Message Notifications Sidebar
+        // ✅ Toggle Message Notifications & Adjust Chat Layout
         document.getElementById("chatToggle").addEventListener("click", function() {
+            let chatContainer = document.querySelector(".chat-container");
             let messageNotifications = document.getElementById("messageNotifications");
-            
+
             // Toggle 'open' class to expand/collapse
             messageNotifications.classList.toggle("open");
+            chatContainer.classList.toggle("open");
         });
 
 
