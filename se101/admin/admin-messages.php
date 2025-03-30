@@ -655,101 +655,77 @@ foreach ($users as $user) {
                 min-width: 420px;
             }
         }
+        
 
-        /* Ensure the container remains fixed in size */
-        .recent-accounts {
-            width: 100%;
+        /* Chat Container - Matches chat-input Width */
+        .chat-container {
+            display: flex;
+            width: 100%;  
             max-width: 100%;
-            height: 330px; /* Fixed height to prevent stretching */
-            overflow: hidden; /* Prevent content from overflowing */
+            height: 400px;
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             position: relative;
         }
 
-        /* Table and Chart Container */
-        .table-view, .chart-container {
-            width: 100%;
-            height: 100%;
+        /* Chat Content - Now Includes Header */
+        .chat-content {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            position: absolute;
-            top: 0;
-            left: 0;
-            
+            flex-direction: column;
+            flex: 1;
         }
 
-        /* Hide Pie Chart Initially */
-        .chart-container {
-            display: none;
-            
-        }
-
-        /* Ensure the Pie Chart adjusts inside the container */
-        canvas {
-            max-width: 100% !important;
-            max-height: 100% !important;
-            
-        }
-
-
-
-        /* Ensure chat container is fully visible inside Recent Accounts */
-        .order .chat-container {
-            width: 100%; /* Full width inside .order */
-            height: auto; /* Let it expand naturally */
-            background: #fff;
-            border-radius: 10px;
-            overflow: visible; /* Ensure full visibility */
-            box-shadow: none; /* Remove extra shadow */
-        }
-
-        /* Chat Header */
+        /* Chat Header - Shows Chat Person */
         .chat-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             padding: 10px;
-            background: #4CAF50;
-            color: white;
+            background: #f1f1f1;
+            border-bottom: 1px solid #ddd;
+            text-align: center;
             font-weight: bold;
         }
 
-        /* Chat Box */
+        /* Chat Box - Scrollable & Takes Remaining Space */
         .chat-box {
-            height: auto; /* Allow chat messages to expand */
-            overflow-y: visible; /* Ensure messages don't get cut */
-            padding: 10px;
+            flex: 1;
+            padding: 12px;
+            overflow-y: auto;
             display: flex;
             flex-direction: column;
+            transition: margin-right 0.3s ease-in-out;
         }
 
-        /* Messages */
+        /* Message */
         .message {
             max-width: 75%;
-            padding: 10px;
-            margin: 5px;
+            padding: 8px 12px;
             border-radius: 8px;
+            margin-bottom: 8px;
             font-size: 14px;
-            position: relative;
         }
 
-        .sent {
-            align-self: flex-end;
+        .message.received {
+            background: #e0e0e0;
+            align-self: flex-start;
+        }
+
+        .message.sent {
             background: #4CAF50;
             color: white;
-        }
-
-        .received {
-            align-self: flex-start;
-            background: #f1f1f1;
-            color: black;
+            align-self: flex-end;
         }
 
         /* Chat Input */
         .chat-input {
             display: flex;
-            padding: 10px;
+            width: 100%;
+            padding: 12px;
             border-top: 1px solid #ddd;
+            background: #fff;
+            position: absolute;
+            bottom: 0;
+            left: 0;
         }
 
         .chat-input input {
@@ -757,6 +733,8 @@ foreach ($users as $user) {
             padding: 8px;
             border: none;
             outline: none;
+            border-radius: 5px;
+            border: 1px solid #ccc;
         }
 
         .chat-input button {
@@ -766,6 +744,53 @@ foreach ($users as $user) {
             padding: 8px 12px;
             cursor: pointer;
             border-radius: 4px;
+            margin-left: 8px;
+        }
+
+        /* Message Notifications - Sidebar (Initially Hidden) */
+        .message-notifications {
+            width: 0;
+            overflow: hidden;
+            background: #f9f9f9;
+            border-left: 1px solid #ddd;
+            transition: width 0.3s ease-in-out, padding 0.3s ease-in-out;
+            padding: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 100%;
+        }
+
+        /* When Open - Expand */
+        .message-notifications.open {
+            width: 220px;
+            padding: 10px;
+        }
+
+        /* Sidebar Title */
+        .message-notifications h4 {
+            font-size: 16px;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        /* Message List */
+        .message-notifications ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        /* Message Item */
+        .message-item {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+
+        .message-item:hover {
+            background: #eee;
         }
 
 
@@ -773,7 +798,7 @@ foreach ($users as $user) {
 
     </style>
 
-    <title>Admin Dashboard</title>
+    <title>Admin Message</title>
 </head>
 <body>
 
@@ -886,35 +911,50 @@ foreach ($users as $user) {
                     <div class="head">
                         <h3 id="section-title">Recent Messages</h3> 
                         <i class='bx bx-plus'></i>  <!-- Expand -->
-                        <i class='bx bxs-chat'></i>
-
-                        
+                        <i class='bx bxs-chat' id="chatToggle"></i>  <!-- Toggle Button -->
                     </div>
 
-                    <!-- Chat Container (Now Inside Recent Accounts) -->
+                    <!-- Chat Container (Fixed Layout) -->
                     <div class="chat-container">
-                        <div class="chat-header">
-                            <h3>[Name]</h3>
-                        </div>
-                        
-                        <div class="chat-box">
-                            <div class="message received">
-                                <p>Hey! How’s it going?</p>
-                                <span class="timestamp">2 mins ago</span>
+                        <!-- Chat Content -->
+                        <div class="chat-content">
+                            <!-- Chat Header (User's Name) -->
+                            <div class="chat-header">
+                                <h3 id="chatPerson">Chat with Alice</h3>
                             </div>
-                            <div class="message sent">
-                                <p>All good! You?</p>
-                                <span class="timestamp">Just now</span>
+
+                            <!-- Chat Box -->
+                            <div class="chat-box" id="chatBox">
+                                <div class="message received">
+                                    <p>Hey! How’s it going?</p>
+                                    <span class="timestamp">2 mins ago</span>
+                                </div>
+                                <div class="message sent">
+                                    <p>All good! You?</p>
+                                    <span class="timestamp">Just now</span>
+                                </div>
+                            </div>
+
+                            <!-- Chat Input -->
+                            <div class="chat-input">
+                                <input type="text" id="messageInput" placeholder="Type a message...">
+                                <button id="sendMessage"><i class='bx bx-send'></i></button>
                             </div>
                         </div>
 
-                        <div class="chat-input">
-                            <input type="text" id="messageInput" placeholder="Type a message...">
-                            <button id="sendMessage"><i class='bx bx-send'></i></button>
+                        <!-- Hidden Message Notifications (Expands inside container) -->
+                        <div class="message-notifications" id="messageNotifications">
+                            <h4>Message Notifications</h4>
+                            <ul>
+                                <li class="message-item" onclick="changeChat('Alice')">New message from Alice</li>
+                                <li class="message-item" onclick="changeChat('John')">John sent you a reply</li>
+                                <li class="message-item">Reminder: Meeting at 3 PM</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
+
 
             
         </main>
@@ -1080,6 +1120,47 @@ foreach ($users as $user) {
                 }
             });
         });
+
+    </script>
+
+    <script>
+        
+        document.getElementById("sendMessage").addEventListener("click", function() {
+            let input = document.getElementById("messageInput");
+            let messageText = input.value.trim();
+            
+            if (messageText !== "") {
+                let chatBox = document.getElementById("chatBox");
+
+                // Create a new message div
+                let newMessage = document.createElement("div");
+                newMessage.classList.add("message", "sent");
+                newMessage.innerHTML = `<p>${messageText}</p><span class="timestamp">Just now</span>`;
+
+                // Append to chat box
+                chatBox.appendChild(newMessage);
+
+                // Clear input
+                input.value = "";
+
+                // Auto-scroll to bottom
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }
+        });
+
+        // Function to Change Chat Name on Click
+        function changeChat(name) {
+            document.getElementById("chatPerson").textContent = "Chat with " + name;
+        }
+
+        // ✅ Toggle Message Notifications Sidebar
+        document.getElementById("chatToggle").addEventListener("click", function() {
+            let messageNotifications = document.getElementById("messageNotifications");
+            
+            // Toggle 'open' class to expand/collapse
+            messageNotifications.classList.toggle("open");
+        });
+
 
     </script>
 
