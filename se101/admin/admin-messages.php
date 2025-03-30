@@ -1193,6 +1193,28 @@ foreach ($users as $user) {
             chatContainer.classList.toggle("open");
         });
 
+        // Toggle Client/Supervisor Messages
+        document.querySelectorAll(".role-btn").forEach(button => {
+            button.addEventListener("click", function() {
+                // Remove 'active' class from all buttons
+                document.querySelectorAll(".role-btn").forEach(btn => btn.classList.remove("active"));
+                
+                // Add 'active' class to the clicked button
+                this.classList.add("active");
+
+                // Get selected role
+                let selectedRole = this.getAttribute("data-role");
+
+                // Hide all message lists first
+                document.querySelectorAll(".message-list").forEach(list => {
+                    list.style.display = "none";
+                });
+
+                // Show the selected role's messages
+                document.querySelector(`.message-list[data-role="${selectedRole}"]`).style.display = "block";
+            });
+        });
+
 
     </script>
 
