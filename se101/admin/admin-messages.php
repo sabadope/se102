@@ -657,10 +657,10 @@ foreach ($users as $user) {
         }
         
 
-        /* Chat Container - Matches chat-input Width */
+        /* Chat Container - Flex for Layout */
         .chat-container {
             display: flex;
-            width: 100%;  
+            width: 100%; /* Matches chat-input width */
             max-width: 100%;
             height: 400px;
             background: #fff;
@@ -668,13 +668,15 @@ foreach ($users as $user) {
             overflow: hidden;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             position: relative;
+            transition: width 0.3s ease-in-out;
         }
 
-        /* Chat Content - Now Includes Header */
+        /* Chat Content - Takes Full Space Initially */
         .chat-content {
+            flex: 1;
             display: flex;
             flex-direction: column;
-            flex: 1;
+            transition: width 0.3s ease-in-out; /* Animates resizing */
         }
 
         /* Chat Header - Shows Chat Person */
@@ -686,14 +688,13 @@ foreach ($users as $user) {
             font-weight: bold;
         }
 
-        /* Chat Box - Scrollable & Takes Remaining Space */
+        /* Chat Box - Scrollable */
         .chat-box {
             flex: 1;
             padding: 12px;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            transition: margin-right 0.3s ease-in-out;
         }
 
         /* Message */
@@ -747,17 +748,14 @@ foreach ($users as $user) {
             margin-left: 8px;
         }
 
-        /* Message Notifications - Sidebar (Initially Hidden) */
+        /* Message Notifications - Sidebar */
         .message-notifications {
-            width: 0;
+            width: 0; /* Hidden by default */
             overflow: hidden;
             background: #f9f9f9;
             border-left: 1px solid #ddd;
             transition: width 0.3s ease-in-out, padding 0.3s ease-in-out;
             padding: 0;
-            position: absolute;
-            right: 0;
-            top: 0;
             height: 100%;
         }
 
