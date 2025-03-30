@@ -705,7 +705,7 @@ foreach ($users as $user) {
             max-width: 75%;
             word-wrap: break-word;
             position: relative;
-            margin-bottom: 5px; /* Add spacing between messages */
+            margin-bottom: 2px; /* Small space between messages */
         }
 
         /* Received Messages (Left Aligned) */
@@ -821,13 +821,17 @@ foreach ($users as $user) {
             color: white;
         }
 
-        /* Timestamp Styling - Small & Beneath the Message */
+        /* Timestamp Styling */
         .timestamp {
             font-size: 12px;
             color: #888;
-            margin-top: 2px;
             display: block;
-            text-align: right; /* Aligns timestamp under the message */
+            margin-top: 3px;
+        }
+
+        /* Align timestamp below each respective message */
+        .received-timestamp {
+            text-align: left; /* Timestamp for received messages aligns left */
         }
 
     </style>
@@ -962,12 +966,12 @@ foreach ($users as $user) {
                                 <div class="message received">
                                     <p>Hey! How’s it going?</p>
                                 </div>
-                                <span class="timestamp">2 mins ago</span>  <!-- Timestamp below the message -->
+                                <span class="timestamp received-timestamp">2 mins ago</span> <!-- Aligned to the left -->
 
                                 <div class="message sent">
                                     <p>All good! You?</p>
                                 </div>
-                                <span class="timestamp">Just now</span>  <!-- Timestamp below the message -->
+                                <span class="timestamp sent-timestamp">Just now</span> <!-- Aligned to the right -->
                             </div>
 
                             <!-- Chat Input -->
