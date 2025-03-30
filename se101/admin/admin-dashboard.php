@@ -655,6 +655,38 @@ foreach ($users as $user) {
 				min-width: 420px;
 			}
 		}
+
+		/* Ensure the container remains fixed in size */
+	    .recent-accounts {
+	        width: 100%;
+	        max-width: 100%;
+	        height: 400px; /* Fixed height to prevent stretching */
+	        overflow: hidden; /* Prevent content from overflowing */
+	        position: relative;
+	    }
+
+	    /* Table and Chart Container */
+	    .table-view, .chart-container {
+	        width: 100%;
+	        height: 100%;
+	        display: flex;
+	        align-items: center;
+	        justify-content: center;
+	        position: absolute;
+	        top: 0;
+	        left: 0;
+	    }
+
+	    /* Hide Pie Chart Initially */
+	    .chart-container {
+	        display: none;
+	    }
+
+	    /* Ensure the Pie Chart adjusts inside the container */
+	    canvas {
+	        max-width: 100% !important;
+	        max-height: 100% !important;
+	    }
 	</style>
 
 	<title>Admin Dashboard</title>
@@ -793,35 +825,73 @@ foreach ($users as $user) {
 			    <div class="order">
 			        <div class="head">
 			            <h3>Recent Accounts</h3>
-			            <i class='bx bx-search'></i>
 			            <i class='bx bx-filter'></i>
+			            <i class='bx bxs-pie-chart-alt-2 chart-toggle'></i> <!-- Toggle Button -->
 			        </div>
-			        <table>
-			            <thead>
-			                <tr>
-			                    <th>User Name</th>
-			                    <th>Role</th>
-			                    <th>Status</th>
-			                </tr>
-			            </thead>
-			            <tbody>
-			                <?php foreach ($recent_users as $user): ?>
-			                    <tr>
-			                        <td>
-			                            <img src="img/people.png">
-			                            <p><?= htmlspecialchars($user['username']) ?></p>
-			                        </td>
-			                        <td><?= htmlspecialchars($user['role']) ?></td>
-			                        <!-- Store timestamp in data attribute -->
-			                        <td class="registered-time" data-time="<?= htmlspecialchars($user['created_at']) ?>"></td>
-			                    </tr>
-			                <?php endforeach; ?>
-			            </tbody>
-			        </table>
+
+			        <!-- Recent Accounts Container (Holds BOTH Table & Chart) -->
+			        <div class="recent-accounts">
+			            <!-- Table View (Default Display) -->
+			            <div class="table-view">
+			                <table>
+			                    <thead>
+			                        <tr>
+			                            <th>User Name</th>
+			                            <th>Role</th>
+			                            <th>Status</th>
+			                        </tr>
+			                    </thead>
+			                    <tbody>
+			                        <?php foreach ($recent_users as $user): ?>
+			                            <tr>
+			                                <td>
+			                                    <img src="img/people.png">
+			                                    <p><?= htmlspecialchars($user['username']) ?></p>
+			                                </td>
+			                                <td><?= htmlspecialchars($user['role']) ?></td>
+			                                <td class="registered-time" data-time="<?= htmlspecialchars($user['created_at']) ?>"></td>
+			                            </tr>
+			                        <?php endforeach; ?>
+			                    </tbody>
+			                </table>
+			            </div>
+
+			            <!-- Pie Chart View (Hidden by Default) -->
+			            <div class="chart-container" style="display: none;">
+			                <h3>User Distribution</h3>
+			                <canvas id="userChart"></canvas>
+			            </div>
+			        </div>
 			    </div>
-				<div class="chart-container">
-				    <h3>User Distribution</h3>
-				    <canvas id="userChart"></canvas>
+				
+				<div class="todo">
+					<div class="head">
+						<h3>Todos</h3>
+						<i class='bx bx-plus' ></i>
+						<i class='bx bx-filter' ></i>
+					</div>
+					<ul class="todo-list">
+						<li class="completed">
+							<p>Todo List</p>
+							<i class='bx bx-dots-vertical-rounded' ></i>
+						</li>
+						<li class="completed">
+							<p>Todo List</p>
+							<i class='bx bx-dots-vertical-rounded' ></i>
+						</li>
+						<li class="not-completed">
+							<p>Todo List</p>
+							<i class='bx bx-dots-vertical-rounded' ></i>
+						</li>
+						<li class="completed">
+							<p>Todo List</p>
+							<i class='bx bx-dots-vertical-rounded' ></i>
+						</li>
+						<li class="not-completed">
+							<p>Todo List</p>
+							<i class='bx bx-dots-vertical-rounded' ></i>
+						</li>
+					</ul>
 				</div>
 			</div>
 		</main>
@@ -885,7 +955,9 @@ foreach ($users as $user) {
 		});
 	</script>
 
+	<!-- JavaScript for Toggle & Time Update -->
 	<script>
+	    // Function to calculate "time ago"
 	    function timeAgo(time) {
 	        const now = new Date();
 	        const createdAt = new Date(time);
@@ -905,6 +977,7 @@ foreach ($users as $user) {
 	        }
 	    }
 
+	    // Function to update time dynamically
 	    function updateTimes() {
 	        document.querySelectorAll('.registered-time').forEach(el => {
 	            const time = el.getAttribute('data-time');
@@ -912,13 +985,17 @@ foreach ($users as $user) {
 	        });
 	    }
 
-	    // Update every 30 seconds
+	    // Initial call & update every 30 seconds
 	    updateTimes();
 	    setInterval(updateTimes, 30000);
-	</script>
 
-	<script>
+	    // Wait for the page to load
 	    document.addEventListener("DOMContentLoaded", function () {
+	        var chartToggle = document.querySelector(".chart-toggle");
+	        var tableView = document.querySelector(".table-view");
+	        var chartContainer = document.querySelector(".chart-container");
+
+	        // Pie Chart Configuration
 	        var ctx = document.getElementById('userChart').getContext('2d');
 	        var userChart = new Chart(ctx, {
 	            type: 'pie',
@@ -932,10 +1009,19 @@ foreach ($users as $user) {
 	            options: {
 	                responsive: true,
 	                plugins: {
-	                    legend: {
-	                        position: 'top'
-	                    }
+	                    legend: { position: 'top' }
 	                }
+	            }
+	        });
+
+	        // Toggle between table and pie chart
+	        chartToggle.addEventListener("click", function () {
+	            if (tableView.style.display === "none") {
+	                tableView.style.display = "block";
+	                chartContainer.style.display = "none";
+	            } else {
+	                tableView.style.display = "none";
+	                chartContainer.style.display = "block";
 	            }
 	        });
 	    });
