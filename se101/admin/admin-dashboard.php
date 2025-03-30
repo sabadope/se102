@@ -402,7 +402,7 @@ foreach ($users as $user) {
 		}
 		#content main .head-title .left .breadcrumb li a {
 			color: var(--dark-grey);
-			pointer-events: none;
+			
 		}
 		#content main .head-title .left .breadcrumb li a.active {
 			color: var(--blue);
@@ -705,7 +705,7 @@ foreach ($users as $user) {
 		</a>
 		<ul class="side-menu top">
 			<li class="active">
-				<a href="#">
+				<a href="admin-dashboard.php">
 					<i class='bx bxs-dashboard' ></i>
 					<span class="text">Dashboard</span>
 				</a>
@@ -722,11 +722,11 @@ foreach ($users as $user) {
 					<span class="text">Analytics</span>
 				</a>
 			</li>
-			<li>
-				<a href="#">
-					<i class='bx bxs-message-dots' ></i>
-					<span class="text">Message</span>
-				</a>
+			<li id="openChat">
+			    <a href="admin-messages.php">
+			        <i class='bx bxs-message-dots'></i>
+			        <span class="text">Messages</span>
+			    </a>
 			</li>
 			<li>
 				<a href="#">
@@ -785,12 +785,13 @@ foreach ($users as $user) {
 					<h1>Dashboard</h1>
 					<ul class="breadcrumb">
 						<li>
-							<a href="#">Dashboard</a>
+							<a href="">Home</a>
 						</li>
 						<li><i class='bx bx-chevron-right' ></i></li>
 						<li>
-							<a class="active" href="#">Home</a>
+							<a class="active">Dashboard</a>
 						</li>
+						
 					</ul>
 				</div>
 				<a href="#" class="btn-download">
