@@ -1,43 +1,84 @@
 <?php
+// Include database connection
 include 'db_connect.php';
 
-$result = $conn->query("SELECT * FROM hiring_evaluations ORDER BY last_updated DESC");
-?>
+// Initialize search variable
+$search = "";
+$search = isset($_GET['search']) ? $conn->real_escape_string($_GET['search']) : '';
 
-<link rel="stylesheet" href="styles.css">
+if ($search) {
+    // If searching, show all interns that match ID, name, or rank
+    $result = $conn->query("SELECT * FROM interns WHERE 
+        intern_id LIKE '%$search%' OR 
+        name LIKE '%$search%' OR 
+        ranking LIKE '%$search%'
+    ");
+} else {
+    // Default: Show only top 3 ranked interns
+    $result = $conn->query("SELECT * FROM interns WHERE ranking IN (1, 2, 3) ORDER BY ranking ASC");
+};
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Intern Evaluations</title>
+    <link rel="stylesheet" href="viewEval.css">
 </head>
 <body>
-    <h2>Intern Evaluations</h2>
-    <table border="1">
-        <tr>
-            <th>ID</th>
-            <th>Intern Name</th>
-            <th>Total Score</th>
-            <th>Behavior Score</th>
-            <th>Hiring Score</th>
-            <th>Recommendation</th>
-            <th>Status</th>
-            <th>Last Updated</th>
-        </tr>
-        <?php while ($row = $result->fetch_assoc()) { ?>
-        <tr>
-            <td><?php echo $row['id']; ?></td>
-            <td><?php echo $row['name']; ?></td>
-            <td><?php echo $row['total_score']; ?></td>
-            <td><?php echo $row['behavior_score']; ?></td>
-            <td><?php echo $row['hiring_score']; ?></td>
-            <td><?php echo $row['recommendation']; ?></td>
-            <td><?php echo $row['status']; ?></td>
-            <td><?php echo $row['last_updated']; ?></td>
-        </tr>
-        <?php } ?>
-    </table>
+
+<div class="containers">
+    <!-- Header and Search Bar Wrapper -->
+    <div class="header-container">
+        <h2>Interns Data</h2>
+        <!-- Search Form -->
+        <form method="GET" class="search-form">
+            <input type="text" name="search" placeholder="Search by ID or Name" value="<?php echo htmlspecialchars($search); ?>">
+            <button type="submit">Search</button>
+        </form>
+        </div>
+    </div>
+</div>
+
+
+<?php
+// Check if any results are found
+if ($result->num_rows > 0) {
+    echo "<table border='1'>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Attendance</th>
+                <th>Tasks Completed</th>
+                <th>Feedback</th>
+                <th>Skills</th>
+                <th>Overall Score</th>
+                <th>Ranking</th>
+            </tr>";
+    while ($row = $result->fetch_assoc()) {
+        echo "<tr>
+                <td>{$row['intern_id']}</td>
+                <td>{$row['name']}</td>
+                <td>{$row['attendance']}%</td>
+                <td>{$row['tasks_completed']}</td>
+                <td>{$row['feedback']}</td>
+                <td>{$row['skills']}</td>
+                <td>{$row['overall_score']}</td>
+                <td>{$row['ranking']}</td>
+                <td>
+                <a href='view_intern.php?id={$row['intern_id']}' class='view-btn'>View</a>
+            </td>
+            </tr>";
+    }
+    echo "</table>";
+} else {
+    echo "No intern records found.";
+}
+
+$conn->close();
+?>
+
 </body>
 </html>
-
-<?php $conn->close(); ?>

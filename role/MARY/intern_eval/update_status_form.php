@@ -1,31 +1,40 @@
 <?php
 include 'db_connect.php';
 
-$result = $conn->query("SELECT * FROM hiring_evaluations WHERE status = 'Pending'");
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $id = $_POST["id"];
+    $recommendation = $_POST["recommendation"];
+    $sql = "UPDATE interns SET recommendation='$recommendation' WHERE id=$id";
+    $conn->query($sql);
+}
+
+$result = $conn->query("SELECT * FROM hiring_evaluations");
 ?>
-
-<link rel="stylesheet" href="styles.css">
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Update Hiring Status</title>
+    <meta charset="UTF-8">
+    <title>Update Intern Status</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h2>Update Intern Status</h2>
-    <form action="update_status.php" method="POST">
-        <select name="id">
+    <h2>Update Hiring Recommendation</h2>
+    <form method="post">
+        <label for="id">Select Intern:</label>
+        <select name="id" required>
             <?php while ($row = $result->fetch_assoc()) { ?>
-                <option value="<?php echo $row['id']; ?>"><?php echo $row['name']; ?> - <?php echo $row['recommendation']; ?></option>
+            <option value="<?= $row['id'] ?>"><?= $row['name'] ?></option>
             <?php } ?>
         </select>
-        <select name="status">
-            <option value="Approved">✅ Approve</option>
-            <option value="Rejected">❌ Reject</option>
+
+        <label for="recommendation">Recommendation:</label>
+        <select name="recommendation" required>
+            <option value="Recommended">Recommended</option>
+            <option value="Needs Review">Needs Review</option>
+            <option value="Not Recommended">Not Recommended</option>
         </select>
+
         <button type="submit">Update</button>
     </form>
 </body>
 </html>
-
-<?php $conn->close(); ?>
