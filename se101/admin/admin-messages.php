@@ -834,6 +834,10 @@ foreach ($users as $user) {
             text-align: left; /* Timestamp for received messages aligns left */
         }
 
+        .sent-timestamp {
+            text-align: right; /* Timestamp for sent messages aligns right */
+        }
+
     </style>
 
     <title>Admin Message</title>
