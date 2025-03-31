@@ -729,13 +729,12 @@ echo '<a href="#" class="brand">
                     <h1>Dashboard</h1>
                     <ul class="breadcrumb">
                         <li>
-                            <a href="admin-dashboard.php">Home</a>
+                            <a href="student-dashboard.php">Home</a>
                         </li>
                         <li><i class='bx bx-chevron-right' ></i></li>
                         <li>
                             <a class="active">Dashboard</a>
                         </li>
-                        
                     </ul>
                 </div>
                 <a href="#" class="btn-download">
@@ -746,101 +745,27 @@ echo '<a href="#" class="brand">
 
             <ul class="box-info">
                 <li>
-                    <i class='bx bxs-group'></i>
+                    <i class='bx bxs-calendar-check' ></i>
                     <span class="text">
-                        <h3><?php echo $students_count; ?></h3>
-                        <p>Students</p>
+                        <h3>Attendace</h3>
+                        <p>100%</p>
                     </span>
                 </li>
                 <li>
-                    <i class='bx bxs-group'></i>
+                    <i class='bx bxs-group' ></i>
                     <span class="text">
-                        <h3><?php echo $supervisors_count; ?></h3>
-                        <p>Supervisors</p>
+                        <h3>Message</h3>
+                        <p>3</p>
                     </span>
                 </li>
                 <li>
-                    <i class='bx bxs-group'></i>
+                    <i class='bx bxs-dollar-circle' ></i>
                     <span class="text">
-                        <h3><?php echo $clients_count; ?></h3>
-                        <p>Clients</p>
+                        <h3>Team</h3>
+                        <p>5</p>
                     </span>
                 </li>
             </ul>
-
-
-            <div class="table-data">
-                <div class="order">
-                    <div class="head">
-                        <h3 id="section-title">Recent Accounts</h3> <!-- Title Changes Dynamically -->
-                        <i class='bx bx-filter'></i>
-                        <i class='bx bxs-pie-chart-alt-2 chart-toggle'></i> <!-- Toggle Button -->
-                    </div>
-
-                    <!-- Recent Accounts Container (Holds BOTH Table & Chart) -->
-                    <div class="recent-accounts">
-                        <!-- Table View (Default Display) -->
-                        <div class="table-view">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>User Name</th>
-                                        <th>Role</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php foreach ($recent_users as $user): ?>
-                                        <tr>
-                                            <td>
-                                                <img src="img/people.png">
-                                                <p><?= htmlspecialchars($user['username']) ?></p>
-                                            </td>
-                                            <td><?= htmlspecialchars($user['role']) ?></td>
-                                            <td class="registered-time" data-time="<?= htmlspecialchars($user['created_at']) ?>"></td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <!-- Pie Chart View (Hidden by Default) -->
-                        <div class="chart-container">
-                            <canvas id="userChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="todo">
-                    <div class="head">
-                        <h3>Todos</h3>
-                        <i class='bx bx-plus' ></i>
-                        <i class='bx bx-filter' ></i>
-                    </div>
-                    <ul class="todo-list">
-                        <li class="completed">
-                            <p>Todo List</p>
-                            <i class='bx bx-dots-vertical-rounded' ></i>
-                        </li>
-                        <li class="completed">
-                            <p>Todo List</p>
-                            <i class='bx bx-dots-vertical-rounded' ></i>
-                        </li>
-                        <li class="not-completed">
-                            <p>Todo List</p>
-                            <i class='bx bx-dots-vertical-rounded' ></i>
-                        </li>
-                        <li class="completed">
-                            <p>Todo List</p>
-                            <i class='bx bx-dots-vertical-rounded' ></i>
-                        </li>
-                        <li class="not-completed">
-                            <p>Todo List</p>
-                            <i class='bx bx-dots-vertical-rounded' ></i>
-                        </li>
-                    </ul>
-                </div>
-            </div>
         </main>
         <!-- MAIN -->
     </section>
