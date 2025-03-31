@@ -788,7 +788,7 @@
 
     </style>
 
-    <title>Supervisor Message</title>
+    <title>Student Message</title>
 </head>
 <body>
 
@@ -796,7 +796,7 @@
     <!-- SIDEBAR -->
     <section id="sidebar">
         <a href="#" class="brand">
-            <i class='bx bxs-user'></i>
+            <i class="bx bxs-graduation"></i>
             <span class="text">Hi <?php echo htmlspecialchars($_SESSION['username']); ?>!</span>
         </a>
         <ul class="side-menu top">
