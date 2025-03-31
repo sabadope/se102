@@ -1,63 +1,63 @@
 <?php
-require_once '../src/config.php'; // Include DB connection
+    require_once '../src/config.php'; // Include DB connection
 
-// Fetch the count of each role
-$stmt = $pdo->prepare("
-    SELECT role, COUNT(*) as count FROM users 
-    WHERE role IN ('Student', 'Supervisor', 'Client') 
-    GROUP BY role
-");
-$stmt->execute();
-$roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    // Fetch the count of each role
+    $stmt = $pdo->prepare("
+        SELECT role, COUNT(*) as count FROM users 
+        WHERE role IN ('Student', 'Supervisor', 'Client') 
+        GROUP BY role
+    ");
+    $stmt->execute();
+    $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Initialize counts
-$students_count = 0;
-$supervisors_count = 0;
-$clients_count = 0;
+    // Initialize counts
+    $students_count = 0;
+    $supervisors_count = 0;
+    $clients_count = 0;
 
-// Assign counts based on role
-foreach ($roles as $role) {
-    if ($role['role'] === 'Student') {
-        $students_count = $role['count'];
-    } elseif ($role['role'] === 'Supervisor') {
-        $supervisors_count = $role['count'];
-    } elseif ($role['role'] === 'Client') {
-        $clients_count = $role['count'];
+    // Assign counts based on role
+    foreach ($roles as $role) {
+        if ($role['role'] === 'Student') {
+            $students_count = $role['count'];
+        } elseif ($role['role'] === 'Supervisor') {
+            $supervisors_count = $role['count'];
+        } elseif ($role['role'] === 'Client') {
+            $clients_count = $role['count'];
+        }
     }
-}
 
-function timeAgo($timestamp) {
-    $time_difference = time() - strtotime($timestamp); // Get time difference in seconds
+    function timeAgo($timestamp) {
+        $time_difference = time() - strtotime($timestamp); // Get time difference in seconds
 
-    if ($time_difference < 60) {
-        return "Just now"; // Less than a minute
-    } elseif ($time_difference < 3600) {
-        $minutes = floor($time_difference / 60);
-        return $minutes . " min" . ($minutes > 1 ? "s" : "") . " ago"; // 1 min, 2 mins, etc.
-    } elseif ($time_difference < 86400) {
-        $hours = floor($time_difference / 3600);
-        return $hours . " hour" . ($hours > 1 ? "s" : "") . " ago"; // 1 hour, 2 hours, etc.
-    } else {
-        $days = floor($time_difference / 86400);
-        return $days . " day" . ($days > 1 ? "s" : "") . " ago"; // 1 day, 2 days, etc.
+        if ($time_difference < 60) {
+            return "Just now"; // Less than a minute
+        } elseif ($time_difference < 3600) {
+            $minutes = floor($time_difference / 60);
+            return $minutes . " min" . ($minutes > 1 ? "s" : "") . " ago"; // 1 min, 2 mins, etc.
+        } elseif ($time_difference < 86400) {
+            $hours = floor($time_difference / 3600);
+            return $hours . " hour" . ($hours > 1 ? "s" : "") . " ago"; // 1 hour, 2 hours, etc.
+        } else {
+            $days = floor($time_difference / 86400);
+            return $days . " day" . ($days > 1 ? "s" : "") . " ago"; // 1 day, 2 days, etc.
+        }
     }
-}
 
-// Fetch the 4 most recent users
-$stmt = $pdo->query("SELECT username, role, created_at FROM users ORDER BY created_at DESC LIMIT 4");
-$recent_users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    // Fetch the 4 most recent users
+    $stmt = $pdo->query("SELECT username, role, created_at FROM users ORDER BY created_at DESC LIMIT 4");
+    $recent_users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Fetch the count of each user role
-$stmt = $pdo->query("SELECT role, COUNT(*) as count FROM users WHERE role != 'Admin' GROUP BY role");
-$users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    // Fetch the count of each user role
+    $stmt = $pdo->query("SELECT role, COUNT(*) as count FROM users WHERE role != 'Admin' GROUP BY role");
+    $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-$roles = [];
-$counts = [];
+    $roles = [];
+    $counts = [];
 
-foreach ($users as $user) {
-    $roles[] = $user['role'];
-    $counts[] = $user['count'];
-}
+    foreach ($users as $user) {
+        $roles[] = $user['role'];
+        $counts[] = $user['count'];
+    }
 ?>
 
 <!DOCTYPE html>
@@ -933,7 +933,7 @@ foreach ($users as $user) {
                     <h1>Chat Messages</h1>
                     <ul class="breadcrumb">
                         <li>
-                            <a href="">Home</a>
+                            <a href="admin-messages.php">Home</a>
                         </li>
                         <li><i class='bx bx-chevron-right' ></i></li>
                         <li>

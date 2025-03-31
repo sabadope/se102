@@ -406,7 +406,7 @@ foreach ($users as $user) {
         }
         #content main .head-title .left .breadcrumb li a.active {
             color: var(--blue);
-            pointer-events: unset;
+            
         }
         #content main .head-title .btn-download {
             height: 36px;
@@ -927,7 +927,7 @@ foreach ($users as $user) {
                     <h1>Chat Messages</h1>
                     <ul class="breadcrumb">
                         <li>
-                            <a href="student-dashboard.php">Home</a>
+                            <a href="student-messages.php">Home</a>
                         </li>
                         <li><i class='bx bx-chevron-right' ></i></li>
                         <li>
