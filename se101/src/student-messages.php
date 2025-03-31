@@ -374,7 +374,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             grid-gap: 24px;
-            margin-top: 36px;
+            margin-top: 24px;
         }
         #content main .box-info li {
             padding: 24px;
