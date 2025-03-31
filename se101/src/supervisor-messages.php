@@ -6,7 +6,6 @@
 
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -102,7 +101,6 @@
             background: var(--light);
             z-index: 500;
             box-sizing: content-box;
-            
         }
         #sidebar .brand .bx {
             min-width: 60px;
@@ -350,11 +348,11 @@
         }
         #content main .head-title .left .breadcrumb li a {
             color: var(--dark-grey);
-            pointer-events: none;
+            
         }
         #content main .head-title .left .breadcrumb li a.active {
             color: var(--blue);
-            pointer-events: unset;
+            
         }
         #content main .head-title .btn-download {
             height: 36px;
@@ -376,7 +374,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             grid-gap: 24px;
-            margin-top: 36px;
+            margin-top: 24px;
         }
         #content main .box-info li {
             padding: 24px;
@@ -423,7 +421,7 @@
         #content main .table-data {
             display: flex;
             flex-wrap: wrap;
-            grid-gap: 24px;
+            grid-gap: 0px;
             margin-top: 24px;
             width: 100%;
             color: var(--dark);
@@ -439,6 +437,8 @@
             align-items: center;
             grid-gap: 16px;
             margin-bottom: 24px;
+            flex-grow: 1;
+            flex-basis: 500px;
         }
         #content main .table-data .head h3 {
             margin-right: auto;
@@ -603,24 +603,205 @@
                 min-width: 420px;
             }
         }
+        
+
+        /* Chat Container - Flex for Layout */
+        .chat-container {
+            display: flex;
+            width: 100%; /* Matches chat-input width */
+            max-width: 100%;
+            height: 400px;
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
+            transition: width 0.3s ease-in-out;
+        }
+
+        /* Chat Content - Takes Full Space Initially */
+        .chat-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            transition: width 0.3s ease-in-out; /* Animates resizing */
+        }
+
+        /* Chat Header - Shows Chat Person */
+        .chat-header {
+            padding: 10px;
+            background: #f1f1f1;
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        /* Chat Box - Scrollable */
+        .chat-box {
+            flex: 1;
+            padding: 12px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Message Styling */
+        .message {
+            background: #f1f1f1;
+            padding: 10px;
+            border-radius: 8px;
+            max-width: 75%;
+            word-wrap: break-word;
+            position: relative;
+            margin-bottom: 2px; /* Small space between messages */
+        }
+
+        /* Received Messages (Left Aligned) */
+        .message.received {
+            background: #ddd;
+            align-self: flex-start;
+        }
+
+        /* Sent Messages (Right Aligned) */
+        .message.sent {
+            background: #4CAF50;
+            color: white;
+            align-self: flex-end;
+        }
+
+        /* Chat Input - Stays at Bottom */
+        .chat-input {
+            display: flex;
+            width: 100%;
+            padding: 12px;
+            border-top: 1px solid #ddd;
+            background: #fff;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            outline: none;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .chat-input button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-left: 8px;
+        }
+
+        /* Message Notifications - Sidebar */
+        .message-notifications {
+            width: 0; /* Hidden by default */
+            overflow: hidden;
+            background: #f9f9f9;
+            border-left: 1px solid #ddd;
+            transition: width 0.3s ease-in-out, padding 0.3s ease-in-out;
+            padding: 0;
+            height: 100%;
+        }
+
+        /* When Open - Expand */
+        .message-notifications.open {
+            width: 220px;
+            padding: 10px;
+        }
+
+        /* Sidebar Title */
+        .message-notifications h4 {
+            font-size: 16px;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        /* Message List */
+        .message-notifications ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        /* Message Item */
+        .message-item {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+
+        .message-item:hover {
+            background: #eee;
+        }
+
+        /* Shrink Chat Content when Notifications Open */
+        .chat-container.open .chat-content {
+            width: calc(100% - 220px); /* Adjust chat width */
+        }
+
+
+        /* Role Toggle Buttons */
+        .role-toggle {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+
+        .role-btn {
+            flex: 1;
+            padding: 6px 12px;
+            border: 1px solid #4CAF50;
+            background: white;
+            color: #4CAF50;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: 0.3s;
+        }
+
+        .role-btn.active {
+            background: #4CAF50;
+            color: white;
+        }
+
+        /* Timestamp Styling */
+        .timestamp {
+            font-size: 12px;
+            color: #888;
+            display: block;
+            margin-top: 3px;
+        }
+
+        /* Align timestamp below each respective message */
+        .received-timestamp {
+            text-align: left; /* Timestamp for received messages aligns left */
+        }
+
+        .sent-timestamp {
+            text-align: right; /* Timestamp for sent messages aligns right */
+        }
+
     </style>
 
-    <title>Student Dashboard</title>
+    <title>Supervisor Message</title>
 </head>
 <body>
 
 
     <!-- SIDEBAR -->
     <section id="sidebar">
-        
         <a href="#" class="brand">
             <i class='bx bxs-user'></i>
             <span class="text">Hi <?php echo htmlspecialchars($_SESSION['username']); ?>!</span>
         </a>
-        
         <ul class="side-menu top">
-            <li class="active">
-                <a href="#">
+            <li>
+                <a href="student-dashboard.php">
                     <i class='bx bxs-dashboard' ></i>
                     <span class="text">Dashboard</span>
                 </a>
@@ -631,8 +812,8 @@
                     <span class="text">Attendance</span>
                 </a>
             </li>
-            <li>
-                <a href="#">
+            <li class="active">
+                <a href="student-messages.php">
                     <i class='bx bxs-message-dots' ></i>
                     <span class="text">Message</span>
                 </a>
@@ -691,15 +872,16 @@
         <main>
             <div class="head-title">
                 <div class="left">
-                    <h1>Dashboard</h1>
+                    <h1>Chat Messages</h1>
                     <ul class="breadcrumb">
                         <li>
-                            <a href="#">Dashboard</a>
+                            <a href="student-messages.php">Home</a>
                         </li>
                         <li><i class='bx bx-chevron-right' ></i></li>
                         <li>
-                            <a class="active" href="#">Home</a>
+                            <a class="active">Messages</a>
                         </li>
+                        
                     </ul>
                 </div>
                 <a href="#" class="btn-download">
@@ -708,29 +890,71 @@
                 </a>
             </div>
 
-            <ul class="box-info">
-                <li>
-                    <i class='bx bxs-calendar-check' ></i>
-                    <span class="text">
-                        <h3>Attendace</h3>
-                        <p>100%</p>
-                    </span>
-                </li>
-                <li>
-                    <i class='bx bxs-group' ></i>
-                    <span class="text">
-                        <h3>Message</h3>
-                        <p>3</p>
-                    </span>
-                </li>
-                <li>
-                    <i class='bx bxs-dollar-circle' ></i>
-                    <span class="text">
-                        <h3>Team</h3>
-                        <p>5</p>
-                    </span>
-                </li>
-            </ul>
+
+            <div class="table-data">
+                
+                <div class="head">
+                    <h3 id="section-title">Recent Messages</h3> 
+                    <i class='bx bx-plus'></i>  <!-- Expand -->
+                    <i class='bx bxs-chat' id="chatToggle"></i>  <!-- Toggle Button -->
+                </div>
+                
+
+                <!-- Chat Container (Fixed Layout) -->
+                <div class="chat-container">
+                    <!-- Chat Content -->
+                    <div class="chat-content">
+                        <!-- Chat Header (User's Name) -->
+                        <div class="chat-header">
+                            <h3 id="chatPerson">Chat with Alice</h3>
+                        </div>
+
+                        <!-- Chat Box -->
+                        <div class="chat-box" id="chatBox">
+                            <div class="message received">
+                                <p>Hey! How’s it going?</p>
+                            </div>
+                            <span class="timestamp received-timestamp">2 mins ago</span> <!-- Aligned to the left -->
+
+                            <div class="message sent">
+                                <p>All good! You?</p>
+                            </div>
+                            <span class="timestamp sent-timestamp">Just now</span> <!-- Aligned to the right -->
+                        </div>
+
+                        <!-- Chat Input -->
+                        <div class="chat-input">
+                            <input type="text" id="messageInput" placeholder="Type a message...">
+                            <button id="sendMessage"><i class='bx bx-send'></i></button>
+                        </div>
+                    </div>
+
+                    <!-- Message Notifications Panel -->
+                    <div class="message-notifications" id="messageNotifications">
+                        <h4>Message Notifications</h4>
+
+                        <!-- Role Toggle Buttons -->
+                        <div class="role-toggle">
+                            <button class="role-btn active" data-role="client">Clients</button>
+                            <button class="role-btn" data-role="supervisor">Supervisors</button>
+                        </div>
+
+                        <!-- Client Messages -->
+                        <ul class="message-list" data-role="client">
+                            <li class="message-item">New message from Alice (Client)</li>
+                            <li class="message-item">John (Client) sent you a reply</li>
+                        </ul>
+
+                        <!-- Supervisor Messages -->
+                        <ul class="message-list" data-role="supervisor" style="display: none;">
+                            <li class="message-item">Reminder: Meeting at 3 PM (Supervisor)</li>
+                            <li class="message-item">Supervisor Mike sent an update</li>
+                        </ul>
+                    </div>
+
+                </div>
+                
+            </div>
 
 
             
@@ -793,8 +1017,173 @@
                 }
             }
         });
+    </script>
+
+    <!-- JavaScript for Toggle, Title Update & Pie Chart -->
+    <script>
+        // Function to calculate "time ago"
+        function timeAgo(time) {
+            const now = new Date();
+            const createdAt = new Date(time);
+            const diff = Math.floor((now - createdAt) / 1000); // Time difference in seconds
+
+            if (diff < 60) {
+                return "Just now";
+            } else if (diff < 3600) {
+                return Math.floor(diff / 60) + " min ago";
+            } else if (diff < 86400) {
+                return Math.floor(diff / 3600) + " hour ago";
+            } else {
+                return Math.floor(diff / 86400) + " day ago";
+            }
+        }
+
+        // Function to update time dynamically
+        function updateTimes() {
+            document.querySelectorAll('.registered-time').forEach(el => {
+                const time = el.getAttribute('data-time');
+                el.textContent = timeAgo(time);
+            });
+        }
+
+        // Initial call & update every 30 seconds
+        updateTimes();
+        setInterval(updateTimes, 30000);
+
+        // Wait for the page to load
+        document.addEventListener("DOMContentLoaded", function () {
+            var chartToggle = document.querySelector(".chart-toggle");
+            var sectionTitle = document.getElementById("section-title");
+            var tableView = document.querySelector(".table-view");
+            var chartContainer = document.querySelector(".chart-container");
+
+            // Pie Chart Configuration
+            var ctx = document.getElementById('userChart').getContext('2d');
+            var userChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: <?php echo json_encode($roles); ?>,
+                    datasets: [{
+                        data: <?php echo json_encode($counts); ?>,
+                        backgroundColor: ['#ff6384', '#36a2eb', '#ffcd56', '#4bc0c0']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    layout: {
+                        padding: {
+                            bottom: 35 // Adds space between the chart and labels
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'left',
+                            labels: {
+                                boxWidth: 15, // Smaller legend boxes
+                                padding: 40,  // Adds spacing between legend items
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Toggle between Table and Pie Chart
+            chartToggle.addEventListener("click", function () {
+                if (tableView.style.display === "none") {
+                    tableView.style.display = "flex";
+                    chartContainer.style.display = "none";
+                    sectionTitle.textContent = "Recent Accounts"; // Update title back
+                } else {
+                    tableView.style.display = "none";
+                    chartContainer.style.display = "flex";
+                    sectionTitle.textContent = "Total Users"; // Update title to Pie Chart
+                }
+            });
+        });
+    </script>
+
+    <script>
+        
+        document.addEventListener("DOMContentLoaded", function () {
+            // Send Message
+            document.getElementById("sendMessage").addEventListener("click", function () {
+                const inputField = document.getElementById("messageInput");
+                const messageText = inputField.value.trim();
+                
+                if (messageText !== "") {
+                    const chatBox = document.querySelector(".chat-box");
+                    const messageDiv = document.createElement("div");
+                    messageDiv.classList.add("message", "sent");
+                    messageDiv.innerHTML = `<p>${messageText}</p><span class="timestamp">Just now</span>`;
+                    chatBox.appendChild(messageDiv);
+                    inputField.value = "";
+                    chatBox.scrollTop = chatBox.scrollHeight;  // Auto-scroll to the latest message
+                }
+            });
+        });
+
+    </script>
+
+    <script>
+        
+        document.getElementById("sendMessage").addEventListener("click", function() {
+            let input = document.getElementById("messageInput");
+            let messageText = input.value.trim();
+            
+            if (messageText !== "") {
+                let chatBox = document.getElementById("chatBox");
+
+                // Create a new message div
+                let newMessage = document.createElement("div");
+                newMessage.classList.add("message", "sent");
+                newMessage.innerHTML = `<p>${messageText}</p><span class="timestamp">Just now</span>`;
+
+                // Append to chat box
+                chatBox.appendChild(newMessage);
+
+                // Clear input
+                input.value = "";
+
+                // Auto-scroll to bottom
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }
+        });
+
+        // Toggle Message Notifications & Adjust Chat Layout
+        document.getElementById("chatToggle").addEventListener("click", function() {
+            let chatContainer = document.querySelector(".chat-container");
+            let messageNotifications = document.getElementById("messageNotifications");
+
+            // Toggle 'open' class to expand/collapse
+            messageNotifications.classList.toggle("open");
+            chatContainer.classList.toggle("open");
+        });
+
+        // Toggle Client/Supervisor Messages
+        document.querySelectorAll(".role-btn").forEach(button => {
+            button.addEventListener("click", function() {
+                // Remove 'active' class from all buttons
+                document.querySelectorAll(".role-btn").forEach(btn => btn.classList.remove("active"));
+                
+                // Add 'active' class to the clicked button
+                this.classList.add("active");
+
+                // Get selected role
+                let selectedRole = this.getAttribute("data-role");
+
+                // Hide all message lists first
+                document.querySelectorAll(".message-list").forEach(list => {
+                    list.style.display = "none";
+                });
+
+                // Show the selected role's messages
+                document.querySelector(`.message-list[data-role="${selectedRole}"]`).style.display = "block";
+            });
+        });
 
 
     </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Load Chart.js -->
 </body>
 </html>
