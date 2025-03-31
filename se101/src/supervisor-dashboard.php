@@ -350,7 +350,7 @@
         }
         #content main .head-title .left .breadcrumb li a {
             color: var(--dark-grey);
-            pointer-events: none;
+            
         }
         #content main .head-title .left .breadcrumb li a.active {
             color: var(--blue);
@@ -605,7 +605,7 @@
         }
     </style>
 
-    <title>Student Dashboard</title>
+    <title>Supervisor Dashboard</title>
 </head>
 <body>
 
@@ -694,7 +694,7 @@
                     <h1>Dashboard</h1>
                     <ul class="breadcrumb">
                         <li>
-                            <a href="#">Home</a>
+                            <a href="supervisor-dashboard.php">Home</a>
                         </li>
                         <li><i class='bx bx-chevron-right' ></i></li>
                         <li>
