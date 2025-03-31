@@ -88,6 +88,25 @@ form {
     width: 100%;
 }
 
+/* View Button */
+.view-button {
+    display: inline-block;
+    padding: 8px 12px;
+    background: #257ad3;  /* Blue background */
+    color: white;          /* White text */
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: 0.3s;
+    border: none;
+    cursor: pointer;
+}
+
+/* Hover effect */
+.view-button:hover {
+    background: #0056b3; /* Darker blue on hover */
+}
+
 /* Tables */
 table {
     width: 80%;
@@ -109,3 +128,26 @@ th {
     text-transform: uppercase;
 }
 
+/* Back Button */
+.back-container {
+    width: 80%;
+    margin: 20px auto;
+    display: flex;
+    justify-content: flex-start; /* Align button to the left */
+}
+
+.back-btn {
+    display: inline-block;
+    padding: 10px 15px;
+    background: #28a745;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.back-btn:hover {
+    background: #218838;
+}
