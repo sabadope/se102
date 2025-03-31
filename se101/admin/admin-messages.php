@@ -475,7 +475,7 @@
         #content main .table-data {
             display: flex;
             flex-wrap: wrap;
-            grid-gap: 24px;
+            grid-gap: 0px;
             margin-top: 24px;
             width: 100%;
             color: var(--dark);
@@ -491,6 +491,8 @@
             align-items: center;
             grid-gap: 16px;
             margin-bottom: 24px;
+            flex-grow: 1;
+            flex-basis: 500px;
         }
         #content main .table-data .head h3 {
             margin-right: auto;
@@ -949,67 +951,68 @@
             </div>
 
             <div class="table-data">
-                <div class="order">
-                    <div class="head">
-                        <h3 id="section-title">Recent Messages</h3> 
-                        <i class='bx bx-plus'></i>  <!-- Expand -->
-                        <i class='bx bxs-chat' id="chatToggle"></i>  <!-- Toggle Button -->
-                    </div>
-
-                    <!-- Chat Container (Fixed Layout) -->
-                    <div class="chat-container">
-                        <!-- Chat Content -->
-                        <div class="chat-content">
-                            <!-- Chat Header (User's Name) -->
-                            <div class="chat-header">
-                                <h3 id="chatPerson">Chat with Alice</h3>
-                            </div>
-
-                            <!-- Chat Box -->
-                            <div class="chat-box" id="chatBox">
-                                <div class="message received">
-                                    <p>Hey! How’s it going?</p>
-                                </div>
-                                <span class="timestamp received-timestamp">2 mins ago</span> <!-- Aligned to the left -->
-
-                                <div class="message sent">
-                                    <p>All good! You?</p>
-                                </div>
-                                <span class="timestamp sent-timestamp">Just now</span> <!-- Aligned to the right -->
-                            </div>
-
-                            <!-- Chat Input -->
-                            <div class="chat-input">
-                                <input type="text" id="messageInput" placeholder="Type a message...">
-                                <button id="sendMessage"><i class='bx bx-send'></i></button>
-                            </div>
-                        </div>
-
-                        <!-- Message Notifications Panel -->
-                        <div class="message-notifications" id="messageNotifications">
-                            <h4>Message Notifications</h4>
-
-                            <!-- Role Toggle Buttons -->
-                            <div class="role-toggle">
-                                <button class="role-btn active" data-role="client">Clients</button>
-                                <button class="role-btn" data-role="supervisor">Supervisors</button>
-                            </div>
-
-                            <!-- Client Messages -->
-                            <ul class="message-list" data-role="client">
-                                <li class="message-item">New message from Alice (Client)</li>
-                                <li class="message-item">John (Client) sent you a reply</li>
-                            </ul>
-
-                            <!-- Supervisor Messages -->
-                            <ul class="message-list" data-role="supervisor" style="display: none;">
-                                <li class="message-item">Reminder: Meeting at 3 PM (Supervisor)</li>
-                                <li class="message-item">Supervisor Mike sent an update</li>
-                            </ul>
-                        </div>
-
-                    </div>
+                
+                <div class="head">
+                    <h3 id="section-title">Recent Messages</h3> 
+                    <i class='bx bx-plus'></i>  <!-- Expand -->
+                    <i class='bx bxs-chat' id="chatToggle"></i>  <!-- Toggle Button -->
                 </div>
+                
+
+                <!-- Chat Container (Fixed Layout) -->
+                <div class="chat-container">
+                    <!-- Chat Content -->
+                    <div class="chat-content">
+                        <!-- Chat Header (User's Name) -->
+                        <div class="chat-header">
+                            <h3 id="chatPerson">Chat with Alice</h3>
+                        </div>
+
+                        <!-- Chat Box -->
+                        <div class="chat-box" id="chatBox">
+                            <div class="message received">
+                                <p>Hey! How’s it going?</p>
+                            </div>
+                            <span class="timestamp received-timestamp">2 mins ago</span> <!-- Aligned to the left -->
+
+                            <div class="message sent">
+                                <p>All good! You?</p>
+                            </div>
+                            <span class="timestamp sent-timestamp">Just now</span> <!-- Aligned to the right -->
+                        </div>
+
+                        <!-- Chat Input -->
+                        <div class="chat-input">
+                            <input type="text" id="messageInput" placeholder="Type a message...">
+                            <button id="sendMessage"><i class='bx bx-send'></i></button>
+                        </div>
+                    </div>
+
+                    <!-- Message Notifications Panel -->
+                    <div class="message-notifications" id="messageNotifications">
+                        <h4>Message Notifications</h4>
+
+                        <!-- Role Toggle Buttons -->
+                        <div class="role-toggle">
+                            <button class="role-btn active" data-role="client">Clients</button>
+                            <button class="role-btn" data-role="supervisor">Supervisors</button>
+                        </div>
+
+                        <!-- Client Messages -->
+                        <ul class="message-list" data-role="client">
+                            <li class="message-item">New message from Alice (Client)</li>
+                            <li class="message-item">John (Client) sent you a reply</li>
+                        </ul>
+
+                        <!-- Supervisor Messages -->
+                        <ul class="message-list" data-role="supervisor" style="display: none;">
+                            <li class="message-item">Reminder: Meeting at 3 PM (Supervisor)</li>
+                            <li class="message-item">Supervisor Mike sent an update</li>
+                        </ul>
+                    </div>
+
+                </div>
+                
             </div>
 
 

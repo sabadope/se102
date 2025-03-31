@@ -1,11 +1,10 @@
 <?php
-session_start();
+    session_start();
 
-// Check if username exists in session
-$username = isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username']) : 'Guest';
+    // Check if username exists in session
+    $username = isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username']) : 'Guest';
 
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -102,7 +101,6 @@ $username = isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username'
             background: var(--light);
             z-index: 500;
             box-sizing: content-box;
-            
         }
         #sidebar .brand .bx {
             min-width: 60px;
@@ -350,7 +348,7 @@ $username = isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username'
         }
         #content main .head-title .left .breadcrumb li a {
             color: var(--dark-grey);
-            pointer-events: none;
+            
         }
         #content main .head-title .left .breadcrumb li a.active {
             color: var(--blue);
@@ -603,23 +601,56 @@ $username = isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username'
                 min-width: 420px;
             }
         }
+
+        /* Ensure the container remains fixed in size */
+        .recent-accounts {
+            width: 100%;
+            max-width: 100%;
+            height: 330px; /* Fixed height to prevent stretching */
+            overflow: hidden; /* Prevent content from overflowing */
+            position: relative;
+        }
+
+        /* Table and Chart Container */
+        .table-view, .chart-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            
+        }
+
+        /* Hide Pie Chart Initially */
+        .chart-container {
+            display: none;
+            
+        }
+
+        /* Ensure the Pie Chart adjusts inside the container */
+        canvas {
+            max-width: 100% !important;
+            max-height: 100% !important;
+            
+        }
     </style>
 
-    <title>Student Dashboard</title>
+    <title>Student </title>
 </head>
 <body>
 
 
     <!-- SIDEBAR -->
     <section id="sidebar">
-        
         <a href="#" class="brand">
-            <i class="bx bxs-teacher"></i>
+            <i class="bx bxs-graduation"></i>
             <span class="text">Hi! <?php echo htmlspecialchars($_SESSION['username']); ?></span>
         </a>
-        
         <ul class="side-menu top">
-            <li class="active">
+            <li>
                 <a href="#">
                     <i class='bx bxs-dashboard' ></i>
                     <span class="text">Dashboard</span>
@@ -694,11 +725,11 @@ $username = isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username'
                     <h1>Dashboard</h1>
                     <ul class="breadcrumb">
                         <li>
-                            <a href="#">Dashboard</a>
+                            <a href="student-dashboard.php">Home</a>
                         </li>
                         <li><i class='bx bx-chevron-right' ></i></li>
                         <li>
-                            <a class="active" href="#">Home</a>
+                            <a class="active">Dashboard</a>
                         </li>
                     </ul>
                 </div>
@@ -708,30 +739,7 @@ $username = isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username'
                 </a>
             </div>
 
-            <ul class="box-info">
-                <li>
-                    <i class='bx bxs-calendar-check' ></i>
-                    <span class="text">
-                        <h3>Attendace</h3>
-                        <p>100%</p>
-                    </span>
-                </li>
-                <li>
-                    <i class='bx bxs-group' ></i>
-                    <span class="text">
-                        <h3>Message</h3>
-                        <p>3</p>
-                    </span>
-                </li>
-                <li>
-                    <i class='bx bxs-dollar-circle' ></i>
-                    <span class="text">
-                        <h3>Team</h3>
-                        <p>5</p>
-                    </span>
-                </li>
-            </ul>
-
+            <!-- MAIN CONTENT HERE! -->
 
             
         </main>
@@ -793,8 +801,10 @@ $username = isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username'
                 }
             }
         });
-
-
     </script>
+
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Load Chart.js -->
 </body>
 </html>

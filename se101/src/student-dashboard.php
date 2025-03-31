@@ -1,13 +1,9 @@
 <?php
-session_start();
+    session_start();
 
-// Check if username exists in session
-$username = isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username']) : 'Guest';
+    // Check if username exists in session
+    $username = isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username']) : 'Guest';
 
-echo '<a href="#" class="brand">
-        <i class="bx bxs-graduation"></i>
-        <span class="text">Hi! ' . $username . '</span>
-      </a>';
 ?>
 
 <!DOCTYPE html>
