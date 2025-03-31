@@ -642,7 +642,7 @@ echo '<a href="#" class="brand">
         }
     </style>
 
-    <title>Admin Dashboard</title>
+    <title>Student Dashboard</title>
 </head>
 <body>
 
@@ -650,32 +650,26 @@ echo '<a href="#" class="brand">
     <!-- SIDEBAR -->
     <section id="sidebar">
         <a href="#" class="brand">
-            <i class='bx bxs-user'></i>
-            <span class="text">Admin Panel</span>
+            <i class="bx bxs-graduation"></i>
+            <span class="text">Hi! <?php echo htmlspecialchars($_SESSION['username']); ?></span>
         </a>
         <ul class="side-menu top">
             <li class="active">
-                <a href="admin-dashboard.php">
+                <a href="student-dashboard.php">
                     <i class='bx bxs-dashboard' ></i>
                     <span class="text">Dashboard</span>
                 </a>
             </li>
             <li>
                 <a href="#">
-                    <i class='bx bxs-check-circle' ></i>
-                    <span class="text">Task</span>
+                    <i class='bx bxs-calendar-check' ></i>
+                    <span class="text">Attendance</span>
                 </a>
             </li>
             <li>
-                <a href="#">
-                    <i class='bx bxs-doughnut-chart' ></i>
-                    <span class="text">Analytics</span>
-                </a>
-            </li>
-            <li id="openChat">
-                <a href="admin-messages.php">
-                    <i class='bx bxs-message-dots'></i>
-                    <span class="text">Messages</span>
+                <a href="student-messages.php">
+                    <i class='bx bxs-message-dots' ></i>
+                    <span class="text">Message</span>
                 </a>
             </li>
             <li>
@@ -693,7 +687,7 @@ echo '<a href="#" class="brand">
                 </a>
             </li>
             <li>
-                <a href="admin-logout.php" class="logout">
+                <a href="logout.php" class="logout">
                     <i class='bx bxs-log-out-circle' ></i>
                     <span class="text">Logout</span>
                 </a>
