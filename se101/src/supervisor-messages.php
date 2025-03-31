@@ -788,7 +788,7 @@
 
     </style>
 
-    <title>Student Message</title>
+    <title>Supervisor Message</title>
 </head>
 <body>
 
@@ -796,12 +796,12 @@
     <!-- SIDEBAR -->
     <section id="sidebar">
         <a href="#" class="brand">
-            <i class="bx bxs-graduation"></i>
+            <i class="bx bxs-user"></i>
             <span class="text">Hi <?php echo htmlspecialchars($_SESSION['username']); ?>!</span>
         </a>
         <ul class="side-menu top">
             <li>
-                <a href="student-dashboard.php">
+                <a href="supervisor-dashboard.php">
                     <i class='bx bxs-dashboard' ></i>
                     <span class="text">Dashboard</span>
                 </a>
@@ -813,7 +813,7 @@
                 </a>
             </li>
             <li class="active">
-                <a href="student-messages.php">
+                <a href="supervisor-messages.php">
                     <i class='bx bxs-message-dots' ></i>
                     <span class="text">Message</span>
                 </a>
@@ -875,7 +875,7 @@
                     <h1>Chat Messages</h1>
                     <ul class="breadcrumb">
                         <li>
-                            <a href="student-messages.php">Home</a>
+                            <a href="supervisor-messages.php">Home</a>
                         </li>
                         <li><i class='bx bx-chevron-right' ></i></li>
                         <li>
