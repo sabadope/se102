@@ -927,7 +927,7 @@ foreach ($users as $user) {
                     <h1>Chat Messages</h1>
                     <ul class="breadcrumb">
                         <li>
-                            <a href="">Home</a>
+                            <a href="student-dashboard.php">Home</a>
                         </li>
                         <li><i class='bx bx-chevron-right' ></i></li>
                         <li>
