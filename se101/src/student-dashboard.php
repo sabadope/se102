@@ -624,7 +624,7 @@ echo '<a href="#" class="brand">
         
         <ul class="side-menu top">
             <li class="active">
-                <a href="#">
+                <a href="student-dashboard.php">
                     <i class='bx bxs-dashboard' ></i>
                     <span class="text">Dashboard</span>
                 </a>
@@ -636,7 +636,7 @@ echo '<a href="#" class="brand">
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="student-messages.php">
                     <i class='bx bxs-message-dots' ></i>
                     <span class="text">Message</span>
                 </a>

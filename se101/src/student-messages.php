@@ -840,7 +840,7 @@ foreach ($users as $user) {
 
     </style>
 
-    <title>Admin Message</title>
+    <title>Student Message</title>
 </head>
 <body>
 
@@ -852,8 +852,8 @@ foreach ($users as $user) {
             <span class="text">Hi! <?php echo htmlspecialchars($_SESSION['username']); ?></span>
         </a>
         <ul class="side-menu top">
-            <li class="active">
-                <a href="#">
+            <li>
+                <a href="student-dashboard.php">
                     <i class='bx bxs-dashboard' ></i>
                     <span class="text">Dashboard</span>
                 </a>
@@ -864,8 +864,8 @@ foreach ($users as $user) {
                     <span class="text">Attendance</span>
                 </a>
             </li>
-            <li>
-                <a href="#">
+            <li class="active">
+                <a href="student-messages.php">
                     <i class='bx bxs-message-dots' ></i>
                     <span class="text">Message</span>
                 </a>
