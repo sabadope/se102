@@ -636,9 +636,81 @@
             max-height: 100% !important;
             
         }
+
+        /* Keep the default container styling */
+        .table-data {
+            width: 450px;
+            background: var(--light);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .todo {
+            width: 100%;
+            text-align: center;
+        }
+
+        .todo .head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .todo .head h3 {
+            color: var(--dark);
+        }
+
+        .profile-form h4 {
+            color: var(--dark);
+            margin-bottom: 10px;
+            text-align: left;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 14px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--dark-grey);
+            border-radius: 5px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .btn {
+            background: var(--blue);
+            color: var(--light);
+            border: none;
+            padding: 10px;
+            width: 100%;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 15px;
+        }
+
+        .btn:hover {
+            background: var(--light-blue);
+            color: var(--dark);
+        }
     </style>
 
-    <title>Student </title>
+    <title>Student Profile</title>
 </head>
 <body>
 
@@ -654,6 +726,12 @@
                 <a href="#">
                     <i class='bx bxs-dashboard' ></i>
                     <span class="text">Dashboard</span>
+                </a>
+            </li>
+            <li class="active">
+                <a href="#">
+                    <i class='bx bxs-dashboard' ></i>
+                    <span class="text">Profile</span>
                 </a>
             </li>
             <li>
@@ -722,24 +800,107 @@
         <main>
             <div class="head-title">
                 <div class="left">
-                    <h1>Dashboard</h1>
+                    <h1>Profile</h1>
                     <ul class="breadcrumb">
                         <li>
                             <a href="student-dashboard.php">Home</a>
                         </li>
                         <li><i class='bx bx-chevron-right' ></i></li>
                         <li>
-                            <a class="active">Dashboard</a>
+                            <a class="active">Profile</a>
                         </li>
                     </ul>
                 </div>
                 <a href="#" class="btn-download">
                     <i class='bx bxs-cloud-download' ></i>
-                    <span class="text">Download PDF</span>
+                    <span class="text">Edit Profile</span>
                 </a>
             </div>
 
             <!-- MAIN CONTENT HERE! -->
+
+           <div class="table-data">            
+                <div class="todo">
+                    <div class="head">
+                        <h3>Profile</h3>
+                        <i class='bx bx-plus'></i>
+                        <i class='bx bx-filter'></i>
+                    </div>
+
+                    <form class="profile-form">
+                        <!-- User Information -->
+                        <div class="profile-section">
+                            <h4>I. User Information</h4>
+                            <div class="input-group">
+                                <label for="full_name">Full Name</label>
+                                <input type="text" id="full_name" name="full_name" value="John Doe">
+                            </div>
+                            <div class="input-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" value="johndoe@example.com">
+                            </div>
+                            <div class="input-group">
+                                <label for="phone">Phone</label>
+                                <input type="text" id="phone" name="phone" value="+1234567890">
+                            </div>
+                            <div class="input-group">
+                                <label for="address">Address</label>
+                                <input type="text" id="address" name="address" value="123 Main St, City, Country">
+                            </div>
+                        </div>
+
+                        <!-- Family Background -->
+                        <h4>II. Family Background</h4>
+                        <div class="profile-section">
+                            <div class="input-group">
+                                <label for="father_name">Father's Name</label>
+                                <input type="text" id="father_name" name="father_name" value="Michael Doe">
+                            </div>
+                            <div class="input-group">
+                                <label for="mother_name">Mother's Name</label>
+                                <input type="text" id="mother_name" name="mother_name" value="Sarah Doe">
+                            </div>
+                            <div class="input-group">
+                                <label for="siblings">Siblings</label>
+                                <input type="text" id="siblings" name="siblings" value="Jane Doe, Mark Doe">
+                            </div>
+                        </div>
+
+                        <!-- Educational Background -->
+                        <h4>III. Educational Background</h4>
+                        <div class="profile-section">
+                            <div class="input-group">
+                                <label for="high_school">High School</label>
+                                <input type="text" id="high_school" name="high_school" value="XYZ High School">
+                            </div>
+                            <div class="input-group">
+                                <label for="college">College</label>
+                                <input type="text" id="college" name="college" value="ABC University">
+                            </div>
+                            <div class="input-group">
+                                <label for="degree">Degree</label>
+                                <input type="text" id="degree" name="degree" value="Bachelor of Science in Computer Science">
+                            </div>
+                        </div>
+
+                        <!-- Highest Attainment -->
+                        <h4>IV. Highest Attainment</h4>
+                        <div class="profile-section">
+                            <div class="input-group">
+                                <label for="achievement">Achievement</label>
+                                <input type="text" id="achievement" name="achievement" value="Master’s Degree in Software Engineering">
+                            </div>
+                            <div class="input-group">
+                                <label for="certifications">Certifications</label>
+                                <input type="text" id="certifications" name="certifications" value="Microsoft Certified Developer, AWS Certified Solutions Architect">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn">Save Profile</button>
+                    </form>
+                </div>
+            </div>
+
 
             
         </main>
