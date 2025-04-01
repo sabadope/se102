@@ -819,6 +819,10 @@
 
             <!-- MAIN CONTENT HERE! -->
 
+<<<<<<< HEAD
+=======
+           
+>>>>>>> 96e4ae2438a6825d0057a39bac3350adc58c2115
             <div class="table-data">            
                 <div class="todo">
                     <div class="head">
@@ -901,7 +905,87 @@
                 </div>
             </div>
 
+            <div class="table-data">            
+                <div class="todo">
+                    <div class="head">
+                        <h3>Profile</h3>
+                        <i class='bx bx-plus'></i>
+                        <i class='bx bx-filter'></i>
+                    </div>
 
+                    <form class="profile-form">
+                        <!-- User Information -->
+                        <div class="profile-section">
+                            <h4>I. User Information</h4>
+                            <div class="input-group">
+                                <label for="full_name">Full Name</label>
+                                <input type="text" id="full_name" name="full_name" value="John Doe">
+                            </div>
+                            <div class="input-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" value="johndoe@example.com">
+                            </div>
+                            <div class="input-group">
+                                <label for="phone">Phone</label>
+                                <input type="text" id="phone" name="phone" value="+1234567890">
+                            </div>
+                            <div class="input-group">
+                                <label for="address">Address</label>
+                                <input type="text" id="address" name="address" value="123 Main St, City, Country">
+                            </div>
+                        </div>
+
+                        <!-- Family Background -->
+                        <h4>II. Family Background</h4>
+                        <div class="profile-section">
+                            <div class="input-group">
+                                <label for="father_name">Father's Name</label>
+                                <input type="text" id="father_name" name="father_name" value="Michael Doe">
+                            </div>
+                            <div class="input-group">
+                                <label for="mother_name">Mother's Name</label>
+                                <input type="text" id="mother_name" name="mother_name" value="Sarah Doe">
+                            </div>
+                            <div class="input-group">
+                                <label for="siblings">Siblings</label>
+                                <input type="text" id="siblings" name="siblings" value="Jane Doe, Mark Doe">
+                            </div>
+                        </div>
+
+                        <!-- Educational Background -->
+                        <h4>III. Educational Background</h4>
+                        <div class="profile-section">
+                            <div class="input-group">
+                                <label for="high_school">High School</label>
+                                <input type="text" id="high_school" name="high_school" value="XYZ High School">
+                            </div>
+                            <div class="input-group">
+                                <label for="college">College</label>
+                                <input type="text" id="college" name="college" value="ABC University">
+                            </div>
+                            <div class="input-group">
+                                <label for="degree">Degree</label>
+                                <input type="text" id="degree" name="degree" value="Bachelor of Science in Computer Science">
+                            </div>
+                        </div>
+
+                        <!-- Highest Attainment -->
+                        <h4>IV. Highest Attainment</h4>
+                        <div class="profile-section">
+                            <div class="input-group">
+                                <label for="achievement">Achievement</label>
+                                <input type="text" id="achievement" name="achievement" value="Master’s Degree in Software Engineering">
+                            </div>
+                            <div class="input-group">
+                                <label for="certifications">Certifications</label>
+                                <input type="text" id="certifications" name="certifications" value="Microsoft Certified Developer, AWS Certified Solutions Architect">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn">Save Profile</button>
+                    </form>
+                </div>
+            </div>
             
         </main>
         <!-- MAIN -->
