@@ -819,7 +819,7 @@
 
             <!-- MAIN CONTENT HERE! -->
 
-           <div class="table-data">            
+            <div class="table-data">            
                 <div class="todo">
                     <div class="head">
                         <h3>Profile</h3>
