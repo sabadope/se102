@@ -23,7 +23,7 @@ include 'db_connect.php';
             <img src="https://via.placeholder.com/150" alt="Feature Image">
         </div>
         
-        <div class="card" onclick="window.location.href='update_status_form.php'">
+        <div class="card" onclick="window.location.href='none'">
             <div class="card-container">
                 <span class="badge">2</span>
             </div>

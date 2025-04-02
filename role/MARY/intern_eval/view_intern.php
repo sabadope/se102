@@ -72,34 +72,44 @@ if (isset($_POST['delete_feedback'])) {
 </head>
 <body>
 
+<div class="containers">
+    <div class="header-container">
+        <h2>Intern's Full Report</h2>
+    </div>
+</div>
+
 <!-- Back Button -->
 <div class="back-container">
     <a href="view_evaluations.php" class="back-btn">← Back</a>
 </div>
-
+   
 <!-- Intern Profile -->
+<div class="intern-container">
 <div class="intern-profile">
     <div class="rank-box">
         <p class="rank-text">Rank</p>
         <p class="rank-number"><?php echo $intern['ranking']; ?></p>
     </div>
     <div class="intern-info">
-        <h2><?php echo $intern['name']; ?></h2>
+        <h4><?php echo $intern['name']; ?></h4>
         <p class="intern-id">ID: <?php echo $intern['intern_id']; ?></p>
     </div>
 </div>
 
-<!-- Clickable Containers -->
+<!-- Clickable Containers (Attendance & Task Completion) -->
 <div class="info-container">
-    <a href="#" class="info-box">
+    <a href="get_attendance.php?id=<?php echo $intern['intern_id']; ?>" class="info-box">
         <h3>Attendance</h3>
         <p><?php echo $intern['attendance']; ?>%</p>
     </a>
+
+
     <a href="#" class="info-box">
         <h3>Task Completion</h3>
         <p><?php echo $intern['tasks_completed']; ?></p>
     </a>
 </div>
+
 
 <!-- Skills Section -->
 <div class="skills-container">
@@ -117,8 +127,28 @@ if (isset($_POST['delete_feedback'])) {
         <textarea name="feedback" rows="4" cols="50"><?php echo $intern['feedback']; ?></textarea><br>
         <button type="submit" name="update_feedback" class="update-btn">Update Feedback</button>
         <button type="submit" name="delete_feedback" class="delete-btn">Delete Feedback</button>
-    </form>
+        </form>
+    </div>
 </div>
+
+<script>
+function showAttendance(intern_id) {
+    let xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            document.getElementById("attendance-details").innerHTML = xhr.responseText;
+            document.getElementById("attendance-modal").style.display = "block";
+        }
+    };
+    xhr.open("GET", "get_attendance.php?intern_id=" + intern_id, true);
+    xhr.send();
+}
+
+function closeModal() {
+    document.getElementById("attendance-modal").style.display = "none";
+}
+</script>
+
 
 </body>
 </html>
