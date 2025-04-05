@@ -1,64 +1,83 @@
 <?php
-    require_once '../src/config.php'; // Include DB connection
+    require_once '../src/config.php'; // DB Connection
+    session_start();
 
-    // Fetch the count of each role
-    $stmt = $pdo->prepare("
-        SELECT role, COUNT(*) as count FROM users 
-        WHERE role IN ('Student', 'Supervisor', 'Client') 
-        GROUP BY role
-    ");
-    $stmt->execute();
-    $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $sender = $_SESSION['username']; // assuming user is logged in
+    $receiver = $_POST['receiver'];
+    $message = $_POST['message'];
 
-    // Initialize counts
-    $students_count = 0;
-    $supervisors_count = 0;
-    $clients_count = 0;
+    $stmt = $pdo->prepare("INSERT INTO messages (sender, receiver, message) VALUES (?, ?, ?)");
+    $stmt->execute([$sender, $receiver, $message]);
 
-    // Assign counts based on role
-    foreach ($roles as $role) {
-        if ($role['role'] === 'Student') {
-            $students_count = $role['count'];
-        } elseif ($role['role'] === 'Supervisor') {
-            $supervisors_count = $role['count'];
-        } elseif ($role['role'] === 'Client') {
-            $clients_count = $role['count'];
-        }
-    }
-
-    function timeAgo($timestamp) {
-        $time_difference = time() - strtotime($timestamp); // Get time difference in seconds
-
-        if ($time_difference < 60) {
-            return "Just now"; // Less than a minute
-        } elseif ($time_difference < 3600) {
-            $minutes = floor($time_difference / 60);
-            return $minutes . " min" . ($minutes > 1 ? "s" : "") . " ago"; // 1 min, 2 mins, etc.
-        } elseif ($time_difference < 86400) {
-            $hours = floor($time_difference / 3600);
-            return $hours . " hour" . ($hours > 1 ? "s" : "") . " ago"; // 1 hour, 2 hours, etc.
-        } else {
-            $days = floor($time_difference / 86400);
-            return $days . " day" . ($days > 1 ? "s" : "") . " ago"; // 1 day, 2 days, etc.
-        }
-    }
-
-    // Fetch the 4 most recent users
-    $stmt = $pdo->query("SELECT username, role, created_at FROM users ORDER BY created_at DESC LIMIT 4");
-    $recent_users = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    // Fetch the count of each user role
+    // --- Fetch role counts ---
     $stmt = $pdo->query("SELECT role, COUNT(*) as count FROM users WHERE role != 'Admin' GROUP BY role");
     $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     $roles = [];
     $counts = [];
+    $students_count = $supervisors_count = $clients_count = 0;
 
     foreach ($users as $user) {
-        $roles[] = $user['role'];
-        $counts[] = $user['count'];
+        $role = $user['role'];
+        $count = $user['count'];
+        $roles[] = $role;
+        $counts[] = $count;
+
+        // Optional assignment
+        if ($role === 'Student') $students_count = $count;
+        if ($role === 'Supervisor') $supervisors_count = $count;
+        if ($role === 'Client') $clients_count = $count;
+    }
+
+    // --- Fetch 4 most recent users ---
+    $role = $_GET['role'];
+
+    $stmt = $pdo->prepare("SELECT username FROM users WHERE role = :role");
+    $stmt->execute(['role' => $role]);
+    $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach ($users as $user) {
+        echo '<li class="message-item" data-username="' . htmlspecialchars($user['username']) . '">'
+            . 'New message from ' . htmlspecialchars($user['username']) . ' (' . ucfirst($role) . ')' .
+            '</li>';
+    }
+
+    // --- Fetch chat messages ---
+    if (isset($_GET['username'])) {
+        $username = $_GET['username'];
+
+        $stmt = $pdo->prepare("
+            SELECT sender, receiver, message, created_at 
+            FROM messages 
+            WHERE sender = :user OR receiver = :user 
+            ORDER BY created_at ASC
+        ");
+        $stmt->execute(['user' => $username]);
+        $messages = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($messages as $msg) {
+            $isReceived = $msg['sender'] === $username;
+
+            echo '<div class="message ' . ($isReceived ? 'received' : 'sent') . '">';
+            echo '<p>' . htmlspecialchars($msg['message']) . '</p>';
+            echo '</div>';
+            echo '<span class="timestamp ' . ($isReceived ? 'received-timestamp' : 'sent-timestamp') . '">' . timeAgo($msg['created_at']) . '</span>';
+        }
+
+        exit(); // Prevent further output if this is a fetch request
+    }
+
+    // --- Time ago function ---
+    function timeAgo($timestamp) {
+        $time_difference = time() - strtotime($timestamp);
+
+        if ($time_difference < 60) return "Just now";
+        elseif ($time_difference < 3600) return floor($time_difference / 60) . " min ago";
+        elseif ($time_difference < 86400) return floor($time_difference / 3600) . " hour ago";
+        else return floor($time_difference / 86400) . " day ago";
     }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -803,8 +822,8 @@
         /* Role Toggle Buttons */
         .role-toggle {
             display: flex;
-            gap: 5px;
-            margin-bottom: 10px;
+            flex-wrap: wrap;
+            gap: 0.5rem;
         }
 
         .role-btn {
@@ -965,26 +984,18 @@
                     <div class="chat-content">
                         <!-- Chat Header (User's Name) -->
                         <div class="chat-header">
-                            <h3 id="chatPerson">Chat with Alice</h3>
+                            <h3 id="chatPerson">Select a message</h3>
                         </div>
 
                         <!-- Chat Box -->
                         <div class="chat-box" id="chatBox">
-                            <div class="message received">
-                                <p>Hey! How’s it going?</p>
-                            </div>
-                            <span class="timestamp received-timestamp">2 mins ago</span> <!-- Aligned to the left -->
-
-                            <div class="message sent">
-                                <p>All good! You?</p>
-                            </div>
-                            <span class="timestamp sent-timestamp">Just now</span> <!-- Aligned to the right -->
+                            <!-- Will be populated dynamically -->
                         </div>
 
                         <!-- Chat Input -->
                         <div class="chat-input">
-                            <input type="text" id="messageInput" placeholder="Type a message...">
-                            <button id="sendMessage"><i class='bx bx-send'></i></button>
+                            <input type="text" id="messageInput" placeholder="Type a message..." disabled>
+                            <button id="sendMessage" disabled><i class='bx bx-send'></i></button>
                         </div>
                     </div>
 
@@ -996,22 +1007,26 @@
                         <div class="role-toggle">
                             <button class="role-btn active" data-role="client">Clients</button>
                             <button class="role-btn" data-role="supervisor">Supervisors</button>
+                            <button class="role-btn" data-role="student">Students</button>
                         </div>
 
                         <!-- Client Messages -->
                         <ul class="message-list" data-role="client">
-                            <li class="message-item">New message from Alice (Client)</li>
-                            <li class="message-item">John (Client) sent you a reply</li>
+                            <!-- Dynamically populated client messages -->
                         </ul>
 
                         <!-- Supervisor Messages -->
                         <ul class="message-list" data-role="supervisor" style="display: none;">
-                            <li class="message-item">Reminder: Meeting at 3 PM (Supervisor)</li>
-                            <li class="message-item">Supervisor Mike sent an update</li>
+                            <!-- Dynamically populated supervisor messages -->
+                        </ul>
+
+                        <!-- Student Messages -->
+                        <ul class="message-list" data-role="student" style="display: none;">
+                            <!-- Dynamically populated student messages -->
                         </ul>
                     </div>
-
                 </div>
+
                 
             </div>
 
@@ -1218,25 +1233,72 @@
             chatContainer.classList.toggle("open");
         });
 
-        // Toggle Client/Supervisor Messages
-        document.querySelectorAll(".role-btn").forEach(button => {
-            button.addEventListener("click", function() {
-                // Remove 'active' class from all buttons
-                document.querySelectorAll(".role-btn").forEach(btn => btn.classList.remove("active"));
-                
-                // Add 'active' class to the clicked button
-                this.classList.add("active");
+        // Role Filter Toggle
+        document.querySelectorAll('.role-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const role = btn.getAttribute('data-role');
 
-                // Get selected role
-                let selectedRole = this.getAttribute("data-role");
+                // Highlight active button
+                document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
 
                 // Hide all message lists first
-                document.querySelectorAll(".message-list").forEach(list => {
-                    list.style.display = "none";
-                });
+                document.querySelectorAll('.message-list').forEach(ul => ul.style.display = 'none');
 
-                // Show the selected role's messages
-                document.querySelector(`.message-list[data-role="${selectedRole}"]`).style.display = "block";
+                // Fetch users by role dynamically
+                fetch(`fetch_users_by_role.php?role=${role}`)
+                    .then(res => res.text())
+                    .then(data => {
+                        const list = document.querySelector(`.message-list[data-role="${role}"]`);
+                        list.innerHTML = data;
+                        list.style.display = 'block';
+                    });
+            });
+        });
+
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('message-item')) {
+                const username = e.target.getAttribute('data-username');
+
+                // Set the header
+                document.getElementById('chatPerson').textContent = `Chat with ${username}`;
+
+                // Enable message input
+                document.getElementById('messageInput').disabled = false;
+                document.getElementById('sendMessage').disabled = false;
+
+                // Load chat messages
+                fetch(`myphp.php?username=${username}`)
+                    .then(res => res.text())
+                    .then(data => {
+                        document.getElementById('chatBox').innerHTML = data;
+                    });
+
+                // Store current user you're chatting with
+                window.currentChatUser = username;
+            }
+        });
+
+        document.getElementById('sendMessage').addEventListener('click', function () {
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+            const receiver = window.currentChatUser;
+
+            if (!message || !receiver) return;
+
+            fetch('send_message.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `receiver=${receiver}&message=${encodeURIComponent(message)}`
+            }).then(res => res.text())
+              .then(() => {
+                // Reload chat after sending
+                fetch(`myphp.php?username=${receiver}`)
+                    .then(res => res.text())
+                    .then(data => {
+                        document.getElementById('chatBox').innerHTML = data;
+                        input.value = ''; // clear input
+                    });
             });
         });
 
