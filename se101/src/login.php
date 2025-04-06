@@ -1,57 +1,73 @@
 <?php
-session_start();
-require_once '../src/config.php';
+    session_start();
+    require_once '../src/config.php';
 
-// Hardcoded Admin Credentials
-$valid_username = 'admin';
-$valid_email = 'admin@gmail.com';
-$valid_password = 'admin1230';
+    // Hardcoded Admin Credentials
+    $admin_username = 'admin';
+    $admin_email = 'admin@gmail.com';
+    $admin_password = 'admin1230';
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $email = trim($_POST['email']);
-    $password = trim($_POST['password']);
+    // Hardcoded Supervisor Credentials
+    $supervisor_username = 'supervisor';
+    $supervisor_email = 'supervisor@gmail.com';
+    $supervisor_password = 'supervisor1230';
 
-    if (empty($email) || empty($password)) {
-        $error = "All fields are required!";
-    } else {
-        // Check if user is logging in as the hardcoded Admin
-        if ($email === $valid_email && $password === $valid_password) {
-            $_SESSION['user_id'] = 1; // Set a dummy ID for Admin
-            $_SESSION['username'] = $valid_username;
-            $_SESSION['email'] = $valid_email;
-            $_SESSION['role'] = 'Admin';
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $email = trim($_POST['email']);
+        $password = trim($_POST['password']);
 
-            header("Location: ../admin/admin-dashboard.php");
-            exit();
-        }
-
-        // Otherwise, check the database
-        $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
-        $stmt->execute([$email]);
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if ($user && password_verify($password, $user['password'])) {
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['username'] = $user['username'];
-            $_SESSION['email'] = $user['email'];
-            $_SESSION['role'] = $user['role'];
-
-            // Redirect based on role
-            if ($user['role'] === 'Admin') {
-                header("Location: admin-dashboard.php");
-            } elseif ($user['role'] === 'Student') {
-                header("Location: student-dashboard.php");
-            } elseif ($user['role'] === 'Supervisor') {
-                header("Location: supervisor-dashboard.php");
-            } elseif ($user['role'] === 'Client') {
-                header("Location: client-dashboard.php");
-            }
-            exit();
+        if (empty($email) || empty($password)) {
+            $error = "All fields are required!";
         } else {
-            $error = "Invalid email or password!";
+            // Check Admin
+            if ($email === $admin_email && $password === $admin_password) {
+                $_SESSION['user_id'] = 1;
+                $_SESSION['username'] = $admin_username;
+                $_SESSION['email'] = $admin_email;
+                $_SESSION['role'] = 'Admin';
+
+                header("Location: ../admin/admin-dashboard.php");
+                exit();
+            }
+
+            // Check Supervisor
+            if ($email === $supervisor_email && $password === $supervisor_password) {
+                $_SESSION['user_id'] = 2;
+                $_SESSION['username'] = $supervisor_username;
+                $_SESSION['email'] = $supervisor_email;
+                $_SESSION['role'] = 'Supervisor';
+
+                header("Location: ../super/supervisor-dashboard.php");
+                exit();
+            }
+
+            // Otherwise, check the database
+            $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
+            $stmt->execute([$email]);
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($user && password_verify($password, $user['password'])) {
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['username'] = $user['username'];
+                $_SESSION['email'] = $user['email'];
+                $_SESSION['role'] = $user['role'];
+
+                // Redirect based on role
+                if ($user['role'] === 'Admin') {
+                    header("Location: admin-dashboard.php");
+                } elseif ($user['role'] === 'Student') {
+                    header("Location: student-dashboard.php");
+                } elseif ($user['role'] === 'Supervisor') {
+                    header("Location: supervisor-dashboard.php");
+                } elseif ($user['role'] === 'Client') {
+                    header("Location: client-dashboard.php");
+                }
+                exit();
+            } else {
+                $error = "Invalid email or password!";
+            }
         }
     }
-}
 ?>
 
 

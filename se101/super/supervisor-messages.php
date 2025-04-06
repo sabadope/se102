@@ -1,75 +1,27 @@
 <?php
-    require_once '../src/config.php'; // DB Connection
+    require_once '../src/config.php'; // Include DB connection
 
-    // --- Fetch role counts ---
-    $stmt = $pdo->query("SELECT role, COUNT(*) as count FROM users WHERE role != 'Admin' GROUP BY role");
-    $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    // Fetch the 4 most recent users based on role (excluding Supervisor)
+    $stmt = $pdo->query("SELECT username, role, created_at FROM users WHERE role IN ('Student', 'Client') ORDER BY created_at DESC LIMIT 4");
+    $recent_users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    $roles = [];
-    $counts = [];
-    $students_count = $supervisors_count = $clients_count = 0;
-
-    foreach ($users as $user) {
-        $role = $user['role'];
-        $count = $user['count'];
-        $roles[] = $role;
-        $counts[] = $count;
-
-        // Optional assignment
-        if ($role === 'Student') $students_count = $count;
-        if ($role === 'Supervisor') $supervisors_count = $count;
-        if ($role === 'Client') $clients_count = $count;
-    }
-
-    // --- Fetch 4 most recent users ---
-    $role = $_GET['role'];
-
-        $stmt = $pdo->prepare("SELECT username FROM users WHERE role = :role");
-        $stmt->execute(['role' => $role]);
-        $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        foreach ($users as $user) {
-            echo '<li class="message-item" data-username="' . htmlspecialchars($user['username']) . '">'
-                . 'New message from ' . htmlspecialchars($user['username']) . ' (' . ucfirst($role) . ')' .
-                '</li>';
-        }
-
-    // --- Fetch chat messages ---
-    if (isset($_GET['username'])) {
-        $username = $_GET['username'];
-
-        $stmt = $pdo->prepare("
-            SELECT sender, receiver, message, created_at 
-            FROM messages 
-            WHERE sender = :user OR receiver = :user 
-            ORDER BY created_at ASC
-        ");
-        $stmt->execute(['user' => $username]);
-        $messages = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        foreach ($messages as $msg) {
-            $isReceived = $msg['sender'] === $username;
-
-            echo '<div class="message ' . ($isReceived ? 'received' : 'sent') . '">';
-            echo '<p>' . htmlspecialchars($msg['message']) . '</p>';
-            echo '</div>';
-            echo '<span class="timestamp ' . ($isReceived ? 'received-timestamp' : 'sent-timestamp') . '">' . timeAgo($msg['created_at']) . '</span>';
-        }
-
-        exit(); // Prevent further output if this is a fetch request
-    }
-
-    // --- Time ago function ---
     function timeAgo($timestamp) {
-        $time_difference = time() - strtotime($timestamp);
+        $time_difference = time() - strtotime($timestamp); // Get time difference in seconds
 
-        if ($time_difference < 60) return "Just now";
-        elseif ($time_difference < 3600) return floor($time_difference / 60) . " min ago";
-        elseif ($time_difference < 86400) return floor($time_difference / 3600) . " hour ago";
-        else return floor($time_difference / 86400) . " day ago";
+        if ($time_difference < 60) {
+            return "Just now"; // Less than a minute
+        } elseif ($time_difference < 3600) {
+            $minutes = floor($time_difference / 60);
+            return $minutes . " min" . ($minutes > 1 ? "s" : "") . " ago"; // 1 min, 2 mins, etc.
+        } elseif ($time_difference < 86400) {
+            $hours = floor($time_difference / 3600);
+            return $hours . " hour" . ($hours > 1 ? "s" : "") . " ago"; // 1 hour, 2 hours, etc.
+        } else {
+            $days = floor($time_difference / 86400);
+            return $days . " day" . ($days > 1 ? "s" : "") . " ago"; // 1 day, 2 days, etc.
+        }
     }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -851,9 +803,39 @@
             text-align: right; /* Timestamp for sent messages aligns right */
         }
 
+        .my-message {
+            background: #007bff;
+            color: #fff;
+            padding: 8px 12px;
+            margin: 5px 0;
+            border-radius: 10px;
+            text-align: right;
+            align-self: flex-end;
+            max-width: 60%;
+        }
+
+        .other-message {
+            background: #f1f1f1;
+            padding: 8px 12px;
+            margin: 5px 0;
+            border-radius: 10px;
+            text-align: left;
+            align-self: flex-start;
+            max-width: 60%;
+        }
+
+        .chat-body {
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            height: 300px;
+            padding: 10px;
+        }
+
+
     </style>
 
-    <title>Admin Message</title>
+    <title>Supervisor Message</title>
 </head>
 <body>
 
@@ -862,11 +844,11 @@
     <section id="sidebar">
         <a href="#" class="brand">
             <i class='bx bxs-user'></i>
-            <span class="text">Admin Panel</span>
+            <span class="text">Super Panel</span>
         </a>
         <ul class="side-menu top">
             <li>
-                <a href="admin-dashboard.php">
+                <a href="supervisor-dashboard.php">
                     <i class='bx bxs-dashboard' ></i>
                     <span class="text">Dashboard</span>
                 </a>
@@ -884,7 +866,7 @@
                 </a>
             </li>
             <li id="openChat" class="active">
-                <a href="admin-messages.php">
+                <a href="supervisor-messages.php">
                     <i class='bx bxs-message-dots'></i>
                     <span class="text">Messages</span>
                 </a>
@@ -904,7 +886,7 @@
                 </a>
             </li>
             <li>
-                <a href="admin-logout.php" class="logout">
+                <a href="supervisor-logout.php" class="logout">
                     <i class='bx bxs-log-out-circle' ></i>
                     <span class="text">Logout</span>
                 </a>
@@ -974,7 +956,7 @@
                 <div class="chat-container">
                     <!-- Chat Content -->
                     <div class="chat-content">
-                        <!-- Chat Header (User's Name) -->
+                        <!-- Chat Header -->
                         <div class="chat-header">
                             <h3 id="chatPerson">Select a message</h3>
                         </div>
@@ -986,8 +968,8 @@
 
                         <!-- Chat Input -->
                         <div class="chat-input">
-                            <input type="text" id="messageInput" placeholder="Type a message..." disabled>
-                            <button id="sendMessage" disabled><i class='bx bx-send'></i></button>
+                            <input type="text" id="messageInput" placeholder="Type a message...">
+                            <button id="sendMessage"><i class='bx bx-send'></i></button>
                         </div>
                     </div>
 
@@ -995,26 +977,34 @@
                     <div class="message-notifications" id="messageNotifications">
                         <h4>Message Notifications</h4>
 
-                        <!-- Role Toggle Buttons -->
+                        <!-- HTML Code to Display Data -->
                         <div class="role-toggle">
                             <button class="role-btn active" data-role="client">Clients</button>
-                            <button class="role-btn" data-role="supervisor">Supervisors</button>
                             <button class="role-btn" data-role="student">Students</button>
                         </div>
 
                         <!-- Client Messages -->
                         <ul class="message-list" data-role="client">
-                            <!-- Dynamically populated client messages -->
-                        </ul>
-
-                        <!-- Supervisor Messages -->
-                        <ul class="message-list" data-role="supervisor" style="display: none;">
-                            <!-- Dynamically populated supervisor messages -->
+                            <?php foreach ($recent_users as $user): ?>
+                                <?php if ($user['role'] === 'Client'): ?>
+                                    <li class="message-item" data-username="<?= htmlspecialchars($user['username']) ?>" data-role="client">
+                                        <p><strong><?= htmlspecialchars($user['username']) ?></strong></p>
+                                        <p>Registered: <span class="registered-time" data-time="<?= htmlspecialchars($user['created_at']) ?>"></span></p>
+                                    </li>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
                         </ul>
 
                         <!-- Student Messages -->
                         <ul class="message-list" data-role="student" style="display: none;">
-                            <!-- Dynamically populated student messages -->
+                            <?php foreach ($recent_users as $user): ?>
+                                <?php if ($user['role'] === 'Student'): ?>
+                                    <li class="message-item" data-username="<?= htmlspecialchars($user['username']) ?>" data-role="student">
+                                        <p><strong><?= htmlspecialchars($user['username']) ?></strong></p>
+                                        <p>Registered: <span class="registered-time" data-time="<?= htmlspecialchars($user['created_at']) ?>"></span></p>
+                                    </li>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
                         </ul>
                     </div>
                 </div>
@@ -1192,6 +1182,7 @@
 
     <script>
         
+        // Send Message Event
         document.getElementById("sendMessage").addEventListener("click", function() {
             let input = document.getElementById("messageInput");
             let messageText = input.value.trim();
@@ -1225,40 +1216,59 @@
             chatContainer.classList.toggle("open");
         });
 
-        // Role Filter Toggle
-        document.querySelectorAll(".role-btn").forEach(button => {
-            button.addEventListener("click", () => {
-                const role = button.getAttribute("data-role");
+        // Function to calculate "time ago"
+        function timeAgo(time) {
+            const now = new Date();
+            const createdAt = new Date(time);
+            const diff = Math.floor((now - createdAt) / 1000); // Time difference in seconds
 
-                // Toggle active button
-                document.querySelectorAll(".role-btn").forEach(btn => btn.classList.remove("active"));
-                button.classList.add("active");
+            if (diff < 60) {
+                return "Just now";
+            } else if (diff < 3600) {
+                return Math.floor(diff / 60) + " min ago";
+            } else if (diff < 86400) {
+                return Math.floor(diff / 3600) + " hour ago";
+            } else {
+                return Math.floor(diff / 86400) + " day ago";
+            }
+        }
 
-                // Show messages of selected role only
-                document.querySelectorAll(".message-list").forEach(list => {
-                    list.style.display = list.getAttribute("data-role") === role ? "block" : "none";
+        // Function to update time dynamically
+        function updateTimes() {
+            document.querySelectorAll('.registered-time').forEach(el => {
+                const time = el.getAttribute('data-time');
+                el.textContent = timeAgo(time);
+            });
+        }
+
+        // Call updateTimes on page load to initialize
+        updateTimes();
+
+        // Role toggle functionality
+        document.querySelectorAll('.role-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const role = this.getAttribute('data-role');
+                
+                // Show the appropriate message list based on the clicked role
+                document.querySelectorAll('.message-list').forEach(list => {
+                    list.style.display = (list.getAttribute('data-role') === role) ? 'block' : 'none';
                 });
+
+                // Toggle active class on buttons
+                document.querySelectorAll('.role-btn').forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
             });
         });
 
-        // Load messages for selected user
-        document.querySelectorAll(".message-item").forEach(item => {
-            item.addEventListener("click", () => {
-                const username = item.getAttribute("data-username");
+        // Add event listener to message items to handle clicks
+        document.querySelectorAll('.message-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const username = this.getAttribute('data-username');
+                
+                // Update the chat header with the selected username
+                document.getElementById('chatPerson').textContent = username;
 
-                // Update chat header
-                document.getElementById("chatPerson").textContent = `Chat with ${username}`;
-
-                // Enable input
-                document.getElementById("messageInput").disabled = false;
-                document.getElementById("sendMessage").disabled = false;
-
-                // Fetch and display messages
-                fetch(`fetch_messages.php?username=${username}`)
-                    .then(res => res.text())
-                    .then(data => {
-                        document.getElementById("chatBox").innerHTML = data;
-                    });
+                // Optional: You can add functionality to load chat history or messages here
             });
         });
 

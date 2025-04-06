@@ -37,8 +37,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Redirect based on role
             if ($role === 'Student') {
                 header("Location: student-dashboard.php");
-            } elseif ($role === 'Supervisor') {
-                header("Location: supervisor-dashboard.php");
             } elseif ($role === 'Client') {
                 header("Location: client-dashboard.php");
             }
@@ -202,7 +200,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <select id="role" name="role" required>
                     <option value="" disabled selected>-- Select Role --</option>
                     <option value="Student">Student</option>
-                    <option value="Supervisor">Supervisor</option>
                     <option value="Client">Client</option>
                 </select>
             </div>

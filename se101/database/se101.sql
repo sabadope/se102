@@ -10,6 +10,17 @@ CREATE TABLE users (
 INSERT INTO users (username, email, password, role) 
 VALUES ('Admin', 'admin@gmail.com', '$2y$10$E6bXzjEjZztZ4S6pOxsaFOHQJ6FwG/iV4DhE5Z5INpylIztMJQ5eG', 'Admin');
 
+-- Insert default Supervisor account
+INSERT INTO users (username, email, password, role) 
+VALUES ('Supervisor', 'supervisor@gmail.com', '$2y$10$YVGcFYmtzk9XUpJrKXxz7OAwfQ4Zd/JJk7c8el6Xuvrq8U1RB1D4C', 'Supervisor');
+
 ALTER TABLE users ADD COLUMN created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
 
+CREATE TABLE messages (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    sender VARCHAR(100),
+    receiver VARCHAR(100),
+    message TEXT,
+    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+);
 
