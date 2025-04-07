@@ -770,6 +770,7 @@
     </section>
     <!-- CONTENT END -->
     
+
     <!-- SIDEBAR -->
     <script>
         
@@ -825,6 +826,8 @@
             }
         });
     </script>
+
+
 
     <!-- JavaScript for Toggle, Title Update & Pie Chart -->
     <script>
@@ -909,127 +912,11 @@
         });
     </script>
 
+
+    <!-- CHAT CONTENT -->
     <script>
         
-        // Send Message Event
-        document.getElementById('sendMessage').addEventListener('click', function () {
-            const message = document.getElementById('messageInput').value;
-            const receiverUsername = document.getElementById('chatPerson').textContent; // name of the selected user
-
-            if (message.trim() === '') return;
-
-            fetch('send_message.php', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: `receiver=${encodeURIComponent(receiverUsername)}&message=${encodeURIComponent(message)}`
-            })
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('messageInput').value = '';
-                loadMessages(receiverUsername); // reload chat after sending
-            });
-        });
-
-
-    </script>
-
-    <script>
-        
-        
-
-        // Toggle Message Notifications & Adjust Chat Layout
-        document.getElementById("chatToggle").addEventListener("click", function() {
-            let chatContainer = document.querySelector(".chat-container");
-            let messageNotifications = document.getElementById("messageNotifications");
-
-            // Toggle 'open' class to expand/collapse
-            messageNotifications.classList.toggle("open");
-            chatContainer.classList.toggle("open");
-        });
-
-        // Function to calculate "time ago"
-        function timeAgo(time) {
-            const now = new Date();
-            const createdAt = new Date(time);
-            const diff = Math.floor((now - createdAt) / 1000); // Time difference in seconds
-
-            if (diff < 60) {
-                return "Just now";
-            } else if (diff < 3600) {
-                return Math.floor(diff / 60) + " min ago";
-            } else if (diff < 86400) {
-                return Math.floor(diff / 3600) + " hour ago";
-            } else {
-                return Math.floor(diff / 86400) + " day ago";
-            }
-        }
-
-        // Function to update time dynamically
-        function updateTimes() {
-            document.querySelectorAll('.registered-time').forEach(el => {
-                const time = el.getAttribute('data-time');
-                el.textContent = timeAgo(time);
-            });
-        }
-
-        // Call updateTimes on page load to initialize
-        updateTimes();
-
-        // Role toggle functionality
-        document.querySelectorAll('.role-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                const role = this.getAttribute('data-role');
-                
-                // Show the appropriate message list based on the clicked role
-                document.querySelectorAll('.message-list').forEach(list => {
-                    list.style.display = (list.getAttribute('data-role') === role) ? 'block' : 'none';
-                });
-
-                // Toggle active class on buttons
-                document.querySelectorAll('.role-btn').forEach(btn => btn.classList.remove('active'));
-                this.classList.add('active');
-            });
-        });
-
-        document.querySelectorAll('.message-item').forEach(item => {
-            item.addEventListener('click', function() {
-                const username = this.getAttribute('data-username');
-                document.getElementById('chatPerson').textContent = username;
-
-                fetch("load_messages.php", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/x-www-form-urlencoded"
-                    },
-                    body: "chatWith=" + encodeURIComponent(username)
-                })
-                .then(res => res.json())
-                .then(messages => {
-                    const chatBox = document.getElementById("chatBox");
-                    chatBox.innerHTML = ""; // Clear existing
-
-                    messages.forEach(msg => {
-                        let msgDiv = document.createElement("div");
-                        msgDiv.classList.add("message");
-
-                        if (msg.sender_name === username) {
-                            msgDiv.classList.add("received");
-                        } else {
-                            msgDiv.classList.add("sent");
-                        }
-
-                        msgDiv.innerHTML = `<p>${msg.message}</p><span class="timestamp">${msg.timestamp}</span>`;
-                        chatBox.appendChild(msgDiv);
-                    });
-
-                    chatBox.scrollTop = chatBox.scrollHeight;
-                });
-            });
-        });
-
-
-        console.log("Fetching chat with:", username);
-
+    
 
     </script>
 
