@@ -625,193 +625,10 @@
             transition: width 0.3s ease-in-out; /* Animates resizing */
         }
 
-        /* Chat Header - Shows Chat Person */
-        .chat-header {
-            padding: 10px;
-            background: #f1f1f1;
-            border-bottom: 1px solid #ddd;
-            text-align: center;
-            font-weight: bold;
-        }
+        
+        
 
-        /* Chat Box - Scrollable */
-        .chat-box {
-            flex: 1;
-            padding: 12px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* Message Styling */
-        .message {
-            background: #f1f1f1;
-            padding: 10px;
-            border-radius: 8px;
-            max-width: 75%;
-            word-wrap: break-word;
-            position: relative;
-            margin-bottom: 2px; /* Small space between messages */
-        }
-
-        /* Received Messages (Left Aligned) */
-        .message.received {
-            background: #ddd;
-            align-self: flex-start;
-        }
-
-        /* Sent Messages (Right Aligned) */
-        .message.sent {
-            background: #4CAF50;
-            color: white;
-            align-self: flex-end;
-        }
-
-        /* Chat Input - Stays at Bottom */
-        .chat-input {
-            display: flex;
-            width: 100%;
-            padding: 12px;
-            border-top: 1px solid #ddd;
-            background: #fff;
-        }
-
-        .chat-input input {
-            flex: 1;
-            padding: 8px;
-            border: none;
-            outline: none;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-
-        .chat-input button {
-            background: #4CAF50;
-            color: white;
-            border: none;
-            padding: 8px 12px;
-            cursor: pointer;
-            border-radius: 4px;
-            margin-left: 8px;
-        }
-
-        /* Message Notifications - Sidebar */
-        .message-notifications {
-            width: 0; /* Hidden by default */
-            overflow: hidden;
-            background: #f9f9f9;
-            border-left: 1px solid #ddd;
-            transition: width 0.3s ease-in-out, padding 0.3s ease-in-out;
-            padding: 0;
-            height: 100%;
-        }
-
-        /* When Open - Expand */
-        .message-notifications.open {
-            width: 220px;
-            padding: 10px;
-        }
-
-        /* Sidebar Title */
-        .message-notifications h4 {
-            font-size: 16px;
-            margin-bottom: 8px;
-            font-weight: bold;
-        }
-
-        /* Message List */
-        .message-notifications ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        /* Message Item */
-        .message-item {
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
-            cursor: pointer;
-            font-size: 14px;
-            transition: background 0.2s;
-        }
-
-        .message-item:hover {
-            background: #eee;
-        }
-
-        /* Shrink Chat Content when Notifications Open */
-        .chat-container.open .chat-content {
-            width: calc(100% - 220px); /* Adjust chat width */
-        }
-
-
-        /* Role Toggle Buttons */
-        .role-toggle {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .role-btn {
-            flex: 1;
-            padding: 6px 12px;
-            border: 1px solid #4CAF50;
-            background: white;
-            color: #4CAF50;
-            cursor: pointer;
-            border-radius: 4px;
-            transition: 0.3s;
-        }
-
-        .role-btn.active {
-            background: #4CAF50;
-            color: white;
-        }
-
-        /* Timestamp Styling */
-        .timestamp {
-            font-size: 12px;
-            color: #888;
-            display: block;
-            margin-top: 3px;
-        }
-
-        /* Align timestamp below each respective message */
-        .received-timestamp {
-            text-align: left; /* Timestamp for received messages aligns left */
-        }
-
-        .sent-timestamp {
-            text-align: right; /* Timestamp for sent messages aligns right */
-        }
-
-        .my-message {
-            background: #007bff;
-            color: #fff;
-            padding: 8px 12px;
-            margin: 5px 0;
-            border-radius: 10px;
-            text-align: right;
-            align-self: flex-end;
-            max-width: 60%;
-        }
-
-        .other-message {
-            background: #f1f1f1;
-            padding: 8px 12px;
-            margin: 5px 0;
-            border-radius: 10px;
-            text-align: left;
-            align-self: flex-start;
-            max-width: 60%;
-        }
-
-        .chat-body {
-            display: flex;
-            flex-direction: column;
-            overflow-y: auto;
-            height: 300px;
-            padding: 10px;
-        }
+        
 
 
     </style>
@@ -937,56 +754,8 @@
                 <div class="chat-container">
                     <!-- Chat Content -->
                     <div class="chat-content">
-                        <!-- Chat Header -->
-                        <div class="chat-header">
-                            <h3 id="chatPerson">Select a message</h3>
-                        </div>
-
-                        <!-- Chat Box -->
-                        <div class="chat-box" id="chatBox">
-                            <!-- Will be populated dynamically -->
-                        </div>
-
-                        <!-- Chat Input -->
-                        <div class="chat-input">
-                            <input type="text" id="messageInput" placeholder="Type a message...">
-                            <button id="sendMessage"><i class='bx bx-send'></i></button>
-                        </div>
-                    </div>
-
-                    <!-- Message Notifications Panel -->
-                    <div class="message-notifications" id="messageNotifications">
-                        <h4>Message Notifications</h4>
-
-                        <!-- HTML Code to Display Data -->
-                        <div class="role-toggle">
-                            <button class="role-btn active" data-role="client">Clients</button>
-                            <button class="role-btn" data-role="student">Students</button>
-                        </div>
-
-                        <!-- Client Messages -->
-                        <ul class="message-list" data-role="client">
-                            <?php foreach ($recent_users as $user): ?>
-                                <?php if ($user['role'] === 'Client'): ?>
-                                    <li class="message-item" data-username="<?= htmlspecialchars($user['username']) ?>" data-role="client">
-                                        <p><strong><?= htmlspecialchars($user['username']) ?></strong></p>
-                                        <p>Registered: <span class="registered-time" data-time="<?= htmlspecialchars($user['created_at']) ?>"></span></p>
-                                    </li>
-                                <?php endif; ?>
-                            <?php endforeach; ?>
-                        </ul>
-
-                        <!-- Student Messages -->
-                        <ul class="message-list" data-role="student" style="display: none;">
-                            <?php foreach ($recent_users as $user): ?>
-                                <?php if ($user['role'] === 'Student'): ?>
-                                    <li class="message-item" data-username="<?= htmlspecialchars($user['username']) ?>" data-role="student">
-                                        <p><strong><?= htmlspecialchars($user['username']) ?></strong></p>
-                                        <p>Registered: <span class="registered-time" data-time="<?= htmlspecialchars($user['created_at']) ?>"></span></p>
-                                    </li>
-                                <?php endif; ?>
-                            <?php endforeach; ?>
-                        </ul>
+                        
+                        
                     </div>
                 </div>
 
@@ -1000,7 +769,7 @@
     </section>
     <!-- CONTENT -->
     
-
+    <!-- SIDEBAR -->
     <script>
         
         // Select all sidebar menu items
