@@ -36,9 +36,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             // Redirect based on role
             if ($role === 'Student') {
-                header("Location: student-dashboard.php");
+                header("Location: student/student-dashboard.php");
             } elseif ($role === 'Client') {
-                header("Location: client-dashboard.php");
+                header("Location: client/client-dashboard.php");
             }
             exit();
         } else {

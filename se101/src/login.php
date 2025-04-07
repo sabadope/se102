@@ -26,7 +26,7 @@
                 $_SESSION['email'] = $admin_email;
                 $_SESSION['role'] = 'Admin';
 
-                header("Location: ../admin/admin-dashboard.php");
+                header("Location: admin/admin-dashboard.php");
                 exit();
             }
 
@@ -37,7 +37,7 @@
                 $_SESSION['email'] = $supervisor_email;
                 $_SESSION['role'] = 'Supervisor';
 
-                header("Location: ../super/supervisor-dashboard.php");
+                header("Location: super/supervisor-dashboard.php");
                 exit();
             }
 
@@ -54,13 +54,13 @@
 
                 // Redirect based on role
                 if ($user['role'] === 'Admin') {
-                    header("Location: admin-dashboard.php");
+                    header("Location: admin/admin-dashboard.php");
                 } elseif ($user['role'] === 'Student') {
-                    header("Location: student-dashboard.php");
+                    header("Location: student/student-dashboard.php");
                 } elseif ($user['role'] === 'Supervisor') {
-                    header("Location: supervisor-dashboard.php");
+                    header("Location: supervisor/supervisor-dashboard.php");
                 } elseif ($user['role'] === 'Client') {
-                    header("Location: client-dashboard.php");
+                    header("Location: client/client-dashboard.php");
                 }
                 exit();
             } else {
