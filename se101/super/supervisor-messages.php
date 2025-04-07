@@ -765,9 +765,10 @@
 
             
         </main>
-        <!-- MAIN -->
+        <!-- MAIN END -->
+
     </section>
-    <!-- CONTENT -->
+    <!-- CONTENT END -->
     
     <!-- SIDEBAR -->
     <script>
