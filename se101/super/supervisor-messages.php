@@ -1,26 +1,7 @@
 <?php
     require_once '../src/config.php'; // Include DB connection
 
-    // Fetch the 4 most recent users based on role (excluding Supervisor)
-    $stmt = $pdo->query("SELECT username, role, created_at FROM users WHERE role IN ('Student', 'Client') ORDER BY created_at DESC LIMIT 4");
-    $recent_users = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    function timeAgo($timestamp) {
-        $time_difference = time() - strtotime($timestamp); // Get time difference in seconds
-
-        if ($time_difference < 60) {
-            return "Just now"; // Less than a minute
-        } elseif ($time_difference < 3600) {
-            $minutes = floor($time_difference / 60);
-            return $minutes . " min" . ($minutes > 1 ? "s" : "") . " ago"; // 1 min, 2 mins, etc.
-        } elseif ($time_difference < 86400) {
-            $hours = floor($time_difference / 3600);
-            return $hours . " hour" . ($hours > 1 ? "s" : "") . " ago"; // 1 hour, 2 hours, etc.
-        } else {
-            $days = floor($time_difference / 86400);
-            return $days . " day" . ($days > 1 ? "s" : "") . " ago"; // 1 day, 2 days, etc.
-        }
-    }
+    
 ?>
 
 <!DOCTYPE html>
