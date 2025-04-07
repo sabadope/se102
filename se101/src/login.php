@@ -26,7 +26,7 @@
                 $_SESSION['email'] = $admin_email;
                 $_SESSION['role'] = 'Admin';
 
-                header("Location: admin/admin-dashboard.php");
+                header("Location: ../admin/admin-dashboard.php");
                 exit();
             }
 
@@ -37,7 +37,7 @@
                 $_SESSION['email'] = $supervisor_email;
                 $_SESSION['role'] = 'Supervisor';
 
-                header("Location: super/supervisor-dashboard.php");
+                header("Location: ../super/supervisor-dashboard.php");
                 exit();
             }
 
