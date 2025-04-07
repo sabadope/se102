@@ -1,19 +1,19 @@
 <?php
-    require_once '../src/config.php';
-    session_start();
+require_once '../src/config.php';
+$data = json_decode(file_get_contents("php://input"), true);
 
-    if (!isset($_SESSION['username']) || !isset($_POST['receiver']) || !isset($_POST['message'])) {
-        http_response_code(400);
-        echo 'Missing required data.';
-        exit();
-    }
+$sender = $data['sender'];
+$receiver = $data['receiver'];
+$message = $data['message'];
 
-    $sender = $_SESSION['username'];
-    $receiver = $_POST['receiver'];
-    $message = trim($_POST['message']);
-
+if ($sender && $receiver && $message) {
     $stmt = $pdo->prepare("INSERT INTO messages (sender, receiver, message) VALUES (?, ?, ?)");
-    $stmt->execute([$sender, $receiver, $message]);
-
-    echo 'Message sent.';
+    if ($stmt->execute([$sender, $receiver, $message])) {
+        echo json_encode(['success' => true]);
+    } else {
+        echo json_encode(['success' => false, 'error' => 'DB error']);
+    }
+} else {
+    echo json_encode(['success' => false, 'error' => 'Missing data']);
+}
 ?>

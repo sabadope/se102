@@ -1160,51 +1160,31 @@
 
     <script>
         
-        document.addEventListener("DOMContentLoaded", function () {
-            // Send Message
-            document.getElementById("sendMessage").addEventListener("click", function () {
-                const inputField = document.getElementById("messageInput");
-                const messageText = inputField.value.trim();
-                
-                if (messageText !== "") {
-                    const chatBox = document.querySelector(".chat-box");
-                    const messageDiv = document.createElement("div");
-                    messageDiv.classList.add("message", "sent");
-                    messageDiv.innerHTML = `<p>${messageText}</p><span class="timestamp">Just now</span>`;
-                    chatBox.appendChild(messageDiv);
-                    inputField.value = "";
-                    chatBox.scrollTop = chatBox.scrollHeight;  // Auto-scroll to the latest message
-                }
+        // Send Message Event
+        document.getElementById('sendMessage').addEventListener('click', function () {
+            const message = document.getElementById('messageInput').value;
+            const receiverUsername = document.getElementById('chatPerson').textContent; // name of the selected user
+
+            if (message.trim() === '') return;
+
+            fetch('send_message.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `receiver=${encodeURIComponent(receiverUsername)}&message=${encodeURIComponent(message)}`
+            })
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('messageInput').value = '';
+                loadMessages(receiverUsername); // reload chat after sending
             });
         });
+
 
     </script>
 
     <script>
         
-        // Send Message Event
-        document.getElementById("sendMessage").addEventListener("click", function() {
-            let input = document.getElementById("messageInput");
-            let messageText = input.value.trim();
-            
-            if (messageText !== "") {
-                let chatBox = document.getElementById("chatBox");
-
-                // Create a new message div
-                let newMessage = document.createElement("div");
-                newMessage.classList.add("message", "sent");
-                newMessage.innerHTML = `<p>${messageText}</p><span class="timestamp">Just now</span>`;
-
-                // Append to chat box
-                chatBox.appendChild(newMessage);
-
-                // Clear input
-                input.value = "";
-
-                // Auto-scroll to bottom
-                chatBox.scrollTop = chatBox.scrollHeight;
-            }
-        });
+        
 
         // Toggle Message Notifications & Adjust Chat Layout
         document.getElementById("chatToggle").addEventListener("click", function() {
@@ -1260,18 +1240,44 @@
             });
         });
 
-        // Add event listener to message items to handle clicks
         document.querySelectorAll('.message-item').forEach(item => {
             item.addEventListener('click', function() {
                 const username = this.getAttribute('data-username');
-                
-                // Update the chat header with the selected username
                 document.getElementById('chatPerson').textContent = username;
 
-                // Optional: You can add functionality to load chat history or messages here
+                fetch("load_messages.php", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    },
+                    body: "chatWith=" + encodeURIComponent(username)
+                })
+                .then(res => res.json())
+                .then(messages => {
+                    const chatBox = document.getElementById("chatBox");
+                    chatBox.innerHTML = ""; // Clear existing
+
+                    messages.forEach(msg => {
+                        let msgDiv = document.createElement("div");
+                        msgDiv.classList.add("message");
+
+                        if (msg.sender_name === username) {
+                            msgDiv.classList.add("received");
+                        } else {
+                            msgDiv.classList.add("sent");
+                        }
+
+                        msgDiv.innerHTML = `<p>${msg.message}</p><span class="timestamp">${msg.timestamp}</span>`;
+                        chatBox.appendChild(msgDiv);
+                    });
+
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                });
             });
         });
 
+
+        console.log("Fetching chat with:", username);
 
 
     </script>

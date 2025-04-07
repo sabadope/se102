@@ -24,3 +24,5 @@ CREATE TABLE messages (
     timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
+
+SELECT * FROM messages ORDER BY timestamp DESC LIMIT 10;

@@ -1126,28 +1126,26 @@
 
     <script>
         
-        document.getElementById("sendMessage").addEventListener("click", function() {
-            let input = document.getElementById("messageInput");
-            let messageText = input.value.trim();
-            
-            if (messageText !== "") {
-                let chatBox = document.getElementById("chatBox");
-
-                // Create a new message div
-                let newMessage = document.createElement("div");
-                newMessage.classList.add("message", "sent");
-                newMessage.innerHTML = `<p>${messageText}</p><span class="timestamp">Just now</span>`;
-
-                // Append to chat box
-                chatBox.appendChild(newMessage);
-
-                // Clear input
-                input.value = "";
-
-                // Auto-scroll to bottom
-                chatBox.scrollTop = chatBox.scrollHeight;
+        document.getElementById('sendMessage').addEventListener('click', function () {
+            const message = document.getElementById('messageInput').value;
+            const receiver = document.getElementById('chatPerson').dataset.username; // receiver username
+            if (message && receiver) {
+                fetch('send-message.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message, receiver })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        document.getElementById('messageInput').value = '';
+                        loadChat(receiver); // refresh chat
+                    }
+                });
             }
         });
+
+
 
         // Toggle Message Notifications & Adjust Chat Layout
         document.getElementById("chatToggle").addEventListener("click", function() {
@@ -1180,6 +1178,17 @@
                 document.querySelector(`.message-list[data-role="${selectedRole}"]`).style.display = "block";
             });
         });
+
+
+        document.querySelectorAll('.message-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const username = item.dataset.username;
+                document.getElementById('chatPerson').textContent = `Chatting with ${username}`;
+                document.getElementById('chatPerson').dataset.username = username;
+                loadChat(username);
+            });
+        });
+
 
 
     </script>

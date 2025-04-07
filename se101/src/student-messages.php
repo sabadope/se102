@@ -1,10 +1,46 @@
 <?php
-    session_start();
+session_start();
+require_once '../src/config.php';
 
-    // Check if username exists in session
-    $username = isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username']) : 'Guest';
+if (!isset($_SESSION['user_id']) || !isset($_SESSION['email'])) {
+    die("Unauthorized");
+}
 
-?>
+$currentUserEmail = $_SESSION['email']; // supervisor@gmail.com or client@gmail.com
+$selectedUserEmail = $_POST['selected_user_email'] ?? null;
+
+if (!$selectedUserEmail) {
+    die("No user selected");
+}
+
+// Use the actual column name from your DB: `timestamp` or `sent_at`
+$stmt = $pdo->prepare("
+    SELECT * FROM messages
+    WHERE (sender = :sender AND receiver = :receiver)
+       OR (sender = :receiver AND receiver = :sender)
+    ORDER BY timestamp ASC
+");
+
+$stmt->execute([
+    'sender' => $currentUserEmail,
+    'receiver' => $selectedUserEmail
+]);
+
+$chatHistory = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Return as JSON if using fetch/AJAX
+header('Content-Type: application/json');
+echo json_encode($chatHistory);
+
+$stmt = $pdo->prepare("
+    SELECT * FROM messages 
+    WHERE sender = 'supervisor@gmail.com' AND receiver = :receiver 
+    ORDER BY timestamp ASC LIMIT 0, 25
+");
+$stmt->execute(['receiver' => 'student1@gmail.com']);
+
+<?
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -786,6 +822,22 @@
             text-align: right; /* Timestamp for sent messages aligns right */
         }
 
+        .message {
+            margin: 10px;
+            padding: 10px;
+            max-width: 60%;
+            border-radius: 10px;
+        }
+        .sent {
+            background-color: #d1ffd6;
+            align-self: flex-end;
+        }
+        .received {
+            background-color: #f0f0f0;
+            align-self: flex-start;
+        }
+
+
     </style>
 
     <title>Student Message</title>
@@ -904,22 +956,14 @@
                 <div class="chat-container">
                     <!-- Chat Content -->
                     <div class="chat-content">
-                        <!-- Chat Header (User's Name) -->
+                        <!-- Chat Header -->
                         <div class="chat-header">
-                            <h3 id="chatPerson">Chat with Alice</h3>
+                            <h3 id="chatPerson">Select a message</h3>
                         </div>
 
                         <!-- Chat Box -->
                         <div class="chat-box" id="chatBox">
-                            <div class="message received">
-                                <p>Hey! How’s it going?</p>
-                            </div>
-                            <span class="timestamp received-timestamp">2 mins ago</span> <!-- Aligned to the left -->
-
-                            <div class="message sent">
-                                <p>All good! You?</p>
-                            </div>
-                            <span class="timestamp sent-timestamp">Just now</span> <!-- Aligned to the right -->
+                            <!-- Will be populated dynamically -->
                         </div>
 
                         <!-- Chat Input -->
@@ -933,25 +977,38 @@
                     <div class="message-notifications" id="messageNotifications">
                         <h4>Message Notifications</h4>
 
-                        <!-- Role Toggle Buttons -->
+                        <!-- HTML Code to Display Data -->
                         <div class="role-toggle">
                             <button class="role-btn active" data-role="client">Clients</button>
-                            <button class="role-btn" data-role="supervisor">Supervisors</button>
+                            <button class="role-btn" data-role="supervisor">Supervisor</button>
                         </div>
 
                         <!-- Client Messages -->
                         <ul class="message-list" data-role="client">
-                            <li class="message-item">New message from Alice (Client)</li>
-                            <li class="message-item">John (Client) sent you a reply</li>
+                            <?php foreach ($recent_users as $user): ?>
+                                <?php if ($user['role'] === 'Client'): ?>
+                                    <li class="message-item" data-username="<?= htmlspecialchars($user['username']) ?>" data-role="client">
+                                        <p><strong><?= htmlspecialchars($user['username']) ?></strong></p>
+                                        <p>Registered: <span class="registered-time" data-time="<?= htmlspecialchars($user['created_at']) ?>"></span></p>
+                                    </li>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
                         </ul>
 
-                        <!-- Supervisor Messages -->
-                        <ul class="message-list" data-role="supervisor" style="display: none;">
-                            <li class="message-item">Reminder: Meeting at 3 PM (Supervisor)</li>
-                            <li class="message-item">Supervisor Mike sent an update</li>
+                        <!-- Supervisor Messages List -->
+                        <ul class="message-list" data-role="supervisor" style="list-style: none; padding: 0;">
+                            <?php if (!empty($supervisorMessages)): ?>
+                                <?php foreach ($supervisorMessages as $msg): ?>
+                                    <li class="message-item" data-username="<?= htmlspecialchars($msg['sender']) ?>">
+                                        <p><strong><?= htmlspecialchars($msg['sender']) ?>:</strong> <?= htmlspecialchars($msg['message']) ?></p>
+                                        <p><small><?= htmlspecialchars($msg['timestamp']) ?></small></p>
+                                    </li>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <li>No messages from supervisor.</li>
+                            <?php endif; ?>
                         </ul>
                     </div>
-
                 </div>
                 
             </div>
@@ -1126,28 +1183,7 @@
 
     <script>
         
-        document.getElementById("sendMessage").addEventListener("click", function() {
-            let input = document.getElementById("messageInput");
-            let messageText = input.value.trim();
-            
-            if (messageText !== "") {
-                let chatBox = document.getElementById("chatBox");
-
-                // Create a new message div
-                let newMessage = document.createElement("div");
-                newMessage.classList.add("message", "sent");
-                newMessage.innerHTML = `<p>${messageText}</p><span class="timestamp">Just now</span>`;
-
-                // Append to chat box
-                chatBox.appendChild(newMessage);
-
-                // Clear input
-                input.value = "";
-
-                // Auto-scroll to bottom
-                chatBox.scrollTop = chatBox.scrollHeight;
-            }
-        });
+        
 
         // Toggle Message Notifications & Adjust Chat Layout
         document.getElementById("chatToggle").addEventListener("click", function() {
@@ -1160,26 +1196,109 @@
         });
 
         // Toggle Client/Supervisor Messages
-        document.querySelectorAll(".role-btn").forEach(button => {
-            button.addEventListener("click", function() {
-                // Remove 'active' class from all buttons
-                document.querySelectorAll(".role-btn").forEach(btn => btn.classList.remove("active"));
-                
-                // Add 'active' class to the clicked button
-                this.classList.add("active");
+        document.querySelectorAll('.role-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                document.querySelectorAll('.role-btn').forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
 
-                // Get selected role
-                let selectedRole = this.getAttribute("data-role");
-
-                // Hide all message lists first
-                document.querySelectorAll(".message-list").forEach(list => {
-                    list.style.display = "none";
+                const role = this.getAttribute('data-role');
+                document.querySelectorAll('.message-list').forEach(list => {
+                    list.style.display = (list.getAttribute('data-role') === role) ? 'block' : 'none';
                 });
-
-                // Show the selected role's messages
-                document.querySelector(`.message-list[data-role="${selectedRole}"]`).style.display = "block";
             });
         });
+
+
+
+
+        // Attach click listener to message list
+        document.addEventListener("click", function (e) {
+            if (e.target.closest('.message-item')) {
+                const item = e.target.closest('.message-item');
+                const username = item.getAttribute('data-username');
+                document.getElementById('chatPerson').textContent = username;
+
+                // Load conversation via AJAX
+                fetch("load_messages_student.php", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    },
+                    body: "chatWith=" + encodeURIComponent(username)
+                })
+                .then(res => res.json())
+                .then(messages => {
+                    const chatBox = document.getElementById("chatBox");
+                    chatBox.innerHTML = "";
+
+                    messages.forEach(msg => {
+                        let msgDiv = document.createElement("div");
+                        msgDiv.classList.add("message");
+
+                        if (msg.sender === username) {
+                            msgDiv.classList.add("received");
+                        } else {
+                            msgDiv.classList.add("sent");
+                        }
+
+                        msgDiv.innerHTML = `<p>${msg.message}</p><span class="timestamp">${msg.timestamp}</span>`;
+                        chatBox.appendChild(msgDiv);
+                    });
+
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                });
+            }
+        });
+
+        // Send message
+        document.getElementById("sendMessage").addEventListener("click", function() {
+            let input = document.getElementById("messageInput");
+            let messageText = input.value.trim();
+            let receiver = document.getElementById("chatPerson").textContent;
+
+            if (messageText !== "" && receiver !== "Select a message") {
+                fetch('send_message.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        sender: "supervisor@gmail.com", // or get from PHP session
+                        receiver: receiver,
+                        message: messageText
+                    })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        let chatBox = document.getElementById("chatBox");
+                        let newMessage = document.createElement("div");
+                        newMessage.classList.add("message", "sent");
+                        newMessage.innerHTML = `<p>${messageText}</p><span class="timestamp">Just now</span>`;
+                        chatBox.appendChild(newMessage);
+                        input.value = "";
+                        chatBox.scrollTop = chatBox.scrollHeight;
+                    } else {
+                        alert("Failed to send message.");
+                    }
+                });
+            }
+        });
+
+        fetch('get_messages.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: `selected_user_email=${encodeURIComponent(userEmail)}`
+        })
+        .then(res => res.json())
+        .then(messages => {
+          // Load messages into the chat box
+        });
+
+
+
 
 
     </script>
