@@ -86,5 +86,10 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
     
+    function confirmDeleteReview(reviewId) {
+      if (confirm("Are you sure you want to delete this supervisor review?\nThis action cannot be undone.")) {
+          window.location.href = `delete_review.php?id=${reviewId}`;
+      }
+  }
     return valid;
   }

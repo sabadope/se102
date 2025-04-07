@@ -420,11 +420,18 @@ if ($result === false) die('Execute failed: ' . htmlspecialchars($stmt->error));
             display: flex;
             justify-content: space-between;
             margin-bottom: 0.75rem;
+            align-items: center;
         }
         
         .review-date {
             color: var(--gray);
             font-size: 0.875rem;
+        }
+        
+        .review-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
         
         .rating-badge {
@@ -634,18 +641,23 @@ if ($result === false) die('Execute failed: ' . htmlspecialchars($stmt->error));
                     <div class="past-reviews">
                         <h3>Previous Supervisor Reviews</h3>
                         <?php
-                        $review_query = "SELECT * FROM supervisor_reviews ORDER BY review_date DESC";
+                        $review_query = "SELECT id, review_date, rating, feedback FROM supervisor_reviews ORDER BY review_date DESC";
                         $review_result = $conn->query($review_query);
                         
-                        if ($review_result->num_rows > 0): ?>
+                        if ($review_result && $review_result->num_rows > 0): ?>
                             <div class="review-list">
                                 <?php while ($review = $review_result->fetch_assoc()): ?>
                                     <div class="review-card">
                                         <div class="review-header">
                                             <span class="review-date"><?= date('M j, Y', strtotime($review['review_date'])) ?></span>
-                                            <span class="rating-badge <?= strtolower(str_replace(' ', '-', $review['rating'])) ?>">
-                                                <?= $review['rating'] ?>
-                                            </span>
+                                            <div class="review-actions">
+                                                <span class="rating-badge <?= strtolower(str_replace(' ', '-', $review['rating'])) ?>">
+                                                    <?= $review['rating'] ?>
+                                                </span>
+                                                <button onclick="confirmDeleteReview(<?= $review['id'] ?>)" class="btn-icon danger" title="Delete Review">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
                                         </div>
                                         <div class="review-content">
                                             <p><?= nl2br(htmlspecialchars($review['feedback'])) ?></p>
@@ -682,6 +694,12 @@ if ($result === false) die('Execute failed: ' . htmlspecialchars($stmt->error));
         function confirmDelete(logId) {
             if (confirm("Are you sure you want to delete this log entry?\nThis action cannot be undone.")) {
                 window.location.href = `delete_log.php?id=${logId}&redirect=weekly_summary.php`;
+            }
+        }
+        
+        function confirmDeleteReview(reviewId) {
+            if (confirm("Are you sure you want to delete this supervisor review?\nThis action cannot be undone.")) {
+                window.location.href = `delete_review.php?id=${reviewId}&redirect=weekly_summary.php`;
             }
         }
     </script>
