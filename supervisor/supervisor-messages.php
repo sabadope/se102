@@ -287,7 +287,7 @@
                             <button type="submit" class="btn">LOGIN</button>
 
                             <div class="register-link">
-                                <p>Don't have an account? <a href="signup.php">Sign Up</a></p>
+                                <p>Don't have an account? <a href="supervisor-register.php">Sign Up</a></p>
                             </div>
                         </form>
                     </div>

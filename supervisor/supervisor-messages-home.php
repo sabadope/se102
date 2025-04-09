@@ -135,36 +135,6 @@
             color: #155724;
             border: 1px solid #c3e6cb;
         }
-
-        .register-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-            align-items: center;
-            width: 100%;
-
-        }
-
-        .form-box {
-            width: 100%;
-            max-width: 100%;
-            padding: 15px;
-            text-align: center;
-            align-items: center;
-        }
-
-        .form-header img {
-            width: 80px;
-            margin-bottom: 15px;
-        }
-
-        .form-header h3 {
-            font-size: 24px;
-            margin-bottom: 20px;
-        }
-
-        
     </style>
 
     <title>Supervisor Message</title>
@@ -287,60 +257,39 @@
                 <!-- Chat Container -->
                 <div class="chat-container">
 
-                    <div class="register-container">
-                      <div class="form-box">
-                        <form method="post" action="app/http/signup.php" enctype="multipart/form-data" class="register-form">
-                          <!-- Logo & Heading -->
-                          <div class="form-header">
+                    <div class="login-container">
+                        <form method="post" action="app/http/auth.php" class="login-form">
                             <img src="img/logo.png" alt="Logo">
                             <h2>CHAT AUTHENTICATION</h2>
-                          </div>
 
-                          <!-- Error Message -->
-                          <?php if (isset($_GET['error'])) { ?>
-                            <div class="alert alert-warning">
-                              <?= htmlspecialchars($_GET['error']); ?>
+                            <?php if (isset($_GET['error'])) { ?>
+                                <div class="alert alert-warning">
+                                    <?php echo htmlspecialchars($_GET['error']); ?>
+                                </div>
+                            <?php } ?>
+
+                            <?php if (isset($_GET['success'])) { ?>
+                                <div class="alert alert-success">
+                                    <?php echo htmlspecialchars($_GET['success']); ?>
+                                </div>
+                            <?php } ?>
+
+                            <div class="input-group">
+                                <label for="username">User name</label>
+                                <input type="text" id="username" name="username">
                             </div>
-                          <?php } ?>
 
-                          <?php
-                            $name = $_GET['name'] ?? '';
-                            $username = $_GET['username'] ?? '';
-                          ?>
+                            <div class="input-group">
+                                <label for="password">Password</label>
+                                <input type="password" id="password" name="password">
+                            </div>
 
-                          <!-- Name Input -->
-                          <div class="input-group">
-                            <label for="name">Name</label>
-                            <input type="text" name="name" id="name" value="<?= $name ?>" required>
-                          </div>
+                            <button type="submit" class="btn">LOGIN</button>
 
-                          <!-- Username Input -->
-                          <div class="input-group">
-                            <label for="username">User Name</label>
-                            <input type="text" name="username" id="username" value="<?= $username ?>" required>
-                          </div>
-
-                          <!-- Password Input -->
-                          <div class="input-group">
-                            <label for="password">Password</label>
-                            <input type="password" name="password" id="password" required>
-                          </div>
-
-                          <!-- Profile Picture Input -->
-                          <div class="input-group">
-                            <label for="pp">Profile Picture</label>
-                            <input type="file" name="pp" id="pp" accept="image/*">
-                          </div>
-
-                          <!-- Submit Button -->
-                          <button type="submit" class="btn">Sign Up</button>
-
-                          <!-- Link to Login -->
-                          <div class="register-link">
-                            <p>Already have an account? <a href="supervisor-messages.php">Login</a></p>
-                          </div>
+                            <div class="register-link">
+                                <p>Don't have an account? <a href="signup.php">Sign Up</a></p>
+                            </div>
                         </form>
-                      </div>
                     </div>
 
                 </div>
