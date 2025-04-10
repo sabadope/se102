@@ -1,8 +1,6 @@
 <?php
-    session_start();
-
-    // Check if username exists in session
-    $username = isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username']) : 'Guest';
+    
+    require_once '../src/config.php'; // Include DB connection
 
 ?>
 
@@ -669,9 +667,9 @@
                 </a>
             </li>
             <li>
-                <a href="#">
-                    <i class='bx bxs-group' ></i>
-                    <span class="text">Team</span>
+                <a href="student-activities.php">
+                    <i class='bx bxs-check-note' ></i>
+                    <span class="text">Activities</span>
                 </a>
             </li>
         </ul>
@@ -683,7 +681,7 @@
                 </a>
             </li>
             <li>
-                <a href="logout.php" class="logout">
+                <a href="student-logout.php" class="logout">
                     <i class='bx bxs-log-out-circle' ></i>
                     <span class="text">Logout</span>
                 </a>

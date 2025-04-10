@@ -167,7 +167,7 @@
                     <span class="text">Analytics</span>
                 </a>
             </li>
-            <li id="openChat" class="active">
+            <li class="active">
                 <a href="supervisor-messages.php">
                     <i class='bx bxs-message-dots'></i>
                     <span class="text">Messages</span>
@@ -257,40 +257,7 @@
                 <!-- Chat Container -->
                 <div class="chat-container">
 
-                    <div class="login-container">
-                        <form method="post" action="app/http/auth.php" class="login-form">
-                            <img src="img/logo.png" alt="Logo">
-                            <h2>CHAT AUTHENTICATION</h2>
-
-                            <?php if (isset($_GET['error'])) { ?>
-                                <div class="alert alert-warning">
-                                    <?php echo htmlspecialchars($_GET['error']); ?>
-                                </div>
-                            <?php } ?>
-
-                            <?php if (isset($_GET['success'])) { ?>
-                                <div class="alert alert-success">
-                                    <?php echo htmlspecialchars($_GET['success']); ?>
-                                </div>
-                            <?php } ?>
-
-                            <div class="input-group">
-                                <label for="username">User name</label>
-                                <input type="text" id="username" name="username">
-                            </div>
-
-                            <div class="input-group">
-                                <label for="password">Password</label>
-                                <input type="password" id="password" name="password">
-                            </div>
-
-                            <button type="submit" class="btn">LOGIN</button>
-
-                            <div class="register-link">
-                                <p>Don't have an account? <a href="supervisor-register.php">Sign Up</a></p>
-                            </div>
-                        </form>
-                    </div>
+                    <iframe src="index.php" width="100%" height="590px" frameborder="0"></iframe>
 
                 </div>
 

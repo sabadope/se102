@@ -1,11 +1,8 @@
 <?php
-session_start();
-
-// Check if username exists in session
-$username = isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username']) : 'Guest';
+    
+    require_once '../src/config.php'; // Include DB connection
 
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -79,8 +76,12 @@ $username = isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username'
             z-index: 2000;
             font-family: var(--lato);
             transition: all 0.3s ease-in-out;
-            overflow-x: hidden;
+            overflow: hidden;
             scrollbar-width: none;
+            display: flex;
+            flex-direction: column;
+            
+            
         }
         #sidebar::--webkit-scrollbar {
             display: none;
@@ -102,7 +103,6 @@ $username = isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username'
             background: var(--light);
             z-index: 500;
             box-sizing: content-box;
-            
         }
         #sidebar .brand .bx {
             min-width: 60px;
@@ -175,6 +175,26 @@ $username = isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username'
             min-width: calc(60px  - ((4px + 6px) * 2));
             display: flex;
             justify-content: center;
+        }
+
+        /* Sub-menu base styling */
+        .sub-menu {
+            display: none;
+            padding-left: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .has-submenu.active .sub-menu {
+            display: block;
+        }
+
+        /* Optional: Arrow rotation when submenu is active */
+        .has-submenu .arrow {
+            margin-left: auto;
+            transition: transform 0.3s ease;
+        }
+        .has-submenu.active .arrow {
+            transform: rotate(180deg);
         }
         /* SIDEBAR */
 
@@ -350,7 +370,7 @@ $username = isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username'
         }
         #content main .head-title .left .breadcrumb li a {
             color: var(--dark-grey);
-            pointer-events: none;
+            
         }
         #content main .head-title .left .breadcrumb li a.active {
             color: var(--blue);
@@ -376,7 +396,7 @@ $username = isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username'
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             grid-gap: 24px;
-            margin-top: 36px;
+            margin-top: 24px;
         }
         #content main .box-info li {
             padding: 24px;
@@ -603,6 +623,41 @@ $username = isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username'
                 min-width: 420px;
             }
         }
+
+        /* Ensure the container remains fixed in size */
+        .recent-accounts {
+            width: 100%;
+            max-width: 100%;
+            height: 330px; /* Fixed height to prevent stretching */
+            overflow: hidden; /* Prevent content from overflowing */
+            position: relative;
+        }
+
+        /* Table and Chart Container */
+        .table-view, .chart-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            
+        }
+
+        /* Hide Pie Chart Initially */
+        .chart-container {
+            display: none;
+            
+        }
+
+        /* Ensure the Pie Chart adjusts inside the container */
+        canvas {
+            max-width: 100% !important;
+            max-height: 100% !important;
+            
+        }
     </style>
 
     <title>Student Dashboard</title>
@@ -612,54 +667,67 @@ $username = isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username'
 
     <!-- SIDEBAR -->
     <section id="sidebar">
-        
         <a href="#" class="brand">
-            <i class="bx bxs-teacher"></i>
-            <span class="text">Hi! <?php echo htmlspecialchars($_SESSION['username']); ?></span>
+            <i class="bx bxs-graduation"></i>
+            <span class="text">Hi <?php echo htmlspecialchars($_SESSION['username']); ?>!</span>
         </a>
-        
-        <ul class="side-menu top">
-            <li class="active">
-                <a href="#">
-                    <i class='bx bxs-dashboard' ></i>
-                    <span class="text">Dashboard</span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class='bx bxs-calendar-check' ></i>
-                    <span class="text">Attendance</span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class='bx bxs-message-dots' ></i>
-                    <span class="text">Message</span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class='bx bxs-group' ></i>
-                    <span class="text">Team</span>
-                </a>
-            </li>
-        </ul>
-        <ul class="side-menu">
-            <li>
-                <a href="#">
-                    <i class='bx bxs-cog' ></i>
-                    <span class="text">Settings</span>
-                </a>
-            </li>
-            <li>
-                <a href="logout.php" class="logout">
-                    <i class='bx bxs-log-out-circle' ></i>
-                    <span class="text">Logout</span>
-                </a>
-            </li>
-        </ul>
+
+        <!-- NEW FLEX WRAPPER -->
+        <div class="sidebar-content">
+            <!-- TOP ITEMS -->
+            <ul class="side-menu top">
+                <li>
+                    <a href="student-dashboard.php">
+                        <i class='bx bxs-dashboard'></i>
+                        <span class="text">Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class='bx bxs-calendar-check'></i>
+                        <span class="text">Attendance</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="student-messages.php">
+                        <i class='bx bxs-message-dots'></i>
+                        <span class="text">Message</span>
+                    </a>
+                </li>
+
+                <!-- Activities with Submenu -->
+                <li class="has-submenu active">
+                    <a href="student-activities.php">
+                        <i class='bx bxs-check-note'></i>
+                        <span class="text">Activities</span>
+                        <i class='bx bx-chevron-down arrow'></i>
+                    </a>
+                    <ul class="sub-menu">
+                        <li><a href="student-dailylogs.php">Daily Logs</a></li>
+                        <li><a href="student-feedbacks.php">Feedbacks</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+            <!-- BOTTOM ITEMS -->
+            <ul class="side-menu bottom">
+                <li>
+                    <a href="#">
+                        <i class='bx bxs-cog'></i>
+                        <span class="text">Settings</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="student-logout.php" class="logout">
+                        <i class='bx bxs-log-out-circle'></i>
+                        <span class="text">Logout</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
     </section>
-    <!-- SIDEBAR -->
+
+
 
 
 
@@ -691,14 +759,14 @@ $username = isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username'
         <main>
             <div class="head-title">
                 <div class="left">
-                    <h1>Dashboard</h1>
+                    <h1>Activities</h1>
                     <ul class="breadcrumb">
                         <li>
-                            <a href="#">Dashboard</a>
+                            <a href="student-activities.php">Home</a>
                         </li>
                         <li><i class='bx bx-chevron-right' ></i></li>
                         <li>
-                            <a class="active" href="#">Home</a>
+                            <a class="active">Activities</a>
                         </li>
                     </ul>
                 </div>
@@ -731,9 +799,6 @@ $username = isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username'
                     </span>
                 </li>
             </ul>
-
-
-            
         </main>
         <!-- MAIN -->
     </section>
@@ -741,9 +806,8 @@ $username = isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username'
     
 
     <script>
-        
-        // Select all sidebar menu items
-        const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
+        // Highlight top-level sidebar items except those with submenus
+        const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top > li:not(.has-submenu) > a');
 
         allSideMenu.forEach(item => {
             const li = item.parentElement;
@@ -756,45 +820,144 @@ $username = isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username'
             });
         });
 
-        // TOGGLE SIDEBAR
-        const menuBar = document.querySelector('#content nav .bx.bx-chevron-left'); // Updated selector
-        const sidebar = document.getElementById('sidebar');
+        // Submenu toggle for 'Activities'
+        const submenuToggles = document.querySelectorAll('.has-submenu > a');
 
-        menuBar.addEventListener('click', function () {
-            sidebar.classList.toggle('hide');
-
-            // Toggle the icon between left and right chevron + add rotation animation
-            if (sidebar.classList.contains('hide')) {
-                menuBar.classList.replace('bx-chevron-left', 'bx-chevron-right');
-            } else {
-                menuBar.classList.replace('bx-chevron-right', 'bx-chevron-left');
-            }
-
-            // Add rotation animation
-            menuBar.classList.add('rotate-icon');
-            setTimeout(() => {
-                menuBar.classList.remove('rotate-icon'); // Remove class after animation completes
-            }, 300); // Matches the CSS transition time
+        submenuToggles.forEach(toggle => {
+            toggle.addEventListener('click', (e) => {
+                e.preventDefault();
+                const parent = toggle.parentElement;
+                parent.classList.toggle('active');
+            });
         });
 
-        // SEARCH TOGGLE (For small screens)
+        // Toggle sidebar visibility (if you have a sidebar toggle icon)
+        const menuBar = document.querySelector('#content nav .bx.bx-chevron-left'); // Update this selector if needed
+        const sidebar = document.getElementById('sidebar');
+
+        if (menuBar) {
+            menuBar.addEventListener('click', function () {
+                sidebar.classList.toggle('hide');
+
+                // Toggle the icon direction
+                if (sidebar.classList.contains('hide')) {
+                    menuBar.classList.replace('bx-chevron-left', 'bx-chevron-right');
+                } else {
+                    menuBar.classList.replace('bx-chevron-right', 'bx-chevron-left');
+                }
+
+                // Add rotation effect
+                menuBar.classList.add('rotate-icon');
+                setTimeout(() => {
+                    menuBar.classList.remove('rotate-icon');
+                }, 300);
+            });
+        }
+
+        // Responsive search toggle (optional)
         const searchButton = document.querySelector('#content nav form .form-input button');
         const searchButtonIcon = document.querySelector('#content nav form .form-input button .bx');
         const searchForm = document.querySelector('#content nav form');
 
-        searchButton.addEventListener('click', function (e) {
-            if (window.innerWidth < 576) {
-                e.preventDefault();
-                searchForm.classList.toggle('show');
-                if (searchForm.classList.contains('show')) {
-                    searchButtonIcon.classList.replace('bx-search', 'bx-x');
-                } else {
-                    searchButtonIcon.classList.replace('bx-x', 'bx-search');
+        if (searchButton) {
+            searchButton.addEventListener('click', function (e) {
+                if (window.innerWidth < 576) {
+                    e.preventDefault();
+                    searchForm.classList.toggle('show');
+                    if (searchForm.classList.contains('show')) {
+                        searchButtonIcon.classList.replace('bx-search', 'bx-x');
+                    } else {
+                        searchButtonIcon.classList.replace('bx-x', 'bx-search');
+                    }
                 }
-            }
-        });
-
-
+            });
+        }
     </script>
+
+
+    <!-- JavaScript for Toggle, Title Update & Pie Chart -->
+    <script>
+        // Function to calculate "time ago"
+        function timeAgo(time) {
+            const now = new Date();
+            const createdAt = new Date(time);
+            const diff = Math.floor((now - createdAt) / 1000); // Time difference in seconds
+
+            if (diff < 60) {
+                return "Just now";
+            } else if (diff < 3600) {
+                return Math.floor(diff / 60) + " min ago";
+            } else if (diff < 86400) {
+                return Math.floor(diff / 3600) + " hour ago";
+            } else {
+                return Math.floor(diff / 86400) + " day ago";
+            }
+        }
+
+        // Function to update time dynamically
+        function updateTimes() {
+            document.querySelectorAll('.registered-time').forEach(el => {
+                const time = el.getAttribute('data-time');
+                el.textContent = timeAgo(time);
+            });
+        }
+
+        // Initial call & update every 30 seconds
+        updateTimes();
+        setInterval(updateTimes, 30000);
+
+        // Wait for the page to load
+        document.addEventListener("DOMContentLoaded", function () {
+            var chartToggle = document.querySelector(".chart-toggle");
+            var sectionTitle = document.getElementById("section-title");
+            var tableView = document.querySelector(".table-view");
+            var chartContainer = document.querySelector(".chart-container");
+
+            // Pie Chart Configuration
+            var ctx = document.getElementById('userChart').getContext('2d');
+            var userChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: <?php echo json_encode($roles); ?>,
+                    datasets: [{
+                        data: <?php echo json_encode($counts); ?>,
+                        backgroundColor: ['#ff6384', '#36a2eb', '#ffcd56', '#4bc0c0']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    layout: {
+                        padding: {
+                            bottom: 35 // Adds space between the chart and labels
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'left',
+                            labels: {
+                                boxWidth: 15, // Smaller legend boxes
+                                padding: 40,  // Adds spacing between legend items
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Toggle between Table and Pie Chart
+            chartToggle.addEventListener("click", function () {
+                if (tableView.style.display === "none") {
+                    tableView.style.display = "flex";
+                    chartContainer.style.display = "none";
+                    sectionTitle.textContent = "Recent Accounts"; // Update title back
+                } else {
+                    tableView.style.display = "none";
+                    chartContainer.style.display = "flex";
+                    sectionTitle.textContent = "Total Users"; // Update title to Pie Chart
+                }
+            });
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Load Chart.js -->
 </body>
 </html>

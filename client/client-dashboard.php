@@ -1,8 +1,6 @@
 <?php
-session_start();
-
-// Check if username exists in session
-$username = isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username']) : 'Guest';
+    
+    require_once '../src/config.php'; // Include DB connection
 
 ?>
 
@@ -350,7 +348,7 @@ $username = isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username'
         }
         #content main .head-title .left .breadcrumb li a {
             color: var(--dark-grey);
-            pointer-events: none;
+            
         }
         #content main .head-title .left .breadcrumb li a.active {
             color: var(--blue);
@@ -605,7 +603,7 @@ $username = isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username'
         }
     </style>
 
-    <title>Student Dashboard</title>
+    <title>Client Dashboard</title>
 </head>
 <body>
 
@@ -614,13 +612,13 @@ $username = isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username'
     <section id="sidebar">
         
         <a href="#" class="brand">
-            <i class="bx bxs-teacher"></i>
-            <span class="text">Hi! <?php echo htmlspecialchars($_SESSION['username']); ?></span>
+            <i class='bx bxs-user'></i>
+            <span class="text">Hi <?php echo htmlspecialchars($_SESSION['username']); ?>!</span>
         </a>
         
         <ul class="side-menu top">
             <li class="active">
-                <a href="#">
+                <a href="client-dashboard.php">
                     <i class='bx bxs-dashboard' ></i>
                     <span class="text">Dashboard</span>
                 </a>
@@ -632,7 +630,7 @@ $username = isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username'
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="client-messages.php">
                     <i class='bx bxs-message-dots' ></i>
                     <span class="text">Message</span>
                 </a>
@@ -652,7 +650,7 @@ $username = isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username'
                 </a>
             </li>
             <li>
-                <a href="logout.php" class="logout">
+                <a href="client-logout.php" class="logout">
                     <i class='bx bxs-log-out-circle' ></i>
                     <span class="text">Logout</span>
                 </a>
@@ -694,11 +692,11 @@ $username = isset($_SESSION['username']) ? htmlspecialchars($_SESSION['username'
                     <h1>Dashboard</h1>
                     <ul class="breadcrumb">
                         <li>
-                            <a href="#">Dashboard</a>
+                            <a href="client-dashboard.php">Home</a>
                         </li>
                         <li><i class='bx bx-chevron-right' ></i></li>
                         <li>
-                            <a class="active" href="#">Home</a>
+                            <a class="active">Dashboard</a>
                         </li>
                     </ul>
                 </div>

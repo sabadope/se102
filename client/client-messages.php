@@ -137,7 +137,7 @@
         }
     </style>
 
-    <title>Supervisor Message</title>
+    <title>Client Message</title>
 </head>
 <body>
 
@@ -146,11 +146,11 @@
     <section id="sidebar">
         <a href="#" class="brand">
             <i class='bx bxs-user'></i>
-            <span class="text">Super Panel</span>
+            <span class="text">Hi <?php echo htmlspecialchars($_SESSION['username']); ?>!</span>
         </a>
         <ul class="side-menu top">
             <li>
-                <a href="supervisor-dashboard.php">
+                <a href="client-dashboard.php">
                     <i class='bx bxs-dashboard' ></i>
                     <span class="text">Dashboard</span>
                 </a>
@@ -167,8 +167,8 @@
                     <span class="text">Analytics</span>
                 </a>
             </li>
-            <li id="openChat" class="active">
-                <a href="supervisor-messages.php">
+            <li class="active">
+                <a href="client-messages.php">
                     <i class='bx bxs-message-dots'></i>
                     <span class="text">Messages</span>
                 </a>
@@ -188,7 +188,7 @@
                 </a>
             </li>
             <li>
-                <a href="supervisor-logout.php" class="logout">
+                <a href="client-logout.php" class="logout">
                     <i class='bx bxs-log-out-circle' ></i>
                     <span class="text">Logout</span>
                 </a>
@@ -230,7 +230,7 @@
                     <h1>Chat Messages</h1>
                     <ul class="breadcrumb">
                         <li>
-                            <a href="admin-messages.php">Home</a>
+                            <a href="client-messages.php">Home</a>
                         </li>
                         <li><i class='bx bx-chevron-right' ></i></li>
                         <li>
@@ -257,40 +257,7 @@
                 <!-- Chat Container -->
                 <div class="chat-container">
 
-                    <div class="login-container">
-                        <form method="post" action="app/http/auth.php" class="login-form">
-                            <img src="img/logo.png" alt="Logo">
-                            <h2>CHAT AUTHENTICATION</h2>
-
-                            <?php if (isset($_GET['error'])) { ?>
-                                <div class="alert alert-warning">
-                                    <?php echo htmlspecialchars($_GET['error']); ?>
-                                </div>
-                            <?php } ?>
-
-                            <?php if (isset($_GET['success'])) { ?>
-                                <div class="alert alert-success">
-                                    <?php echo htmlspecialchars($_GET['success']); ?>
-                                </div>
-                            <?php } ?>
-
-                            <div class="input-group">
-                                <label for="username">User name</label>
-                                <input type="text" id="username" name="username">
-                            </div>
-
-                            <div class="input-group">
-                                <label for="password">Password</label>
-                                <input type="password" id="password" name="password">
-                            </div>
-
-                            <button type="submit" class="btn">LOGIN</button>
-
-                            <div class="register-link">
-                                <p>Don't have an account? <a href="signup.php">Sign Up</a></p>
-                            </div>
-                        </form>
-                    </div>
+                    <iframe src="index.php" width="100%" height="520px" frameborder="0"></iframe>
 
                 </div>
 

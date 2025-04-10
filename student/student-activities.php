@@ -1,7 +1,7 @@
 <?php
+    
     require_once '../src/config.php'; // Include DB connection
 
-    
 ?>
 
 <!DOCTYPE html>
@@ -65,7 +65,7 @@
             overflow-x: hidden;
         }
 
-        /* SIDEBAR */
+        /* ========== SIDEBAR BASE ========== */
         #sidebar {
             position: fixed;
             top: 0;
@@ -75,17 +75,22 @@
             background: var(--light);
             z-index: 2000;
             font-family: var(--lato);
+            display: flex;
+            flex-direction: column;
             transition: all 0.3s ease-in-out;
-            overflow-x: hidden;
+            overflow: hidden;
             scrollbar-width: none;
         }
+
         #sidebar::--webkit-scrollbar {
             display: none;
         }
+
         #sidebar.hide {
             width: 60px;
-
         }
+
+        /* ========== BRAND ========== */
         #sidebar .brand {
             font-size: 24px;
             font-weight: 700;
@@ -100,48 +105,35 @@
             z-index: 500;
             box-sizing: content-box;
         }
+
         #sidebar .brand .bx {
             min-width: 60px;
             display: flex;
             justify-content: center;
         }
+
+        /* ========== SIDEBAR CONTENT WRAPPER ========== */
+        .sidebar-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0;
+        }
+
+        /* ========== SIDE MENU BASE ========== */
         #sidebar .side-menu {
             width: 100%;
             margin-top: 48px;
         }
+
         #sidebar .side-menu li {
-            height: 48px;
+            height: 48px; /* or whatever height you set */
             background: transparent;
             margin-left: 6px;
             border-radius: 48px 0 0 48px;
             padding: 4px;
+            transition: margin-top 0.2s ease; /* Smooth transition for margin adjustment */
         }
-        #sidebar .side-menu li.active {
-            background: var(--grey);
-            position: relative;
-        }
-        #sidebar .side-menu li.active::before {
-            content: '';
-            position: absolute;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            top: -40px;
-            right: 0;
-            box-shadow: 20px 20px 0 var(--grey);
-            z-index: -1;
-        }
-        #sidebar .side-menu li.active::after {
-            content: '';
-            position: absolute;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            bottom: -40px;
-            right: 0;
-            box-shadow: 20px -20px 0 var(--grey);
-            z-index: -1;
-        }
+
         #sidebar .side-menu li a {
             width: 100%;
             height: 100%;
@@ -152,27 +144,111 @@
             font-size: 16px;
             color: var(--dark);
             white-space: nowrap;
-            overflow-x: hidden;
         }
-        #sidebar .side-menu.top li.active a {
-            color: var(--blue);
-        }
-        #sidebar.hide .side-menu li a {
-            width: calc(48px - (4px * 2));
-            transition: width .3s ease;
-        }
-        #sidebar .side-menu li a.logout {
-            color: var(--red);
-        }
-        #sidebar .side-menu.top li a:hover {
-            color: var(--blue);
-        }
+
         #sidebar .side-menu li a .bx {
-            min-width: calc(60px  - ((4px + 6px) * 2));
+            min-width: calc(60px - ((4px + 6px) * 2));
             display: flex;
             justify-content: center;
         }
-        /* SIDEBAR */
+
+        /* ========== ACTIVE STATE ========== */
+        #sidebar .side-menu li.active {
+            background: var(--grey);
+            position: relative;
+
+        }
+
+        /* ===== Submenu Default Style ===== */
+        #sidebar .side-menu .sub-menu li a {
+            padding-left: 1px;       
+            transition: color 0.3s;
+        }
+
+
+
+        #sidebar .side-menu li.active::before,
+        #sidebar .side-menu li.active::after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            right: 0;
+            z-index: -1;
+        }
+
+        #sidebar .side-menu li.active::before {
+            top: -40px;
+            box-shadow: 20px 20px 0 var(--grey);
+
+        }
+
+        #sidebar .side-menu li.active::after {
+            bottom: -40px;
+            box-shadow: 20px -20px 0 var(--grey);
+        }
+
+        #sidebar .side-menu.top li.active a {
+            color: var(--blue);
+        }
+
+        /* ========== HOVER & HIDE EFFECTS ========== */
+        #sidebar .side-menu.top li a:hover {
+            color: var(--blue);
+        }
+
+        #sidebar.hide .side-menu li a {
+            width: calc(48px - (4px * 2));
+            transition: width 0.3s ease;
+        }
+
+        /* ========== LOGOUT COLOR ========== */
+        #sidebar .side-menu li a.logout {
+            color: var(--red);
+        }
+
+        /* ========== SUBMENU DROPDOWN ========== */
+        .sub-menu {
+            display: none;
+            padding-left: 1.5rem;
+            transition: all 0.3s ease;
+
+        }
+
+        /* Optional: Add active styles for the expanded submenu */
+        .sub-menu.active {
+            display: block; /* Ensure the submenu is visible */
+        }
+
+        /* Apply grey background to active items */
+        .has-submenu.active > a {
+            background: var(--grey);
+            border-radius: 5px; /* Ensure the border radius is maintained */
+        }
+
+        /* Optionally, add hover effect to the active link */
+        .has-submenu.active > a:hover {
+            background: var(--grey); /* Active background for the Activities tab */
+            border-radius: 5px; /* Preserve the border radius */
+        }
+
+        .has-submenu.active .sub-menu {
+            display: block;
+        }
+
+        /* ========== Arrow for expanded/collapsed state ========== */
+        .has-submenu > a .arrow {
+            margin-left: auto;
+            transition: transform 0.3s ease;
+            transform: rotate(0deg); /* Default: collapsed (arrow up) */
+        }
+
+        /* Arrow rotation for expanded submenu (handled by JavaScript now) */
+        .has-submenu.active > a .arrow {
+            transform: rotate(180deg); /* Expanded: arrow down */
+        }
+
 
 
         /* CONTENT */
@@ -419,7 +495,7 @@
         #content main .table-data {
             display: flex;
             flex-wrap: wrap;
-            grid-gap: 0px;
+            grid-gap: 24px;
             margin-top: 24px;
             width: 100%;
             color: var(--dark);
@@ -435,8 +511,6 @@
             align-items: center;
             grid-gap: 16px;
             margin-bottom: 24px;
-            flex-grow: 1;
-            flex-basis: 500px;
         }
         #content main .table-data .head h3 {
             margin-right: auto;
@@ -601,39 +675,44 @@
                 min-width: 420px;
             }
         }
-        
 
-        /* Chat Container - Flex for Layout */
-        .chat-container {
-            display: flex;
-            width: 100%; /* Matches chat-input width */
+        /* Ensure the container remains fixed in size */
+        .recent-accounts {
+            width: 100%;
             max-width: 100%;
-            height: 400px;
-            background: #fff;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            height: 330px; /* Fixed height to prevent stretching */
+            overflow: hidden; /* Prevent content from overflowing */
             position: relative;
-            transition: width 0.3s ease-in-out;
         }
 
-        /* Chat Content - Takes Full Space Initially */
-        .chat-content {
-            flex: 1;
+        /* Table and Chart Container */
+        .table-view, .chart-container {
+            width: 100%;
+            height: 100%;
             display: flex;
-            flex-direction: column;
-            transition: width 0.3s ease-in-out; /* Animates resizing */
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            
         }
 
-        
-        
+        /* Hide Pie Chart Initially */
+        .chart-container {
+            display: none;
+            
+        }
 
-        
-
-
+        /* Ensure the Pie Chart adjusts inside the container */
+        canvas {
+            max-width: 100% !important;
+            max-height: 100% !important;
+            
+        }
     </style>
 
-    <title>Supervisor Message</title>
+    <title>Student Dashboard</title>
 </head>
 <body>
 
@@ -641,57 +720,73 @@
     <!-- SIDEBAR -->
     <section id="sidebar">
         <a href="#" class="brand">
-            <i class='bx bxs-user'></i>
-            <span class="text">Super Panel</span>
+            <i class="bx bxs-graduation"></i>
+            <span class="text">Hi <?php echo htmlspecialchars($_SESSION['username']); ?>!</span>
         </a>
-        <ul class="side-menu top">
-            <li>
-                <a href="supervisor-dashboard.php">
-                    <i class='bx bxs-dashboard' ></i>
-                    <span class="text">Dashboard</span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class='bx bxs-check-circle' ></i>
-                    <span class="text">Task</span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class='bx bxs-doughnut-chart' ></i>
-                    <span class="text">Analytics</span>
-                </a>
-            </li>
-            <li id="openChat" class="active">
-                <a href="supervisor-messages.php">
-                    <i class='bx bxs-message-dots'></i>
-                    <span class="text">Messages</span>
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class='bx bxs-group' ></i>
-                    <span class="text">Team</span>
-                </a>
-            </li>
-        </ul>
-        <ul class="side-menu">
-            <li>
-                <a href="#">
-                    <i class='bx bxs-cog' ></i>
-                    <span class="text">Settings</span>
-                </a>
-            </li>
-            <li>
-                <a href="supervisor-logout.php" class="logout">
-                    <i class='bx bxs-log-out-circle' ></i>
-                    <span class="text">Logout</span>
-                </a>
-            </li>
-        </ul>
+
+        <!-- NEW FLEX WRAPPER -->
+        <div class="sidebar-content">
+            <!-- TOP ITEMS -->
+            <ul class="side-menu top">
+                <li>
+                    <a href="student-dashboard.php">
+                        <i class='bx bxs-dashboard'></i>
+                        <span class="text">Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class='bx bxs-calendar-check'></i>
+                        <span class="text">Attendance</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="student-messages.php">
+                        <i class='bx bxs-message-dots'></i>
+                        <span class="text">Message</span>
+                    </a>
+                </li>
+
+                <!-- Activities with Submenu -->
+                <li id="has-submenu" class="has-submenu active">
+                    <a href="student-activities.php">
+                        <i class='bx bxs-folder-open'></i>
+                        <span class="text">Activities</span>
+                        <i class='bx bx-chevron-down arrow'></i>
+                    </a>
+                    <ul id="sub-menu" class="sub-menu active">
+                        <li>
+                            <a href="student-dailylogs.php">
+                                <i class='bx bxs-book-content'></i>
+                                Daily Logs
+                            </a>
+                        </li>
+                        <li>
+                            <a href="student-feedbacks.php">
+                                <i class='bx bx-comment-detail'></i>
+                                Feedbacks
+                            </a>
+                        </li>
+                    </ul>
+                </li>        
+                <li>
+                    <a href="#">
+                        <i class='bx bxs-cog'></i>
+                        <span class="text">Settings</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="student-logout.php" class="logout">
+                        <i class='bx bxs-log-out-circle'></i>
+                        <span class="text">Logout</span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
     </section>
-    <!-- SIDEBAR -->
+
+
 
 
 
@@ -723,16 +818,15 @@
         <main>
             <div class="head-title">
                 <div class="left">
-                    <h1>Chat Messages</h1>
+                    <h1>Activities</h1>
                     <ul class="breadcrumb">
                         <li>
-                            <a href="admin-messages.php">Home</a>
+                            <a href="student-activities.php">Home</a>
                         </li>
                         <li><i class='bx bx-chevron-right' ></i></li>
                         <li>
-                            <a class="active">Messages</a>
+                            <a class="active">Activities</a>
                         </li>
-                        
                     </ul>
                 </div>
                 <a href="#" class="btn-download">
@@ -741,91 +835,99 @@
                 </a>
             </div>
 
-            <div class="table-data">
-                
-                <div class="head">
-                    <h3 id="section-title">Recent Messages</h3> 
-                    <i class='bx bx-plus'></i>  <!-- Expand -->
-                    <i class='bx bxs-chat' id="chatToggle"></i>  <!-- Toggle Button -->
-                </div>
-                
-
-                <!-- Chat Container (Fixed Layout) -->
-                <div class="chat-container">
-                    <!-- Chat Content -->
-                    <div class="chat-content">
-                        
-                        
-                    </div>
-                </div>
-
-                
-            </div>
-
-
-            
+            <ul class="box-info">
+                <li>
+                    <i class='bx bxs-calendar-check' ></i>
+                    <span class="text">
+                        <h3>Attendace</h3>
+                        <p>100%</p>
+                    </span>
+                </li>
+                <li>
+                    <i class='bx bxs-group' ></i>
+                    <span class="text">
+                        <h3>Message</h3>
+                        <p>3</p>
+                    </span>
+                </li>
+                <li>
+                    <i class='bx bxs-dollar-circle' ></i>
+                    <span class="text">
+                        <h3>Team</h3>
+                        <p>5</p>
+                    </span>
+                </li>
+            </ul>
         </main>
-        <!-- MAIN END -->
-
+        <!-- MAIN -->
     </section>
-    <!-- CONTENT END -->
+    <!-- CONTENT -->
     
 
-    <!-- SIDEBAR -->
     <script>
-        
-        // Select all sidebar menu items
-        const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
+        // ========== DEFAULT ACTIVATION RULES ==========
 
-        allSideMenu.forEach(item => {
-            const li = item.parentElement;
+        if (window.location.pathname.includes("student-activities.php")) {
+            const activitiesMenu = document.querySelector('#has-submenu');
+            const submenu = activitiesMenu.querySelector('.sub-menu');
+            const nextLi = activitiesMenu.nextElementSibling;
 
-            item.addEventListener('click', function () {
-                allSideMenu.forEach(i => {
-                    i.parentElement.classList.remove('active');
-                });
-                li.classList.add('active');
+            // Always keep the Activities tab styled as active
+            activitiesMenu.classList.add('active');
+
+            // Keep the submenu expanded
+            submenu.classList.add('active');
+            submenu.style.display = 'block';
+
+            // Push down the next item to avoid overlap
+            if (nextLi) nextLi.style.marginTop = '90px';
+        }
+
+        // ========== SUBMENU TOGGLE FUNCTIONALITY ==========
+
+        const submenuLinks = document.querySelectorAll('.has-submenu > a');
+
+        submenuLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault(); // Prevent redirect
+
+                const parentLi = link.parentElement;
+                const submenu = parentLi.querySelector('.sub-menu');
+                const arrow = link.querySelector('.arrow'); // Get the arrow element
+                const nextLi = parentLi.nextElementSibling;
+
+                // Toggle submenu visibility only — NOT the .active class
+                const isExpanded = submenu.classList.contains('active');
+                submenu.classList.toggle('active');
+                submenu.style.display = isExpanded ? 'none' : 'block';
+
+                // Rotate arrow based on expanded/collapsed state
+                if (!isExpanded) {
+                    arrow.style.transform = 'rotate(180deg)';
+                } else {
+                    arrow.style.transform = 'rotate(0deg)';
+                }
+
+                // Adjust margin of next item to avoid overlapping
+                if (!isExpanded) {
+                    if (nextLi) nextLi.style.marginTop = '90px';
+                } else {
+                    if (nextLi) nextLi.style.marginTop = '0px';
+                }
             });
         });
 
-        // TOGGLE SIDEBAR
-        const menuBar = document.querySelector('#content nav .bx.bx-chevron-left'); // Updated selector
-        const sidebar = document.getElementById('sidebar');
-
-        menuBar.addEventListener('click', function () {
-            sidebar.classList.toggle('hide');
-
-            // Toggle the icon between left and right chevron + add rotation animation
-            if (sidebar.classList.contains('hide')) {
-                menuBar.classList.replace('bx-chevron-left', 'bx-chevron-right');
-            } else {
-                menuBar.classList.replace('bx-chevron-right', 'bx-chevron-left');
-            }
-
-            // Add rotation animation
-            menuBar.classList.add('rotate-icon');
-            setTimeout(() => {
-                menuBar.classList.remove('rotate-icon'); // Remove class after animation completes
-            }, 300); // Matches the CSS transition time
-        });
-
-        // SEARCH TOGGLE (For small screens)
-        const searchButton = document.querySelector('#content nav form .form-input button');
-        const searchButtonIcon = document.querySelector('#content nav form .form-input button .bx');
-        const searchForm = document.querySelector('#content nav form');
-
-        searchButton.addEventListener('click', function (e) {
-            if (window.innerWidth < 576) {
-                e.preventDefault();
-                searchForm.classList.toggle('show');
-                if (searchForm.classList.contains('show')) {
-                    searchButtonIcon.classList.replace('bx-search', 'bx-x');
-                } else {
-                    searchButtonIcon.classList.replace('bx-x', 'bx-search');
-                }
+        // Highlight the active submenu link based on current URL
+        const subLinks = document.querySelectorAll('.sub-menu li a');
+        subLinks.forEach(link => {
+            if (window.location.href.includes(link.getAttribute('href'))) {
+                link.classList.add('active');
             }
         });
+
     </script>
+
+
 
 
 
@@ -910,14 +1012,6 @@
                 }
             });
         });
-    </script>
-
-
-    <!-- CHAT CONTENT -->
-    <script>
-        
-    
-
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Load Chart.js -->
