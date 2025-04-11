@@ -750,7 +750,7 @@
                 <!-- Performance with Submenu -->
                 <li id="has-submenu" class="has-submenu active">
                     <a href="student-performance.php">
-                        <i class='bx bxs-folder-open'></i>
+                        <i class='bx bxs-book-content'></i>
                         <span class="text">Performance</span>
                         <i class='bx bx-chevron-down arrow'></i>
                     </a>
@@ -758,13 +758,25 @@
                         <li>
                             <a href="student-dailylogs.php">
                                 <i class='bx bx-task'></i>
-                                Daily Logs
+                                Task Completion
                             </a>
                         </li>
                         <li>
                             <a href="student-feedbacks.php">
                                 <i class='bx bx-comment-detail'></i>
-                                Feedbacks
+                                Skill Development
+                            </a>
+                        </li>
+                        <li>
+                            <a href="student-feedbacks.php">
+                                <i class='bx bx-comment-detail'></i>
+                                Achievement Ranking
+                            </a>
+                        </li>
+                        <li>
+                            <a href="student-feedbacks.php">
+                                <i class='bx bx-comment-detail'></i>
+                                Behavioral Conduct
                             </a>
                         </li>
                     </ul>
