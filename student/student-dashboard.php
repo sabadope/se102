@@ -754,7 +754,7 @@
                 <li>
                     <a href="student-performances.php" style="display: flex; align-items: center;">
                         <i class='bx bxs-book-content'></i>
-                        <span class="text">Performances</span>
+                        <span class="text">Performance</span>
                         <i class='bx bx-chevron-down arrow' style="margin-left: auto;"></i>
                     </a>
                 </li>

@@ -747,11 +747,11 @@
                     </a>
                 </li>
 
-                <!-- Activities with Submenu -->
+                <!-- Performance with Submenu -->
                 <li id="has-submenu" class="has-submenu active">
-                    <a href="student-activities.php">
+                    <a href="student-performance.php">
                         <i class='bx bxs-folder-open'></i>
-                        <span class="text">Activities</span>
+                        <span class="text">Performance</span>
                         <i class='bx bx-chevron-down arrow'></i>
                     </a>
                     <ul id="sub-menu" class="sub-menu active">
@@ -768,7 +768,14 @@
                             </a>
                         </li>
                     </ul>
-                </li>        
+                </li>
+                <li>
+                    <a href="student-activities.php" style="display: flex; align-items: center;">
+                        <i class='bx bxs-folder-open'></i>
+                        <span class="text">Activities</span>
+                        <i class='bx bx-chevron-down arrow' style="margin-left: auto;"></i>
+                    </a>
+                </li>
                 <li>
                     <a href="#">
                         <i class='bx bxs-cog'></i>
