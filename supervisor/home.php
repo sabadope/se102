@@ -29,10 +29,7 @@
 	<link rel="icon" href="img/logo.png">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
-<body class="d-flex
-             justify-content-center
-             align-items-center
-             vh-100">
+<body class="d-flex justify-content-center align-items-center" style="background: #F9F9F9; height: 100%; padding: 0;">
     <div class="p-2 w-400
                 rounded shadow">
     	<div>

@@ -15,7 +15,7 @@
 	      href="css/style.css">
 	<link rel="icon" href="img/logo.png">
 </head>
-<body class="d-flex justify-content-center align-items-center">
+<body class="d-flex justify-content-center align-items-center" style="background: #F9F9F9; height: 100%; padding: 0;">
 	 <div class="w-400 p-3">
 	 	<form method="post" 
 	 	      action="app/http/signup.php"
