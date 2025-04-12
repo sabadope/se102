@@ -14,6 +14,27 @@
 	<link rel="icon" href="img/logo.png">
 
 	<style>
+
+		:root {
+			--poppins: 'Poppins', sans-serif;
+			--lato: 'Lato', sans-serif;
+
+			--light: #F9F9F9;
+			--blue: #3C91E6;
+			--light-blue: #CFE8FF;
+			--grey: #eee;
+			--dark-grey: #AAAAAA;
+			--dark: #342E37;
+			--red: #DB504A;
+			--yellow: #FFCE26;
+			--light-yellow: #FFF2C6;
+			--orange: #FD7238;
+			--light-orange: #FFE0D3;
+		}
+
+		.body {
+			background: #F9F9F9;
+		}
 		
 		.vh-100 {
 			min-height: 100vh;
@@ -93,20 +114,13 @@
 		/*message_status*/
 	</style>
 </head>
-<body class="d-flex justify-content-center align-items-center">
-	 <div class="w-400 p-3">
-	 	<form method="post" 
-	 	      action="app/http/auth.php">
-	 		<div class="d-flex
-	 		            justify-content-center
-	 		            align-items-center
-	 		            flex-column">
+<body class="d-flex justify-content-center align-items-center" style="background: #F9F9F9; height: 100%; padding: 0;">
+ 	<div class="w-400 p-3">
+	 	<form method="post" action="app/http/auth.php">
+			<div class="d-flex justify-content-center align-items-center flex-column">
 
-	 		<img src="img/logo.png" 
-	 		     class="w-25">
-	 		<h3 class="display-4 fs-1 p-3 text-center">
-	 			       CHAT ROOM</h3>   
-
+		 		<img src="img/logo.png" class="w-25">
+		 		<h3 class="display-4 fs-1 p-3 text-center">CHAT ROOM</h3>   
 
 	 		</div>
 	 		<?php if (isset($_GET['error'])) { ?>
@@ -121,27 +135,19 @@
 			</div>
 			<?php } ?>
 		  <div class="mb-3">
-		    <label class="form-label">
-		           User name</label>
-		    <input type="text" 
-		           class="form-control"
-		           name="username">
+		    <label class="form-label"> User name</label>
+		    <input type="text" class="form-control"name="username">
 		  </div>
 
 		  <div class="mb-3">
-		    <label class="form-label">
-		           Password</label>
-		    <input type="password" 
-		           class="form-control"
-		           name="password">
+		    <label class="form-label">Password</label>
+		    <input type="password" class="form-control" name="password">
 		  </div>
-		  
-		  <button type="submit" 
-		          class="btn btn-primary">
-		          LOGIN</button>
+			  
+		  <button type="submit" class="btn btn-primary">LOGIN</button>
 		  <a href="signup.php">Sign Up</a>
 		</form>
-	 </div>
+ 	</div>
 </body>
 </html>
 <?php

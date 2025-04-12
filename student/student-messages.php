@@ -49,7 +49,6 @@
             display: flex;
             width: 100%;
             max-width: 100%;
-            height: 100%;
             overflow: hidden;
             position: relative;
             transition: width 0.3s ease-in-out;
@@ -64,108 +63,41 @@
             display: block; /* Ensures it behaves like a block-level element */
         }
 
-        /* Login Container - Centered Box Inside */
-        .login-container {
-            /* background: var(--light); */ /* Removed */
-            padding: 15px;
+        #content main .table-data {
+            display: flex;
+            flex-wrap: wrap;
+            grid-gap: 0px;
+            margin-top: 24px;
             width: 100%;
-            max-width: 100%;
-            text-align: center;
+            height: 100%;
+            color: var(--dark);
+        }
+        #content main .table-data > div {
+            border-radius: 20px;
+            background: var(--light);
+            padding: 24px;
+            overflow-x: auto;
+        }
+        #content main .table-data .head {
+            display: flex;
             align-items: center;
-            background-color: transparent; /* Optional: explicitly transparent */
+            grid-gap: 16px;
+            margin-bottom: 24px;
+            flex-grow: 1;
+            flex-basis: 500px;
         }
-
-        /* Form and Fields */
-        .login-form img {
-            width: 80px;
-            margin-bottom: 15px;
-        }
-
-        .login-form h2 {
-            color: var(--dark);
+        #content main .table-data .head h3 {
+            margin-right: auto;
             font-size: 24px;
-            margin-bottom: 20px;
-        }
-
-        .input-group {
-            margin-bottom: 15px;
-            text-align: left;
-        }
-
-        .input-group label {
-            display: block;
             font-weight: 600;
-            color: var(--dark);
-            margin-bottom: 5px;
-            font-size: 14px;
         }
-
-        .input-group input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid var(--dark-grey);
-            border-radius: 5px;
-            outline: none;
-            font-size: 14px;
-            transition: border-color 0.3s;
-        }
-
-        .input-group input:focus {
-            border-color: var(--blue);
-        }
-
-        .btn {
-            background: var(--blue);
-            color: var(--light);
-            border: none;
-            padding: 10px;
-            width: 100%;
-            border-radius: 5px;
-            font-size: 16px;
+        #content main .table-data .head .bx {
             cursor: pointer;
-            transition: 0.3s;
         }
 
-        .btn:hover {
-            background: var(--light-blue);
-            color: var(--dark);
-        }
+        
 
-        .register-link {
-            margin-top: 15px;
-            font-size: 14px;
-        }
-
-        .register-link a {
-            color: var(--blue);
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .register-link a:hover {
-            text-decoration: underline;
-        }
-
-        /* Alerts */
-        .alert {
-            padding: 10px;
-            margin-bottom: 15px;
-            font-size: 14px;
-            border-radius: 5px;
-            text-align: left;
-        }
-
-        .alert-warning {
-            background-color: #fff3cd;
-            color: #856404;
-            border: 1px solid #ffeeba;
-        }
-
-        .alert-success {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
+        
     </style>
 
     <title>Student Message</title>
@@ -279,13 +211,6 @@
 
 
             <div class="table-data">
-                
-                <div class="head">
-                    <h3 id="section-title">Recent Messages</h3> 
-                    <i class='bx bx-plus'></i>  <!-- Expand -->
-                    <i class='bx bxs-chat' id="chatToggle"></i>  <!-- Toggle Button -->
-                </div>
-                
 
                 <!-- Chat Container -->
                 <div class="chat-container">
