@@ -825,21 +825,15 @@
                     </a>
                     <ul id="sub-menu" class="sub-menu active">
                         <li>
-                            <a href="student-taskcompletion.php">
-                                <i class='bx bx-task'></i>
-                                Task Completion
-                            </a>
-                        </li>
-                        <li>
                             <a href="student-feedbacks.php">
                                 <i class='bx bx-check-shield'></i>
                                 Skill Development
                             </a>
                         </li>
                         <li>
-                            <a href="student-feedbacks.php">
-                                <i class='bx bx-check-square'></i>
-                                Achievement Ranking
+                            <a href="student-taskcompletion.php">
+                                <i class='bx bx-task'></i>
+                                Task Completion
                             </a>
                         </li>
                         <li>
@@ -848,8 +842,13 @@
                                 Behavioral Conduct
                             </a>
                         </li>
+                        <li>
+                            <a href="student-feedbacks.php">
+                                <i class='bx bx-check-square'></i>
+                                Achievement Ranking
+                            </a>
+                        </li>
                     </ul>
-
                 </li>
                 <li>
                     <a href="student-activities.php" style="display: flex; align-items: center;">
@@ -925,32 +924,12 @@
             </div>
 
             <ul class="box-info">
-                <a href="student-taskcompletion.php">
-                    <li>
-                        <i class='bx bx-task' ></i>
-                        <span class="text">
-                            <h3>Task Completion</h3>
-                            <p>3</p>
-                        </span>
-                    </li>
-                </a>
                 <a href="student-skilldevelopment.php">
                     <li>
                         <i class='bx bx-check-shield' ></i>
                         <span class="text">
                             <h3>Skill Development</h3>
-                            <p>3</p>
-                        </span>
-                    </li>
-                </a>
-            </ul>
-            <ul class="box-info">
-                <a href="student-achievementranking.php">
-                    <li>
-                        <i class='bx bx-check-square' ></i>
-                        <span class="text">
-                            <h3>Achievement Ranking</h3>
-                            <p>3</p>
+                            <p>100%</p>
                         </span>
                     </li>
                 </a>
@@ -959,7 +938,27 @@
                         <i class='bx bx-check-circle' ></i>
                         <span class="text">
                             <h3>Behavior Conduct</h3>
-                            <p>3</p>
+                            <p>100%</p>
+                        </span>
+                    </li>
+                </a>
+            </ul>
+            <ul class="box-info">
+                <a href="student-taskcompletion.php">
+                    <li>
+                        <i class='bx bx-task' ></i>
+                        <span class="text">
+                            <h3>Task Completion</h3>
+                            <p>100%</p>
+                        </span>
+                    </li>
+                </a>
+                <a href="student-achievementranking.php">
+                    <li>
+                        <i class='bx bx-check-square' ></i>
+                        <span class="text">
+                            <h3>Achievement Ranking</h3>
+                            <p>100%</p>
                         </span>
                     </li>
                 </a>
