@@ -19,6 +19,23 @@
 
     <!-- My CSS -->
     <style>
+
+        :root {
+            --poppins: 'Poppins', sans-serif;
+            --lato: 'Lato', sans-serif;
+
+            --light: #F9F9F9;
+            --blue: #3C91E6;
+            --light-blue: #CFE8FF;
+            --grey: #eee;
+            --dark-grey: #AAAAAA;
+            --dark: #342E37;
+            --red: #DB504A;
+            --yellow: #FFCE26;
+            --light-yellow: #FFF2C6;
+            --orange: #FD7238;
+            --light-orange: #FFE0D3;
+        }
         
         /* Target the entire page's scrollbar */
         ::-webkit-scrollbar {
@@ -43,6 +60,427 @@
             background: #555; /* Darker color when the user hovers over the thumb */
         }
 
+        /* ========== SIDEBAR BASE ========== */
+        #sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 280px;
+            height: 100%;
+            background: var(--light);
+            z-index: 2000;
+            font-family: var(--lato);
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease-in-out;
+            overflow: hidden;
+            scrollbar-width: none;
+        }
+
+        #sidebar::--webkit-scrollbar {
+            display: none;
+        }
+
+        #sidebar.hide {
+            width: 60px;
+
+        }
+
+        /* ========== BRAND ========== */
+        #sidebar .brand {
+            font-size: 24px;
+            font-weight: 700;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            color: var(--blue);
+            position: sticky;
+            top: 0;
+            left: 0;
+            background: var(--light);
+            z-index: 500;
+            box-sizing: content-box;
+        }
+
+        #sidebar .brand .bx {
+            min-width: 60px;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* ========== SIDEBAR CONTENT WRAPPER ========== */
+        .sidebar-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0;
+        }
+
+        /* ========== SIDE MENU BASE ========== */
+        #sidebar .side-menu {
+            width: 100%;
+            margin-top: 48px;
+        }
+
+        #sidebar .side-menu li {
+            height: 48px; /* or whatever height you set */
+            background: transparent;
+            margin-left: 6px;
+            border-radius: 48px 0 0 48px;
+            padding: 4px;
+            transition: margin-top 0.2s ease; /* Smooth transition for margin adjustment */
+        }
+
+        #sidebar .side-menu li a {
+            width: 100%;
+            height: 100%;
+            background: var(--light);
+            display: flex;
+            align-items: center;
+            border-radius: 48px;
+            font-size: 16px;
+            color: var(--dark);
+            white-space: nowrap;
+
+        }
+
+        #sidebar .side-menu li a .bx {
+            min-width: calc(60px - ((4px + 6px) * 2));
+            display: flex;
+            justify-content: center;
+        }
+
+        /* ========== ACTIVE STATE ========== */
+        #sidebar .side-menu li.active {
+            background: var(--grey);
+            position: relative;
+
+        }
+
+        /* ===== Submenu Default Style ===== */
+        #sidebar .side-menu .sub-menu li a {
+            padding-left: 1px;       
+            transition: color 0.3s;
+        }
+
+
+
+        #sidebar .side-menu li.active::before,
+        #sidebar .side-menu li.active::after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            right: 0;
+            z-index: -1;
+        }
+
+        #sidebar .side-menu li.active::before {
+            top: -40px;
+            box-shadow: 20px 20px 0 var(--grey);
+
+        }
+
+        #sidebar .side-menu li.active::after {
+            bottom: -40px;
+            box-shadow: 20px -20px 0 var(--grey);
+        }
+
+        #sidebar .side-menu.top li.active a {
+            color: var(--blue);
+        }
+
+        /* ========== HOVER & HIDE EFFECTS ========== */
+        #sidebar .side-menu.top li a:hover {
+            color: var(--blue);
+        }
+
+        #sidebar.hide .side-menu li a {
+            width: calc(48px - (4px * 2));
+            transition: width 0.3s ease;
+        }
+
+        /* ========== LOGOUT COLOR ========== */
+        #sidebar .side-menu li a.logout {
+            color: var(--red);
+        }
+
+        /* ========== SUBMENU DROPDOWN ========== */
+        .sub-menu {
+            display: none;
+            padding-left: 1.5rem;
+            transition: all 0.3s ease;
+
+        }
+
+
+        /* Collapsed state */
+        #sidebar.hide .side-menu li a .text {
+            opacity: 0;
+            visibility: hidden;
+            width: 0;
+            overflow: hidden;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Expanded state */
+        #sidebar .side-menu li a .text {
+            opacity: 1;
+            visibility: visible;
+            width: auto;
+            
+            transition: all 0.3s ease;
+        }
+
+        /* Optional: Add active styles for the expanded submenu */
+        .sub-menu.active {
+            display: block; /* Ensure the submenu is visible */
+        }
+
+        /* Apply grey background to active items */
+        .has-submenu.active > a {
+            background: var(--grey);
+            border-radius: 5px; /* Ensure the border radius is maintained */
+        }
+
+        /* Optionally, add hover effect to the active link */
+        .has-submenu.active > a:hover {
+            background: var(--grey); /* Active background for the Activities tab */
+            border-radius: 5px; /* Preserve the border radius */
+        }
+
+        .has-submenu.active .sub-menu {
+            display: block;
+        }
+
+        /* ========== Arrow for expanded/collapsed state ========== */
+        .has-submenu > a .arrow {
+            margin-left: auto;
+            transition: transform 0.3s ease;
+            transform: rotate(0deg); /* Default: collapsed (arrow up) */
+        }
+
+        /* Arrow rotation for expanded submenu (handled by JavaScript now) */
+        .has-submenu.active > a .arrow {
+            transform: rotate(180deg); /* Expanded: arrow down */
+        }
+
+        
+
+
+        /* SIDEBAR */
+
+
+        /* CONTENT */
+        #content {
+            position: relative;
+            width: calc(100% - 280px);
+            left: 280px;
+            transition: .3s ease;
+        }
+        #sidebar.hide ~ #content {
+            width: calc(100% - 60px);
+            left: 60px;
+        }
+
+        /* NAVBAR */
+        #content nav {
+            height: 56px;
+            background: var(--light);
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            grid-gap: 24px;
+            font-family: var(--lato);
+            position: sticky;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+
+        }
+        #content nav::before {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            bottom: -40px;
+            left: 0;
+            border-radius: 50%;
+            box-shadow: -20px -20px 0 var(--light);
+        }
+
+        #content nav a {
+            color: var(--dark);
+        }
+        #content nav .bx.bx-menu {
+            cursor: pointer;
+            color: var(--dark);
+        }
+        #content nav .nav-link {
+            font-size: 16px;
+            transition: .3s ease;
+        }
+        #content nav .nav-link:hover {
+            color: var(--blue);
+        }
+        #content nav form {
+            max-width: 400px;
+            width: 100%;
+            margin-right: auto;
+        }
+        #content nav form .form-input {
+            display: flex;
+            align-items: center;
+            height: 36px;
+
+        }
+        #content nav form .form-input input {
+            flex-grow: 1;
+            padding: 0 16px;
+            height: 100%;
+            border: none;
+            background: var(--grey);
+            border-radius: 36px 0 0 36px;
+            outline: none;
+            width: 100%;
+            color: var(--dark);
+
+        }
+        #content nav form .form-input button {
+            width: 36px;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: var(--blue);
+            color: var(--light);
+            font-size: 18px;
+            border: none;
+            outline: none;
+            border-radius: 0 36px 36px 0;
+            cursor: pointer;
+        }
+        #content nav .notification {
+            font-size: 20px;
+            position: relative;
+        }
+        #content nav .notification .num {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid var(--light);
+            background: var(--red);
+            color: var(--light);
+            font-weight: 700;
+            font-size: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #content nav .profile img {
+            width: 36px;
+            height: 36px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        #content nav .switch-mode {
+            display: block;
+            min-width: 50px;
+            height: 25px;
+            border-radius: 25px;
+            background: var(--grey);
+            cursor: pointer;
+            position: relative;
+        }
+        #content nav .switch-mode::before {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            bottom: 2px;
+            width: calc(25px - 4px);
+            background: var(--blue);
+            border-radius: 50%;
+            transition: all .3s ease;
+        }
+        #content nav #switch-mode:checked + .switch-mode::before {
+            left: calc(100% - (25px - 4px) - 2px);
+        }
+
+        nav.navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: #fff; /* Optional */
+            position: relative;
+        }
+
+        /* Force the left and right parts to occupy equal width for balance */
+        .nav-left,
+        .nav-right {
+            flex: 1;
+            display: flex;
+            align-items: center;
+
+        }
+
+        /* Right section spacing */
+        .nav-right {
+            justify-content: flex-end;
+            gap: 30px;
+            margin-left: 16%;
+        }
+
+        /* Center part (search bar) stays in the middle */
+        .nav-center {
+            flex: 0 0 auto;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Search form styling */
+        .form-input {
+            display: flex;
+            align-items: center;
+            background: #f1f1f1;
+            padding: 0;
+            border-radius: 20px;
+            width: 100%;
+        }
+
+        .form-input input[type="search"] {
+            border: none;
+            outline: none;
+            background: transparent;
+            padding: 5px 10px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+
+        }
+
+        .search-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            color: #333;
+        }
+
+        /* Profile image */
+        .profile img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        /* NAVBAR */
 
         /* Chat Container - Layout Holder */
         .chat-container {
@@ -160,24 +598,33 @@
     <!-- CONTENT -->
     <section id="content">
         <!-- NAVBAR -->
-        <nav>
+        <nav class="navbar">
             <i class="bx bx-chevron-left" style="font-size: 25px;"></i> <!-- Sidebar toggle button -->
-            
-            <form action="#">
+            <!-- Left Spacer -->
+            <div class="nav-left"></div>
+
+            <!-- Center: Search Form -->
+            <form action="#" class="nav-center">
                 <div class="form-input">
                     <input type="search" placeholder="Search...">
-                    <button type="submit" class="search-btn"><i class='bx bx-search' ></i></button>
+                    <button type="submit" class="search-btn">
+                        <i class='bx bx-search'></i>
+                    </button>
                 </div>
             </form>
-            <input type="checkbox" id="switch-mode" hidden>
-            <label for="switch-mode" class="switch-mode"></label>
-            <a href="#" class="notification">
-                <i class='bx bxs-bell' ></i>
-                <span class="num">8</span>
-            </a>
-            <a href="#" class="profile">
-                <img src="img/people.png">
-            </a>
+
+            <!-- Right: Icons -->
+            <div class="nav-right">
+                <input type="checkbox" id="switch-mode" hidden>
+                <label for="switch-mode" class="switch-mode"></label>
+                <a href="#" class="notification">
+                    <i class='bx bxs-bell'></i>
+                    <span class="num">8</span>
+                </a>
+                <a href="#" class="profile">
+                    <img src="img/people.png">
+                </a>
+            </div>
         </nav>
         <!-- NAVBAR -->
 
@@ -246,8 +693,8 @@
 
 
 
-    <script>
-        
+    <!-- NAV BAR W/ TOGGLE HIDE -->
+    <script>        
         // Select all sidebar menu items
         const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
 
@@ -301,88 +748,7 @@
         });
     </script>
 
-    <!-- JavaScript for Toggle, Title Update & Pie Chart -->
-    <script>
-        // Function to calculate "time ago"
-        function timeAgo(time) {
-            const now = new Date();
-            const createdAt = new Date(time);
-            const diff = Math.floor((now - createdAt) / 1000); // Time difference in seconds
-
-            if (diff < 60) {
-                return "Just now";
-            } else if (diff < 3600) {
-                return Math.floor(diff / 60) + " min ago";
-            } else if (diff < 86400) {
-                return Math.floor(diff / 3600) + " hour ago";
-            } else {
-                return Math.floor(diff / 86400) + " day ago";
-            }
-        }
-
-        // Function to update time dynamically
-        function updateTimes() {
-            document.querySelectorAll('.registered-time').forEach(el => {
-                const time = el.getAttribute('data-time');
-                el.textContent = timeAgo(time);
-            });
-        }
-
-        // Initial call & update every 30 seconds
-        updateTimes();
-        setInterval(updateTimes, 30000);
-
-        // Wait for the page to load
-        document.addEventListener("DOMContentLoaded", function () {
-            var chartToggle = document.querySelector(".chart-toggle");
-            var sectionTitle = document.getElementById("section-title");
-            var tableView = document.querySelector(".table-view");
-            var chartContainer = document.querySelector(".chart-container");
-
-            // Pie Chart Configuration
-            var ctx = document.getElementById('userChart').getContext('2d');
-            var userChart = new Chart(ctx, {
-                type: 'pie',
-                data: {
-                    labels: <?php echo json_encode($roles); ?>,
-                    datasets: [{
-                        data: <?php echo json_encode($counts); ?>,
-                        backgroundColor: ['#ff6384', '#36a2eb', '#ffcd56', '#4bc0c0']
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    layout: {
-                        padding: {
-                            bottom: 35 // Adds space between the chart and labels
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            position: 'left',
-                            labels: {
-                                boxWidth: 15, // Smaller legend boxes
-                                padding: 40,  // Adds spacing between legend items
-                            }
-                        }
-                    }
-                }
-            });
-
-            // Toggle between Table and Pie Chart
-            chartToggle.addEventListener("click", function () {
-                if (tableView.style.display === "none") {
-                    tableView.style.display = "flex";
-                    chartContainer.style.display = "none";
-                    sectionTitle.textContent = "Recent Accounts"; // Update title back
-                } else {
-                    tableView.style.display = "none";
-                    chartContainer.style.display = "flex";
-                    sectionTitle.textContent = "Total Users"; // Update title to Pie Chart
-                }
-            });
-        });
-    </script>
+    
 
     <script>
         

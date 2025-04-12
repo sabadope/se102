@@ -170,6 +170,38 @@
             white-space: nowrap;
         }
 
+        /* Collapsed state */
+        #sidebar.hide .side-menu li a .text {
+            opacity: 0;
+            visibility: hidden;
+            width: 0;
+            overflow: hidden;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Expanded state */
+        #sidebar .side-menu li a .text {
+            opacity: 1;
+            visibility: visible;
+            width: auto;
+            transition: all 0.3s ease;
+        }
+
+        #sidebar.hide .sub-menu .text,
+        #sidebar.hide .sub-menu i {
+            display: none;
+            opacity: 0;
+            visibility: hidden;
+            width: 0;
+            overflow: hidden;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            margin: 0;
+            padding: 0;
+        }
 
         #sidebar .side-menu li a .bx {
             min-width: calc(60px - ((4px + 6px) * 2));
@@ -218,6 +250,8 @@
             right: 0;
             z-index: -1;
         }
+
+
 
         #sidebar .side-menu li.active::before {
             top: -40px;
@@ -317,6 +351,7 @@
             top: 0;
             left: 0;
             z-index: 1000;
+
         }
         #content nav::before {
             content: '';
@@ -328,6 +363,7 @@
             border-radius: 50%;
             box-shadow: -20px -20px 0 var(--light);
         }
+
         #content nav a {
             color: var(--dark);
         }
@@ -351,6 +387,7 @@
             display: flex;
             align-items: center;
             height: 36px;
+
         }
         #content nav form .form-input input {
             flex-grow: 1;
@@ -362,6 +399,7 @@
             outline: none;
             width: 100%;
             color: var(--dark);
+
         }
         #content nav form .form-input button {
             width: 36px;
@@ -425,6 +463,74 @@
         }
         #content nav #switch-mode:checked + .switch-mode::before {
             left: calc(100% - (25px - 4px) - 2px);
+        }
+
+        nav.navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: #fff; /* Optional */
+            position: relative;
+        }
+
+        /* Force the left and right parts to occupy equal width for balance */
+        .nav-left,
+        .nav-right {
+            flex: 1;
+            display: flex;
+            align-items: center;
+
+        }
+
+        /* Right section spacing */
+        .nav-right {
+            justify-content: flex-end;
+            gap: 30px;
+            margin-left: 16%;
+        }
+
+        /* Center part (search bar) stays in the middle */
+        .nav-center {
+            flex: 0 0 auto;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Search form styling */
+        .form-input {
+            display: flex;
+            align-items: center;
+            background: #f1f1f1;
+            padding: 0;
+            border-radius: 20px;
+            width: 100%;
+        }
+
+        .form-input input[type="search"] {
+            border: none;
+            outline: none;
+            background: transparent;
+            padding: 5px 10px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+
+        }
+
+        .search-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            color: #333;
+        }
+
+        /* Profile image */
+        .profile img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
         }
         /* NAVBAR */
 
@@ -881,24 +987,33 @@
     <!-- CONTENT -->
     <section id="content">
         <!-- NAVBAR -->
-        <nav>
+        <nav class="navbar">
             <i class="bx bx-chevron-left" style="font-size: 25px;"></i> <!-- Sidebar toggle button -->
-            
-            <form action="#">
+            <!-- Left Spacer -->
+            <div class="nav-left"></div>
+
+            <!-- Center: Search Form -->
+            <form action="#" class="nav-center">
                 <div class="form-input">
                     <input type="search" placeholder="Search...">
-                    <button type="submit" class="search-btn"><i class='bx bx-search' ></i></button>
+                    <button type="submit" class="search-btn">
+                        <i class='bx bx-search'></i>
+                    </button>
                 </div>
             </form>
-            <input type="checkbox" id="switch-mode" hidden>
-            <label for="switch-mode" class="switch-mode"></label>
-            <a href="#" class="notification">
-                <i class='bx bxs-bell' ></i>
-                <span class="num">8</span>
-            </a>
-            <a href="#" class="profile">
-                <img src="img/people.png">
-            </a>
+
+            <!-- Right: Icons -->
+            <div class="nav-right">
+                <input type="checkbox" id="switch-mode" hidden>
+                <label for="switch-mode" class="switch-mode"></label>
+                <a href="#" class="notification">
+                    <i class='bx bxs-bell'></i>
+                    <span class="num">8</span>
+                </a>
+                <a href="#" class="profile">
+                    <img src="img/people.png">
+                </a>
+            </div>
         </nav>
         <!-- NAVBAR -->
 
@@ -969,6 +1084,82 @@
     <!-- CONTENT -->
     
 
+
+    <!-- NAV BAR W/ TOGGLE HIDE -->
+    <script>        
+        // Select all sidebar menu items
+        const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
+
+        allSideMenu.forEach(item => {
+            const li = item.parentElement;
+
+            item.addEventListener('click', function () {
+                allSideMenu.forEach(i => {
+                    i.parentElement.classList.remove('active');
+                });
+                li.classList.add('active');
+            });
+        });
+
+        // TOGGLE SIDEBAR
+        const menuBar = document.querySelector('#content nav .bx.bx-chevron-left'); // Updated selector
+        const sidebar = document.getElementById('sidebar');
+
+        menuBar.addEventListener('click', function () {
+            sidebar.classList.toggle('hide');
+
+            const isSidebarCollapsed = sidebar.classList.contains('hide');
+
+            // Toggle the icon between left and right chevron + add rotation animation
+            if (isSidebarCollapsed) {
+                menuBar.classList.replace('bx-chevron-left', 'bx-chevron-right');
+
+                // Collapse all expanded submenus
+                const allSubMenus = document.querySelectorAll('.sub-menu.active');
+                allSubMenus.forEach(submenu => {
+                    submenu.classList.remove('active');
+                    submenu.style.display = 'none';
+
+                    // Reset margin of next element (usually the sibling li)
+                    const parentLi = submenu.closest('li');
+                    const nextLi = parentLi ? parentLi.nextElementSibling : null;
+                    if (nextLi) nextLi.style.marginTop = '0px';
+
+                    // Reset arrow rotation
+                    const arrow = parentLi.querySelector('.arrow');
+                    if (arrow) arrow.style.transform = 'rotate(0deg)';
+                });
+            } else {
+                menuBar.classList.replace('bx-chevron-right', 'bx-chevron-left');
+            }
+
+            // Add rotation animation
+            menuBar.classList.add('rotate-icon');
+            setTimeout(() => {
+                menuBar.classList.remove('rotate-icon'); // Remove class after animation completes
+            }, 300); // Matches the CSS transition time
+        });
+
+
+        // SEARCH TOGGLE (For small screens)
+        const searchButton = document.querySelector('#content nav form .form-input button');
+        const searchButtonIcon = document.querySelector('#content nav form .form-input button .bx');
+        const searchForm = document.querySelector('#content nav form');
+
+        searchButton.addEventListener('click', function (e) {
+            if (window.innerWidth < 576) {
+                e.preventDefault();
+                searchForm.classList.toggle('show');
+                if (searchForm.classList.contains('show')) {
+                    searchButtonIcon.classList.replace('bx-search', 'bx-x');
+                } else {
+                    searchButtonIcon.classList.replace('bx-x', 'bx-search');
+                }
+            }
+        });
+    </script>
+
+
     <script>
         // ========== DEFAULT ACTIVATION RULES FOR ACTIVITIES & PERFORMANCE ==========
 
@@ -1026,93 +1217,6 @@
         });
     </script>
 
-
-
-
-
-
-    <!-- JavaScript for Toggle, Title Update & Pie Chart -->
-    <script>
-        // Function to calculate "time ago"
-        function timeAgo(time) {
-            const now = new Date();
-            const createdAt = new Date(time);
-            const diff = Math.floor((now - createdAt) / 1000); // Time difference in seconds
-
-            if (diff < 60) {
-                return "Just now";
-            } else if (diff < 3600) {
-                return Math.floor(diff / 60) + " min ago";
-            } else if (diff < 86400) {
-                return Math.floor(diff / 3600) + " hour ago";
-            } else {
-                return Math.floor(diff / 86400) + " day ago";
-            }
-        }
-
-        // Function to update time dynamically
-        function updateTimes() {
-            document.querySelectorAll('.registered-time').forEach(el => {
-                const time = el.getAttribute('data-time');
-                el.textContent = timeAgo(time);
-            });
-        }
-
-        // Initial call & update every 30 seconds
-        updateTimes();
-        setInterval(updateTimes, 30000);
-
-        // Wait for the page to load
-        document.addEventListener("DOMContentLoaded", function () {
-            var chartToggle = document.querySelector(".chart-toggle");
-            var sectionTitle = document.getElementById("section-title");
-            var tableView = document.querySelector(".table-view");
-            var chartContainer = document.querySelector(".chart-container");
-
-            // Pie Chart Configuration
-            var ctx = document.getElementById('userChart').getContext('2d');
-            var userChart = new Chart(ctx, {
-                type: 'pie',
-                data: {
-                    labels: <?php echo json_encode($roles); ?>,
-                    datasets: [{
-                        data: <?php echo json_encode($counts); ?>,
-                        backgroundColor: ['#ff6384', '#36a2eb', '#ffcd56', '#4bc0c0']
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    layout: {
-                        padding: {
-                            bottom: 35 // Adds space between the chart and labels
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            position: 'left',
-                            labels: {
-                                boxWidth: 15, // Smaller legend boxes
-                                padding: 40,  // Adds spacing between legend items
-                            }
-                        }
-                    }
-                }
-            });
-
-            // Toggle between Table and Pie Chart
-            chartToggle.addEventListener("click", function () {
-                if (tableView.style.display === "none") {
-                    tableView.style.display = "flex";
-                    chartContainer.style.display = "none";
-                    sectionTitle.textContent = "Recent Accounts"; // Update title back
-                } else {
-                    tableView.style.display = "none";
-                    chartContainer.style.display = "flex";
-                    sectionTitle.textContent = "Total Users"; // Update title to Pie Chart
-                }
-            });
-        });
-    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Load Chart.js -->
 </body>
