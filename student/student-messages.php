@@ -56,12 +56,6 @@
             align-items: center; /* Centers vertically */
         }
 
-        /* Optional: make iframe look better on smaller screens */
-        .chat-container iframe {
-            width: 100%;
-            border: none; /* Remove any border */
-            display: block; /* Ensures it behaves like a block-level element */
-        }
 
         #content main .table-data {
             display: flex;
@@ -215,7 +209,7 @@
                 <!-- Chat Container -->
                 <div class="chat-container">
 
-                    <iframe id="chatIframe" src="index.php" width="100%" frameborder="0"></iframe>
+                    <iframe src="index.php" width="100%" height="590px" frameborder="0"></iframe>
 
                 </div>
                 

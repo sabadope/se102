@@ -20,47 +20,17 @@
         
 
 
-        /* Target the entire page's scrollbar */
-        ::-webkit-scrollbar {
-            width: 6px; /* Set the width of the scrollbar */
-            height: 6px; /* Set the height of the horizontal scrollbar (if needed) */
-        }
-
-        /* Style the track (the background of the scrollbar) */
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1; /* Light background for the track */
-            border-radius: 10px;
-        }
-
-        /* Style the thumb (the draggable part of the scrollbar) */
-        ::-webkit-scrollbar-thumb {
-            background: #888; /* Set the color of the thumb */
-            border-radius: 10px; /* Round corners for the thumb */
-        }
-
-        /* Hover effect for the thumb */
-        ::-webkit-scrollbar-thumb:hover {
-            background: #555; /* Darker color when the user hovers over the thumb */
-        }
-
-
         /* Chat Container - Layout Holder */
         .chat-container {
             display: flex;
             width: 100%;
             max-width: 100%;
+            height: 100%;
             overflow: hidden;
             position: relative;
             transition: width 0.3s ease-in-out;
             justify-content: center;
             align-items: center; /* Centers vertically */
-        }
-
-        /* Optional: make iframe look better on smaller screens */
-        .chat-container iframe {
-            width: 100%;
-            border: none; /* Remove any border */
-            display: block; /* Ensures it behaves like a block-level element */
         }
 
         #content main .table-data {
@@ -216,7 +186,7 @@
                 <!-- Chat Container -->
                 <div class="chat-container">
 
-                    <iframe id="chatIframe" src="index.php" width="100%" frameborder="0"></iframe>
+                    <iframe src="index.php" width="100%" height="590px" frameborder="0"></iframe>
 
                 </div>
 
