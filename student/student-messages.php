@@ -237,7 +237,7 @@
                         </li>
                         <li><i class='bx bx-chevron-right' ></i></li>
                         <li>
-                            <a class="active">Messages</a>
+                            <a class="active">Message</a>
                         </li>
                         
                     </ul>

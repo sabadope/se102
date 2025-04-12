@@ -474,6 +474,7 @@
             grid-gap: 24px;
             margin-top: 24px;
         }
+
         #content main .box-info li {
             padding: 24px;
             background: var(--light);
@@ -481,7 +482,23 @@
             display: flex;
             align-items: center;
             grid-gap: 24px;
+            position: relative;
         }
+
+        #content main .box-info li:hover {
+            background: var(--blue);     /* Hover background color */
+            outline: 2px solid var(--dark); /* Solid outline outside the box */
+            border-radius: 20px;         /* Border radius for rounded corners */
+            cursor: pointer;            /* Pointer cursor on hover */
+            
+            /* Prevent any movement */
+            box-shadow: none;            /* No shadow to prevent layout change */
+            transform: none;             /* Ensure no transformation or movement */
+            
+            /* Change text color on hover */
+            color: var(--light);         /* Change text color to light when hovering */
+        }
+
         #content main .box-info li .bx {
             width: 80px;
             height: 80px;
@@ -491,26 +508,44 @@
             justify-content: center;
             align-items: center;
         }
+
         #content main .box-info li:nth-child(1) .bx {
             background: var(--light-blue);
             color: var(--blue);
         }
+
         #content main .box-info li:nth-child(2) .bx {
             background: var(--light-yellow);
             color: var(--yellow);
         }
+
         #content main .box-info li:nth-child(3) .bx {
             background: var(--light-orange);
             color: var(--orange);
         }
+
+        /* Text styles */
         #content main .box-info li .text h3 {
             font-size: 24px;
             font-weight: 600;
-            color: var(--dark);
+            color: var(--dark);  /* Default color */
+            
         }
+
         #content main .box-info li .text p {
-            color: var(--dark); 
+            color: var(--dark);  /* Default color */
+            
         }
+
+        /* Hover effect on text */
+        #content main .box-info li:hover .text h3 {
+            color: var(--light);   /* Text color on hover */
+        }
+
+        #content main .box-info li:hover .text p {
+            color: var(--light);   /* Text color on hover */
+        }
+
 
 
 
@@ -881,13 +916,7 @@
                         <p>3</p>
                     </span>
                 </li>
-                <li>
-                    <i class='bx bxs-dollar-circle' ></i>
-                    <span class="text">
-                        <h3>Team</h3>
-                        <p>5</p>
-                    </span>
-                </li>
+                
             </ul>
         </main>
         <!-- MAIN -->
