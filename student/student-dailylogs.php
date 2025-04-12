@@ -65,6 +65,7 @@
             overflow-x: hidden;
         }
 
+
         /* Target the entire page's scrollbar */
         ::-webkit-scrollbar {
             width: 6px; /* Set the width of the scrollbar */
@@ -87,7 +88,7 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #555; /* Darker color when the user hovers over the thumb */
         }
-        
+
         /* ========== SIDEBAR BASE ========== */
         #sidebar {
             position: fixed;
@@ -169,6 +170,7 @@
             white-space: nowrap;
         }
 
+
         #sidebar .side-menu li a .bx {
             min-width: calc(60px - ((4px + 6px) * 2));
             display: flex;
@@ -187,6 +189,7 @@
             background: none !important;
             color: var(--dark);
             transition: color 0.3s ease;
+            margin-top: 3px;
         }
 
         /* On hover, only change the text color */
@@ -197,7 +200,7 @@
 
         /* ===== Submenu Default Style ===== */
         #sidebar .side-menu .sub-menu li a {
-            margin-left: -9px;       
+            padding-left: 1px;       
             transition: color 0.3s;
             color: var(--dark);
         }
@@ -205,8 +208,6 @@
         #sidebar .side-menu .sub-menu li a:hover {
             color: var(--dark); /* Just change the text color on hover */
         }
-
-        
 
         #sidebar .side-menu li.active::before,
         #sidebar .side-menu li.active::after {
@@ -243,6 +244,48 @@
             width: calc(48px - (4px * 2));
             transition: width 0.3s ease;
         }
+
+        .sub-menu li a .underline i {
+            padding-right: 20px; /* or 10px, 12px — adjust as needed */
+        }
+
+        .sub-menu li a .underline span {
+            margin-left: -10px;
+        }
+
+        .sub-menu li a .underline {
+            display: flex;
+            align-items: center;
+            border-bottom: 2px solid currentColor; /* Creates an underline that works for both icon and text */
+            padding-bottom: 4px;
+            padding-left: 0;
+            
+        }
+
+        .sub-menu li a .non-underline i {
+            padding-right: 20px; /* or 10px, 12px — adjust as needed */
+            margin-top: -1px;
+        }
+
+        .sub-menu li a .non-underline span {
+            margin-left: -10px;
+        }
+
+        .sub-menu li a .non-underline {
+            display: flex;
+            align-items: center;
+            padding-left: 0;
+            margin-top: -5px;
+            
+        }
+
+        .sub-menu li a .underline.active {
+            color: var(--blue); /* Optional: highlight color for active state */
+            border-bottom: 2px solid var(--blue);
+        }
+
+
+
 
         /* ========== LOGOUT COLOR ========== */
         #sidebar .side-menu li a.logout {
@@ -530,17 +573,11 @@
             background: var(--light-blue);
             color: var(--blue);
         }
-
         #content main .box-info li:nth-child(2) .bx {
-            background: var(--light-yellow);
-            color: var(--yellow);
+            background: var(--light-blue);
+            color: var(--blue);
         }
-
-        #content main .box-info li:nth-child(3) .bx {
-            background: var(--light-orange);
-            color: var(--orange);
-        }
-
+        
         /* Text styles */
         #content main .box-info li .text h3 {
             font-size: 24px;
@@ -562,7 +599,6 @@
         #content main .box-info li:hover .text p {
             color: var(--light);   /* Text color on hover */
         }
-
 
 
 
@@ -788,7 +824,7 @@
         }
     </style>
 
-    <title>Student Dashboard</title>
+    <title>Student Daily Logs</title>
 </head>
 <body>
 
@@ -822,6 +858,7 @@
                         <span class="text">Message</span>
                     </a>
                 </li>
+
                 <li>
                     <a href="student-performance.php" style="display: flex; align-items: center;">
                         <i class='bx bxs-book-content'></i>
@@ -831,7 +868,7 @@
                 </li>
 
                 <!-- Activities with Submenu -->
-                <li id="has-submenu" class="has-submenu active">
+                <li id="performance-submenu" class="has-submenu">
                     <a href="student-activities.php">
                         <i class='bx bxs-folder-open'></i>
                         <span class="text">Activities</span>
@@ -840,14 +877,18 @@
                     <ul id="sub-menu" class="sub-menu active">
                         <li>
                             <a href="student-dailylogs.php">
-                                <i class='bx bx-calendar-check'></i>
-                                Daily Logs
+                                <div class="underline">
+                                    <i class='bx bx-calendar-check'></i>
+                                    <span>Daily Logs</span>
+                                </div>
                             </a>
                         </li>
                         <li>
                             <a href="student-feedbacks.php">
-                                <i class='bx bx-comment-detail'></i>
-                                Feedbacks
+                                <div class="non-underline">
+                                    <i class='bx bx-comment-detail'></i>
+                                    <span>Feedbacks</span>
+                                </div>
                             </a>
                         </li>
                     </ul>
@@ -901,14 +942,14 @@
         <main>
             <div class="head-title">
                 <div class="left">
-                    <h1>Activities</h1>
+                    <h1>Performance</h1>
                     <ul class="breadcrumb">
                         <li>
-                            <a href="student-activities.php">Home</a>
+                            <a href="student-performance.php">Home</a>
                         </li>
                         <li><i class='bx bx-chevron-right' ></i></li>
                         <li>
-                            <a class="active">Activities</a>
+                            <a class="active">Performance</a>
                         </li>
                     </ul>
                 </div>
@@ -919,21 +960,41 @@
             </div>
 
             <ul class="box-info">
-                <a href="student-dailylogs.php">
+                <a href="student-skilldevelopment.php">
                     <li>
-                        <i class='bx bx-calendar-check' ></i>
+                        <i class='bx bx-check-shield' ></i>
                         <span class="text">
-                            <h3>Daily Logs</h3>
+                            <h3>Skill Development</h3>
                             <p>100%</p>
                         </span>
                     </li>
                 </a>
-                <a href="student-dailylogs.php">
+                <a href="student-behavioralconduct.php">
                     <li>
-                        <i class='bx bx-comment-detail'></i>
+                        <i class='bx bx-check-circle' ></i>
                         <span class="text">
-                            <h3>Feedbacks</h3>
-                            <p>3</p>
+                            <h3>Behavior Conduct</h3>
+                            <p>100%</p>
+                        </span>
+                    </li>
+                </a>
+            </ul>
+            <ul class="box-info">
+                <a href="student-taskcompletion.php">
+                    <li>
+                        <i class='bx bx-task' ></i>
+                        <span class="text">
+                            <h3>Task Completion</h3>
+                            <p>100%</p>
+                        </span>
+                    </li>
+                </a>
+                <a href="student-achievementranking.php">
+                    <li>
+                        <i class='bx bx-check-square' ></i>
+                        <span class="text">
+                            <h3>Achievement Ranking</h3>
+                            <p>100%</p>
                         </span>
                     </li>
                 </a>
@@ -945,15 +1006,26 @@
     
 
     <script>
-        // ========== DEFAULT ACTIVATION RULES ==========
+        // ========== DEFAULT ACTIVATION RULES FOR ACTIVITIES & PERFORMANCE ==========
 
-        if (window.location.pathname.includes("student-activities.php")) {
-            const activitiesMenu = document.querySelector('#has-submenu');
-            const submenu = activitiesMenu.querySelector('.sub-menu');
-            const nextLi = activitiesMenu.nextElementSibling;
+        const path = window.location.pathname;
 
-            // Always keep the Activities tab styled as active
-            activitiesMenu.classList.add('active');
+        if (
+            path.includes("student-activities.php") ||
+            path.includes("student-performance.php") ||
+            path.includes("student-dailylogs.php") // 👈 Add this line
+
+        ) {
+            const menuId = (path.includes("student-performance.php") || path.includes("student-dailylogs.php"))
+                ? '#performance-submenu'
+                : '#activities-submenu';
+
+            const menuElement = document.querySelector(menuId);
+            const submenu = menuElement.querySelector('.sub-menu');
+            const nextLi = menuElement.nextElementSibling;
+
+            // Keep the tab styled as active
+            menuElement.classList.add('active');
 
             // Keep the submenu expanded
             submenu.classList.add('active');
@@ -976,36 +1048,31 @@
                 const arrow = link.querySelector('.arrow'); // Get the arrow element
                 const nextLi = parentLi.nextElementSibling;
 
-                // Toggle submenu visibility only — NOT the .active class
+                // Toggle submenu visibility
                 const isExpanded = submenu.classList.contains('active');
                 submenu.classList.toggle('active');
                 submenu.style.display = isExpanded ? 'none' : 'block';
 
                 // Rotate arrow based on expanded/collapsed state
-                if (!isExpanded) {
-                    arrow.style.transform = 'rotate(180deg)';
-                } else {
-                    arrow.style.transform = 'rotate(0deg)';
-                }
+                arrow.style.transform = isExpanded ? 'rotate(0deg)' : 'rotate(180deg)';
 
-                // Adjust margin of next item to avoid overlapping
-                if (!isExpanded) {
-                    if (nextLi) nextLi.style.marginTop = '90px';
-                } else {
-                    if (nextLi) nextLi.style.marginTop = '0px';
-                }
+                // Adjust margin of next item
+                if (nextLi) nextLi.style.marginTop = isExpanded ? '0px' : '90px';
             });
         });
 
-        // Highlight the active submenu link based on current URL
-        const subLinks = document.querySelectorAll('.sub-menu li a');
-        subLinks.forEach(link => {
-            if (window.location.href.includes(link.getAttribute('href'))) {
-                link.classList.add('active');
+        // ========== HIGHLIGHT ACTIVE SUBMENU ITEM ==========
+        if (path.includes("student-dailylogs.php")) {
+            const skillLink = document.querySelector('.sub-menu li a[href="student-dailylogs.php"]');
+            if (skillLink) {
+                const underlineDiv = skillLink.querySelector('.underline');
+                if (underlineDiv) {
+                    underlineDiv.classList.add('active');
+                }
             }
-        });
-
+        }
     </script>
+
 
 
 
