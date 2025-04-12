@@ -146,6 +146,7 @@
             white-space: nowrap;
         }
 
+
         #sidebar .side-menu li a .bx {
             min-width: calc(60px - ((4px + 6px) * 2));
             display: flex;
@@ -159,13 +160,29 @@
 
         }
 
+        /* Ensure submenu links have no background by default */
+        #sidebar .sub-menu li a {
+            background: none !important;
+            color: var(--dark);
+            transition: color 0.3s ease;
+        }
+
+        /* On hover, only change the text color */
+        #sidebar .sub-menu li a:hover {
+            background: none !important;
+            color: var(--dark) !important;
+        }
+
         /* ===== Submenu Default Style ===== */
         #sidebar .side-menu .sub-menu li a {
             padding-left: 1px;       
             transition: color 0.3s;
+            color: var(--dark);
         }
 
-
+        #sidebar .side-menu .sub-menu li a:hover {
+            color: var(--dark); /* Just change the text color on hover */
+        }
 
         #sidebar .side-menu li.active::before,
         #sidebar .side-menu li.active::after {
@@ -748,7 +765,7 @@
                 </li>
 
                 <!-- Performance with Submenu -->
-                <li id="has-submenu" class="has-submenu active">
+                <li id="performance-submenu" class="has-submenu">
                     <a href="student-performance.php">
                         <i class='bx bxs-book-content'></i>
                         <span class="text">Performance</span>
@@ -763,23 +780,24 @@
                         </li>
                         <li>
                             <a href="student-feedbacks.php">
-                                <i class='bx bx-comment-detail'></i>
+                                <i class='bx bx-check-shield'></i>
                                 Skill Development
                             </a>
                         </li>
                         <li>
                             <a href="student-feedbacks.php">
-                                <i class='bx bx-comment-detail'></i>
+                                <i class='bx bx-check-square'></i>
                                 Achievement Ranking
                             </a>
                         </li>
                         <li>
                             <a href="student-feedbacks.php">
-                                <i class='bx bx-comment-detail'></i>
+                                <i class='bx bx-check-circle'></i>
                                 Behavioral Conduct
                             </a>
                         </li>
                     </ul>
+
                 </li>
                 <li>
                     <a href="student-activities.php" style="display: flex; align-items: center;">
@@ -884,22 +902,25 @@
     
 
     <script>
-        // ========== DEFAULT ACTIVATION RULES ==========
+        // ========== DEFAULT ACTIVATION RULES FOR ACTIVITIES & PERFORMANCE ==========
 
-        if (window.location.pathname.includes("student-activities.php")) {
-            const activitiesMenu = document.querySelector('#has-submenu');
-            const submenu = activitiesMenu.querySelector('.sub-menu');
-            const nextLi = activitiesMenu.nextElementSibling;
+        const path = window.location.pathname;
 
-            // Always keep the Activities tab styled as active
-            activitiesMenu.classList.add('active');
+        if (path.includes("student-activities.php") || path.includes("student-performance.php")) {
+            const menuId = path.includes("student-performance.php") ? '#performance-submenu' : '#activities-submenu';
+            const menuElement = document.querySelector(menuId);
+            const submenu = menuElement.querySelector('.sub-menu');
+            const nextLi = menuElement.nextElementSibling;
+
+            // Keep the tab styled as active
+            menuElement.classList.add('active');
 
             // Keep the submenu expanded
             submenu.classList.add('active');
             submenu.style.display = 'block';
 
             // Push down the next item to avoid overlap
-            if (nextLi) nextLi.style.marginTop = '90px';
+            if (nextLi) nextLi.style.marginTop = '185px';
         }
 
         // ========== SUBMENU TOGGLE FUNCTIONALITY ==========
@@ -915,36 +936,28 @@
                 const arrow = link.querySelector('.arrow'); // Get the arrow element
                 const nextLi = parentLi.nextElementSibling;
 
-                // Toggle submenu visibility only — NOT the .active class
+                // Toggle submenu visibility
                 const isExpanded = submenu.classList.contains('active');
                 submenu.classList.toggle('active');
                 submenu.style.display = isExpanded ? 'none' : 'block';
 
                 // Rotate arrow based on expanded/collapsed state
-                if (!isExpanded) {
-                    arrow.style.transform = 'rotate(180deg)';
-                } else {
-                    arrow.style.transform = 'rotate(0deg)';
-                }
+                arrow.style.transform = isExpanded ? 'rotate(0deg)' : 'rotate(180deg)';
 
-                // Adjust margin of next item to avoid overlapping
-                if (!isExpanded) {
-                    if (nextLi) nextLi.style.marginTop = '90px';
-                } else {
-                    if (nextLi) nextLi.style.marginTop = '0px';
-                }
+                // Adjust margin of next item
+                if (nextLi) nextLi.style.marginTop = isExpanded ? '0px' : '185px';
             });
         });
 
-        // Highlight the active submenu link based on current URL
+        // ========== HIGHLIGHT ACTIVE SUBMENU ITEM ==========
         const subLinks = document.querySelectorAll('.sub-menu li a');
         subLinks.forEach(link => {
             if (window.location.href.includes(link.getAttribute('href'))) {
                 link.classList.add('active');
             }
         });
-
     </script>
+
 
 
 

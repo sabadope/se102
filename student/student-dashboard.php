@@ -861,15 +861,18 @@
     
 
     <script>
-        // ========== DEFAULT ACTIVATION RULES ==========
+        // ========== DEFAULT ACTIVATION RULES FOR ACTIVITIES & PERFORMANCE ==========
 
-        if (window.location.pathname.includes("student-activities.php")) {
-            const activitiesMenu = document.querySelector('#has-submenu');
-            const submenu = activitiesMenu.querySelector('.sub-menu');
-            const nextLi = activitiesMenu.nextElementSibling;
+        const path = window.location.pathname;
 
-            // Always keep the Activities tab styled as active
-            activitiesMenu.classList.add('active');
+        if (path.includes("student-activities.php") || path.includes("student-performance.php")) {
+            const menuId = path.includes("student-performance.php") ? '#performance-submenu' : '#activities-submenu';
+            const menuElement = document.querySelector(menuId);
+            const submenu = menuElement.querySelector('.sub-menu');
+            const nextLi = menuElement.nextElementSibling;
+
+            // Keep the tab styled as active
+            menuElement.classList.add('active');
 
             // Keep the submenu expanded
             submenu.classList.add('active');
@@ -892,35 +895,26 @@
                 const arrow = link.querySelector('.arrow'); // Get the arrow element
                 const nextLi = parentLi.nextElementSibling;
 
-                // Toggle submenu visibility only — NOT the .active class
+                // Toggle submenu visibility
                 const isExpanded = submenu.classList.contains('active');
                 submenu.classList.toggle('active');
                 submenu.style.display = isExpanded ? 'none' : 'block';
 
                 // Rotate arrow based on expanded/collapsed state
-                if (!isExpanded) {
-                    arrow.style.transform = 'rotate(180deg)';
-                } else {
-                    arrow.style.transform = 'rotate(0deg)';
-                }
+                arrow.style.transform = isExpanded ? 'rotate(0deg)' : 'rotate(180deg)';
 
-                // Adjust margin of next item to avoid overlapping
-                if (!isExpanded) {
-                    if (nextLi) nextLi.style.marginTop = '90px';
-                } else {
-                    if (nextLi) nextLi.style.marginTop = '0px';
-                }
+                // Adjust margin of next item
+                if (nextLi) nextLi.style.marginTop = isExpanded ? '0px' : '180px';
             });
         });
 
-        // Highlight the active submenu link based on current URL
+        // ========== HIGHLIGHT ACTIVE SUBMENU ITEM ==========
         const subLinks = document.querySelectorAll('.sub-menu li a');
         subLinks.forEach(link => {
             if (window.location.href.includes(link.getAttribute('href'))) {
                 link.classList.add('active');
             }
         });
-
     </script>
 
 
