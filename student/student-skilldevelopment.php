@@ -189,6 +189,7 @@
             background: none !important;
             color: var(--dark);
             transition: color 0.3s ease;
+            margin-top: 3px;
         }
 
         /* On hover, only change the text color */
@@ -199,7 +200,7 @@
 
         /* ===== Submenu Default Style ===== */
         #sidebar .side-menu .sub-menu li a {
-            margin-left: -9px;       
+            padding-left: 1px;       
             transition: color 0.3s;
             color: var(--dark);
         }
@@ -243,6 +244,48 @@
             width: calc(48px - (4px * 2));
             transition: width 0.3s ease;
         }
+
+        .sub-menu li a .underline i {
+            padding-right: 20px; /* or 10px, 12px — adjust as needed */
+        }
+
+        .sub-menu li a .underline span {
+            margin-left: -10px;
+        }
+
+        .sub-menu li a .underline {
+            display: flex;
+            align-items: center;
+            border-bottom: 2px solid currentColor; /* Creates an underline that works for both icon and text */
+            padding-bottom: 4px;
+            padding-left: 0;
+            
+        }
+
+        .sub-menu li a .non-underline i {
+            padding-right: 20px; /* or 10px, 12px — adjust as needed */
+            margin-top: -1px;
+        }
+
+        .sub-menu li a .non-underline span {
+            margin-left: -10px;
+        }
+
+        .sub-menu li a .non-underline {
+            display: flex;
+            align-items: center;
+            padding-left: 0;
+            margin-top: -5px;
+            
+        }
+
+        .sub-menu li a .underline.active {
+            color: var(--blue); /* Optional: highlight color for active state */
+            border-bottom: 2px solid var(--blue);
+        }
+
+
+
 
         /* ========== LOGOUT COLOR ========== */
         #sidebar .side-menu li a.logout {
@@ -825,27 +868,35 @@
                     </a>
                     <ul id="sub-menu" class="sub-menu active">
                         <li>
-                            <a href="student-feedbacks.php">
-                                <i class='bx bx-check-shield'></i>
-                                Skill Development
+                            <a href="student-skilldevelopment.php">
+                                <div class="underline">
+                                    <i class='bx bx-check-shield'></i>
+                                    <span>Skill Development</span>
+                                </div>
                             </a>
                         </li>
                         <li>
                             <a href="student-taskcompletion.php">
-                                <i class='bx bx-task'></i>
-                                Task Completion
+                                <div class="non-underline">
+                                    <i class='bx bx-task'></i>
+                                    <span>Task Completion</span>
+                                </div>
                             </a>
                         </li>
                         <li>
                             <a href="student-feedbacks.php">
-                                <i class='bx bx-check-circle'></i>
-                                Behavioral Conduct
+                                <div class="non-underline">
+                                    <i class='bx bx-check-circle'></i>
+                                    <span>Behavioral Conduct</span>
+                                </div>
                             </a>
                         </li>
                         <li>
                             <a href="student-feedbacks.php">
-                                <i class='bx bx-check-square'></i>
-                                Achievement Ranking
+                                <div class="non-underline">
+                                    <i class='bx bx-check-square'></i>
+                                    <span>Achievement Ranking</span>
+                                </div>
                             </a>
                         </li>
                     </ul>
@@ -974,8 +1025,15 @@
 
         const path = window.location.pathname;
 
-        if (path.includes("student-activities.php") || path.includes("student-performance.php")) {
-            const menuId = path.includes("student-performance.php") ? '#performance-submenu' : '#activities-submenu';
+        if (
+            path.includes("student-activities.php") ||
+            path.includes("student-performance.php") ||
+            path.includes("student-skilldevelopment.php") // 👈 Add this line
+        ) {
+            const menuId = (path.includes("student-performance.php") || path.includes("student-skilldevelopment.php"))
+                ? '#performance-submenu'
+                : '#activities-submenu';
+
             const menuElement = document.querySelector(menuId);
             const submenu = menuElement.querySelector('.sub-menu');
             const nextLi = menuElement.nextElementSibling;
@@ -1018,12 +1076,15 @@
         });
 
         // ========== HIGHLIGHT ACTIVE SUBMENU ITEM ==========
-        const subLinks = document.querySelectorAll('.sub-menu li a');
-        subLinks.forEach(link => {
-            if (window.location.href.includes(link.getAttribute('href'))) {
-                link.classList.add('active');
+        if (path.includes("student-skilldevelopment.php")) {
+            const skillLink = document.querySelector('.sub-menu li a[href="student-skilldevelopment.php"]');
+            if (skillLink) {
+                const underlineDiv = skillLink.querySelector('.underline');
+                if (underlineDiv) {
+                    underlineDiv.classList.add('active');
+                }
             }
-        });
+        }
     </script>
 
 
