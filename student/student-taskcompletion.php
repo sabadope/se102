@@ -884,7 +884,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="student-feedbacks.php">
+                            <a href="student-behavioralconduct.php">
                                 <div class="non-underline">
                                     <i class='bx bx-check-circle'></i>
                                     <span>Behavioral Conduct</span>
@@ -892,7 +892,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="student-feedbacks.php">
+                            <a href="student-achievementranking.php">
                                 <div class="non-underline">
                                     <i class='bx bx-check-square'></i>
                                     <span>Achievement Ranking</span>
