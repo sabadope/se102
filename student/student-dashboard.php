@@ -227,6 +227,27 @@
             transition: width 0.3s ease;
         }
 
+        /* Collapsed state */
+        #sidebar.hide .side-menu li a .text {
+            opacity: 0;
+            visibility: hidden;
+            width: 0;
+            overflow: hidden;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Expanded state */
+        #sidebar .side-menu li a .text {
+            opacity: 1;
+            visibility: visible;
+            width: auto;
+            
+            transition: all 0.3s ease;
+        }
+
         /* ========== LOGOUT COLOR ========== */
         #sidebar .side-menu li a.logout {
             color: var(--red);
@@ -412,6 +433,74 @@
         }
         #content nav #switch-mode:checked + .switch-mode::before {
             left: calc(100% - (25px - 4px) - 2px);
+        }
+
+        nav.navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: #fff; /* Optional */
+            position: relative;
+        }
+
+        /* Force the left and right parts to occupy equal width for balance */
+        .nav-left,
+        .nav-right {
+            flex: 1;
+            display: flex;
+            align-items: center;
+
+        }
+
+        /* Right section spacing */
+        .nav-right {
+            justify-content: flex-end;
+            gap: 30px;
+            margin-left: 16%;
+        }
+
+        /* Center part (search bar) stays in the middle */
+        .nav-center {
+            flex: 0 0 auto;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Search form styling */
+        .form-input {
+            display: flex;
+            align-items: center;
+            background: #f1f1f1;
+            padding: 0;
+            border-radius: 20px;
+            width: 100%;
+        }
+
+        .form-input input[type="search"] {
+            border: none;
+            outline: none;
+            background: transparent;
+            padding: 5px 10px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+
+        }
+
+        .search-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            color: #333;
+        }
+
+        /* Profile image */
+        .profile img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
         }
         /* NAVBAR */
 
@@ -763,7 +852,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="student-attendance.php">
                         <i class='bx bxs-calendar-check'></i>
                         <span class="text">Attendance</span>
                     </a>
@@ -811,24 +900,33 @@
     <!-- CONTENT -->
     <section id="content">
         <!-- NAVBAR -->
-        <nav>
+        <nav class="navbar">
             <i class="bx bx-chevron-left" style="font-size: 25px;"></i> <!-- Sidebar toggle button -->
-            
-            <form action="#">
+            <!-- Left Spacer -->
+            <div class="nav-left"></div>
+
+            <!-- Center: Search Form -->
+            <form action="#" class="nav-center">
                 <div class="form-input">
                     <input type="search" placeholder="Search...">
-                    <button type="submit" class="search-btn"><i class='bx bx-search' ></i></button>
+                    <button type="submit" class="search-btn">
+                        <i class='bx bx-search'></i>
+                    </button>
                 </div>
             </form>
-            <input type="checkbox" id="switch-mode" hidden>
-            <label for="switch-mode" class="switch-mode"></label>
-            <a href="#" class="notification">
-                <i class='bx bxs-bell' ></i>
-                <span class="num">8</span>
-            </a>
-            <a href="#" class="profile">
-                <img src="img/people.png">
-            </a>
+
+            <!-- Right: Icons -->
+            <div class="nav-right">
+                <input type="checkbox" id="switch-mode" hidden>
+                <label for="switch-mode" class="switch-mode"></label>
+                <a href="#" class="notification">
+                    <i class='bx bxs-bell'></i>
+                    <span class="num">8</span>
+                </a>
+                <a href="#" class="profile">
+                    <img src="img/people.png">
+                </a>
+            </div>
         </nav>
         <!-- NAVBAR -->
 
@@ -882,6 +980,7 @@
     <!-- CONTENT -->
     
 
+    <!-- SIDE BAR SCRIPT -->
     <script>
         // ========== DEFAULT ACTIVATION RULES FOR ACTIVITIES & PERFORMANCE ==========
 
@@ -939,90 +1038,6 @@
         });
     </script>
 
-
-
-    <!-- JavaScript for Toggle, Title Update & Pie Chart -->
-    <script>
-        // Function to calculate "time ago"
-        function timeAgo(time) {
-            const now = new Date();
-            const createdAt = new Date(time);
-            const diff = Math.floor((now - createdAt) / 1000); // Time difference in seconds
-
-            if (diff < 60) {
-                return "Just now";
-            } else if (diff < 3600) {
-                return Math.floor(diff / 60) + " min ago";
-            } else if (diff < 86400) {
-                return Math.floor(diff / 3600) + " hour ago";
-            } else {
-                return Math.floor(diff / 86400) + " day ago";
-            }
-        }
-
-        // Function to update time dynamically
-        function updateTimes() {
-            document.querySelectorAll('.registered-time').forEach(el => {
-                const time = el.getAttribute('data-time');
-                el.textContent = timeAgo(time);
-            });
-        }
-
-        // Initial call & update every 30 seconds
-        updateTimes();
-        setInterval(updateTimes, 30000);
-
-        // Wait for the page to load
-        document.addEventListener("DOMContentLoaded", function () {
-            var chartToggle = document.querySelector(".chart-toggle");
-            var sectionTitle = document.getElementById("section-title");
-            var tableView = document.querySelector(".table-view");
-            var chartContainer = document.querySelector(".chart-container");
-
-            // Pie Chart Configuration
-            var ctx = document.getElementById('userChart').getContext('2d');
-            var userChart = new Chart(ctx, {
-                type: 'pie',
-                data: {
-                    labels: <?php echo json_encode($roles); ?>,
-                    datasets: [{
-                        data: <?php echo json_encode($counts); ?>,
-                        backgroundColor: ['#ff6384', '#36a2eb', '#ffcd56', '#4bc0c0']
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    layout: {
-                        padding: {
-                            bottom: 35 // Adds space between the chart and labels
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            position: 'left',
-                            labels: {
-                                boxWidth: 15, // Smaller legend boxes
-                                padding: 40,  // Adds spacing between legend items
-                            }
-                        }
-                    }
-                }
-            });
-
-            // Toggle between Table and Pie Chart
-            chartToggle.addEventListener("click", function () {
-                if (tableView.style.display === "none") {
-                    tableView.style.display = "flex";
-                    chartContainer.style.display = "none";
-                    sectionTitle.textContent = "Recent Accounts"; // Update title back
-                } else {
-                    tableView.style.display = "none";
-                    chartContainer.style.display = "flex";
-                    sectionTitle.textContent = "Total Users"; // Update title to Pie Chart
-                }
-            });
-        });
-    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Load Chart.js -->
 </body>
