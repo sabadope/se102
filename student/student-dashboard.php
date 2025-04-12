@@ -980,6 +980,62 @@
     <!-- CONTENT -->
     
 
+    <!-- NAV BAR W/ TOGGLE HIDE -->
+    <script>        
+        // Select all sidebar menu items
+        const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
+
+        allSideMenu.forEach(item => {
+            const li = item.parentElement;
+
+            item.addEventListener('click', function () {
+                allSideMenu.forEach(i => {
+                    i.parentElement.classList.remove('active');
+                });
+                li.classList.add('active');
+            });
+        });
+
+        // TOGGLE SIDEBAR
+        const menuBar = document.querySelector('#content nav .bx.bx-chevron-left'); // Updated selector
+        const sidebar = document.getElementById('sidebar');
+
+        menuBar.addEventListener('click', function () {
+            sidebar.classList.toggle('hide');
+
+            // Toggle the icon between left and right chevron + add rotation animation
+            if (sidebar.classList.contains('hide')) {
+                menuBar.classList.replace('bx-chevron-left', 'bx-chevron-right');
+            } else {
+                menuBar.classList.replace('bx-chevron-right', 'bx-chevron-left');
+            }
+
+            // Add rotation animation
+            menuBar.classList.add('rotate-icon');
+            setTimeout(() => {
+                menuBar.classList.remove('rotate-icon'); // Remove class after animation completes
+            }, 300); // Matches the CSS transition time
+        });
+
+        // SEARCH TOGGLE (For small screens)
+        const searchButton = document.querySelector('#content nav form .form-input button');
+        const searchButtonIcon = document.querySelector('#content nav form .form-input button .bx');
+        const searchForm = document.querySelector('#content nav form');
+
+        searchButton.addEventListener('click', function (e) {
+            if (window.innerWidth < 576) {
+                e.preventDefault();
+                searchForm.classList.toggle('show');
+                if (searchForm.classList.contains('show')) {
+                    searchButtonIcon.classList.replace('bx-search', 'bx-x');
+                } else {
+                    searchButtonIcon.classList.replace('bx-x', 'bx-search');
+                }
+            }
+        });
+    </script>
+
+
     <!-- SIDE BAR SCRIPT -->
     <script>
         // ========== DEFAULT ACTIVATION RULES FOR ACTIVITIES & PERFORMANCE ==========
