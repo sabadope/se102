@@ -525,7 +525,7 @@
             justify-content: center;
             align-items: center;
         }
-        
+
         #content main .box-info li:nth-child(1) .bx {
             background: var(--light-blue);
             color: var(--blue);
@@ -825,7 +825,7 @@
                     </a>
                     <ul id="sub-menu" class="sub-menu active">
                         <li>
-                            <a href="student-dailylogs.php">
+                            <a href="student-taskcompletion.php">
                                 <i class='bx bx-task'></i>
                                 Task Completion
                             </a>
@@ -925,20 +925,20 @@
             </div>
 
             <ul class="box-info">
-                <a href="student-dailylogs.php">
+                <a href="student-taskcompletion.php">
                     <li>
-                        <i class='bx bxs-group' ></i>
+                        <i class='bx bx-task' ></i>
                         <span class="text">
-                            <h3>Message</h3>
+                            <h3>Task Completion</h3>
                             <p>3</p>
                         </span>
                     </li>
                 </a>
-                <a href="student-dailylogs.php">
+                <a href="student-skilldevelopment.php">
                     <li>
-                        <i class='bx bxs-group' ></i>
+                        <i class='bx bx-check-shield' ></i>
                         <span class="text">
-                            <h3>Message</h3>
+                            <h3>Skill Development</h3>
                             <p>3</p>
                         </span>
                     </li>
