@@ -1110,35 +1110,54 @@
 
             const isSidebarCollapsed = sidebar.classList.contains('hide');
 
-            // Toggle the icon between left and right chevron + add rotation animation
             if (isSidebarCollapsed) {
                 menuBar.classList.replace('bx-chevron-left', 'bx-chevron-right');
 
-                // Collapse all expanded submenus
-                const allSubMenus = document.querySelectorAll('.sub-menu.active');
-                allSubMenus.forEach(submenu => {
+                // Loop through submenus to collapse them and store open state
+                document.querySelectorAll('.has-submenu').forEach(item => {
+                    const submenu = item.querySelector('.sub-menu');
+                    const arrow = item.querySelector('.arrow');
+                    const nextLi = item.nextElementSibling;
+
+                    // Store current state before hiding
+                    const isExpanded = submenu.classList.contains('active');
+                    item.setAttribute('data-opened', isExpanded ? 'true' : 'false');
+
+                    // Force collapse
                     submenu.classList.remove('active');
                     submenu.style.display = 'none';
-
-                    // Reset margin of next element (usually the sibling li)
-                    const parentLi = submenu.closest('li');
-                    const nextLi = parentLi ? parentLi.nextElementSibling : null;
-                    if (nextLi) nextLi.style.marginTop = '0px';
-
-                    // Reset arrow rotation
-                    const arrow = parentLi.querySelector('.arrow');
                     if (arrow) arrow.style.transform = 'rotate(0deg)';
+                    if (nextLi) nextLi.style.marginTop = '0px';
                 });
+
             } else {
                 menuBar.classList.replace('bx-chevron-right', 'bx-chevron-left');
+
+                // Restore previous submenu state
+                document.querySelectorAll('.has-submenu').forEach(item => {
+                    const shouldOpen = item.getAttribute('data-opened') === 'true';
+                    const submenu = item.querySelector('.sub-menu');
+                    const arrow = item.querySelector('.arrow');
+                    const nextLi = item.nextElementSibling;
+
+                    if (shouldOpen) {
+                        submenu.classList.add('active');
+                        submenu.style.display = 'block';
+                        if (arrow) arrow.style.transform = 'rotate(180deg)';
+                        if (nextLi) nextLi.style.marginTop = '185px';
+                    }
+                });
             }
 
             // Add rotation animation
             menuBar.classList.add('rotate-icon');
             setTimeout(() => {
-                menuBar.classList.remove('rotate-icon'); // Remove class after animation completes
-            }, 300); // Matches the CSS transition time
+                menuBar.classList.remove('rotate-icon');
+            }, 300);
         });
+
+
+
 
 
         // SEARCH TOGGLE (For small screens)
