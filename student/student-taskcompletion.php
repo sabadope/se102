@@ -869,7 +869,7 @@
                     <ul id="sub-menu" class="sub-menu active">
                         <li>
                             <a href="student-skilldevelopment.php">
-                                <div class="underline">
+                                <div class="non-underline">
                                     <i class='bx bx-check-shield'></i>
                                     <span>Skill Development</span>
                                 </div>
@@ -877,7 +877,7 @@
                         </li>
                         <li>
                             <a href="student-taskcompletion.php">
-                                <div class="non-underline">
+                                <div class="underline">
                                     <i class='bx bx-task'></i>
                                     <span>Task Completion</span>
                                 </div>
@@ -1028,10 +1028,10 @@
         if (
             path.includes("student-activities.php") ||
             path.includes("student-performance.php") ||
-            path.includes("student-skilldevelopment.php") // 👈 Add this line
+            path.includes("student-taskcompletion.php") // 👈 Add this line
             
         ) {
-            const menuId = (path.includes("student-performance.php") || path.includes("student-skilldevelopment.php"))
+            const menuId = (path.includes("student-performance.php") || path.includes("student-taskcompletion.php"))
                 ? '#performance-submenu'
                 : '#activities-submenu';
 
@@ -1078,7 +1078,7 @@
 
         // ========== HIGHLIGHT ACTIVE SUBMENU ITEM ==========
         if (path.includes("student-skilldevelopment.php")) {
-            const skillLink = document.querySelector('.sub-menu li a[href="student-skilldevelopment.php"]');
+            const skillLink = document.querySelector('.sub-menu li a[href="student-taskcompletion.php"]');
             if (skillLink) {
                 const underlineDiv = skillLink.querySelector('.underline');
                 if (underlineDiv) {

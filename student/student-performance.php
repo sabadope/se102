@@ -825,7 +825,7 @@
                     </a>
                     <ul id="sub-menu" class="sub-menu active">
                         <li>
-                            <a href="student-feedbacks.php">
+                            <a href="student-skilldevelopment.php">
                                 <i class='bx bx-check-shield'></i>
                                 Skill Development
                             </a>
