@@ -823,7 +823,7 @@
                     <ul id="sub-menu" class="sub-menu active">
                         <li>
                             <a href="student-dailylogs.php">
-                                <i class='bx bx-task'></i>
+                                <i class='bx bx-calendar-check'></i>
                                 Daily Logs
                             </a>
                         </li>
@@ -902,21 +902,24 @@
             </div>
 
             <ul class="box-info">
-                <li>
-                    <i class='bx bxs-calendar-check' ></i>
-                    <span class="text">
-                        <h3>Attendace</h3>
-                        <p>100%</p>
-                    </span>
-                </li>
-                <li>
-                    <i class='bx bxs-group' ></i>
-                    <span class="text">
-                        <h3>Message</h3>
-                        <p>3</p>
-                    </span>
-                </li>
-                
+                <a href="student-dailylogs.php">
+                    <li>
+                        <i class='bx bx-calendar-check' ></i>
+                        <span class="text">
+                            <h3>Daily Logs</h3>
+                            <p>100%</p>
+                        </span>
+                    </li>
+                </a>
+                <a href="student-dailylogs.php">
+                    <li>
+                        <i class='bx bx-comment-detail'></i>
+                        <span class="text">
+                            <h3>Feedbacks</h3>
+                            <p>3</p>
+                        </span>
+                    </li>
+                </a>
             </ul>
         </main>
         <!-- MAIN -->
