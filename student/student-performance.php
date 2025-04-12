@@ -945,20 +945,20 @@
                 </a>
             </ul>
             <ul class="box-info">
-                <a href="student-dailylogs.php">
+                <a href="student-achievementranking.php">
                     <li>
-                        <i class='bx bxs-group' ></i>
+                        <i class='bx bx-check-square' ></i>
                         <span class="text">
-                            <h3>Message</h3>
+                            <h3>Achievement Ranking</h3>
                             <p>3</p>
                         </span>
                     </li>
                 </a>
-                <a href="student-dailylogs.php">
+                <a href="student-behavioralconduct.php">
                     <li>
-                        <i class='bx bxs-group' ></i>
+                        <i class='bx bx-check-circle' ></i>
                         <span class="text">
-                            <h3>Message</h3>
+                            <h3>Behavior Conduct</h3>
                             <p>3</p>
                         </span>
                     </li>
