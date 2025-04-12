@@ -766,7 +766,6 @@
                         <i class='bx bx-chevron-down arrow' style="margin-left: auto;"></i>
                     </a>
                 </li>
-   
                 <li>
                     <a href="student-settings.php">
                         <i class='bx bxs-cog'></i>

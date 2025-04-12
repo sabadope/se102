@@ -729,7 +729,7 @@
         }
     </style>
 
-    <title>Student Dashboard</title>
+    <title>Student Performance</title>
 </head>
 <body>
 
@@ -855,14 +855,14 @@
         <main>
             <div class="head-title">
                 <div class="left">
-                    <h1>Activities</h1>
+                    <h1>Performance</h1>
                     <ul class="breadcrumb">
                         <li>
-                            <a href="student-activities.php">Home</a>
+                            <a href="student-performance.php">Home</a>
                         </li>
                         <li><i class='bx bx-chevron-right' ></i></li>
                         <li>
-                            <a class="active">Activities</a>
+                            <a class="active">Performance</a>
                         </li>
                     </ul>
                 </div>

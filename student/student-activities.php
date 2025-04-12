@@ -159,6 +159,30 @@
 
         }
 
+        /* Ensure submenu links have no background by default */
+        #sidebar .sub-menu li a {
+            background: none !important;
+            color: var(--dark);
+            transition: color 0.3s ease;
+        }
+
+        /* On hover, only change the text color */
+        #sidebar .sub-menu li a:hover {
+            background: none !important;
+            color: var(--dark) !important;
+        }
+
+        /* ===== Submenu Default Style ===== */
+        #sidebar .side-menu .sub-menu li a {
+            padding-left: 1px;       
+            transition: color 0.3s;
+            color: var(--dark);
+        }
+
+        #sidebar .side-menu .sub-menu li a:hover {
+            color: var(--dark); /* Just change the text color on hover */
+        }
+
         /* ===== Submenu Default Style ===== */
         #sidebar .side-menu .sub-menu li a {
             padding-left: 1px;       
@@ -744,6 +768,13 @@
                     <a href="student-messages.php">
                         <i class='bx bxs-message-dots'></i>
                         <span class="text">Message</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="student-performance.php" style="display: flex; align-items: center;">
+                        <i class='bx bxs-book-content'></i>
+                        <span class="text">Performance</span>
+                        <i class='bx bx-chevron-down arrow' style="margin-left: auto;"></i>
                     </a>
                 </li>
 

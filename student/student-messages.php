@@ -170,13 +170,20 @@
                 </a>
             </li>
             <li>
-                <a href="#">
-                    <i class='bx bxs-group' ></i>
-                    <span class="text">Team</span>
+                <a href="student-performance.php" style="display: flex; align-items: center;">
+                    <i class='bx bxs-book-content'></i>
+                    <span class="text">Performance</span>
+                    <i class='bx bx-chevron-down arrow' style="margin-left: auto;"></i>
                 </a>
             </li>
-        </ul>
-        <ul class="side-menu">
+
+            <li>
+                <a href="student-activities.php" style="display: flex; align-items: center;">
+                    <i class='bx bxs-folder-open'></i>
+                    <span class="text">Activities</span>
+                    <i class='bx bx-chevron-down arrow' style="margin-left: auto;"></i>
+                </a>
+            </li>
             <li>
                 <a href="#">
                     <i class='bx bxs-cog' ></i>
