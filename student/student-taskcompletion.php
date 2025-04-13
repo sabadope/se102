@@ -171,6 +171,53 @@
         }
 
 
+        /* Collapsed state */
+        #sidebar.hide .side-menu li a .text {
+            opacity: 0;
+            visibility: hidden;
+            width: 0;
+            overflow: hidden;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Expanded state */
+        #sidebar .side-menu li a .text {
+            opacity: 1;
+            visibility: visible;
+            width: auto;
+            transition: all 0.3s ease;
+        }
+
+
+        #sidebar.hide .sub-menu .text,
+        #sidebar.hide .sub-menu i, {
+            display: none;
+            opacity: 0;
+            visibility: hidden;
+            width: 0;
+            overflow: hidden;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        /* Hide the entire submenu only if it's not manually opened */
+        .sidebar-collapsed .sub-menu:not(.active-manual) {
+            display: none !important;
+            visibility: hidden;
+            opacity: 0;
+            height: 0;
+            overflow: hidden;
+            padding: 0;
+        }
+
+
+
         #sidebar .side-menu li a .bx {
             min-width: calc(60px - ((4px + 6px) * 2));
             display: flex;
@@ -285,25 +332,6 @@
         }
 
 
-        /* Collapsed state */
-        #sidebar.hide .side-menu li a .text {
-            opacity: 0;
-            visibility: hidden;
-            width: 0;
-            overflow: hidden;
-            white-space: nowrap;
-            transition: all 0.3s ease;
-            margin: 0;
-            padding: 0;
-        }
-
-        /* Expanded state */
-        #sidebar .side-menu li a .text {
-            opacity: 1;
-            visibility: visible;
-            width: auto;
-            transition: all 0.3s ease;
-        }
 
 
         /* ========== LOGOUT COLOR ========== */
@@ -351,6 +379,12 @@
         .has-submenu.active > a .arrow {
             transform: rotate(180deg); /* Expanded: arrow down */
         }
+
+        .arrow {
+            transition: transform 0.3s ease;
+            display: inline-block; /* ensure transform works */
+        }
+
 
 
 
