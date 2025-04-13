@@ -234,6 +234,11 @@
             color: var(--red);
         }
 
+        #sidebar .side-menu li a.logout:hover {
+            color: #bb2d3b;
+        }
+
+
         /* ========== SUBMENU DROPDOWN ========== */
         .sub-menu {
             display: none;
@@ -990,8 +995,8 @@
     <!-- CONTENT -->
     
 
-    <script>
-        
+    <!-- NAV BAR W/ TOGGLE HIDE -->
+    <script>        
         // Select all sidebar menu items
         const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
 
