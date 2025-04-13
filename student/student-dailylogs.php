@@ -90,6 +90,7 @@
         }
 
         /* ========== SIDEBAR BASE ========== */
+        /* ========== SIDEBAR BASE ========== */
         #sidebar {
             position: fixed;
             top: 0;
@@ -169,6 +170,53 @@
             color: var(--dark);
             white-space: nowrap;
         }
+
+
+        /* Collapsed state */
+        #sidebar.hide .side-menu li a .text {
+            opacity: 0;
+            visibility: hidden;
+            width: 0;
+            overflow: hidden;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Expanded state */
+        #sidebar .side-menu li a .text {
+            opacity: 1;
+            visibility: visible;
+            width: auto;
+            transition: all 0.3s ease;
+        }
+
+
+        #sidebar.hide .sub-menu .text,
+        #sidebar.hide .sub-menu i, {
+            display: none;
+            opacity: 0;
+            visibility: hidden;
+            width: 0;
+            overflow: hidden;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        /* Hide the entire submenu only if it's not manually opened */
+        .sidebar-collapsed .sub-menu:not(.active-manual) {
+            display: none !important;
+            visibility: hidden;
+            opacity: 0;
+            height: 0;
+            overflow: hidden;
+            padding: 0;
+        }
+
 
 
         #sidebar .side-menu li a .bx {
@@ -333,6 +381,12 @@
             transform: rotate(180deg); /* Expanded: arrow down */
         }
 
+        .arrow {
+            transition: transform 0.3s ease;
+            display: inline-block; /* ensure transform works */
+        }
+
+
 
 
         /* CONTENT */
@@ -360,6 +414,7 @@
             top: 0;
             left: 0;
             z-index: 1000;
+
         }
         #content nav::before {
             content: '';
@@ -371,6 +426,7 @@
             border-radius: 50%;
             box-shadow: -20px -20px 0 var(--light);
         }
+
         #content nav a {
             color: var(--dark);
         }
@@ -394,6 +450,7 @@
             display: flex;
             align-items: center;
             height: 36px;
+
         }
         #content nav form .form-input input {
             flex-grow: 1;
@@ -405,6 +462,7 @@
             outline: none;
             width: 100%;
             color: var(--dark);
+
         }
         #content nav form .form-input button {
             width: 36px;
@@ -468,6 +526,74 @@
         }
         #content nav #switch-mode:checked + .switch-mode::before {
             left: calc(100% - (25px - 4px) - 2px);
+        }
+
+        nav.navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: #fff; /* Optional */
+            position: relative;
+        }
+
+        /* Force the left and right parts to occupy equal width for balance */
+        .nav-left,
+        .nav-right {
+            flex: 1;
+            display: flex;
+            align-items: center;
+
+        }
+
+        /* Right section spacing */
+        .nav-right {
+            justify-content: flex-end;
+            gap: 30px;
+            margin-left: 16%;
+        }
+
+        /* Center part (search bar) stays in the middle */
+        .nav-center {
+            flex: 0 0 auto;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Search form styling */
+        .form-input {
+            display: flex;
+            align-items: center;
+            background: #f1f1f1;
+            padding: 0;
+            border-radius: 20px;
+            width: 100%;
+        }
+
+        .form-input input[type="search"] {
+            border: none;
+            outline: none;
+            background: transparent;
+            padding: 5px 10px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+
+        }
+
+        .search-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            color: #333;
+        }
+
+        /* Profile image */
+        .profile img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
         }
         /* NAVBAR */
 
