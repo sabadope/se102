@@ -26,25 +26,25 @@ To develop a web-based platform that modernizes how companies monitor and evalua
   <tr>
     <td valign="top">
       <ul>
-        <li><a href="./BANIAS.md">BANIAS TASK</a></li>
-        <li><a href="./SUDLON.md">SUDLON TASK</a></li>
+        <li><a href="./BANIAS.md">&nbsp;BANIAS TASK&nbsp;</a></li>
+        <li><a href="./SUDLON.md">&nbsp;SUDLON TASK&nbsp;</a></li>
       </ul>
     </td>
     <td valign="top">
       <ul>
-        <li><a href="./BANAAG.md">BANAAG TASK</a></li>
-        <li><a href="./TORRES.md">TORRES TASK</a></li>
+        <li><a href="./BANAAG.md">&nbsp;BANAAG TASK&nbsp;</a></li>
+        <li><a href="./TORRES.md">&nbsp;TORRES TASK&nbsp;</a></li>
       </ul>
     </td>
     <td valign="top">
       <ul>
-        <li><a href="./HOTOHOT.md">HOTOHOT TASK</a></li>
-        <li><a href="./GADUDO.md">GADUDO TASK</a></li>
+        <li><a href="./HOTOHOT.md">&nbsp;HOTOHOT TASK&nbsp;</a></li>
+        <li><a href="./GADUDO.md">&nbsp;GADUDO TASK&nbsp;</a></li>
       </ul>
     </td>
     <td valign="top">
       <ul>
-        <li><a href="./SABADO.md">SABADO TASK</a></li>
+        <li><a href="./SABADO.md">&nbsp;SABADO TASK&nbsp;</a></li>
       </ul>
     </td>
   </tr>
