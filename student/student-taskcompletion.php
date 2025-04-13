@@ -1154,75 +1154,6 @@
     <!-- CONTENT -->
     
 
-    <script>
-        // ========== DEFAULT ACTIVATION RULES FOR ACTIVITIES & PERFORMANCE ==========
-
-        const path = window.location.pathname;
-
-        if (
-            path.includes("student-activities.php") ||
-            path.includes("student-performance.php") ||
-            path.includes("student-taskcompletion.php") // 👈 Add this line
-            
-        ) {
-            const menuId = (path.includes("student-performance.php") || path.includes("student-taskcompletion.php"))
-                ? '#performance-submenu'
-                : '#activities-submenu';
-
-            const menuElement = document.querySelector(menuId);
-            const submenu = menuElement.querySelector('.sub-menu');
-            const nextLi = menuElement.nextElementSibling;
-
-            // Keep the tab styled as active
-            menuElement.classList.add('active');
-
-            // Keep the submenu expanded
-            submenu.classList.add('active');
-            submenu.style.display = 'block';
-
-            // Push down the next item to avoid overlap
-            if (nextLi) nextLi.style.marginTop = '185px';
-        }
-
-        // ========== SUBMENU TOGGLE FUNCTIONALITY ==========
-
-        const submenuLinks = document.querySelectorAll('.has-submenu > a');
-
-        submenuLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault(); // Prevent redirect
-
-                const parentLi = link.parentElement;
-                const submenu = parentLi.querySelector('.sub-menu');
-                const arrow = link.querySelector('.arrow'); // Get the arrow element
-                const nextLi = parentLi.nextElementSibling;
-
-                // Toggle submenu visibility
-                const isExpanded = submenu.classList.contains('active');
-                submenu.classList.toggle('active');
-                submenu.style.display = isExpanded ? 'none' : 'block';
-
-                // Rotate arrow based on expanded/collapsed state
-                arrow.style.transform = isExpanded ? 'rotate(0deg)' : 'rotate(180deg)';
-
-                // Adjust margin of next item
-                if (nextLi) nextLi.style.marginTop = isExpanded ? '0px' : '185px';
-            });
-        });
-
-        // ========== HIGHLIGHT ACTIVE SUBMENU ITEM ==========
-        if (path.includes("student-skilldevelopment.php")) {
-            const skillLink = document.querySelector('.sub-menu li a[href="student-taskcompletion.php"]');
-            if (skillLink) {
-                const underlineDiv = skillLink.querySelector('.underline');
-                if (underlineDiv) {
-                    underlineDiv.classList.add('active');
-                }
-            }
-        }
-    </script>
-
-
     <!-- NAV BAR W/ TOGGLE HIDE -->
     <script>
         const sidebar = document.getElementById('sidebar');
@@ -1346,6 +1277,76 @@
                 }
             }
         });
+    </script>
+
+
+    <!-- SIDEBAR FUNCTIONALITIES -->
+    <script>
+        // ========== DEFAULT ACTIVATION RULES FOR ACTIVITIES & PERFORMANCE ==========
+
+        const path = window.location.pathname;
+
+        if (
+            path.includes("student-activities.php") ||
+            path.includes("student-performance.php") ||
+            path.includes("student-taskcompletion.php") // 👈 Add this line
+            
+        ) {
+            const menuId = (path.includes("student-performance.php") || path.includes("student-taskcompletion.php"))
+                ? '#performance-submenu'
+                : '#activities-submenu';
+
+            const menuElement = document.querySelector(menuId);
+            const submenu = menuElement.querySelector('.sub-menu');
+            const nextLi = menuElement.nextElementSibling;
+
+            // Keep the tab styled as active
+            menuElement.classList.add('active');
+
+            // Keep the submenu expanded
+            submenu.classList.add('active');
+            submenu.style.display = 'block';
+
+            // Push down the next item to avoid overlap
+            if (nextLi) nextLi.style.marginTop = '185px';
+        }
+
+        // ========== SUBMENU TOGGLE FUNCTIONALITY ==========
+
+        const submenuLinks = document.querySelectorAll('.has-submenu > a');
+
+        submenuLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault(); // Prevent redirect
+
+                const parentLi = link.parentElement;
+                const submenu = parentLi.querySelector('.sub-menu');
+                const arrow = link.querySelector('.arrow'); // Get the arrow element
+                const nextLi = parentLi.nextElementSibling;
+
+                // Toggle submenu visibility
+                const isExpanded = submenu.classList.contains('active');
+                submenu.classList.toggle('active');
+                submenu.style.display = isExpanded ? 'none' : 'block';
+
+                // Rotate arrow based on expanded/collapsed state
+                arrow.style.transform = isExpanded ? 'rotate(0deg)' : 'rotate(180deg)';
+
+                // Adjust margin of next item
+                if (nextLi) nextLi.style.marginTop = isExpanded ? '0px' : '185px';
+            });
+        });
+
+        // ========== HIGHLIGHT ACTIVE SUBMENU ITEM ==========
+        if (path.includes("student-skilldevelopment.php")) {
+            const skillLink = document.querySelector('.sub-menu li a[href="student-taskcompletion.php"]');
+            if (skillLink) {
+                const underlineDiv = skillLink.querySelector('.underline');
+                if (underlineDiv) {
+                    underlineDiv.classList.add('active');
+                }
+            }
+        }
     </script>
 
 
