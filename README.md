@@ -7,11 +7,11 @@ To develop a web-based platform that modernizes how companies monitor and evalua
 <div align="center">
 
 <ul align="left">
-  <li>✅ <strong>Real-time Monitoring</strong><br>Track intern activities and performance in real-time through digital logs and reports.</li>
-  <li>📈 <strong>Data-Driven Evaluation</strong><br>Use system-generated data and analytics to assess intern productivity and outcomes.</li>
-  <li>👥 <strong>Multi-Perspective Feedback</strong><br>Collect insights from supervisors, HR, and system logs for a well-rounded evaluation.</li>
-  <li>🧠 <strong>Smart Decision Support</strong><br>Help companies identify high-performing interns for potential employment.</li>
-  <li>🚀 <strong>Scalable and Feasible</strong><br>Designed to be practical for small teams and adaptable for wider institutional use.</li>
+  <li><strong>Real-time Monitoring</strong><br>Track intern activities and performance in real-time through digital logs and reports.</li>
+  <li><strong>Data-Driven Evaluation</strong><br>Use system-generated data and analytics to assess intern productivity and outcomes.</li>
+  <li><strong>Multi-Perspective Feedback</strong><br>Collect insights from supervisors, HR, and system logs for a well-rounded evaluation.</li>
+  <li><strong>Smart Decision Support</strong><br>Help companies identify high-performing interns for potential employment.</li>
+  <li><strong>Scalable and Feasible</strong><br>Designed to be practical for small teams and adaptable for wider institutional use.</li>
 </ul>
 
 </div>
