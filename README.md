@@ -2,7 +2,8 @@
 
 To develop a web-based platform that modernizes how companies monitor and evaluate intern performance by providing a fair, transparent, and data-driven evaluation system.
 
-<h3 align="center">Key Concepts of the System</h3>
+<h3 align="center">KEY CONCEPTS OF THE SYSTEM</h3>
+<br>
 
 <div align="center">
 
@@ -18,7 +19,7 @@ To develop a web-based platform that modernizes how companies monitor and evalua
 
 ---
 
-<h3 align="center">Project Managers</h3>
+<h3 align="center">PROJECT MANAGERS</h3>
 <br>
 
 <div align="center">
