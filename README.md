@@ -26,25 +26,25 @@ To develop a web-based platform that modernizes how companies monitor and evalua
   <tr>
     <td valign="top">
       <ul>
-        <li><a href="./speedometer/README.md">🚴 Speedometer</a></li>
-        <li><a href="./frontend/README.md">🎨 Frontend Guide</a></li>
+        <li><a href="./BANIAS.md">BANIAS TASK</a></li>
+        <li><a href="./SUDLON.md">SUDLON TASK</a></li>
       </ul>
     </td>
     <td valign="top">
       <ul>
-        <li><a href="./bike-lock/README.md">🔐 Smart Bike Lock</a></li>
-        <li><a href="./backend/README.md">🛠 Backend Guide</a></li>
+        <li><a href="./BANAAG.md">BANAAG TASK</a></li>
+        <li><a href="./TORRES.md">TORRES TASK</a></li>
       </ul>
     </td>
     <td valign="top">
       <ul>
-        <li><a href="./line-follower/README.md">🧭 Line Follower</a></li>
-        <li><a href="./database/README.md">🗃 Database Setup</a></li>
+        <li><a href="./HOTOHOT.md">HOTOHOT TASK</a></li>
+        <li><a href="./GADUDO.md">GADUDO TASK</a></li>
       </ul>
     </td>
     <td valign="top">
       <ul>
-        <li><a href="./speedometer/README.md">🚴 Speedometer</a></li>
+        <li><a href="./SABADO.md">SABADO TASK</a></li>
       </ul>
     </td>
   </tr>
