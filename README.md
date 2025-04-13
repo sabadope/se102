@@ -18,7 +18,8 @@ To develop a web-based platform that modernizes how companies monitor and evalua
 
 ---
 
-<h3 align="center">📁 Project Modules</h3>
+<h3 align="center">Project Managers</h3>
+<br>
 
 <div align="center">
 
