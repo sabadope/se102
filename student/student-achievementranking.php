@@ -1154,6 +1154,131 @@
     <!-- CONTENT -->
     
 
+    <!-- NAV BAR W/ TOGGLE HIDE -->
+    <script>
+        const sidebar = document.getElementById('sidebar');
+        const toggleSidebarBtn = document.querySelector('.navbar i.bx');
+        const allSideMenuLinks = document.querySelectorAll('#sidebar .side-menu.top li a');
+        const submenuToggle = document.querySelector('.submenu-toggle');
+        const subMenu = document.getElementById('sub-menu');
+
+        allSideMenuLinks.forEach(item => {
+            const li = item.parentElement;
+
+            item.addEventListener('click', () => {
+                allSideMenuLinks.forEach(i => {
+                    i.parentElement.classList.remove('active');
+                });
+                li.classList.add('active');
+            });
+        });
+
+        // Toggle chevron direction
+        if (sidebar.classList.contains('hide')) {
+            toggleSidebarBtn.classList.replace('bx-chevron-left', 'bx-chevron-right');
+        } else {
+            toggleSidebarBtn.classList.replace('bx-chevron-right', 'bx-chevron-left');
+        }
+
+        toggleSidebarBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('hide');
+            const isCollapsed = sidebar.classList.contains('hide');
+
+            if (isCollapsed) {
+                sidebar.classList.add('sidebar-collapsed');
+
+                // Collapse all submenus and save their state
+                document.querySelectorAll('.has-submenu').forEach(item => {
+                    const submenu = item.querySelector('.sub-menu');
+                    const arrow = item.querySelector('.arrow');
+                    const nextLi = item.nextElementSibling;
+
+                    const isExpanded = submenu.classList.contains('active');
+                    item.setAttribute('data-opened', isExpanded ? 'true' : 'false');
+
+                    submenu.classList.remove('active');
+                    submenu.style.display = 'none';
+
+                    if (arrow) arrow.style.transform = 'rotate(0deg)';
+                    if (nextLi) nextLi.style.marginTop = '0px';
+                });
+
+            } else {
+                sidebar.classList.remove('sidebar-collapsed');
+
+                // Restore submenus that were previously open
+                document.querySelectorAll('.has-submenu').forEach(item => {
+                    const shouldOpen = item.getAttribute('data-opened') === 'true';
+                    const submenu = item.querySelector('.sub-menu');
+                    const arrow = item.querySelector('.arrow');
+                    const nextLi = item.nextElementSibling;
+
+                    if (shouldOpen) {
+                        submenu.classList.add('active');
+                        submenu.style.display = 'block';
+
+                        if (arrow) arrow.style.transform = 'rotate(180deg)';
+                        if (nextLi) nextLi.style.marginTop = '185px';
+                    }
+                });
+
+                // Restore manual submenu
+                if (subMenu.classList.contains('active')) {
+                    subMenu.style.display = 'block';
+                }
+            }
+
+            // Toggle chevron direction
+            if (sidebar.classList.contains('hide')) {
+                toggleSidebarBtn.classList.replace('bx-chevron-left', 'bx-chevron-right');
+            } else {
+                toggleSidebarBtn.classList.replace('bx-chevron-right', 'bx-chevron-left');
+            }
+
+        });
+
+        // Submenu toggle for manual expand/collapse
+        submenuToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+
+            const isOpen = subMenu.classList.contains('active-manual');
+
+            if (isOpen) {
+                subMenu.classList.remove('active', 'active-manual');
+                subMenu.style.display = 'none';
+            } else {
+                subMenu.classList.add('active', 'active-manual');
+                subMenu.style.display = 'block';
+            }
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const isSidebarCollapsed = sidebar.classList.contains('hide');
+            const isManuallyOpened = subMenu.classList.contains('active-manual');
+
+            if (isSidebarCollapsed && !isManuallyOpened) {
+                subMenu.style.display = 'none';
+            }
+        });
+
+        // Search bar for mobile screens
+        const searchButton = document.querySelector('#content nav form .form-input button');
+        const searchButtonIcon = document.querySelector('#content nav form .form-input button .bx');
+        const searchForm = document.querySelector('#content nav form');
+
+        searchButton.addEventListener('click', function (e) {
+            if (window.innerWidth < 576) {
+                e.preventDefault();
+                searchForm.classList.toggle('show');
+                if (searchForm.classList.contains('show')) {
+                    searchButtonIcon.classList.replace('bx-search', 'bx-x');
+                } else {
+                    searchButtonIcon.classList.replace('bx-x', 'bx-search');
+                }
+            }
+        });
+    </script>
+
     <script>
         // ========== DEFAULT ACTIVATION RULES FOR ACTIVITIES & PERFORMANCE ==========
 
@@ -1222,93 +1347,6 @@
         }
     </script>
 
-
-
-
-
-
-    <!-- JavaScript for Toggle, Title Update & Pie Chart -->
-    <script>
-        // Function to calculate "time ago"
-        function timeAgo(time) {
-            const now = new Date();
-            const createdAt = new Date(time);
-            const diff = Math.floor((now - createdAt) / 1000); // Time difference in seconds
-
-            if (diff < 60) {
-                return "Just now";
-            } else if (diff < 3600) {
-                return Math.floor(diff / 60) + " min ago";
-            } else if (diff < 86400) {
-                return Math.floor(diff / 3600) + " hour ago";
-            } else {
-                return Math.floor(diff / 86400) + " day ago";
-            }
-        }
-
-        // Function to update time dynamically
-        function updateTimes() {
-            document.querySelectorAll('.registered-time').forEach(el => {
-                const time = el.getAttribute('data-time');
-                el.textContent = timeAgo(time);
-            });
-        }
-
-        // Initial call & update every 30 seconds
-        updateTimes();
-        setInterval(updateTimes, 30000);
-
-        // Wait for the page to load
-        document.addEventListener("DOMContentLoaded", function () {
-            var chartToggle = document.querySelector(".chart-toggle");
-            var sectionTitle = document.getElementById("section-title");
-            var tableView = document.querySelector(".table-view");
-            var chartContainer = document.querySelector(".chart-container");
-
-            // Pie Chart Configuration
-            var ctx = document.getElementById('userChart').getContext('2d');
-            var userChart = new Chart(ctx, {
-                type: 'pie',
-                data: {
-                    labels: <?php echo json_encode($roles); ?>,
-                    datasets: [{
-                        data: <?php echo json_encode($counts); ?>,
-                        backgroundColor: ['#ff6384', '#36a2eb', '#ffcd56', '#4bc0c0']
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    layout: {
-                        padding: {
-                            bottom: 35 // Adds space between the chart and labels
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            position: 'left',
-                            labels: {
-                                boxWidth: 15, // Smaller legend boxes
-                                padding: 40,  // Adds spacing between legend items
-                            }
-                        }
-                    }
-                }
-            });
-
-            // Toggle between Table and Pie Chart
-            chartToggle.addEventListener("click", function () {
-                if (tableView.style.display === "none") {
-                    tableView.style.display = "flex";
-                    chartContainer.style.display = "none";
-                    sectionTitle.textContent = "Recent Accounts"; // Update title back
-                } else {
-                    tableView.style.display = "none";
-                    chartContainer.style.display = "flex";
-                    sectionTitle.textContent = "Total Users"; // Update title to Pie Chart
-                }
-            });
-        });
-    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Load Chart.js -->
 </body>
