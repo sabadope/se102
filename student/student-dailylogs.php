@@ -89,7 +89,7 @@
             background: #555; /* Darker color when the user hovers over the thumb */
         }
 
-        /* ========== SIDEBAR BASE ========== */
+        
         /* ========== SIDEBAR BASE ========== */
         #sidebar {
             position: fixed;
@@ -338,6 +338,10 @@
         /* ========== LOGOUT COLOR ========== */
         #sidebar .side-menu li a.logout {
             color: var(--red);
+        }
+
+        #sidebar .side-menu li a.logout:hover {
+            color: #bb2d3b;
         }
 
         /* ========== SUBMENU DROPDOWN ========== */
