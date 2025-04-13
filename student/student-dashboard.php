@@ -253,6 +253,10 @@
             color: var(--red);
         }
 
+        #sidebar .side-menu li a.logout:hover {
+            color: #bb2d3b;
+        }
+
         /* ========== SUBMENU DROPDOWN ========== */
         .sub-menu {
             display: none;
