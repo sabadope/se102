@@ -1279,6 +1279,7 @@
         });
     </script>
 
+    <!-- SIDEBAR FUNCTIONALITIES -->
     <script>
         // ========== DEFAULT ACTIVATION RULES FOR ACTIVITIES & PERFORMANCE ==========
 
