@@ -1,4 +1,4 @@
-# A Web-Based Solution for Monitoring and Evaluating Student Intern Performance
+# A WEB-BASED SOLUTION FOR MONITORING AND EVALUATING STUDENT INTERN PERFORMANCE
 
 To develop a web-based platform that modernizes how companies monitor and evaluate intern performance by providing a fair, transparent, and data-driven evaluation system.
 
