@@ -304,7 +304,7 @@
             width: auto;
             transition: all 0.3s ease;
         }
-        
+
 
         /* ========== LOGOUT COLOR ========== */
         #sidebar .side-menu li a.logout {
@@ -353,6 +353,18 @@
         }
 
 
+
+        /* CONTENT */
+        #content {
+            position: relative;
+            width: calc(100% - 280px);
+            left: 280px;
+            transition: .3s ease;
+        }
+        #sidebar.hide ~ #content {
+            width: calc(100% - 60px);
+            left: 60px;
+        }
 
         /* NAVBAR */
         #content nav {
@@ -1011,24 +1023,33 @@
     <!-- CONTENT -->
     <section id="content">
         <!-- NAVBAR -->
-        <nav>
+        <nav class="navbar">
             <i class="bx bx-chevron-left" style="font-size: 25px;"></i> <!-- Sidebar toggle button -->
-            
-            <form action="#">
+            <!-- Left Spacer -->
+            <div class="nav-left"></div>
+
+            <!-- Center: Search Form -->
+            <form action="#" class="nav-center">
                 <div class="form-input">
                     <input type="search" placeholder="Search...">
-                    <button type="submit" class="search-btn"><i class='bx bx-search' ></i></button>
+                    <button type="submit" class="search-btn">
+                        <i class='bx bx-search'></i>
+                    </button>
                 </div>
             </form>
-            <input type="checkbox" id="switch-mode" hidden>
-            <label for="switch-mode" class="switch-mode"></label>
-            <a href="#" class="notification">
-                <i class='bx bxs-bell' ></i>
-                <span class="num">8</span>
-            </a>
-            <a href="#" class="profile">
-                <img src="img/people.png">
-            </a>
+
+            <!-- Right: Icons -->
+            <div class="nav-right">
+                <input type="checkbox" id="switch-mode" hidden>
+                <label for="switch-mode" class="switch-mode"></label>
+                <a href="#" class="notification">
+                    <i class='bx bxs-bell'></i>
+                    <span class="num">8</span>
+                </a>
+                <a href="#" class="profile">
+                    <img src="img/people.png">
+                </a>
+            </div>
         </nav>
         <!-- NAVBAR -->
 
