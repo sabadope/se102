@@ -1056,8 +1056,103 @@
         <!-- MAIN -->
     </section>
     <!-- CONTENT -->
+
+
+    <!-- NAV BAR W/ TOGGLE HIDE -->
+    <script>        
+        // Select all sidebar menu items
+        const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
+
+        allSideMenu.forEach(item => {
+            const li = item.parentElement;
+
+            item.addEventListener('click', function () {
+                allSideMenu.forEach(i => {
+                    i.parentElement.classList.remove('active');
+                });
+                li.classList.add('active');
+            });
+        });
+
+        // TOGGLE SIDEBAR
+        const menuBar = document.querySelector('#content nav .bx.bx-chevron-left'); // Updated selector
+        const sidebar = document.getElementById('sidebar');
+
+        menuBar.addEventListener('click', function () {
+            sidebar.classList.toggle('hide');
+
+            const isSidebarCollapsed = sidebar.classList.contains('hide');
+
+            if (isSidebarCollapsed) {
+                menuBar.classList.replace('bx-chevron-left', 'bx-chevron-right');
+
+                // Loop through submenus to collapse them and store open state
+                document.querySelectorAll('.has-submenu').forEach(item => {
+                    const submenu = item.querySelector('.sub-menu');
+                    const arrow = item.querySelector('.arrow');
+                    const nextLi = item.nextElementSibling;
+
+                    // Store current state before hiding
+                    const isExpanded = submenu.classList.contains('active');
+                    item.setAttribute('data-opened', isExpanded ? 'true' : 'false');
+
+                    // Force collapse
+                    submenu.classList.remove('active');
+                    submenu.style.display = 'none';
+                    if (arrow) arrow.style.transform = 'rotate(0deg)';
+                    if (nextLi) nextLi.style.marginTop = '0px';
+                });
+
+            } else {
+                menuBar.classList.replace('bx-chevron-right', 'bx-chevron-left');
+
+                // Restore previous submenu state
+                document.querySelectorAll('.has-submenu').forEach(item => {
+                    const shouldOpen = item.getAttribute('data-opened') === 'true';
+                    const submenu = item.querySelector('.sub-menu');
+                    const arrow = item.querySelector('.arrow');
+                    const nextLi = item.nextElementSibling;
+
+                    if (shouldOpen) {
+                        submenu.classList.add('active');
+                        submenu.style.display = 'block';
+                        if (arrow) arrow.style.transform = 'rotate(180deg)';
+                        if (nextLi) nextLi.style.marginTop = '90px';
+                    }
+                });
+            }
+
+            // Add rotation animation
+            menuBar.classList.add('rotate-icon');
+            setTimeout(() => {
+                menuBar.classList.remove('rotate-icon');
+            }, 300);
+        });
+
+
+
+
+
+        // SEARCH TOGGLE (For small screens)
+        const searchButton = document.querySelector('#content nav form .form-input button');
+        const searchButtonIcon = document.querySelector('#content nav form .form-input button .bx');
+        const searchForm = document.querySelector('#content nav form');
+
+        searchButton.addEventListener('click', function (e) {
+            if (window.innerWidth < 576) {
+                e.preventDefault();
+                searchForm.classList.toggle('show');
+                if (searchForm.classList.contains('show')) {
+                    searchButtonIcon.classList.replace('bx-search', 'bx-x');
+                } else {
+                    searchButtonIcon.classList.replace('bx-x', 'bx-search');
+                }
+            }
+        });
+    </script>
     
 
+    <!-- SIDEBAR FUNCTIONALITIES -->
     <script>
         // ========== DEFAULT ACTIVATION RULES ==========
 
@@ -1118,95 +1213,8 @@
                 link.classList.add('active');
             }
         });
-
     </script>
 
-
-
-
-
-    <!-- JavaScript for Toggle, Title Update & Pie Chart -->
-    <script>
-        // Function to calculate "time ago"
-        function timeAgo(time) {
-            const now = new Date();
-            const createdAt = new Date(time);
-            const diff = Math.floor((now - createdAt) / 1000); // Time difference in seconds
-
-            if (diff < 60) {
-                return "Just now";
-            } else if (diff < 3600) {
-                return Math.floor(diff / 60) + " min ago";
-            } else if (diff < 86400) {
-                return Math.floor(diff / 3600) + " hour ago";
-            } else {
-                return Math.floor(diff / 86400) + " day ago";
-            }
-        }
-
-        // Function to update time dynamically
-        function updateTimes() {
-            document.querySelectorAll('.registered-time').forEach(el => {
-                const time = el.getAttribute('data-time');
-                el.textContent = timeAgo(time);
-            });
-        }
-
-        // Initial call & update every 30 seconds
-        updateTimes();
-        setInterval(updateTimes, 30000);
-
-        // Wait for the page to load
-        document.addEventListener("DOMContentLoaded", function () {
-            var chartToggle = document.querySelector(".chart-toggle");
-            var sectionTitle = document.getElementById("section-title");
-            var tableView = document.querySelector(".table-view");
-            var chartContainer = document.querySelector(".chart-container");
-
-            // Pie Chart Configuration
-            var ctx = document.getElementById('userChart').getContext('2d');
-            var userChart = new Chart(ctx, {
-                type: 'pie',
-                data: {
-                    labels: <?php echo json_encode($roles); ?>,
-                    datasets: [{
-                        data: <?php echo json_encode($counts); ?>,
-                        backgroundColor: ['#ff6384', '#36a2eb', '#ffcd56', '#4bc0c0']
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    layout: {
-                        padding: {
-                            bottom: 35 // Adds space between the chart and labels
-                        }
-                    },
-                    plugins: {
-                        legend: {
-                            position: 'left',
-                            labels: {
-                                boxWidth: 15, // Smaller legend boxes
-                                padding: 40,  // Adds spacing between legend items
-                            }
-                        }
-                    }
-                }
-            });
-
-            // Toggle between Table and Pie Chart
-            chartToggle.addEventListener("click", function () {
-                if (tableView.style.display === "none") {
-                    tableView.style.display = "flex";
-                    chartContainer.style.display = "none";
-                    sectionTitle.textContent = "Recent Accounts"; // Update title back
-                } else {
-                    tableView.style.display = "none";
-                    chartContainer.style.display = "flex";
-                    sectionTitle.textContent = "Total Users"; // Update title to Pie Chart
-                }
-            });
-        });
-    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Load Chart.js -->
 </body>
