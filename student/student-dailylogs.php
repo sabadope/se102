@@ -1140,7 +1140,131 @@
     <!-- CONTENT -->
     
 
-    
+    <!-- NAV BAR W/ TOGGLE HIDE -->
+    <script>
+        const sidebar = document.getElementById('sidebar');
+        const toggleSidebarBtn = document.querySelector('.navbar i.bx');
+        const allSideMenuLinks = document.querySelectorAll('#sidebar .side-menu.top li a');
+        const submenuToggle = document.querySelector('.submenu-toggle');
+        const subMenu = document.getElementById('sub-menu');
+
+        allSideMenuLinks.forEach(item => {
+            const li = item.parentElement;
+
+            item.addEventListener('click', () => {
+                allSideMenuLinks.forEach(i => {
+                    i.parentElement.classList.remove('active');
+                });
+                li.classList.add('active');
+            });
+        });
+
+        // Toggle chevron direction
+        if (sidebar.classList.contains('hide')) {
+            toggleSidebarBtn.classList.replace('bx-chevron-left', 'bx-chevron-right');
+        } else {
+            toggleSidebarBtn.classList.replace('bx-chevron-right', 'bx-chevron-left');
+        }
+
+        toggleSidebarBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('hide');
+            const isCollapsed = sidebar.classList.contains('hide');
+
+            if (isCollapsed) {
+                sidebar.classList.add('sidebar-collapsed');
+
+                // Collapse all submenus and save their state
+                document.querySelectorAll('.has-submenu').forEach(item => {
+                    const submenu = item.querySelector('.sub-menu');
+                    const arrow = item.querySelector('.arrow');
+                    const nextLi = item.nextElementSibling;
+
+                    const isExpanded = submenu.classList.contains('active');
+                    item.setAttribute('data-opened', isExpanded ? 'true' : 'false');
+
+                    submenu.classList.remove('active');
+                    submenu.style.display = 'none';
+
+                    if (arrow) arrow.style.transform = 'rotate(0deg)';
+                    if (nextLi) nextLi.style.marginTop = '0px';
+                });
+
+            } else {
+                sidebar.classList.remove('sidebar-collapsed');
+
+                // Restore submenus that were previously open
+                document.querySelectorAll('.has-submenu').forEach(item => {
+                    const shouldOpen = item.getAttribute('data-opened') === 'true';
+                    const submenu = item.querySelector('.sub-menu');
+                    const arrow = item.querySelector('.arrow');
+                    const nextLi = item.nextElementSibling;
+
+                    if (shouldOpen) {
+                        submenu.classList.add('active');
+                        submenu.style.display = 'block';
+
+                        if (arrow) arrow.style.transform = 'rotate(180deg)';
+                        if (nextLi) nextLi.style.marginTop = '90px';
+                    }
+                });
+
+                // Restore manual submenu
+                if (subMenu.classList.contains('active')) {
+                    subMenu.style.display = 'block';
+                }
+            }
+
+            // Toggle chevron direction
+            if (sidebar.classList.contains('hide')) {
+                toggleSidebarBtn.classList.replace('bx-chevron-left', 'bx-chevron-right');
+            } else {
+                toggleSidebarBtn.classList.replace('bx-chevron-right', 'bx-chevron-left');
+            }
+
+        });
+
+        // Submenu toggle for manual expand/collapse
+        submenuToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+
+            const isOpen = subMenu.classList.contains('active-manual');
+
+            if (isOpen) {
+                subMenu.classList.remove('active', 'active-manual');
+                subMenu.style.display = 'none';
+            } else {
+                subMenu.classList.add('active', 'active-manual');
+                subMenu.style.display = 'block';
+            }
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const isSidebarCollapsed = sidebar.classList.contains('hide');
+            const isManuallyOpened = subMenu.classList.contains('active-manual');
+
+            if (isSidebarCollapsed && !isManuallyOpened) {
+                subMenu.style.display = 'none';
+            }
+        });
+
+        // Search bar for mobile screens
+        const searchButton = document.querySelector('#content nav form .form-input button');
+        const searchButtonIcon = document.querySelector('#content nav form .form-input button .bx');
+        const searchForm = document.querySelector('#content nav form');
+
+        searchButton.addEventListener('click', function (e) {
+            if (window.innerWidth < 576) {
+                e.preventDefault();
+                searchForm.classList.toggle('show');
+                if (searchForm.classList.contains('show')) {
+                    searchButtonIcon.classList.replace('bx-search', 'bx-x');
+                } else {
+                    searchButtonIcon.classList.replace('bx-x', 'bx-search');
+                }
+            }
+        });
+    </script>
+
 
     <script>
         // ========== DEFAULT ACTIVATION RULES FOR ACTIVITIES & PERFORMANCE ==========
