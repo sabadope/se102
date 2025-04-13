@@ -1224,54 +1224,58 @@
 
 
     <!-- NAV BAR W/ TOGGLE HIDE -->
-    <script>        
-        // Select all sidebar menu items
-        const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
+    <script>
+        const sidebar = document.getElementById('sidebar');
+        const toggleSidebarBtn = document.querySelector('.navbar i.bx');
+        const allSideMenuLinks = document.querySelectorAll('#sidebar .side-menu.top li a');
+        const submenuToggle = document.querySelector('.submenu-toggle');
+        const subMenu = document.getElementById('sub-menu');
 
-        allSideMenu.forEach(item => {
+        allSideMenuLinks.forEach(item => {
             const li = item.parentElement;
 
-            item.addEventListener('click', function () {
-                allSideMenu.forEach(i => {
+            item.addEventListener('click', () => {
+                allSideMenuLinks.forEach(i => {
                     i.parentElement.classList.remove('active');
                 });
                 li.classList.add('active');
             });
         });
 
-        // TOGGLE SIDEBAR
-        const menuBar = document.querySelector('#content nav .bx.bx-chevron-left'); // Updated selector
-        const sidebar = document.getElementById('sidebar');
+        // Toggle chevron direction
+        if (sidebar.classList.contains('hide')) {
+            toggleSidebarBtn.classList.replace('bx-chevron-left', 'bx-chevron-right');
+        } else {
+            toggleSidebarBtn.classList.replace('bx-chevron-right', 'bx-chevron-left');
+        }
 
-        menuBar.addEventListener('click', function () {
+        toggleSidebarBtn.addEventListener('click', () => {
             sidebar.classList.toggle('hide');
+            const isCollapsed = sidebar.classList.contains('hide');
 
-            const isSidebarCollapsed = sidebar.classList.contains('hide');
+            if (isCollapsed) {
+                sidebar.classList.add('sidebar-collapsed');
 
-            if (isSidebarCollapsed) {
-                menuBar.classList.replace('bx-chevron-left', 'bx-chevron-right');
-
-                // Loop through submenus to collapse them and store open state
+                // Collapse all submenus and save their state
                 document.querySelectorAll('.has-submenu').forEach(item => {
                     const submenu = item.querySelector('.sub-menu');
                     const arrow = item.querySelector('.arrow');
                     const nextLi = item.nextElementSibling;
 
-                    // Store current state before hiding
                     const isExpanded = submenu.classList.contains('active');
                     item.setAttribute('data-opened', isExpanded ? 'true' : 'false');
 
-                    // Force collapse
                     submenu.classList.remove('active');
                     submenu.style.display = 'none';
+
                     if (arrow) arrow.style.transform = 'rotate(0deg)';
                     if (nextLi) nextLi.style.marginTop = '0px';
                 });
 
             } else {
-                menuBar.classList.replace('bx-chevron-right', 'bx-chevron-left');
+                sidebar.classList.remove('sidebar-collapsed');
 
-                // Restore previous submenu state
+                // Restore submenus that were previously open
                 document.querySelectorAll('.has-submenu').forEach(item => {
                     const shouldOpen = item.getAttribute('data-opened') === 'true';
                     const submenu = item.querySelector('.sub-menu');
@@ -1281,24 +1285,52 @@
                     if (shouldOpen) {
                         submenu.classList.add('active');
                         submenu.style.display = 'block';
+
                         if (arrow) arrow.style.transform = 'rotate(180deg)';
                         if (nextLi) nextLi.style.marginTop = '185px';
                     }
                 });
+
+                // Restore manual submenu
+                if (subMenu.classList.contains('active')) {
+                    subMenu.style.display = 'block';
+                }
             }
 
-            // Add rotation animation
-            menuBar.classList.add('rotate-icon');
-            setTimeout(() => {
-                menuBar.classList.remove('rotate-icon');
-            }, 300);
+            // Toggle chevron direction
+            if (sidebar.classList.contains('hide')) {
+                toggleSidebarBtn.classList.replace('bx-chevron-left', 'bx-chevron-right');
+            } else {
+                toggleSidebarBtn.classList.replace('bx-chevron-right', 'bx-chevron-left');
+            }
+
         });
 
+        // Submenu toggle for manual expand/collapse
+        submenuToggle.addEventListener('click', (e) => {
+            e.preventDefault();
 
+            const isOpen = subMenu.classList.contains('active-manual');
 
+            if (isOpen) {
+                subMenu.classList.remove('active', 'active-manual');
+                subMenu.style.display = 'none';
+            } else {
+                subMenu.classList.add('active', 'active-manual');
+                subMenu.style.display = 'block';
+            }
+        });
 
+        window.addEventListener('DOMContentLoaded', () => {
+            const isSidebarCollapsed = sidebar.classList.contains('hide');
+            const isManuallyOpened = subMenu.classList.contains('active-manual');
 
-        // SEARCH TOGGLE (For small screens)
+            if (isSidebarCollapsed && !isManuallyOpened) {
+                subMenu.style.display = 'none';
+            }
+        });
+
+        // Search bar for mobile screens
         const searchButton = document.querySelector('#content nav form .form-input button');
         const searchButtonIcon = document.querySelector('#content nav form .form-input button .bx');
         const searchForm = document.querySelector('#content nav form');
@@ -1315,6 +1347,7 @@
             }
         });
     </script>
+
 
 
 
