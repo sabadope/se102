@@ -28,25 +28,25 @@ To develop a web-based platform that modernizes how companies monitor and evalua
   <tr>
     <td valign="top">
       <ul>
-        <li><a href="./BANIAS.md">&nbsp;&nbsp;BANIAS TASK&nbsp;&nbsp;</a></li>
-        <li><a href="./SUDLON.md">&nbsp;&nbsp;SUDLON TASK&nbsp;&nbsp;</a></li>
+        <li><a href="./TASK INSTRUCTIONS/BANIAS.md">&nbsp;&nbsp;BANIAS TASK&nbsp;&nbsp;</a></li>
+        <li><a href="./TASK INSTRUCTIONS/SUDLON.md">&nbsp;&nbsp;SUDLON TASK&nbsp;&nbsp;</a></li>
       </ul>
     </td>
     <td valign="top">
       <ul>
-        <li><a href="./BANAAG.md">&nbsp;&nbsp;BANAAG TASK&nbsp;&nbsp;</a></li>
-        <li><a href="./TORRES.md">&nbsp;&nbsp;TORRES TASK&nbsp;&nbsp;</a></li>
+        <li><a href="./TASK INSTRUCTIONS/BANAAG.md">&nbsp;&nbsp;BANAAG TASK&nbsp;&nbsp;</a></li>
+        <li><a href="./TASK INSTRUCTIONS/TORRES.md">&nbsp;&nbsp;TORRES TASK&nbsp;&nbsp;</a></li>
       </ul>
     </td>
     <td valign="top">
       <ul>
-        <li><a href="./HOTOHOT.md">&nbsp;&nbsp;HOTOHOT TASK&nbsp;&nbsp;</a></li>
-        <li><a href="./GADUDO.md">&nbsp;&nbsp;GADUDO TASK&nbsp;&nbsp;</a></li>
+        <li><a href="./TASK INSTRUCTIONS/HOTOHOT.md">&nbsp;&nbsp;HOTOHOT TASK&nbsp;&nbsp;</a></li>
+        <li><a href="./TASK INSTRUCTIONS/GADUDO.md">&nbsp;&nbsp;GADUDO TASK&nbsp;&nbsp;</a></li>
       </ul>
     </td>
     <td valign="top">
       <ul>
-        <li><a href="./SABADO.md">&nbsp;&nbsp;SABADO TASK&nbsp;&nbsp;</a></li>
+        <li><a href="./TASK INSTRUCTIONS/SABADO.md">&nbsp;&nbsp;SABADO TASK&nbsp;&nbsp;</a></li>
       </ul>
     </td>
   </tr>
