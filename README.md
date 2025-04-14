@@ -99,5 +99,5 @@ pass: `supervisor1230`
 
 ---
 
-### THAT'S ALL! I hope you followed the steps correctly and enjoy using the program! 🎉
+### THAT'S ALL! I hope you followed the steps correctly and enjoy using the program!
 
