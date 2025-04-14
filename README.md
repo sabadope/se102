@@ -62,13 +62,42 @@ To develop a web-based platform that modernizes how companies monitor and evalua
 To run the system locally or deploy it for testing, follow the steps below:
 
 ### Requirements
-- PHP >= 7.4
-- MySQL or MariaDB
-- Web Server (e.g., XAMPP, MAMP, WAMP, or Apache/Nginx)
-- Composer (for dependency management, if applicable)
-- Git (optional, for cloning the repository)
+- PHP >= 7.4 (or higher)
+- MySQL
+- Web Server (e.g., XAMPP, MAMP, WAMP, Apache/Nginx)
 
-### Installation Steps
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/your-username/your-repo-name.git
+### Setup Procedure
+1. Extract the downloaded file.
+2. Copy the main project folder.
+3. Paste it inside your `xampp/htdocs/` directory.
+4. Open your browser and go to: [http://localhost/phpmyadmin/](http://localhost/phpmyadmin/)
+5. Click on the **Databases** tab.
+6. Create two databases:
+   - `se102`
+   - `chat_app_db`
+7. Import the following SQL files:
+   - For `se102`, import the `se102.sql` file located in the `/database/` folder.
+   - For `chat_app_db`, import the SQL file located in `/chat/db/`.
+8. Click the **Go** button to complete the import.
+9. Now open your browser and visit:  
+   `http://localhost/se102/index.html`  
+   to start running the program.
+
+---
+
+### Default Login Credentials
+
+**Admin**  
+email: `admin@gmail.com`  
+pass: `admin1230`
+
+**Supervisor**  
+email: `supervisor@gmail.com`  
+pass: `supervisor1230`
+
+> For **Student** and **Client**, please register manually through the system registration page.
+
+---
+
+### THAT'S ALL! I hope you followed the steps correctly and enjoy using the program! 🎉
+
