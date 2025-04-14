@@ -53,3 +53,22 @@ To develop a web-based platform that modernizes how companies monitor and evalua
 </table>
 
 </div>
+
+---
+
+<h3 align="center">HOW TO SETUP</h3>
+<br>
+
+To run the system locally or deploy it for testing, follow the steps below:
+
+### Requirements
+- PHP >= 7.4
+- MySQL or MariaDB
+- Web Server (e.g., XAMPP, MAMP, WAMP, or Apache/Nginx)
+- Composer (for dependency management, if applicable)
+- Git (optional, for cloning the repository)
+
+### Installation Steps
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/your-username/your-repo-name.git
