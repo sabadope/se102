@@ -77,7 +77,7 @@ To run the system locally or deploy it for testing, follow the steps below:
    - `chat_app_db`
 7. Import the following SQL files:
    - For `se102`, import the `se102.sql` file located in the `/database/` folder.
-   - For `chat_app_db`, import the SQL file located in `/chat/db/`.
+   - For `chat_app_db`, import the `chat_app_db.sql` file located in `/chat/db/`.
 8. Click the **Go** button to complete the import.
 9. Now open your browser and visit:  
    `http://localhost/se102/index.html`  
