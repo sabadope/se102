@@ -1,2 +1,0 @@
-# SABADO FINAL GUIDELINES
-Software Engineer 102
