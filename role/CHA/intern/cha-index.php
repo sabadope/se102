@@ -370,7 +370,7 @@ $recent_logs = $conn->query("SELECT * FROM logs ORDER BY timestamp DESC LIMIT 5"
                     </div>
                     
                     <div class="btn-group">
-                        <button type="submit" class="btn btn-primary">
+                        <button type="submit" class="btn btn-primary" onclick="window.location.href='cha-index.php'">
                             <i class="fas fa-save"></i> Save Daily Log
                         </button>
                         <button type="button" class="btn btn-outline" onclick="window.location.href='weekly_summary.php'">
