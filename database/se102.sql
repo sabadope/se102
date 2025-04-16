@@ -26,3 +26,7 @@ CREATE TABLE messages (
 
 
 SELECT * FROM messages ORDER BY timestamp DESC LIMIT 10;
+
+ALTER TABLE users ADD COLUMN profile_image VARCHAR(255) DEFAULT 'default.png';
+
+

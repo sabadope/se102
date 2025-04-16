@@ -2,6 +2,17 @@
 
     require_once '../src/config.php'; // Include DB connection
 
+    
+    // Use the same logic to construct the expected image filename
+    $username = isset($_SESSION['username']) ? strtolower($_SESSION['username']) : 'default';
+    $safeUsername = preg_replace('/[^a-zA-Z0-9_-]/', '_', $username);
+    $imagePath = "../uploads/" . $safeUsername . ".png";
+
+    // Fallback if image doesn't exist
+    if (!file_exists($imagePath)) {
+        $imagePath = "../uploads/default.png";
+    }
+
 ?>
 
 
@@ -621,13 +632,13 @@
             <div class="nav-right">
                 <input type="checkbox" id="switch-mode" hidden>
                 <label for="switch-mode" class="switch-mode"></label>
-                <a href="#" class="notification">
+                <div class="notification">
                     <i class='bx bxs-bell'></i>
                     <span class="num">8</span>
-                </a>
-                <a href="#" class="profile">
-                    <img src="img/people.png">
-                </a>
+                </div>
+                <div class="profile">
+                    <img src="<?php echo $imagePath; ?>" alt="Profile Image" width="40" height="40" style="border-radius: 50%; object-fit: cover;">
+                </div>
             </div>
         </nav>
         <!-- NAVBAR -->

@@ -2,6 +2,9 @@
     session_start();
     require_once '../src/config.php';
 
+    $_SESSION['profile_image'] = $profileImageName;
+
+
     // Hardcoded Admin Credentials
     $admin_username = 'admin';
     $admin_email = 'admin@gmail.com';
