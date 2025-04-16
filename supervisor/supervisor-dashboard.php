@@ -105,7 +105,7 @@ foreach ($users as $user) {
 					<span class="text">Analytics</span>
 				</a>
 			</li>
-			<li id="openChat">
+			<li>
 			    <a href="supervisor-messages.php">
 			        <i class='bx bxs-message-dots'></i>
 			        <span class="text">Messages</span>

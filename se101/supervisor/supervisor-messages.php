@@ -670,7 +670,7 @@
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="supervisor-logout.php">
                     <i class='bx bxs-group' ></i>
                     <span class="text">Team</span>
                 </a>

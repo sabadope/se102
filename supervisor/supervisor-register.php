@@ -135,6 +135,36 @@
             color: #155724;
             border: 1px solid #c3e6cb;
         }
+
+        .register-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            align-items: center;
+            width: 100%;
+
+        }
+
+        .form-box {
+            width: 100%;
+            max-width: 100%;
+            padding: 15px;
+            text-align: center;
+            align-items: center;
+        }
+
+        .form-header img {
+            width: 80px;
+            margin-bottom: 15px;
+        }
+
+        .form-header h3 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        
     </style>
 
     <title>Supervisor Message</title>
@@ -258,82 +288,59 @@
                 <div class="chat-container">
 
                     <div class="register-container">
-                        <div class="d-flex
-                                 justify-content-center
-                                 align-items-center
-                                 vh-100">
-                         <div class="w-400 p-5 shadow rounded">
-                            <form method="post" 
-                                  action="app/http/signup.php"
-                                  enctype="multipart/form-data">
-                                <div class="d-flex
-                                            justify-content-center
-                                            align-items-center
-                                            flex-column">
+                      <div class="form-box">
+                        <form method="post" action="app/http/signup.php" enctype="multipart/form-data" class="register-form">
+                          <!-- Logo & Heading -->
+                          <div class="form-header">
+                            <img src="img/logo.png" alt="Logo">
+                            <h2>CHAT AUTHENTICATION</h2>
+                          </div>
 
-                                <img src="img/logo.png" 
-                                     class="w-25">
-                                <h3 class="display-4 fs-1 
-                                           text-center">
-                                           Sign Up</h3>   
-                                </div>
+                          <!-- Error Message -->
+                          <?php if (isset($_GET['error'])) { ?>
+                            <div class="alert alert-warning">
+                              <?= htmlspecialchars($_GET['error']); ?>
+                            </div>
+                          <?php } ?>
 
-                                <?php if (isset($_GET['error'])) { ?>
-                                <div class="alert alert-warning" role="alert">
-                                  <?php echo htmlspecialchars($_GET['error']);?>
-                                </div>
-                                <?php } 
-                                  
-                                  if (isset($_GET['name'])) {
-                                    $name = $_GET['name'];
-                                  }else $name = '';
+                          <?php
+                            $name = $_GET['name'] ?? '';
+                            $username = $_GET['username'] ?? '';
+                          ?>
 
-                                  if (isset($_GET['username'])) {
-                                    $username = $_GET['username'];
-                                  }else $username = '';
-                                ?>
+                          <!-- Name Input -->
+                          <div class="input-group">
+                            <label for="name">Name</label>
+                            <input type="text" name="name" id="name" value="<?= $name ?>" required>
+                          </div>
 
-                              <div class="mb-3">
-                                <label class="form-label">
-                                       Name</label>
-                                <input type="text"
-                                       name="name"
-                                       value="<?=$name?>" 
-                                       class="form-control">
-                              </div>
+                          <!-- Username Input -->
+                          <div class="input-group">
+                            <label for="username">User Name</label>
+                            <input type="text" name="username" id="username" value="<?= $username ?>" required>
+                          </div>
 
-                              <div class="mb-3">
-                                <label class="form-label">
-                                       User name</label>
-                                <input type="text" 
-                                       class="form-control"
-                                       value="<?=$username?>" 
-                                       name="username">
-                              </div>
+                          <!-- Password Input -->
+                          <div class="input-group">
+                            <label for="password">Password</label>
+                            <input type="password" name="password" id="password" required>
+                          </div>
 
+                          <!-- Profile Picture Input -->
+                          <div class="input-group">
+                            <label for="pp">Profile Picture</label>
+                            <input type="file" name="pp" id="pp" accept="image/*">
+                          </div>
 
-                              <div class="mb-3">
-                                <label class="form-label">
-                                       Password</label>
-                                <input type="password" 
-                                       class="form-control"
-                                       name="password">
-                              </div>
+                          <!-- Submit Button -->
+                          <button type="submit" class="btn">Sign Up</button>
 
-                              <div class="mb-3">
-                                <label class="form-label">
-                                       Profile Picture</label>
-                                <input type="file" 
-                                       class="form-control"
-                                       name="pp">
-                              </div>
-                              
-                              <button type="submit" 
-                                      class="btn btn-primary">
-                                      Sign Up</button>
-                              <a href="index.php">Login</a>
-                            </form>
-                         </div>
+                          <!-- Link to Login -->
+                          <div class="register-link">
+                            <p>Already have an account? <a href="supervisor-messages.php">Login</a></p>
+                          </div>
+                        </form>
+                      </div>
                     </div>
 
                 </div>

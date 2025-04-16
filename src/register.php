@@ -1,8 +1,9 @@
 <?php
 session_start();
-require_once '../src/config.php';
+require_once '../src/config.php'; // uses $pdo
 
-// Debugging: Check if form is submitted
+$_SESSION['profile_image'] = $profileImageName;
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = trim($_POST['username']);
     $email = trim($_POST['email']);
@@ -10,7 +11,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $confirm_password = trim($_POST['confirm_password']);
     $role = $_POST['role'];
 
-    // Debugging: Check if all fields are received
     if (empty($username) || empty($email) || empty($password) || empty($confirm_password) || empty($role)) {
         die("All fields are required!");
     }
@@ -19,20 +19,46 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         die("Passwords do not match!");
     }
 
-    // Hash the password
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-    // Debugging: Display the query before executing
-    try {
-        $stmt = $pdo->prepare("INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, ?)");
-        $stmt->execute([$username, $email, $hashed_password, $role]);
+    // Image upload – simplified rule: allow any uploaded file
+    if (isset($_FILES['profile_image']) && $_FILES['profile_image']['error'] === 0) {
+        $allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+        $fileType = mime_content_type($_FILES['profile_image']['tmp_name']);
 
-        // Debugging: Check if the user was inserted successfully
+        if (in_array($fileType, $allowedTypes)) {
+            $uploadDir = '../uploads/';
+            $fileExtension = pathinfo($_FILES['profile_image']['name'], PATHINFO_EXTENSION);
+
+            // Sanitize username for filename
+            $safeUsername = preg_replace('/[^a-zA-Z0-9_-]/', '_', strtolower($username));
+
+            $profileImageName = $safeUsername . '.png'; // Force to .png (or change extension if needed)
+            $uploadPath = $uploadDir . $profileImageName;
+
+            if (move_uploaded_file($_FILES['profile_image']['tmp_name'], $uploadPath)) {
+                // Image uploaded successfully
+            } else {
+                $profileImageName = 'default.png';
+            }
+        } else {
+            $profileImageName = 'default.png';
+        }
+    } else {
+        $profileImageName = 'default.png';
+    }
+
+
+    try {
+        $stmt = $pdo->prepare("INSERT INTO users (username, email, password, role, profile_image) VALUES (?, ?, ?, ?, ?)");
+        $stmt->execute([$username, $email, $hashed_password, $role, $profileImageName]);
+
         if ($stmt->rowCount() > 0) {
             $_SESSION['user_id'] = $pdo->lastInsertId();
             $_SESSION['username'] = $username;
             $_SESSION['email'] = $email;
             $_SESSION['role'] = $role;
+            $_SESSION['profile_image'] = $profileImageName;
 
             // Redirect based on role
             if ($role === 'Student') {
@@ -49,6 +75,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -172,7 +200,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body>
 
     <div class="register-container">
-        <form class="register-form" action="register.php" method="POST">
+        <form class="register-form" action="register.php" method="POST" enctype="multipart/form-data">
+
             <h2>Register</h2>
 
             <?php if (isset($error)) : ?>
@@ -202,6 +231,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <option value="Student">Student</option>
                     <option value="Client">Client</option>
                 </select>
+            </div>
+            <div class="input-group">
+                <label for="profile_image">Upload Profile Picture</label>
+                <input type="file" id="profile_image" name="profile_image" accept="image/*">
             </div>
             <button type="submit" class="btn">Register</button>
             <p class="login-link">Already have an account? <a href="login.php">Login here</a></p>
