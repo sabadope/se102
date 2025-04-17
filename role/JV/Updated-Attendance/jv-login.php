@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'db.php';
+include 'jv-db.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'];
@@ -17,9 +17,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['role'] = $user['role']; // Save role in session
         if ($user['role'] == 'supervisor') {
-            header("Location: supervisor_dashboard.php"); // Redirect to supervisor dashboard
+            header("Location: jv-supervisor_dashboard.php"); // Redirect to supervisor dashboard
         } else {
-            header("Location: intern_dashboard.php"); // Redirect to intern dashboard
+            header("Location: jv-intern_dashboard.php"); // Redirect to intern dashboard
         }
         exit;
     } else {
@@ -150,14 +150,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body>
     <div class="login-container">
         <h2>Login</h2>
-        <form method="POST" action="login.php">
+        <form method="POST" action="jv-login.php">
             <input type="text" name="username" placeholder="Username" required><br>
             <input type="password" name="password" placeholder="Password" required><br>
             <input type="submit" value="Login">
         </form>
 
         <!-- Sign Up Button -->
-        <a href="signup.php" class="signup-btn">Sign Up</a>
+        <a href="jv-signup.php" class="signup-btn">Sign Up</a>
     </div>
 </body>
 </html>

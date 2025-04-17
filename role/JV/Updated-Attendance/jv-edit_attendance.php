@@ -1,5 +1,5 @@
 <?php
-include 'db.php'; // Database connection
+include 'jv-db.php'; // Database connection
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $id = $_POST['id'];
@@ -12,6 +12,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$check_in, $check_out, $status, $id]);
 
-    header('Location: supervisor_dashboard.php'); // Redirect back to the dashboard
+    header('Location: jv-supervisor_dashboard.php'); // Redirect back to the dashboard
     exit;
 }

@@ -1,10 +1,10 @@
 <?php
 session_start();
-include 'db.php'; // Database connection
+include 'jv-db.php'; // Database connection
 
 // Ensure user is logged in and is a supervisor
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'supervisor') {
-    header('Location: login.php');
+    header('Location: jv-login.php');
     exit;
 }
 
@@ -19,7 +19,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     // Execute the deletion
     if ($stmt->execute([$id])) {
         // Redirect to the same page after successful deletion
-        header('Location: supervisor_dashboard.php');
+        header('Location: jv-supervisor_dashboard.php');
     } else {
         echo 'Error deleting the attendance record.';
     }

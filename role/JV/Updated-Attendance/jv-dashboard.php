@@ -1,10 +1,10 @@
 <?php
 session_start();
-include 'db.php'; // Database connection
+include 'jv-db.php'; // Database connection
 
 // Ensure user is logged in and is a supervisor
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'supervisor') {
-    header('Location: login.php');
+    header('Location: jv-login.php');
     exit;
 }
 
@@ -78,6 +78,7 @@ body {
     align-items: flex-start;
     gap: 30px;
     font-size: 18px;
+    background: linear-gradient(145deg, #e3f2fd, #f1f8e9);
 }
 
 
@@ -237,8 +238,8 @@ a.active {
     </style>
 </head>
 <body>
-<?php $activePage = 'supervisor_dashboard'; ?>
-<?php include 'navbar.php'; ?>
+<?php $activePage = 'jv-supervisor_dashboard'; ?>
+<?php include 'jv-navbar.php'; ?>
     <!-- Main Container with Attendance Table -->
     <div class="main-container">
         <h2>Intern Attendance Dashboard</h2>

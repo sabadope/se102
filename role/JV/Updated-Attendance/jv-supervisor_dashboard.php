@@ -1,10 +1,10 @@
 <?php
 session_start();
-include 'db.php'; // Database connection
+include 'jv-db.php'; // Database connection
 
 // Ensure user is logged in and is a supervisor
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'supervisor') {
-    header('Location: login.php');
+    header('Location: jv-login.php');
     exit;
 }
 
@@ -78,7 +78,7 @@ $attendanceRecords = $stmt->fetchAll();
 th, td {
     padding: 12px;
     text-align: center;
-    border: 1px solid #ddd;
+    
     
 }
 
@@ -258,8 +258,8 @@ tr:nth-child(even) {
 
 <body>
 
-    <?php $activePage = 'dashboard'; ?>
-    <?php include 'navbar.php'; ?>
+    <?php $activePage = 'jv-dashboard'; ?>
+    <?php include 'jv-navbar.php'; ?>
 
 
 
@@ -268,7 +268,7 @@ tr:nth-child(even) {
         
 
         <div style="display: flex; justify-content: flex-end; align-items: center; margin-bottom: 10px;">
-    <button class="add-btn" onclick="window.location.href='add_attendance.php'">Add New Attendance</button>
+    <button class="add-btn" onclick="window.location.href='jv-add_attendance.php'">Add New Attendance</button>
 </div>
 
 
@@ -330,7 +330,7 @@ tr:nth-child(even) {
         <div class="modal-content">
             <span class="close" onclick="closeModal('editModal')">&times;</span>
             <h2>Edit Attendance</h2>
-            <form id="editForm" method="POST" action="edit_attendance.php">
+            <form id="editForm" method="POST" action="jv-edit_attendance.php">
                 <input type="hidden" name="id" id="editId">
                 <label for="check_in">Check-in Time:</label>
                 <input type="time" name="check_in" id="editCheckIn" required><br>
@@ -384,7 +384,7 @@ tr:nth-child(even) {
         function deleteRecord() {
             // Send a GET request to delete_attendance.php with the ID
             const xhr = new XMLHttpRequest();
-            xhr.open('GET', 'delete_attendance.php?id=' + window.deleteId, true);
+            xhr.open('GET', 'jv-delete_attendance.php?id=' + window.deleteId, true);
             xhr.onload = function () {
                 if (xhr.status === 200) {
                     // On success, close the modal and reload the page to update the table

@@ -1,10 +1,10 @@
 <?php
 session_start();
-include 'db.php'; // Database connection
+include 'jv-db.php'; // Database connection
 
 // Ensure user is logged in and is a supervisor
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'supervisor') {
-    header('Location: login.php');
+    header('Location: jvlogin.php');
     exit;
 }
 
@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->execute([$user_id, $date, $check_in, $check_out, $status]);
 
     // Redirect back to the supervisor dashboard after successful submission
-    header('Location: supervisor_dashboard.php');
+    header('Location: jv-supervisor_dashboard.php');
     exit;
 }
 ?>
@@ -166,7 +166,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="container">
         <h2>Add New Attendance</h2>
 
-        <form method="POST" action="add_attendance.php">
+        <form method="POST" action="jv-add_attendance.php">
             
             <!-- Intern Selection -->
             <div class="form-group">
@@ -211,7 +211,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <button type="submit">Add Attendance</button>
         </form>
 
-        <a href="supervisor_dashboard.php" class="back-link">Cancel</a>
+        <a href="jv-supervisor_dashboard.php" class="back-link">Cancel</a>
     </div>
 
 </body>

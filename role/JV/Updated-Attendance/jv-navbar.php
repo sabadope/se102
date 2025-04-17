@@ -22,9 +22,9 @@
     <nav style="background-color: #2c3e50; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; color: white; font-family: Arial, sans-serif; font-size: 18px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
         <div style="font-weight: bold;">Supervisor Panel</div>
         <div>
-            <a href="dashboard.php" class="nav-link <?php echo ($activePage === 'dashboard') ? 'active' : ''; ?>">Dashboard</a>
-            <a href="supervisor_dashboard.php" class="nav-link <?php echo ($activePage === 'attendance') ? 'active' : ''; ?>">Attendance</a>
-            <a href="logout.php" class="nav-link">Logout</a> <!-- Added Logout link -->
+            <a href="jv-dashboard.php" class="nav-link <?php echo ($activePage === 'dashboard') ? 'active' : ''; ?>">Dashboard</a>
+            <a href="jv-supervisor_dashboard.php" class="nav-link <?php echo ($activePage === 'attendance') ? 'active' : ''; ?>">Attendance</a>
+            <a href="jv-logout.php" class="nav-link">Logout</a> <!-- Added Logout link -->
         </div>
     </nav>
 </div>

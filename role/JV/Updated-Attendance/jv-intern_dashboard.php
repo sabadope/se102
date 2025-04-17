@@ -1,10 +1,10 @@
 <?php
 session_start();
-include 'db.php'; // Make sure db.php sets $pdo
+include 'jv-db.php'; // Make sure db.php sets $pdo
 
 // Redirect if user is not logged in or not an intern
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'intern') {
-    header('Location: login.php');
+    header('Location: jv-login.php');
     exit;
 }
 
@@ -198,7 +198,7 @@ $attendanceRecords = $stmt->fetchAll();
             <p>You have no attendance records yet.</p>
         <?php endif; ?>
 
-        <a href="logout.php" class="logout-btn">Logout</a>
+        <a href="jv-logout.php" class="logout-btn">Logout</a>
     </div>
 </body>
 </html>

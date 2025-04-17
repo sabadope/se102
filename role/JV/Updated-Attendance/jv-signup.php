@@ -1,6 +1,6 @@
 <?php
 // Include database connection
-include 'db.php';
+include 'jv-db.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'];
@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$username, $password, $role]);
 
-        echo "<div class='success-message'>User registered successfully! <a href='login.php'>Login Now</a></div>";
+        echo "<div class='success-message'>User registered successfully! <a href='jv-login.php'>Login Now</a></div>";
     }
 }
 ?>
@@ -148,7 +148,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body>
     <div class="signup-container">
         <h2>Sign Up</h2>
-        <form method="POST" action="signup.php">
+        <form method="POST" action="jv-signup.php">
             <input type="text" name="username" placeholder="Username" required><br>
             <input type="password" name="password" placeholder="Password" required><br>
             <select name="role" required>
@@ -157,7 +157,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </select><br>
             <input type="submit" value="Sign Up">
         </form>
-        <p>Already have an account? <a href="login.php">Login here</a></p>
+        <p>Already have an account? <a href="jv-login.php">Login here</a></p>
     </div>
 </body>
 </html>
