@@ -14,7 +14,7 @@ $id = $_GET['id'];
 $sql = "DELETE FROM logs WHERE id=$id";
 
 if ($conn->query($sql)) {
-    header("Location: index.php"); // Redirect back to the main page
+    header("Location: cha-index.php"); // Redirect back to the main page
 } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
 }

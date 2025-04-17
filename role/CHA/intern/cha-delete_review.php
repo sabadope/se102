@@ -1,10 +1,10 @@
 <?php
-include 'db_connect.php';
+include 'cha-db_connect.php';
 
 // Check if ID is provided
 if (!isset($_GET['id']) || empty($_GET['id'])) {
     $_SESSION['error'] = "No review ID provided.";
-    header("Location: weekly_summary.php");
+    header("Location: cha-weekly_summary.php");
     exit;
 }
 
@@ -14,7 +14,7 @@ $id = intval($_GET['id']);
 $stmt = $conn->prepare("DELETE FROM supervisor_reviews WHERE id = ?");
 if ($stmt === false) {
     $_SESSION['error'] = "Prepare failed: " . $conn->error;
-    header("Location: weekly_summary.php");
+    header("Location: cha-weekly_summary.php");
     exit;
 }
 
@@ -33,7 +33,7 @@ $stmt->close();
 $conn->close();
 
 // Redirect back
-$redirect = isset($_GET['redirect']) ? $_GET['redirect'] : 'weekly_summary.php';
+$redirect = isset($_GET['redirect']) ? $_GET['redirect'] : 'cha-weekly_summary.php';
 header("Location: $redirect");
 exit;
 ?>

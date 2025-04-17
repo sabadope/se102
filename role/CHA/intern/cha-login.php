@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once 'db_connect.php'; // Connect to your database
+require_once 'cha-db_connect.php'; // Connect to your database
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'];
@@ -160,7 +160,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <p>Please enter your credentials to login</p>
         </div>
         
-        <form action="login.php" method="POST">
+        <form action="cha-login.php" method="POST">
             <div class="form-group">
                 <label for="username">Username</label>
                 <input type="text" id="username" name="username" placeholder="Enter your username" required>
