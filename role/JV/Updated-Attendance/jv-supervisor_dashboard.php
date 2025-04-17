@@ -217,6 +217,7 @@ tr:nth-child(even) {
             border-radius: 6px;
             border: 1px solid #ddd;
             width: 100%;
+            box-sizing: border-box
         }
 
         /* Time Input Specific Styling */

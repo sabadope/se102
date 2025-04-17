@@ -1,7 +1,7 @@
 <?php
-require_once 'auth_check.php'; // Ensure the user is authenticated and is an admin
+require_once 'cha-auth_check.php'; // Ensure the user is authenticated and is an admin
 if ($_SESSION['role'] !== 'admin') {
-    header("Location: unauthorized.php");
+    header("Location: cha-unauthorized.php");
     exit();
 }
 
@@ -22,7 +22,7 @@ $users_result = $conn->query($users_query);
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <?php include 'navbar.php'; ?>
+    <?php include 'cha-navbar.php'; ?>
     
     <div class="container">
         <h1>Manage Users</h1>
@@ -49,8 +49,8 @@ $users_result = $conn->query($users_query);
                             <td><?= htmlspecialchars($user['email']) ?></td>
                             <td><?= htmlspecialchars($user['role']) ?></td>
                             <td>
-                                <a href="edit_user.php?id=<?= $user['id'] ?>" class="button">Edit</a>
-                                <a href="delete_user.php?id=<?= $user['id'] ?>" class="button danger">Delete</a>
+                                <a href="cha-edit_user.php?id=<?= $user['id'] ?>" class="button">Edit</a>
+                                <a href="cha-delete_user.php?id=<?= $user['id'] ?>" class="button danger">Delete</a>
                             </td>
                         </tr>
                         <?php endwhile; ?>
@@ -64,7 +64,7 @@ $users_result = $conn->query($users_query);
         </div>
     </div>
 
-    <?php include 'footer.php'; ?>
+    <?php include 'cha-footer.php'; ?>
     <?php $conn->close(); ?>
 </body>
 </html>

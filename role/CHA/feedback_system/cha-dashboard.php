@@ -1,5 +1,5 @@
 <?php
-require_once 'auth_check.php'; // Ensure the user is authenticated
+require_once 'cha-auth_check.php'; // Ensure the user is authenticated
 
 // Database connection
 $conn = new mysqli($host, $user, $pass, $db);
@@ -25,7 +25,7 @@ $stmt->close();
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <?php include 'navbar.php'; ?>
+    <?php include 'cha-navbar.php'; ?>
     
     <div class="container">
         <h1>Welcome, <?= htmlspecialchars($user['first_name']) ?>!</h1>
@@ -38,7 +38,7 @@ $stmt->close();
         </div>
     </div>
 
-    <?php include 'footer.php'; ?>
+    <?php include 'cha-footer.php'; ?>
     <?php $conn->close(); ?>
 </body>
 </html>

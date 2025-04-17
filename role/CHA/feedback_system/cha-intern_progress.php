@@ -1,7 +1,7 @@
 <?php
-require_once 'auth_check.php';
+require_once 'cha-auth_check.php';
 if ($_SESSION['role'] !== 'intern') {
-    header("Location: unauthorized.php");
+    header("Location: cha-unauthorized.php");
     exit();
 }
 
@@ -27,7 +27,7 @@ $progress_result = $stmt->get_result();
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <?php include 'navbar.php'; ?>
+    <?php include 'cha-navbar.php'; ?>
     
     <div class="container">
         <h1>Intern Progress</h1>
@@ -60,7 +60,7 @@ $progress_result = $stmt->get_result();
         </div>
     </div>
 
-    <?php include 'footer.php'; ?>
+    <?php include 'cha-footer.php'; ?>
     <?php $conn->close(); ?>
 </body>
 </html>

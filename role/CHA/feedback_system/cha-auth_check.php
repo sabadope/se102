@@ -9,7 +9,7 @@ $pass = '';
 
 // Redirect to login if not authenticated
 if (!isset($_SESSION['user_id'])) { // Added closing parenthesis
-    header("Location: login.php");
+    header("Location: cha-login.php");
     exit();
 }
 
@@ -27,7 +27,7 @@ $result = $stmt->get_result();
 if ($result->num_rows === 0) {
     session_unset();
     session_destroy();
-    header("Location: login.php");
+    header("Location: cha-login.php");
     exit();
 }
 

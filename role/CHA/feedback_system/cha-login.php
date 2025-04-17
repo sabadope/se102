@@ -41,19 +41,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Redirect based on role
             switch ($user['role']) {
                 case 'admin':
-                    header('Location: admin_panel.php');
+                    header('Location: cha-admin_panel.php');
                     break;
                 case 'supervisor':
-                    header('Location: supervisor_feedback.php');
+                    header('Location: cha-supervisor_feedback.php');
                     break;
                 case 'customer':
-                    header('Location: customer_feedback.php');
+                    header('Location: cha-customer_feedback.php');
                     break;
                 case 'intern':
-                    header('Location: intern_dashboard.php');
+                    header('Location: cha-intern_dashboard.php');
                     break;
                 default:
-                    header('Location: dashboard.php');
+                    header('Location: cha-dashboard.php');
             }
             exit();
         } else {
@@ -83,7 +83,7 @@ $conn->close();
             <div class="alert error"><?= $error ?></div>
         <?php endif; ?>
 
-        <form action="login.php" method="POST">
+        <form action="cha-login.php" method="POST">
             <div class="form-group">
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" required>
@@ -98,7 +98,7 @@ $conn->close();
         </form>
         
         <p style="text-align: center; margin-top: 1rem;">
-            Don't have an account? <a href="register.php">Register here</a>
+            Don't have an account? <a href="cha-register.php">Register here</a>
         </p>
     </div>
 </body>

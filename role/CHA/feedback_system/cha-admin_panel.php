@@ -1,7 +1,7 @@
 <?php
-require_once 'auth_check.php';
+require_once 'cha-auth_check.php';
 if ($_SESSION['role'] !== 'admin') {
-    header("Location: unauthorized.php");
+    header("Location: cha-unauthorized.php");
     exit();
 }
 
@@ -39,16 +39,16 @@ $customer_result = $conn->query($customer_query);
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <?php include 'navbar.php'; ?>
+    <?php include 'cha-navbar.php'; ?>
     
     <div class="admin-container">
         <div class="admin-header">
             <h1>Admin Dashboard</h1>
             <div class="admin-actions">
-                <a href="export_reports.php" class="admin-btn primary">
+                <a href="cha-export_reports.php" class="admin-btn primary">
                     <i class="icon">📊</i> Export All Reports
                 </a>
-                <a href="manage_users.php" class="admin-btn secondary">
+                <a href="cha-manage_users.php" class="admin-btn secondary">
                     <i class="icon">👥</i> Manage Users
                 </a>
             </div>
@@ -125,7 +125,7 @@ $customer_result = $conn->query($customer_query);
         </div>
     </div>
 
-    <?php include 'footer.php'; ?>
+    <?php include 'cha-footer.php'; ?>
     <?php $conn->close(); ?>
 </body>
 </html>

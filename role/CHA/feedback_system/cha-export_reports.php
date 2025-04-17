@@ -1,7 +1,7 @@
 <?php
-require_once 'auth_check.php';
+require_once 'cha-auth_check.php';
 if ($_SESSION['role'] !== 'admin') {
-    header("Location: unauthorized.php");
+    header("Location: cha-unauthorized.php");
     exit();
 }
 

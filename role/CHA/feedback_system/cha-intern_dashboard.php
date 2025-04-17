@@ -1,7 +1,7 @@
 <?php
-require_once 'auth_check.php';
+require_once 'cha-auth_check.php';
 if ($_SESSION['role'] !== 'intern') {
-    header("Location: unauthorized.php");
+    header("Location: cha-unauthorized.php");
     exit();
 }
 
@@ -60,7 +60,7 @@ $stmt->close();
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <?php include 'navbar.php'; ?>
+    <?php include 'cha-navbar.php'; ?>
     
     <div class="container">
         <div class="profile-header">
@@ -258,7 +258,7 @@ $stmt->close();
         }
     </script>
 
-    <?php include 'footer.php'; ?>
+    <?php include 'cha-footer.php'; ?>
     <?php $conn->close(); ?>
 </body>
 </html>
