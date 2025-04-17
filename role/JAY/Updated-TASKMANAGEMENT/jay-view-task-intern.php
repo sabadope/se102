@@ -1,6 +1,6 @@
 <?php
 // Include database connection
-require 'db_connect.php';
+require 'jay-db_connect.php';
 
 // Optional: Start session if intern login is implemented
 // session_start();
