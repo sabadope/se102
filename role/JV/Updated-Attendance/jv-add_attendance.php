@@ -4,7 +4,7 @@ include 'jv-db.php'; // Database connection
 
 // Ensure user is logged in and is a supervisor
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'supervisor') {
-    header('Location: jvlogin.php');
+    header('Location: jv-login.php');
     exit;
 }
 
