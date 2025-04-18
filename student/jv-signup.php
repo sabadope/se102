@@ -153,7 +153,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <input type="password" name="password" placeholder="Password" required><br>
             <select name="role" required>
                 <option value="intern">Intern</option>
-                <option value="supervisor" disabled>Supervisor</option>
+                <option value="supervisor">Supervisor</option>
             </select><br>
             <input type="submit" value="Create Another" style="width: 100%; margin-top: 10px;">
         </form>

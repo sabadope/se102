@@ -517,6 +517,13 @@
             border-radius: 50%;
             object-fit: cover;
         }
+
+        .chevron-toggle {
+            font-size: 25px;
+            color: var(--blue);
+            cursor: pointer;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
         /* NAVBAR */
 
 
@@ -916,8 +923,7 @@
     <section id="content">
         <!-- NAVBAR -->
         <nav class="navbar">
-            <i class="bx bx-chevron-left" style="font-size: 25px;"></i> <!-- Sidebar toggle button -->
-            <!-- Left Spacer -->
+            <i class="bx bx-chevron-left chevron-toggle"></i> <!-- Sidebar toggle button -->
             <div class="nav-left"></div>
 
             <!-- Center: Search Form -->
@@ -1105,17 +1111,27 @@
 
     <!-- NIGHT MODE -->
     <script>
-        
         const switchMode = document.getElementById('switch-mode');
 
+        // On page load, check localStorage and apply mode
+        window.addEventListener('DOMContentLoaded', () => {
+            const darkModeEnabled = localStorage.getItem('dark-mode') === 'true';
+
+            switchMode.checked = darkModeEnabled; // update the toggle position
+            document.body.classList.toggle('dark', darkModeEnabled); // apply dark mode if enabled
+        });
+
+        // When user toggles the switch
         switchMode.addEventListener('change', function () {
-            if(this.checked) {
+            if (this.checked) {
                 document.body.classList.add('dark');
+                localStorage.setItem('dark-mode', 'true'); // store preference
             } else {
                 document.body.classList.remove('dark');
+                localStorage.setItem('dark-mode', 'false'); // store preference
             }
-        })
-    </script>
+        });
+    </script>   
 
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Load Chart.js -->
