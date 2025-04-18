@@ -14,7 +14,7 @@ $id = intval($_GET['id']);
 $stmt = $conn->prepare("DELETE FROM supervisor_reviews WHERE id = ?");
 if ($stmt === false) {
     $_SESSION['error'] = "Prepare failed: " . $conn->error;
-    header("Location: banias-cha-weekly_summary.php");
+    header("Location: banias-weekly_summary.php");
     exit;
 }
 
