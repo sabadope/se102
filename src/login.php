@@ -40,7 +40,7 @@
                 $_SESSION['email'] = $supervisor_email;
                 $_SESSION['role'] = 'Supervisor';
 
-                header("Location: ../supervisor/supervisor-dashboard.php");
+                header("Location: ../supervisor/supervisor-attendance.php");
                 exit();
             }
 
@@ -57,7 +57,7 @@
 
                 // Redirect based on role
                 if ($user['role'] === 'Student') {
-                    header("Location: ../student/student-dashboard.php");
+                    header("Location: ../student/student-activities.php");
                 } elseif ($user['role'] === 'Client') {
                     header("Location: ../client/client-dashboard.php");
                 }

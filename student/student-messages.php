@@ -71,6 +71,7 @@
             background: #555; /* Darker color when the user hovers over the thumb */
         }
 
+        
         /* ========== SIDEBAR BASE ========== */
         #sidebar {
             position: fixed;
@@ -94,7 +95,6 @@
 
         #sidebar.hide {
             width: 60px;
-
         }
 
         /* ========== BRAND ========== */
@@ -151,8 +151,55 @@
             font-size: 16px;
             color: var(--dark);
             white-space: nowrap;
-
         }
+
+
+        /* Collapsed state */
+        #sidebar.hide .side-menu li a .text {
+            opacity: 0;
+            visibility: hidden;
+            width: 0;
+            overflow: hidden;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Expanded state */
+        #sidebar .side-menu li a .text {
+            opacity: 1;
+            visibility: visible;
+            width: auto;
+            transition: all 0.3s ease;
+        }
+
+
+        #sidebar.hide .sub-menu .text,
+        #sidebar.hide .sub-menu i, {
+            display: none;
+            opacity: 0;
+            visibility: hidden;
+            width: 0;
+            overflow: hidden;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        /* Hide the entire submenu only if it's not manually opened */
+        .sidebar-collapsed .sub-menu:not(.active-manual) {
+            display: none !important;
+            visibility: hidden;
+            opacity: 0;
+            height: 0;
+            overflow: hidden;
+            padding: 0;
+        }
+
+
 
         #sidebar .side-menu li a .bx {
             min-width: calc(60px - ((4px + 6px) * 2));
@@ -167,13 +214,30 @@
 
         }
 
+        /* Ensure submenu links have no background by default */
+        #sidebar .sub-menu li a {
+            background: none !important;
+            color: var(--dark);
+            transition: color 0.3s ease;
+            margin-top: 3px;
+        }
+
+        /* On hover, only change the text color */
+        #sidebar .sub-menu li a:hover {
+            background: none !important;
+            color: var(--dark) !important;
+        }
+
         /* ===== Submenu Default Style ===== */
         #sidebar .side-menu .sub-menu li a {
             padding-left: 1px;       
             transition: color 0.3s;
+            color: var(--dark);
         }
 
-
+        #sidebar .side-menu .sub-menu li a:hover {
+            color: var(--dark); /* Just change the text color on hover */
+        }
 
         #sidebar .side-menu li.active::before,
         #sidebar .side-menu li.active::after {
@@ -211,6 +275,48 @@
             transition: width 0.3s ease;
         }
 
+        .sub-menu li a .underline i {
+            padding-right: 20px; /* or 10px, 12px — adjust as needed */
+        }
+
+        .sub-menu li a .underline span {
+            margin-left: -10px;
+        }
+
+        .sub-menu li a .underline {
+            display: flex;
+            align-items: center;
+            border-bottom: 2px solid currentColor; /* Creates an underline that works for both icon and text */
+            padding-bottom: 4px;
+            padding-left: 0;
+            
+        }
+
+        .sub-menu li a .non-underline i {
+            padding-right: 20px; /* or 10px, 12px — adjust as needed */
+            margin-top: -1px;
+        }
+
+        .sub-menu li a .non-underline span {
+            margin-left: -10px;
+        }
+
+        .sub-menu li a .non-underline {
+            display: flex;
+            align-items: center;
+            padding-left: 0;
+            margin-top: -5px;
+            
+        }
+
+        .sub-menu li a .underline.active {
+            color: var(--blue); /* Optional: highlight color for active state */
+            border-bottom: 2px solid var(--blue);
+        }
+
+
+
+
         /* ========== LOGOUT COLOR ========== */
         #sidebar .side-menu li a.logout {
             color: var(--red);
@@ -226,28 +332,6 @@
             padding-left: 1.5rem;
             transition: all 0.3s ease;
 
-        }
-
-
-        /* Collapsed state */
-        #sidebar.hide .side-menu li a .text {
-            opacity: 0;
-            visibility: hidden;
-            width: 0;
-            overflow: hidden;
-            white-space: nowrap;
-            transition: all 0.3s ease;
-            margin: 0;
-            padding: 0;
-        }
-
-        /* Expanded state */
-        #sidebar .side-menu li a .text {
-            opacity: 1;
-            visibility: visible;
-            width: auto;
-            
-            transition: all 0.3s ease;
         }
 
         /* Optional: Add active styles for the expanded submenu */
@@ -283,10 +367,12 @@
             transform: rotate(180deg); /* Expanded: arrow down */
         }
 
-        
+        .arrow {
+            transition: transform 0.3s ease;
+            display: inline-block; /* ensure transform works */
+        }
 
 
-        /* SIDEBAR */
 
 
         /* CONTENT */
@@ -314,7 +400,6 @@
             top: 0;
             left: 0;
             z-index: 1000;
-
         }
         #content nav::before {
             content: '';
@@ -326,7 +411,6 @@
             border-radius: 50%;
             box-shadow: -20px -20px 0 var(--light);
         }
-
         #content nav a {
             color: var(--dark);
         }
@@ -350,7 +434,6 @@
             display: flex;
             align-items: center;
             height: 36px;
-
         }
         #content nav form .form-input input {
             flex-grow: 1;
@@ -362,7 +445,6 @@
             outline: none;
             width: 100%;
             color: var(--dark);
-
         }
         #content nav form .form-input button {
             width: 36px;
@@ -560,11 +642,12 @@
         </a>
         <ul class="side-menu top">
             <li>
-                <a href="student-dashboard.php">
-                    <i class='bx bxs-dashboard' ></i>
-                    <span class="text">Dashboard</span>
+                <a href="student-activities.php" style="display: flex; align-items: center;">
+                    <i class='bx bxs-folder-open'></i>
+                    <span class="text">Activities</span>
+                    <i class='bx bx-chevron-down arrow' style="margin-left: auto;"></i>
                 </a>
-            </li>
+            </li>            
             <li>
                 <a href="#">
                     <i class='bx bxs-calendar-check' ></i>
@@ -585,13 +668,6 @@
                 </a>
             </li>
 
-            <li>
-                <a href="student-activities.php" style="display: flex; align-items: center;">
-                    <i class='bx bxs-folder-open'></i>
-                    <span class="text">Activities</span>
-                    <i class='bx bx-chevron-down arrow' style="margin-left: auto;"></i>
-                </a>
-            </li>
             <li>
                 <a href="#">
                     <i class='bx bxs-cog' ></i>
@@ -628,14 +704,10 @@
                 </div>
             </form>
 
-            <!-- Right: Icons -->
             <div class="nav-right">
                 <input type="checkbox" id="switch-mode" hidden>
                 <label for="switch-mode" class="switch-mode"></label>
-                <div class="notification">
-                    <i class='bx bxs-bell'></i>
-                    <span class="num">8</span>
-                </div>
+                
                 <div class="profile">
                     <img src="<?php echo $imagePath; ?>" alt="Profile Image" width="40" height="40" style="border-radius: 50%; object-fit: cover;">
                 </div>
@@ -647,7 +719,7 @@
         <main>
             <div class="head-title">
                 <div class="left">
-                    <h1>Chat Messages</h1>
+                    <h1>Message</h1>
                     <ul class="breadcrumb">
                         <li>
                             <a href="student-messages.php">Home</a>
@@ -659,10 +731,7 @@
                         
                     </ul>
                 </div>
-                <a href="#" class="btn-download">
-                    <i class='bx bxs-cloud-download' ></i>
-                    <span class="text">Download PDF</span>
-                </a>
+                
             </div>
 
 
@@ -765,148 +834,212 @@
 
     
 
+    <!-- NAV BAR W/ TOGGLE HIDE -->
     <script>
-        
-        document.addEventListener("DOMContentLoaded", function () {
-            // Send Message
-            document.getElementById("sendMessage").addEventListener("click", function () {
-                const inputField = document.getElementById("messageInput");
-                const messageText = inputField.value.trim();
-                
-                if (messageText !== "") {
-                    const chatBox = document.querySelector(".chat-box");
-                    const messageDiv = document.createElement("div");
-                    messageDiv.classList.add("message", "sent");
-                    messageDiv.innerHTML = `<p>${messageText}</p><span class="timestamp">Just now</span>`;
-                    chatBox.appendChild(messageDiv);
-                    inputField.value = "";
-                    chatBox.scrollTop = chatBox.scrollHeight;  // Auto-scroll to the latest message
-                }
+        const sidebar = document.getElementById('sidebar');
+        const toggleSidebarBtn = document.querySelector('.navbar i.bx');
+        const allSideMenuLinks = document.querySelectorAll('#sidebar .side-menu.top li a');
+        const submenuToggle = document.querySelector('.submenu-toggle');
+        const subMenu = document.getElementById('sub-menu');
+
+        allSideMenuLinks.forEach(item => {
+            const li = item.parentElement;
+
+            item.addEventListener('click', () => {
+                allSideMenuLinks.forEach(i => {
+                    i.parentElement.classList.remove('active');
+                });
+                li.classList.add('active');
             });
         });
 
-    </script>
+        // Toggle chevron direction
+        if (sidebar.classList.contains('hide')) {
+            toggleSidebarBtn.classList.replace('bx-chevron-left', 'bx-chevron-right');
+        } else {
+            toggleSidebarBtn.classList.replace('bx-chevron-right', 'bx-chevron-left');
+        }
 
-    <script>
-        
-        
+        toggleSidebarBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('hide');
+            const isCollapsed = sidebar.classList.contains('hide');
 
-        // Toggle Message Notifications & Adjust Chat Layout
-        document.getElementById("chatToggle").addEventListener("click", function() {
-            let chatContainer = document.querySelector(".chat-container");
-            let messageNotifications = document.getElementById("messageNotifications");
+            if (isCollapsed) {
+                sidebar.classList.add('sidebar-collapsed');
 
-            // Toggle 'open' class to expand/collapse
-            messageNotifications.classList.toggle("open");
-            chatContainer.classList.toggle("open");
-        });
+                // Collapse all submenus and save their state
+                document.querySelectorAll('.has-submenu').forEach(item => {
+                    const submenu = item.querySelector('.sub-menu');
+                    const arrow = item.querySelector('.arrow');
+                    const nextLi = item.nextElementSibling;
 
-        // Toggle Client/Supervisor Messages
-        document.querySelectorAll('.role-btn').forEach(button => {
-            button.addEventListener('click', function () {
-                document.querySelectorAll('.role-btn').forEach(btn => btn.classList.remove('active'));
-                this.classList.add('active');
+                    const isExpanded = submenu.classList.contains('active');
+                    item.setAttribute('data-opened', isExpanded ? 'true' : 'false');
 
-                const role = this.getAttribute('data-role');
-                document.querySelectorAll('.message-list').forEach(list => {
-                    list.style.display = (list.getAttribute('data-role') === role) ? 'block' : 'none';
+                    submenu.classList.remove('active');
+                    submenu.style.display = 'none';
+
+                    if (arrow) arrow.style.transform = 'rotate(0deg)';
+                    if (nextLi) nextLi.style.marginTop = '0px';
                 });
-            });
-        });
 
+            } else {
+                sidebar.classList.remove('sidebar-collapsed');
 
+                // Restore submenus that were previously open
+                document.querySelectorAll('.has-submenu').forEach(item => {
+                    const shouldOpen = item.getAttribute('data-opened') === 'true';
+                    const submenu = item.querySelector('.sub-menu');
+                    const arrow = item.querySelector('.arrow');
+                    const nextLi = item.nextElementSibling;
 
+                    if (shouldOpen) {
+                        submenu.classList.add('active');
+                        submenu.style.display = 'block';
 
-        // Attach click listener to message list
-        document.addEventListener("click", function (e) {
-            if (e.target.closest('.message-item')) {
-                const item = e.target.closest('.message-item');
-                const username = item.getAttribute('data-username');
-                document.getElementById('chatPerson').textContent = username;
-
-                // Load conversation via AJAX
-                fetch("load_messages_student.php", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/x-www-form-urlencoded"
-                    },
-                    body: "chatWith=" + encodeURIComponent(username)
-                })
-                .then(res => res.json())
-                .then(messages => {
-                    const chatBox = document.getElementById("chatBox");
-                    chatBox.innerHTML = "";
-
-                    messages.forEach(msg => {
-                        let msgDiv = document.createElement("div");
-                        msgDiv.classList.add("message");
-
-                        if (msg.sender === username) {
-                            msgDiv.classList.add("received");
-                        } else {
-                            msgDiv.classList.add("sent");
-                        }
-
-                        msgDiv.innerHTML = `<p>${msg.message}</p><span class="timestamp">${msg.timestamp}</span>`;
-                        chatBox.appendChild(msgDiv);
-                    });
-
-                    chatBox.scrollTop = chatBox.scrollHeight;
-                });
-            }
-        });
-
-        // Send message
-        document.getElementById("sendMessage").addEventListener("click", function() {
-            let input = document.getElementById("messageInput");
-            let messageText = input.value.trim();
-            let receiver = document.getElementById("chatPerson").textContent;
-
-            if (messageText !== "" && receiver !== "Select a message") {
-                fetch('send_message.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        sender: "supervisor@gmail.com", // or get from PHP session
-                        receiver: receiver,
-                        message: messageText
-                    })
-                })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.success) {
-                        let chatBox = document.getElementById("chatBox");
-                        let newMessage = document.createElement("div");
-                        newMessage.classList.add("message", "sent");
-                        newMessage.innerHTML = `<p>${messageText}</p><span class="timestamp">Just now</span>`;
-                        chatBox.appendChild(newMessage);
-                        input.value = "";
-                        chatBox.scrollTop = chatBox.scrollHeight;
-                    } else {
-                        alert("Failed to send message.");
+                        if (arrow) arrow.style.transform = 'rotate(180deg)';
+                        if (nextLi) nextLi.style.marginTop = '90px';
                     }
                 });
+
+                // Restore manual submenu
+                if (subMenu.classList.contains('active')) {
+                    subMenu.style.display = 'block';
+                }
+            }
+
+            // Toggle chevron direction
+            if (sidebar.classList.contains('hide')) {
+                toggleSidebarBtn.classList.replace('bx-chevron-left', 'bx-chevron-right');
+            } else {
+                toggleSidebarBtn.classList.replace('bx-chevron-right', 'bx-chevron-left');
+            }
+
+        });
+
+        // Submenu toggle for manual expand/collapse
+        submenuToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+
+            const isOpen = subMenu.classList.contains('active-manual');
+
+            if (isOpen) {
+                subMenu.classList.remove('active', 'active-manual');
+                subMenu.style.display = 'none';
+            } else {
+                subMenu.classList.add('active', 'active-manual');
+                subMenu.style.display = 'block';
             }
         });
 
-        fetch('get_messages.php', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-          },
-          body: `selected_user_email=${encodeURIComponent(userEmail)}`
-        })
-        .then(res => res.json())
-        .then(messages => {
-          // Load messages into the chat box
+        window.addEventListener('DOMContentLoaded', () => {
+            const isSidebarCollapsed = sidebar.classList.contains('hide');
+            const isManuallyOpened = subMenu.classList.contains('active-manual');
+
+            if (isSidebarCollapsed && !isManuallyOpened) {
+                subMenu.style.display = 'none';
+            }
         });
 
+        // Search bar for mobile screens
+        const searchButton = document.querySelector('#content nav form .form-input button');
+        const searchButtonIcon = document.querySelector('#content nav form .form-input button .bx');
+        const searchForm = document.querySelector('#content nav form');
 
+        searchButton.addEventListener('click', function (e) {
+            if (window.innerWidth < 576) {
+                e.preventDefault();
+                searchForm.classList.toggle('show');
+                if (searchForm.classList.contains('show')) {
+                    searchButtonIcon.classList.replace('bx-search', 'bx-x');
+                } else {
+                    searchButtonIcon.classList.replace('bx-x', 'bx-search');
+                }
+            }
+        });
+    </script>
 
+    <!-- SIDEBAR FUNCTIONALITIES -->
+    <script>
+        // ========== DEFAULT ACTIVATION RULES FOR ACTIVITIES & PERFORMANCE ==========
 
+        const path = window.location.pathname;
 
+        if (
+            path.includes("student-activities.php") ||
+            path.includes("student-performance.php") ||
+            path.includes("student-dailylogs.php") // 👈 Add this line
+
+        ) {
+            const menuId = (path.includes("student-performance.php") || path.includes("student-dailylogs.php"))
+                ? '#performance-submenu'
+                : '#activities-submenu';
+
+            const menuElement = document.querySelector(menuId);
+            const submenu = menuElement.querySelector('.sub-menu');
+            const nextLi = menuElement.nextElementSibling;
+
+            // Keep the tab styled as active
+            menuElement.classList.add('active');
+
+            // Keep the submenu expanded
+            submenu.classList.add('active');
+            submenu.style.display = 'block';
+
+            // Push down the next item to avoid overlap
+            if (nextLi) nextLi.style.marginTop = '90px';
+        }
+
+        // ========== SUBMENU TOGGLE FUNCTIONALITY ==========
+
+        const submenuLinks = document.querySelectorAll('.has-submenu > a');
+
+        submenuLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault(); // Prevent redirect
+
+                const parentLi = link.parentElement;
+                const submenu = parentLi.querySelector('.sub-menu');
+                const arrow = link.querySelector('.arrow'); // Get the arrow element
+                const nextLi = parentLi.nextElementSibling;
+
+                // Toggle submenu visibility
+                const isExpanded = submenu.classList.contains('active');
+                submenu.classList.toggle('active');
+                submenu.style.display = isExpanded ? 'none' : 'block';
+
+                // Rotate arrow based on expanded/collapsed state
+                arrow.style.transform = isExpanded ? 'rotate(0deg)' : 'rotate(180deg)';
+
+                // Adjust margin of next item
+                if (nextLi) nextLi.style.marginTop = isExpanded ? '0px' : '90px';
+            });
+        });
+
+        // ========== HIGHLIGHT ACTIVE SUBMENU ITEM ==========
+        if (path.includes("student-dailylogs.php")) {
+            const skillLink = document.querySelector('.sub-menu li a[href="student-dailylogs.php"]');
+            if (skillLink) {
+                const underlineDiv = skillLink.querySelector('.underline');
+                if (underlineDiv) {
+                    underlineDiv.classList.add('active');
+                }
+            }
+        }
+    </script>
+
+    <!-- NIGHT MODE -->
+    <script>
+        
+        const switchMode = document.getElementById('switch-mode');
+
+        switchMode.addEventListener('change', function () {
+            if(this.checked) {
+                document.body.classList.add('dark');
+            } else {
+                document.body.classList.remove('dark');
+            }
+        })
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Load Chart.js -->

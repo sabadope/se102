@@ -1,40 +1,37 @@
 <?php
-session_start();
+// Include database connection
 include 'jv-db.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'];
-    $password = $_POST['password'];
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Hash the password
+    $role = $_POST['role'];
 
-    // Check if the username exists
+    // Check if the username already exists
     $sql = "SELECT * FROM users WHERE username = ?";
     $stmt = $pdo->prepare($sql);
     $stmt->execute([$username]);
     $user = $stmt->fetch();
 
-    // Validate the password
-    if ($user && password_verify($password, $user['password'])) {
-        $_SESSION['user_id'] = $user['id'];
-        $_SESSION['role'] = $user['role']; // Save role in session
-        if ($user['role'] == 'supervisor') {
-            header("Location: jv-supervisor_dashboard.php"); // Redirect to supervisor dashboard
-        } else {
-            header("Location: jv-intern_dashboard.php"); // Redirect to intern dashboard
-        }
-        exit;
+    if ($user) {
+        
     } else {
+        // Insert the user into the database
+        $sql = "INSERT INTO users (username, password, role) VALUES (?, ?, ?)";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$username, $password, $role]);
+
         
     }
 }
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Sign Up</title>
     <style>
         /* Body */
         body {
@@ -47,8 +44,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             margin: 0;
         }
 
-        /* Login Container */
-        .login-container {
+        /* SignUp Container */
+        .signup-container {
             background-color: #fff;
             border-radius: 10px;
             padding: 40px;
@@ -66,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         /* Form Inputs */
-        input[type="text"], input[type="password"] {
+        input[type="text"], input[type="password"], select {
             width: 100%;
             padding: 15px;
             margin: 10px 0;
@@ -78,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         /* Focus Effect */
-        input[type="text"]:focus, input[type="password"]:focus {
+        input[type="text"]:focus, input[type="password"]:focus, select:focus {
             border-color: #4CAF50;
             outline: none;
             box-shadow: 0 0 5px rgba(76, 175, 80, 0.6);
@@ -103,7 +100,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             background-color: #45a049;
         }
 
-        /* Error Message */
+        /* Success and Error Messages */
+        .success-message {
+            color: green;
+            margin-top: 15px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
         .error-message {
             color: red;
             margin-top: 15px;
@@ -111,28 +115,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             font-weight: 500;
         }
 
-        /* Sign Up Button */
-        .signup-btn {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #007BFF;
-            color: white;
-            border-radius: 8px;
+        /* Forgot Password Link */
+        p a {
             text-decoration: none;
-            font-size: 16px;
-            font-weight: 600;
-            transition: all 0.3s ease;
+            color: #007BFF;
+            font-size: 14px;
+            font-weight: 500;
         }
 
-        /* Hover Effect on Sign Up Button */
-        .signup-btn:hover {
-            background-color: #0056b3;
+        /* Hover Effect on Link */
+        p a:hover {
+            text-decoration: underline;
         }
 
         /* Media Query for Mobile Devices */
         @media (max-width: 480px) {
-            .login-container {
+            .signup-container {
                 padding: 30px;
                 width: 90%;
             }
@@ -141,23 +139,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 font-size: 20px;
             }
 
-            input[type="text"], input[type="password"], input[type="submit"] {
+            input[type="text"], input[type="password"], select, input[type="submit"] {
                 font-size: 14px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="login-container">
-        <h2>Login</h2>
-        <form method="POST" action="jv-login.php">
+    <div class="signup-container">
+        <h2>User Authentication</h2>
+        <form method="POST" action="jv-signup.php">
             <input type="text" name="username" placeholder="Username" required><br>
             <input type="password" name="password" placeholder="Password" required><br>
-            <input type="submit" value="Login">
+            <select name="role" required>
+                <option value="intern">Intern</option>
+                <option value="supervisor" disabled>Supervisor</option>
+            </select><br>
+            <input type="submit" value="Create Another" style="width: 100%; margin-top: 10px;">
         </form>
-
-        <!-- Sign Up Button -->
-        <a href="jv-signup.php" class="signup-btn">Sign Up</a>
+        <p>Already have an account? <a href="jv-login.php" style="font-size: 15.8px; text-decoration: underline;">Verified</a></p>
     </div>
 </body>
 </html>

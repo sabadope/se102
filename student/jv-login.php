@@ -88,6 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         input[type="submit"] {
             width: 100%;
             padding: 15px;
+            margin-top: 10px;
             background-color: #4CAF50;
             border: none;
             color: white;
@@ -112,7 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         /* Sign Up Button */
-        .signup-btn {
+        .signup-btn {            
             display: inline-block;
             margin-top: 20px;
             padding: 10px 20px;
@@ -143,21 +144,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             input[type="text"], input[type="password"], input[type="submit"] {
                 font-size: 14px;
+
             }
         }
     </style>
 </head>
 <body>
     <div class="login-container">
-        <h2>Login</h2>
+        <h2>User Authentication</h2>
         <form method="POST" action="jv-login.php">
             <input type="text" name="username" placeholder="Username" required><br>
             <input type="password" name="password" placeholder="Password" required><br>
-            <input type="submit" value="Login">
+            <input type="submit" value="Verified">
         </form>
 
         <!-- Sign Up Button -->
-        <a href="jv-signup.php" class="signup-btn">Sign Up</a>
+        <a href="jv-signup.php" class="signup-btn" style="width: 89%;">Create Another</a>
     </div>
 </body>
 </html>

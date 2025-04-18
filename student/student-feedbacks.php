@@ -2,6 +2,15 @@
     
     require_once '../src/config.php'; // Include DB connection
 
+    // Use the same logic to construct the expected image filename
+    $username = isset($_SESSION['username']) ? strtolower($_SESSION['username']) : 'default';
+    $safeUsername = preg_replace('/[^a-zA-Z0-9_-]/', '_', $username);
+    $imagePath = "../uploads/" . $safeUsername . ".png";
+
+    // Fallback if image doesn't exist
+    if (!file_exists($imagePath)) {
+        $imagePath = "../uploads/default.png";
+    }
 ?>
 
 <!DOCTYPE html>
@@ -740,12 +749,13 @@
             margin-top: 24px;
             width: 100%;
             color: var(--dark);
+
         }
         #content main .table-data > div {
             border-radius: 20px;
             background: var(--light);
             padding: 24px;
-            overflow-x: auto;
+            overflow-x: hidden;
         }
         #content main .table-data .head {
             display: flex;
@@ -969,33 +979,6 @@
         <div class="sidebar-content">
             <!-- TOP ITEMS -->
             <ul class="side-menu top">
-                <li>
-                    <a href="student-dashboard.php">
-                        <i class='bx bxs-dashboard'></i>
-                        <span class="text">Dashboard</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class='bx bxs-calendar-check'></i>
-                        <span class="text">Attendance</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="student-messages.php">
-                        <i class='bx bxs-message-dots'></i>
-                        <span class="text">Message</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="student-performance.php" style="display: flex; align-items: center;">
-                        <i class='bx bxs-book-content'></i>
-                        <span class="text">Performance</span>
-                        <i class='bx bx-chevron-down arrow' style="margin-left: auto;"></i>
-                    </a>
-                </li>
-
                 <!-- Activities with Submenu -->
                 <li id="performance-submenu" class="has-submenu">
                     <a href="student-activities.php">
@@ -1022,6 +1005,27 @@
                         </li>
                     </ul>
                 </li>        
+                <li>
+                    <a href="student-attendance.php">
+                        <i class='bx bxs-calendar-check'></i>
+                        <span class="text">Attendance</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="student-messages.php">
+                        <i class='bx bxs-message-dots'></i>
+                        <span class="text">Message</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="student-performance.php" style="display: flex; align-items: center;">
+                        <i class='bx bxs-book-content'></i>
+                        <span class="text">Performance</span>
+                        <i class='bx bx-chevron-down arrow' style="margin-left: auto;"></i>
+                    </a>
+                </li>
+
                 <li>
                     <a href="#">
                         <i class='bx bxs-cog'></i>
@@ -1061,17 +1065,13 @@
                 </div>
             </form>
 
-            <!-- Right: Icons -->
             <div class="nav-right">
                 <input type="checkbox" id="switch-mode" hidden>
                 <label for="switch-mode" class="switch-mode"></label>
-                <a href="#" class="notification">
-                    <i class='bx bxs-bell'></i>
-                    <span class="num">8</span>
-                </a>
-                <a href="#" class="profile">
-                    <img src="img/people.png">
-                </a>
+                
+                <div class="profile">
+                    <img src="<?php echo $imagePath; ?>" alt="Profile Image" width="40" height="40" style="border-radius: 50%; object-fit: cover;">
+                </div>
             </div>
         </nav>
         <!-- NAVBAR -->
@@ -1080,63 +1080,30 @@
         <main>
             <div class="head-title">
                 <div class="left">
-                    <h1>Performance</h1>
+                    <h1>Activities</h1>
                     <ul class="breadcrumb">
                         <li>
-                            <a href="student-performance.php">Home</a>
+                            <a href="student-activities.php">Home</a>
                         </li>
                         <li><i class='bx bx-chevron-right' ></i></li>
                         <li>
-                            <a class="active">Performance</a>
+                            <a class="active">Feedbacks</a>
                         </li>
                     </ul>
                 </div>
-                <a href="#" class="btn-download">
-                    <i class='bx bxs-cloud-download' ></i>
-                    <span class="text">Download PDF</span>
-                </a>
+                
             </div>
 
-            <ul class="box-info">
-                <a href="student-skilldevelopment.php">
-                    <li>
-                        <i class='bx bx-check-shield' ></i>
-                        <span class="text">
-                            <h3>Skill Development</h3>
-                            <p>100%</p>
-                        </span>
-                    </li>
-                </a>
-                <a href="student-behavioralconduct.php">
-                    <li>
-                        <i class='bx bx-check-circle' ></i>
-                        <span class="text">
-                            <h3>Behavior Conduct</h3>
-                            <p>100%</p>
-                        </span>
-                    </li>
-                </a>
-            </ul>
-            <ul class="box-info">
-                <a href="student-taskcompletion.php">
-                    <li>
-                        <i class='bx bx-task' ></i>
-                        <span class="text">
-                            <h3>Task Completion</h3>
-                            <p>100%</p>
-                        </span>
-                    </li>
-                </a>
-                <a href="student-achievementranking.php">
-                    <li>
-                        <i class='bx bx-check-square' ></i>
-                        <span class="text">
-                            <h3>Achievement Ranking</h3>
-                            <p>100%</p>
-                        </span>
-                    </li>
-                </a>
-            </ul>
+            <div class="table-data">
+
+                <!-- Chat Container -->
+                <div class="chat-container">
+
+                    <iframe src="login.php" width="980px" height="1300px" frameborder="0" style="overflow-x: hidden;"></iframe>
+
+                </div>
+                
+            </div>
         </main>
         <!-- MAIN -->
     </section>
@@ -1337,6 +1304,20 @@
         }
     </script>
 
+
+    <!-- NIGHT MODE -->
+    <script>
+        
+        const switchMode = document.getElementById('switch-mode');
+
+        switchMode.addEventListener('change', function () {
+            if(this.checked) {
+                document.body.classList.add('dark');
+            } else {
+                document.body.classList.remove('dark');
+            }
+        })
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Load Chart.js -->
 </body>

@@ -2,6 +2,15 @@
 
     require_once '../src/config.php'; // Include DB connection
 
+    // Use the same logic to construct the expected image filename
+    $username = isset($_SESSION['username']) ? strtolower($_SESSION['username']) : 'default';
+    $safeUsername = preg_replace('/[^a-zA-Z0-9_-]/', '_', $username);
+    $imagePath = "../uploads/" . $safeUsername . ".png";
+
+    // Fallback if image doesn't exist
+    if (!file_exists($imagePath)) {
+        $imagePath = "../uploads/default.png";
+    }
 ?>
 
 
@@ -112,7 +121,6 @@
 
         #sidebar.hide {
             width: 60px;
-
         }
 
         /* ========== BRAND ========== */
@@ -229,25 +237,6 @@
             transition: width 0.3s ease;
         }
 
-        /* ========== LOGOUT COLOR ========== */
-        #sidebar .side-menu li a.logout {
-            color: var(--red);
-        }
-
-        #sidebar .side-menu li a.logout:hover {
-            color: #bb2d3b;
-        }
-
-
-        /* ========== SUBMENU DROPDOWN ========== */
-        .sub-menu {
-            display: none;
-            padding-left: 1.5rem;
-            transition: all 0.3s ease;
-
-        }
-
-
         /* Collapsed state */
         #sidebar.hide .side-menu li a .text {
             opacity: 0;
@@ -267,6 +256,23 @@
             width: auto;
             
             transition: all 0.3s ease;
+        }
+
+        /* ========== LOGOUT COLOR ========== */
+        #sidebar .side-menu li a.logout {
+            color: var(--red);
+        }
+
+        #sidebar .side-menu li a.logout:hover {
+            color: #bb2d3b;
+        }
+
+        /* ========== SUBMENU DROPDOWN ========== */
+        .sub-menu {
+            display: none;
+            padding-left: 1.5rem;
+            transition: all 0.3s ease;
+
         }
 
         /* Optional: Add active styles for the expanded submenu */
@@ -333,7 +339,6 @@
             top: 0;
             left: 0;
             z-index: 1000;
-
         }
         #content nav::before {
             content: '';
@@ -345,7 +350,6 @@
             border-radius: 50%;
             box-shadow: -20px -20px 0 var(--light);
         }
-
         #content nav a {
             color: var(--dark);
         }
@@ -369,7 +373,6 @@
             display: flex;
             align-items: center;
             height: 36px;
-
         }
         #content nav form .form-input input {
             flex-grow: 1;
@@ -381,7 +384,6 @@
             outline: none;
             width: 100%;
             color: var(--dark);
-
         }
         #content nav form .form-input button {
             width: 36px;
@@ -858,9 +860,10 @@
             <!-- TOP ITEMS -->
             <ul class="side-menu top">
                 <li>
-                    <a href="student-dashboard.php">
-                        <i class='bx bxs-dashboard'></i>
-                        <span class="text">Dashboard</span>
+                    <a href="student-activities.php" style="display: flex; align-items: center;">
+                        <i class='bx bxs-folder-open'></i>
+                        <span class="text">Activities</span>
+                        <i class='bx bx-chevron-down arrow' style="margin-left: auto;"></i>
                     </a>
                 </li>
                 <li class="active">
@@ -883,13 +886,6 @@
                     </a>
                 </li>
 
-                <li>
-                    <a href="student-activities.php" style="display: flex; align-items: center;">
-                        <i class='bx bxs-folder-open'></i>
-                        <span class="text">Activities</span>
-                        <i class='bx bx-chevron-down arrow' style="margin-left: auto;"></i>
-                    </a>
-                </li>
                 <li>
                     <a href="student-settings.php">
                         <i class='bx bxs-cog'></i>
@@ -927,17 +923,13 @@
                 </div>
             </form>
 
-            <!-- Right: Icons -->
             <div class="nav-right">
                 <input type="checkbox" id="switch-mode" hidden>
                 <label for="switch-mode" class="switch-mode"></label>
-                <a href="#" class="notification">
-                    <i class='bx bxs-bell'></i>
-                    <span class="num">8</span>
-                </a>
-                <a href="#" class="profile">
-                    <img src="img/people.png">
-                </a>
+                
+                <div class="profile">
+                    <img src="<?php echo $imagePath; ?>" alt="Profile Image" width="40" height="40" style="border-radius: 50%; object-fit: cover;">
+                </div>
             </div>
         </nav>
         <!-- NAVBAR -->
@@ -957,35 +949,19 @@
                         </li>
                     </ul>
                 </div>
-                <a href="#" class="btn-download">
-                    <i class='bx bxs-cloud-download' ></i>
-                    <span class="text">Download PDF</span>
-                </a>
+                
             </div>
 
-            <ul class="box-info">
-                <li>
-                    <i class='bx bxs-calendar-check' ></i>
-                    <span class="text">
-                        <h3>Attendace</h3>
-                        <p>100%</p>
-                    </span>
-                </li>
-                <li>
-                    <i class='bx bxs-group' ></i>
-                    <span class="text">
-                        <h3>Message</h3>
-                        <p>3</p>
-                    </span>
-                </li>
-                <li>
-                    <i class='bx bxs-dollar-circle' ></i>
-                    <span class="text">
-                        <h3>Team</h3>
-                        <p>5</p>
-                    </span>
-                </li>
-            </ul>
+            <div class="table-data">
+
+                <!-- Chat Container -->
+                <div class="chat-container">
+
+                    <iframe src="jv-login.php" width="984px" height="590px" frameborder="0"></iframe>
+
+                </div>
+                
+            </div>
 
 
             
@@ -1049,5 +1025,80 @@
             }
         });
     </script>
+
+
+    <!-- SIDE BAR SCRIPT -->
+    <script>
+        // ========== DEFAULT ACTIVATION RULES FOR ACTIVITIES & PERFORMANCE ==========
+
+        const path = window.location.pathname;
+
+        if (path.includes("student-activities.php") || path.includes("student-performance.php")) {
+            const menuId = path.includes("student-performance.php") ? '#performance-submenu' : '#activities-submenu';
+            const menuElement = document.querySelector(menuId);
+            const submenu = menuElement.querySelector('.sub-menu');
+            const nextLi = menuElement.nextElementSibling;
+
+            // Keep the tab styled as active
+            menuElement.classList.add('active');
+
+            // Keep the submenu expanded
+            submenu.classList.add('active');
+            submenu.style.display = 'block';
+
+            // Push down the next item to avoid overlap
+            if (nextLi) nextLi.style.marginTop = '90px';
+        }
+
+        // ========== SUBMENU TOGGLE FUNCTIONALITY ==========
+
+        const submenuLinks = document.querySelectorAll('.has-submenu > a');
+
+        submenuLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault(); // Prevent redirect
+
+                const parentLi = link.parentElement;
+                const submenu = parentLi.querySelector('.sub-menu');
+                const arrow = link.querySelector('.arrow'); // Get the arrow element
+                const nextLi = parentLi.nextElementSibling;
+
+                // Toggle submenu visibility
+                const isExpanded = submenu.classList.contains('active');
+                submenu.classList.toggle('active');
+                submenu.style.display = isExpanded ? 'none' : 'block';
+
+                // Rotate arrow based on expanded/collapsed state
+                arrow.style.transform = isExpanded ? 'rotate(0deg)' : 'rotate(180deg)';
+
+                // Adjust margin of next item
+                if (nextLi) nextLi.style.marginTop = isExpanded ? '0px' : '180px';
+            });
+        });
+
+        // ========== HIGHLIGHT ACTIVE SUBMENU ITEM ==========
+        const subLinks = document.querySelectorAll('.sub-menu li a');
+        subLinks.forEach(link => {
+            if (window.location.href.includes(link.getAttribute('href'))) {
+                link.classList.add('active');
+            }
+        });
+    </script>
+
+
+    <!-- NIGHT MODE -->
+    <script>
+        
+        const switchMode = document.getElementById('switch-mode');
+
+        switchMode.addEventListener('change', function () {
+            if(this.checked) {
+                document.body.classList.add('dark');
+            } else {
+                document.body.classList.remove('dark');
+            }
+        })
+    </script>
+    
 </body>
 </html>

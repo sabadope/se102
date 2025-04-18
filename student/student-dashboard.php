@@ -60,6 +60,22 @@
             --light-orange: #FFE0D3;
         }
 
+
+        html {
+            overflow-x: hidden;
+        }
+
+        body.dark {
+            --light: #0C0C1E;
+            --grey: #060714;
+            --dark: #FBFBFB;
+        }
+
+        body {
+            background: var(--grey);
+            overflow-x: hidden;
+        }
+
         /* Target the entire page's scrollbar */
         ::-webkit-scrollbar {
             width: 6px; /* Set the width of the scrollbar */
@@ -81,21 +97,6 @@
         /* Hover effect for the thumb */
         ::-webkit-scrollbar-thumb:hover {
             background: #555; /* Darker color when the user hovers over the thumb */
-        }
-
-        html {
-            overflow-x: hidden;
-        }
-
-        body.dark {
-            --light: #0C0C1E;
-            --grey: #060714;
-            --dark: #FBFBFB;
-        }
-
-        body {
-            background: var(--grey);
-            overflow-x: hidden;
         }
 
         /* ========== SIDEBAR BASE ========== */
@@ -932,10 +933,7 @@
             <div class="nav-right">
                 <input type="checkbox" id="switch-mode" hidden>
                 <label for="switch-mode" class="switch-mode"></label>
-                <div class="notification">
-                    <i class='bx bxs-bell'></i>
-                    <span class="num">8</span>
-                </div>
+                
                 <div class="profile">
                     <img src="<?php echo $imagePath; ?>" alt="Profile Image" width="40" height="40" style="border-radius: 50%; object-fit: cover;">
                 </div>
@@ -958,10 +956,7 @@
                         </li>
                     </ul>
                 </div>
-                <a href="#" class="btn-download">
-                    <i class='bx bxs-cloud-download' ></i>
-                    <span class="text">Download PDF</span>
-                </a>
+                
             </div>
 
             <ul class="box-info">
@@ -1105,6 +1100,21 @@
                 link.classList.add('active');
             }
         });
+    </script>
+
+
+    <!-- NIGHT MODE -->
+    <script>
+        
+        const switchMode = document.getElementById('switch-mode');
+
+        switchMode.addEventListener('change', function () {
+            if(this.checked) {
+                document.body.classList.add('dark');
+            } else {
+                document.body.classList.remove('dark');
+            }
+        })
     </script>
 
 
