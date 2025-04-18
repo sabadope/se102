@@ -1,5 +1,5 @@
 <?php
-include 'cha-db_connect.php';
+include 'banias-db_connect.php';
 
 // Prepare data
 $type = $conn->real_escape_string($_POST['type']);
@@ -17,7 +17,7 @@ $sql = "INSERT INTO logs (type, task_name, task_desc, start_time, end_time, stat
         VALUES ('$type', '$task_name', '$task_desc', '$start_time', '$end_time', '$status', '$weekly_goals', '$achievements', '$challenges', '$lessons')";
 
 if ($conn->query($sql)) {
-    header("Location: cha-index.php");
+    header("Location: banias-index.php");
 } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
 }

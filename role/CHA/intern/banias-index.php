@@ -1,5 +1,5 @@
 <?php
-include 'cha-db_connect.php';
+include 'banias-db_connect.php';
 
 // Fetch saved logs (both daily and weekly)
 $recent_logs = $conn->query("SELECT * FROM logs ORDER BY timestamp DESC LIMIT 5");
@@ -332,7 +332,7 @@ $recent_logs = $conn->query("SELECT * FROM logs ORDER BY timestamp DESC LIMIT 5"
             
             <!-- Daily Log Content -->
             <div id="daily" class="tab-content active">
-                <form action="cha-save_log.php" method="POST">
+                <form action="banias-save_log.php" method="POST">
                     <input type="hidden" name="type" value="Daily Log">
                     
                     <div class="form-group">
@@ -370,10 +370,10 @@ $recent_logs = $conn->query("SELECT * FROM logs ORDER BY timestamp DESC LIMIT 5"
                     </div>
                     
                     <div class="btn-group">
-                        <button type="submit" class="btn btn-primary" onclick="window.location.href='cha-index.php'">
+                        <button type="submit" class="btn btn-primary" onclick="window.location.href='banias-index.php'">
                             <i class="fas fa-save"></i> Save Daily Log
                         </button>
-                        <button type="button" class="btn btn-outline" onclick="window.location.href='cha-weekly_summary.php'">
+                        <button type="button" class="btn btn-outline" onclick="window.location.href='banias-weekly_summary.php'">
                             <i class="fas fa-chart-bar"></i> View Weekly Summary
                         </button>
                     </div>
@@ -382,7 +382,7 @@ $recent_logs = $conn->query("SELECT * FROM logs ORDER BY timestamp DESC LIMIT 5"
             
             <!-- Weekly Log Content -->
             <div id="weekly" class="tab-content">
-                <form action="cha-save_log.php" method="POST">
+                <form action="banias-save_log.php" method="POST">
                     <input type="hidden" name="type" value="Weekly Log">
                     
                     <div class="form-group">
@@ -460,7 +460,7 @@ $recent_logs = $conn->query("SELECT * FROM logs ORDER BY timestamp DESC LIMIT 5"
                 <?php endwhile; ?>
                 
                 <div class="btn-group">
-                    <button onclick="window.location.href='cha-export_logs.php'" class="btn btn-outline">
+                    <button onclick="window.location.href='banias-export_logs.php'" class="btn btn-outline">
                         <i class="fas fa-file-export"></i> Export All Logs
                     </button>
                 </div>
@@ -493,7 +493,7 @@ $recent_logs = $conn->query("SELECT * FROM logs ORDER BY timestamp DESC LIMIT 5"
         
         function deleteLog(id) {
             if (confirm("Are you sure you want to delete this log?\nThis action cannot be undone.")) {
-                window.location.href = `cha-delete_log.php?id=${id}`;
+                window.location.href = `banias-delete_log.php?id=${id}`;
             }
         }
     </script>

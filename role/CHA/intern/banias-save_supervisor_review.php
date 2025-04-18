@@ -1,5 +1,5 @@
 <?php
-include 'cha-db_connect.php'; 
+include 'banias-db_connect.php'; 
 
 // Get form data
 $feedback = $_POST['feedback'];

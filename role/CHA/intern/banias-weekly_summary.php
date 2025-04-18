@@ -1,5 +1,5 @@
 <?php
-include 'cha-db_connect.php';
+include 'banias-db_connect.php';
 
 // Initialize variables
 $monday = date('Y-m-d', strtotime('monday this week'));
@@ -515,7 +515,7 @@ if ($result === false) die('Execute failed: ' . htmlspecialchars($stmt->error));
 <body>
     <div class="container">
         <div class="header">
-            <a href="cha-index.php" class="back-btn">
+            <a href="banias-index.php" class="back-btn">
                 <i class="fas fa-arrow-left"></i>
                 Back to Logs
             </a>
@@ -586,7 +586,7 @@ if ($result === false) die('Execute failed: ' . htmlspecialchars($stmt->error));
                             <button onclick="window.print()" class="btn btn-outline">
                                 <i class="fas fa-print"></i> Print Summary
                             </button>
-                            <button onclick="window.location.href='cha-export_weekly.php?start_date=<?= $monday ?>&end_date=<?= $sunday ?>'" 
+                            <button onclick="window.location.href='banias-export_weekly.php?start_date=<?= $monday ?>&end_date=<?= $sunday ?>'" 
                                 class="btn btn-primary">
                                 <i class="fas fa-file-export"></i> Export Weekly Data
                             </button>
@@ -606,7 +606,7 @@ if ($result === false) die('Execute failed: ' . htmlspecialchars($stmt->error));
                         <h2 class="section-title">Supervisor Review</h2>
                         <p class="section-subtitle">Provide feedback on the intern's performance for this week.</p>
                         
-                        <form action="cha-save_supervisor_review.php" method="POST" class="review-form">
+                        <form action="banias-save_supervisor_review.php" method="POST" class="review-form">
                             <div class="form-group">
                                 <label class="form-label">Feedback</label>
                                 <textarea name="feedback" class="form-textarea" placeholder="Provide constructive feedback on the intern's performance..." required></textarea>
@@ -693,13 +693,13 @@ if ($result === false) die('Execute failed: ' . htmlspecialchars($stmt->error));
         
         function confirmDelete(logId) {
             if (confirm("Are you sure you want to delete this log entry?\nThis action cannot be undone.")) {
-                window.location.href = `cha-delete_log.php?id=${logId}&redirect=cha-weekly_summary.php`;
+                window.location.href = `banias-delete_log.php?id=${logId}&redirect=banias-weekly_summary.php`;
             }
         }
         
         function confirmDeleteReview(reviewId) {
             if (confirm("Are you sure you want to delete this supervisor review?\nThis action cannot be undone.")) {
-                window.location.href = `cha-delete_review.php?id=${reviewId}&redirect=cha-weekly_summary.php`;
+                window.location.href = `banias-delete_review.php?id=${reviewId}&redirect=banias-weekly_summary.php`;
             }
         }
     </script>
