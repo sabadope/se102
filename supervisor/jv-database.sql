@@ -31,7 +31,15 @@ CREATE TABLE `attendance` (
   CONSTRAINT `attendance_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-
+-- --------------------------------------------------------
 -- Insert default Supervisor account
+-- Password: supervisor1230
+-- --------------------------------------------------------
+
 INSERT INTO `users` (`username`, `email`, `password`, `role`) 
-VALUES ('Supervisor', 'supervisor@gmail.com', '$2y$10$YVGcFYmtzk9XUpJrKXxz7OAwfQ4Zd/JJk7c8el6Xuvrq8U1RB1D4C', 'supervisor');
+VALUES (
+  'Supervisor',
+  'supervisor@gmail.com',
+  '$2y$10$mEk5qZbiDn08pOMq91uq/OyMEU2dLEFX1aKmZt.tl1FUXwC5ZIgIS',
+  'supervisor'
+);

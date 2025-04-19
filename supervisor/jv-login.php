@@ -1,32 +1,37 @@
 <?php
 session_start();
-include 'jv-db.php';
+require_once 'jv-db.php'; // Make sure this connects your $pdo properly
+
+
+// Hardcoded Supervisor Credentials
+$supervisor_username = 'Supervisor';
+$supervisor_email = 'supervisor@gmail.com';
+$supervisor_password = 'supervisor1230';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+    $email = trim($_POST['email']);
+    $password = trim($_POST['password']);
 
-    // Check if the username exists
-    $sql = "SELECT * FROM users WHERE username = ?";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute([$username]);
-    $user = $stmt->fetch();
-
-    // Validate the password
-    if ($user && password_verify($password, $user['password'])) {
-        $_SESSION['user_id'] = $user['id'];
-        $_SESSION['role'] = $user['role']; // Save role in session
-        if ($user['role'] == 'supervisor') {
-            header("Location: jv-supervisor_dashboard.php"); // Redirect to supervisor dashboard
-        } else {
-            header("Location: jv-intern_dashboard.php"); // Redirect to intern dashboard
-        }
-        exit;
+    if (empty($email) || empty($password)) {
+        $error = "All fields are required!";
     } else {
-        
+        // Check if it matches Supervisor hardcoded credentials
+        if ($email === $supervisor_email && $password === $supervisor_password) {
+            $_SESSION['user_id'] = 1;
+            $_SESSION['username'] = $supervisor_username;
+            $_SESSION['email'] = $supervisor_email;
+            $_SESSION['role'] = 'supervisor';
+
+            header("Location: jv-supervisor_dashboard.php");
+            exit();
+        } else {
+            $error = "Invalid email or password!";
+        }
     }
 }
 ?>
+
+
 
 
 <!DOCTYPE html>
@@ -67,6 +72,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         /* Form Inputs */
         input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-sizing: border-box; /* Ensure padding doesn't affect width */
+        }
+
+        /* Form Inputs */
+        input[type="text"], input[type="email"] {
             width: 100%;
             padding: 15px;
             margin: 10px 0;
@@ -154,13 +171,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div class="login-container">
         <h2>User Authentication</h2>
         <form method="POST" action="jv-login.php">
-            <input type="text" name="username" placeholder="Username" required><br>
+            <input type="email" name="email" placeholder="Email" required><br>
             <input type="password" name="password" placeholder="Password" required><br>
             <input type="submit" value="Verified">
         </form>
 
-        <!-- Sign Up Button -->
-        <a href="jv-signup.php" class="signup-btn">Create Another</a>
     </div>
 </body>
 </html>

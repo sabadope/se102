@@ -59,7 +59,7 @@
                 if ($user['role'] === 'Student') {
                     header("Location: ../student/student-activities.php");
                 } elseif ($user['role'] === 'Client') {
-                    header("Location: ../client/client-dashboard.php");
+                    header("Location: ../client/client-activities.php");
                 }
                 exit();
             } else {

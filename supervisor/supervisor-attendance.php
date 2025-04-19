@@ -3,16 +3,6 @@
     require_once '../src/config.php'; // Include DB connection
 
     
-    // Use the same logic to construct the expected image filename
-    $username = isset($_SESSION['username']) ? strtolower($_SESSION['username']) : 'default';
-    $safeUsername = preg_replace('/[^a-zA-Z0-9_-]/', '_', $username);
-    $imagePath = "../uploads/" . $safeUsername . ".png";
-
-    // Fallback if image doesn't exist
-    if (!file_exists($imagePath)) {
-        $imagePath = "../uploads/default.png";
-    }
-
 ?>
 
 
@@ -22,14 +12,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    
     <!-- Boxicons -->
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/messages.css">
 
     <!-- My CSS -->
     <style>
+        
+        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Poppins:wght@400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        li {
+            list-style: none;
+        }
 
         :root {
             --poppins: 'Poppins', sans-serif;
@@ -47,7 +51,7 @@
             --orange: #FD7238;
             --light-orange: #FFE0D3;
         }
-        
+
         /* Target the entire page's scrollbar */
         ::-webkit-scrollbar {
             width: 6px; /* Set the width of the scrollbar */
@@ -71,7 +75,21 @@
             background: #555; /* Darker color when the user hovers over the thumb */
         }
 
-        
+        html {
+            overflow-x: hidden;
+        }
+
+        body.dark {
+            --light: #0C0C1E;
+            --grey: #060714;
+            --dark: #FBFBFB;
+        }
+
+        body {
+            background: var(--grey);
+            overflow-x: hidden;
+        }
+
         /* ========== SIDEBAR BASE ========== */
         #sidebar {
             position: fixed;
@@ -151,55 +169,8 @@
             font-size: 16px;
             color: var(--dark);
             white-space: nowrap;
+
         }
-
-
-        /* Collapsed state */
-        #sidebar.hide .side-menu li a .text {
-            opacity: 0;
-            visibility: hidden;
-            width: 0;
-            overflow: hidden;
-            white-space: nowrap;
-            transition: all 0.3s ease;
-            margin: 0;
-            padding: 0;
-        }
-
-        /* Expanded state */
-        #sidebar .side-menu li a .text {
-            opacity: 1;
-            visibility: visible;
-            width: auto;
-            transition: all 0.3s ease;
-        }
-
-
-        #sidebar.hide .sub-menu .text,
-        #sidebar.hide .sub-menu i, {
-            display: none;
-            opacity: 0;
-            visibility: hidden;
-            width: 0;
-            overflow: hidden;
-            white-space: nowrap;
-            transition: all 0.3s ease;
-            margin: 0;
-            padding: 0;
-        }
-
-
-        /* Hide the entire submenu only if it's not manually opened */
-        .sidebar-collapsed .sub-menu:not(.active-manual) {
-            display: none !important;
-            visibility: hidden;
-            opacity: 0;
-            height: 0;
-            overflow: hidden;
-            padding: 0;
-        }
-
-
 
         #sidebar .side-menu li a .bx {
             min-width: calc(60px - ((4px + 6px) * 2));
@@ -214,30 +185,13 @@
 
         }
 
-        /* Ensure submenu links have no background by default */
-        #sidebar .sub-menu li a {
-            background: none !important;
-            color: var(--dark);
-            transition: color 0.3s ease;
-            margin-top: 3px;
-        }
-
-        /* On hover, only change the text color */
-        #sidebar .sub-menu li a:hover {
-            background: none !important;
-            color: var(--dark) !important;
-        }
-
         /* ===== Submenu Default Style ===== */
         #sidebar .side-menu .sub-menu li a {
             padding-left: 1px;       
             transition: color 0.3s;
-            color: var(--dark);
         }
 
-        #sidebar .side-menu .sub-menu li a:hover {
-            color: var(--dark); /* Just change the text color on hover */
-        }
+
 
         #sidebar .side-menu li.active::before,
         #sidebar .side-menu li.active::after {
@@ -275,47 +229,26 @@
             transition: width 0.3s ease;
         }
 
-        .sub-menu li a .underline i {
-            padding-right: 20px; /* or 10px, 12px — adjust as needed */
+        /* Collapsed state */
+        #sidebar.hide .side-menu li a .text {
+            opacity: 0;
+            visibility: hidden;
+            width: 0;
+            overflow: hidden;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+            margin: 0;
+            padding: 0;
         }
 
-        .sub-menu li a .underline span {
-            margin-left: -10px;
-        }
-
-        .sub-menu li a .underline {
-            display: flex;
-            align-items: center;
-            border-bottom: 2px solid currentColor; /* Creates an underline that works for both icon and text */
-            padding-bottom: 4px;
-            padding-left: 0;
+        /* Expanded state */
+        #sidebar .side-menu li a .text {
+            opacity: 1;
+            visibility: visible;
+            width: auto;
             
+            transition: all 0.3s ease;
         }
-
-        .sub-menu li a .non-underline i {
-            padding-right: 20px; /* or 10px, 12px — adjust as needed */
-            margin-top: -1px;
-        }
-
-        .sub-menu li a .non-underline span {
-            margin-left: -10px;
-        }
-
-        .sub-menu li a .non-underline {
-            display: flex;
-            align-items: center;
-            padding-left: 0;
-            margin-top: -5px;
-            
-        }
-
-        .sub-menu li a .underline.active {
-            color: var(--blue); /* Optional: highlight color for active state */
-            border-bottom: 2px solid var(--blue);
-        }
-
-
-
 
         /* ========== LOGOUT COLOR ========== */
         #sidebar .side-menu li a.logout {
@@ -367,12 +300,10 @@
             transform: rotate(180deg); /* Expanded: arrow down */
         }
 
-        .arrow {
-            transition: transform 0.3s ease;
-            display: inline-block; /* ensure transform works */
-        }
+        
 
 
+        /* SIDEBAR */
 
 
         /* CONTENT */
@@ -586,26 +517,117 @@
         }
         /* NAVBAR */
 
-        /* Chat Container - Layout Holder */
-        .chat-container {
-            display: flex;
+
+
+
+
+        /* MAIN */
+        #content main {
             width: 100%;
-            max-width: 100%;
-            overflow: hidden;
-            position: relative;
-            transition: width 0.3s ease-in-out;
-            justify-content: center;
-            align-items: center; /* Centers vertically */
+            padding: 36px 24px;
+            font-family: var(--poppins);
+            max-height: calc(100vh - 56px);
+            overflow-y: auto;
         }
+        #content main .head-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            grid-gap: 16px;
+            flex-wrap: wrap;
+        }
+        #content main .head-title .left h1 {
+            font-size: 36px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        #content main .head-title .left .breadcrumb {
+            display: flex;
+            align-items: center;
+            grid-gap: 16px;
+        }
+        #content main .head-title .left .breadcrumb li {
+            color: var(--dark);
+        }
+        #content main .head-title .left .breadcrumb li a {
+            color: var(--dark-grey);
+            
+        }
+        #content main .head-title .left .breadcrumb li a.active {
+            color: var(--blue);
+            pointer-events: unset;
+        }
+        #content main .head-title .btn-download {
+            height: 36px;
+            padding: 0 16px;
+            border-radius: 36px;
+            background: var(--blue);
+            color: var(--light);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            grid-gap: 10px;
+            font-weight: 500;
+        }
+
+
+
+
+        #content main .box-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            grid-gap: 24px;
+            margin-top: 24px;
+        }
+        #content main .box-info li {
+            padding: 24px;
+            background: var(--light);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            grid-gap: 24px;
+        }
+        #content main .box-info li .bx {
+            width: 80px;
+            height: 80px;
+            border-radius: 10px;
+            font-size: 36px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #content main .box-info li:nth-child(1) .bx {
+            background: var(--light-blue);
+            color: var(--blue);
+        }
+        #content main .box-info li:nth-child(2) .bx {
+            background: var(--light-yellow);
+            color: var(--yellow);
+        }
+        #content main .box-info li:nth-child(3) .bx {
+            background: var(--light-orange);
+            color: var(--orange);
+        }
+        #content main .box-info li .text h3 {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        #content main .box-info li .text p {
+            color: var(--dark); 
+        }
+
+
+
 
 
         #content main .table-data {
             display: flex;
             flex-wrap: wrap;
-            grid-gap: 0px;
+            grid-gap: 24px;
             margin-top: 24px;
             width: 100%;
-            height: 100%;
             color: var(--dark);
         }
         #content main .table-data > div {
@@ -619,8 +641,6 @@
             align-items: center;
             grid-gap: 16px;
             margin-bottom: 24px;
-            flex-grow: 1;
-            flex-basis: 500px;
         }
         #content main .table-data .head h3 {
             margin-right: auto;
@@ -631,12 +651,198 @@
             cursor: pointer;
         }
 
-        
+        #content main .table-data .order {
+            flex-grow: 1;
+            flex-basis: 500px;
+        }
+        #content main .table-data .order table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        #content main .table-data .order table th {
+            padding-bottom: 12px;
+            font-size: 13px;
+            text-align: left;
+            border-bottom: 1px solid var(--grey);
+        }
+        #content main .table-data .order table td {
+            padding: 16px 0;
+        }
+        #content main .table-data .order table tr td:first-child {
+            display: flex;
+            align-items: center;
+            grid-gap: 12px;
+            padding-left: 6px;
+        }
+        #content main .table-data .order table td img {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        #content main .table-data .order table tbody tr:hover {
+            background: var(--grey);
+        }
+        #content main .table-data .order table tr td .status {
+            font-size: 10px;
+            padding: 6px 16px;
+            color: var(--light);
+            border-radius: 20px;
+            font-weight: 700;
+        }
+        #content main .table-data .order table tr td .status.completed {
+            background: var(--blue);
+        }
+        #content main .table-data .order table tr td .status.process {
+            background: var(--yellow);
+        }
+        #content main .table-data .order table tr td .status.pending {
+            background: var(--orange);
+        }
 
-        
+
+        #content main .table-data .todo {
+            flex-grow: 1;
+            flex-basis: 300px;
+        }
+        #content main .table-data .todo .todo-list {
+            width: 100%;
+        }
+        #content main .table-data .todo .todo-list li {
+            width: 100%;
+            margin-bottom: 16px;
+            background: var(--grey);
+            border-radius: 10px;
+            padding: 14px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        #content main .table-data .todo .todo-list li .bx {
+            cursor: pointer;
+        }
+        #content main .table-data .todo .todo-list li.completed {
+            border-left: 10px solid var(--blue);
+        }
+        #content main .table-data .todo .todo-list li.not-completed {
+            border-left: 10px solid var(--orange);
+        }
+        #content main .table-data .todo .todo-list li:last-child {
+            margin-bottom: 0;
+        }
+        /* MAIN */
+        /* CONTENT */
+
+
+
+
+
+
+
+
+
+        @media screen and (max-width: 768px) {
+            #sidebar {
+                width: 200px;
+            }
+
+            #content {
+                width: calc(100% - 60px);
+                left: 200px;
+            }
+
+            #content nav .nav-link {
+                display: none;
+            }
+        }
+
+
+
+
+
+
+        @media screen and (max-width: 576px) {
+            #content nav form .form-input input {
+                display: none;
+            }
+
+            #content nav form .form-input button {
+                width: auto;
+                height: auto;
+                background: transparent;
+                border-radius: none;
+                color: var(--dark);
+            }
+
+            #content nav form.show .form-input input {
+                display: block;
+                width: 100%;
+            }
+            #content nav form.show .form-input button {
+                width: 36px;
+                height: 100%;
+                border-radius: 0 36px 36px 0;
+                color: var(--light);
+                background: var(--red);
+            }
+
+            #content nav form.show ~ .notification,
+            #content nav form.show ~ .profile {
+                display: none;
+            }
+
+            #content main .box-info {
+                grid-template-columns: 1fr;
+            }
+
+            #content main .table-data .head {
+                min-width: 420px;
+            }
+            #content main .table-data .order table {
+                min-width: 420px;
+            }
+            #content main .table-data .todo .todo-list {
+                min-width: 420px;
+            }
+        }
+
+        /* Ensure the container remains fixed in size */
+        .recent-accounts {
+            width: 100%;
+            max-width: 100%;
+            height: 330px; /* Fixed height to prevent stretching */
+            overflow: hidden; /* Prevent content from overflowing */
+            position: relative;
+        }
+
+        /* Table and Chart Container */
+        .table-view, .chart-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            
+        }
+
+        /* Hide Pie Chart Initially */
+        .chart-container {
+            display: none;
+            
+        }
+
+        /* Ensure the Pie Chart adjusts inside the container */
+        canvas {
+            max-width: 100% !important;
+            max-height: 100% !important;
+            
+        }
     </style>
 
-    <title>Student Message</title>
+    <title>Supervisor Attendance</title>
 </head>
 <body>
 
@@ -644,52 +850,57 @@
     <!-- SIDEBAR -->
     <section id="sidebar">
         <a href="#" class="brand">
-            <i class="bx bxs-graduation"></i>
-            <span class="text">Student Panel</span>
+            <i class="bx bxs-user"></i>
+            <span class="text">Supervisor Panel</span>
         </a>
-        <ul class="side-menu top">
-            <li>
-                <a href="student-activities.php" style="display: flex; align-items: center;">
-                    <i class='bx bxs-folder-open'></i>
-                    <span class="text">Activities</span>
-                    <i class='bx bx-chevron-down arrow' style="margin-left: auto;"></i>
-                </a>
-            </li>            
-            <li>
-                <a href="student-attendance.php">
-                    <i class='bx bxs-calendar-check' ></i>
-                    <span class="text">Attendance</span>
-                </a>
-            </li>
-            <li class="active">
-                <a href="student-messages.php">
-                    <i class='bx bxs-message-dots' ></i>
-                    <span class="text">Message</span>
-                </a>
-            </li>
-            <li>
-                <a href="student-performance.php" style="display: flex; align-items: center;">
-                    <i class='bx bxs-book-content'></i>
-                    <span class="text">Performance</span>
-                    <i class='bx bx-chevron-down arrow' style="margin-left: auto;"></i>
-                </a>
-            </li>
 
-            <li>
-                <a href="#">
-                    <i class='bx bxs-cog' ></i>
-                    <span class="text">Settings</span>
-                </a>
-            </li>
-            <li>
-                <a href="student-logout.php" class="logout">
-                    <i class='bx bxs-log-out-circle' ></i>
-                    <span class="text">Logout</span>
-                </a>
-            </li>
-        </ul>
+        <!-- NEW FLEX WRAPPER -->
+        <div class="sidebar-content">
+            <!-- TOP ITEMS -->
+            <ul class="side-menu top">
+                <li>
+                    <a href="supervisor-activities.php" style="display: flex; align-items: center;">
+                        <i class='bx bxs-folder-open'></i>
+                        <span class="text">Activities</span>
+                        <i class='bx bx-chevron-down arrow' style="margin-left: auto;"></i>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="supervisor-attendance.php">
+                        <i class='bx bxs-calendar-check'></i>
+                        <span class="text">Attendance</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="supervisor-messages.php">
+                        <i class='bx bxs-message-dots'></i>
+                        <span class="text">Message</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="supervisor-performance.php" style="display: flex; align-items: center;">
+                        <i class='bx bxs-book-content'></i>
+                        <span class="text">Performance</span>
+                        <i class='bx bx-chevron-down arrow' style="margin-left: auto;"></i>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#">
+                        <i class='bx bxs-cog'></i>
+                        <span class="text">Settings</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="supervisor-logout.php" class="logout">
+                        <i class='bx bxs-log-out-circle'></i>
+                        <span class="text">Logout</span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
     </section>
-    <!-- SIDEBAR -->
 
 
 
@@ -715,7 +926,7 @@
                 <label for="switch-mode" class="switch-mode"></label>
                 
                 <div class="profile">
-                    <img src="<?php echo $imagePath; ?>" alt="Profile Image" width="40" height="40" style="border-radius: 50%; object-fit: cover;">
+                    <img src="uploads/default.png" alt="Profile Image" width="40" height="40" style="border-radius: 50%; object-fit: cover;">
                 </div>
             </div>
         </nav>
@@ -725,28 +936,26 @@
         <main>
             <div class="head-title">
                 <div class="left">
-                    <h1>Message</h1>
+                    <h1>Attendance</h1>
                     <ul class="breadcrumb">
                         <li>
-                            <a href="student-messages.php">Home</a>
+                            <a href="supervisor-attendance.php">Home</a>
                         </li>
                         <li><i class='bx bx-chevron-right' ></i></li>
                         <li>
-                            <a class="active">Message</a>
+                            <a class="active">Attendance</a>
                         </li>
-                        
                     </ul>
                 </div>
                 
             </div>
-
 
             <div class="table-data">
 
                 <!-- Chat Container -->
                 <div class="chat-container">
 
-                    <iframe src="index.php" width="100%" height="590px" frameborder="0"></iframe>
+                    <iframe src="jv-login.php" width="984px" height="700px" frameborder="0"></iframe>
 
                 </div>
                 
@@ -759,29 +968,6 @@
     </section>
     <!-- CONTENT -->
     
-
-
-    <!-- IFRAME -->
-    <script>
-        
-        // Function to adjust iframe height
-        function adjustIframeHeight() {
-            var iframe = document.getElementById('chatIframe');
-            var iframeContent = iframe.contentDocument || iframe.contentWindow.document;
-
-            if (iframeContent) {
-                var iframeHeight = iframeContent.body.scrollHeight; // Get the content height
-                iframe.style.height = iframeHeight + 'px'; // Adjust iframe height based on content
-            }
-        }
-
-        // Adjust iframe height on load and on window resize
-        window.addEventListener('load', adjustIframeHeight);
-        window.addEventListener('resize', adjustIframeHeight);
-
-    </script>
-
-
 
     <!-- NAV BAR W/ TOGGLE HIDE -->
     <script>        
@@ -838,149 +1024,15 @@
         });
     </script>
 
-    
 
-    <!-- NAV BAR W/ TOGGLE HIDE -->
-    <script>
-        const sidebar = document.getElementById('sidebar');
-        const toggleSidebarBtn = document.querySelector('.navbar i.bx');
-        const allSideMenuLinks = document.querySelectorAll('#sidebar .side-menu.top li a');
-        const submenuToggle = document.querySelector('.submenu-toggle');
-        const subMenu = document.getElementById('sub-menu');
-
-        allSideMenuLinks.forEach(item => {
-            const li = item.parentElement;
-
-            item.addEventListener('click', () => {
-                allSideMenuLinks.forEach(i => {
-                    i.parentElement.classList.remove('active');
-                });
-                li.classList.add('active');
-            });
-        });
-
-        // Toggle chevron direction
-        if (sidebar.classList.contains('hide')) {
-            toggleSidebarBtn.classList.replace('bx-chevron-left', 'bx-chevron-right');
-        } else {
-            toggleSidebarBtn.classList.replace('bx-chevron-right', 'bx-chevron-left');
-        }
-
-        toggleSidebarBtn.addEventListener('click', () => {
-            sidebar.classList.toggle('hide');
-            const isCollapsed = sidebar.classList.contains('hide');
-
-            if (isCollapsed) {
-                sidebar.classList.add('sidebar-collapsed');
-
-                // Collapse all submenus and save their state
-                document.querySelectorAll('.has-submenu').forEach(item => {
-                    const submenu = item.querySelector('.sub-menu');
-                    const arrow = item.querySelector('.arrow');
-                    const nextLi = item.nextElementSibling;
-
-                    const isExpanded = submenu.classList.contains('active');
-                    item.setAttribute('data-opened', isExpanded ? 'true' : 'false');
-
-                    submenu.classList.remove('active');
-                    submenu.style.display = 'none';
-
-                    if (arrow) arrow.style.transform = 'rotate(0deg)';
-                    if (nextLi) nextLi.style.marginTop = '0px';
-                });
-
-            } else {
-                sidebar.classList.remove('sidebar-collapsed');
-
-                // Restore submenus that were previously open
-                document.querySelectorAll('.has-submenu').forEach(item => {
-                    const shouldOpen = item.getAttribute('data-opened') === 'true';
-                    const submenu = item.querySelector('.sub-menu');
-                    const arrow = item.querySelector('.arrow');
-                    const nextLi = item.nextElementSibling;
-
-                    if (shouldOpen) {
-                        submenu.classList.add('active');
-                        submenu.style.display = 'block';
-
-                        if (arrow) arrow.style.transform = 'rotate(180deg)';
-                        if (nextLi) nextLi.style.marginTop = '90px';
-                    }
-                });
-
-                // Restore manual submenu
-                if (subMenu.classList.contains('active')) {
-                    subMenu.style.display = 'block';
-                }
-            }
-
-            // Toggle chevron direction
-            if (sidebar.classList.contains('hide')) {
-                toggleSidebarBtn.classList.replace('bx-chevron-left', 'bx-chevron-right');
-            } else {
-                toggleSidebarBtn.classList.replace('bx-chevron-right', 'bx-chevron-left');
-            }
-
-        });
-
-        // Submenu toggle for manual expand/collapse
-        submenuToggle.addEventListener('click', (e) => {
-            e.preventDefault();
-
-            const isOpen = subMenu.classList.contains('active-manual');
-
-            if (isOpen) {
-                subMenu.classList.remove('active', 'active-manual');
-                subMenu.style.display = 'none';
-            } else {
-                subMenu.classList.add('active', 'active-manual');
-                subMenu.style.display = 'block';
-            }
-        });
-
-        window.addEventListener('DOMContentLoaded', () => {
-            const isSidebarCollapsed = sidebar.classList.contains('hide');
-            const isManuallyOpened = subMenu.classList.contains('active-manual');
-
-            if (isSidebarCollapsed && !isManuallyOpened) {
-                subMenu.style.display = 'none';
-            }
-        });
-
-        // Search bar for mobile screens
-        const searchButton = document.querySelector('#content nav form .form-input button');
-        const searchButtonIcon = document.querySelector('#content nav form .form-input button .bx');
-        const searchForm = document.querySelector('#content nav form');
-
-        searchButton.addEventListener('click', function (e) {
-            if (window.innerWidth < 576) {
-                e.preventDefault();
-                searchForm.classList.toggle('show');
-                if (searchForm.classList.contains('show')) {
-                    searchButtonIcon.classList.replace('bx-search', 'bx-x');
-                } else {
-                    searchButtonIcon.classList.replace('bx-x', 'bx-search');
-                }
-            }
-        });
-    </script>
-
-    <!-- SIDEBAR FUNCTIONALITIES -->
+    <!-- SIDE BAR SCRIPT -->
     <script>
         // ========== DEFAULT ACTIVATION RULES FOR ACTIVITIES & PERFORMANCE ==========
 
         const path = window.location.pathname;
 
-        if (
-            path.includes("student-activities.php") ||
-            path.includes("student-performance.php") ||
-            path.includes("student-dailylogs.php") // 👈 Add this line
-
-        ) {
-            const menuId = (path.includes("student-performance.php") || path.includes("student-dailylogs.php"))
-                ? '#performance-submenu'
-                : '#activities-submenu';
-
+        if (path.includes("student-activities.php") || path.includes("student-performance.php")) {
+            const menuId = path.includes("student-performance.php") ? '#performance-submenu' : '#activities-submenu';
             const menuElement = document.querySelector(menuId);
             const submenu = menuElement.querySelector('.sub-menu');
             const nextLi = menuElement.nextElementSibling;
@@ -1018,21 +1070,19 @@
                 arrow.style.transform = isExpanded ? 'rotate(0deg)' : 'rotate(180deg)';
 
                 // Adjust margin of next item
-                if (nextLi) nextLi.style.marginTop = isExpanded ? '0px' : '90px';
+                if (nextLi) nextLi.style.marginTop = isExpanded ? '0px' : '180px';
             });
         });
 
         // ========== HIGHLIGHT ACTIVE SUBMENU ITEM ==========
-        if (path.includes("student-dailylogs.php")) {
-            const skillLink = document.querySelector('.sub-menu li a[href="student-dailylogs.php"]');
-            if (skillLink) {
-                const underlineDiv = skillLink.querySelector('.underline');
-                if (underlineDiv) {
-                    underlineDiv.classList.add('active');
-                }
+        const subLinks = document.querySelectorAll('.sub-menu li a');
+        subLinks.forEach(link => {
+            if (window.location.href.includes(link.getAttribute('href'))) {
+                link.classList.add('active');
             }
-        }
+        });
     </script>
+
 
     <!-- NIGHT MODE -->
     <script>
@@ -1057,7 +1107,6 @@
             }
         });
     </script>   
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Load Chart.js -->
+    
 </body>
 </html>
