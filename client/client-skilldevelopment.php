@@ -426,7 +426,6 @@
             top: 0;
             left: 0;
             z-index: 1000;
-
         }
         #content nav::before {
             content: '';
@@ -438,7 +437,6 @@
             border-radius: 50%;
             box-shadow: -20px -20px 0 var(--light);
         }
-
         #content nav a {
             color: var(--dark);
         }
@@ -462,7 +460,6 @@
             display: flex;
             align-items: center;
             height: 36px;
-
         }
         #content nav form .form-input input {
             flex-grow: 1;
@@ -474,7 +471,6 @@
             outline: none;
             width: 100%;
             color: var(--dark);
-
         }
         #content nav form .form-input button {
             width: 36px;
@@ -756,13 +752,12 @@
             margin-top: 24px;
             width: 100%;
             color: var(--dark);
-
         }
         #content main .table-data > div {
             border-radius: 20px;
             background: var(--light);
             padding: 24px;
-            overflow-x: hidden;
+            overflow-x: auto;
         }
         #content main .table-data .head {
             display: flex;
@@ -970,7 +965,7 @@
         }
     </style>
 
-    <title>Student Feedbacks</title>
+    <title>client Performance</title>
 </head>
 <body>
 
@@ -978,61 +973,77 @@
     <!-- SIDEBAR -->
     <section id="sidebar">
         <a href="#" class="brand">
-            <i class="bx bxs-graduation"></i>
-            <span class="text">Student Panel</span>
+            <i class="bx bxs-user"></i>
+            <span class="text">Client Panel</span>
         </a>
 
         <!-- NEW FLEX WRAPPER -->
         <div class="sidebar-content">
             <!-- TOP ITEMS -->
             <ul class="side-menu top">
-                <!-- Activities with Submenu -->
-                <li id="performance-submenu" class="has-submenu">
-                    <a href="student-activities.php">
+                <li>
+                    <a href="client-activities.php" style="display: flex; align-items: center;">
                         <i class='bx bxs-folder-open'></i>
                         <span class="text">Activities</span>
-                        <i class='bx bx-chevron-down arrow'></i>
+                        <i class='bx bx-chevron-down arrow' style="margin-left: auto;"></i>
                     </a>
-                    <ul id="sub-menu" class="sub-menu active">
-                        <li>
-                            <a href="student-dailylogs.php">
-                                <div class="non-underline">
-                                    <i class='bx bx-calendar-check'></i>
-                                    <span>Daily Logs</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="student-feedbacks.php">
-                                <div class="underline">
-                                    <i class='bx bx-comment-detail'></i>
-                                    <span>Feedbacks</span>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                </li>        
+                </li>
                 <li>
-                    <a href="student-attendance.php">
+                    <a href="client-attendance.php">
                         <i class='bx bxs-calendar-check'></i>
                         <span class="text">Attendance</span>
                     </a>
                 </li>
                 <li>
-                    <a href="student-messages.php">
+                    <a href="client-messages.php">
                         <i class='bx bxs-message-dots'></i>
                         <span class="text">Message</span>
                     </a>
                 </li>
 
-                <li>
-                    <a href="student-performance.php" style="display: flex; align-items: center;">
+                <!-- Performance with Submenu -->
+                <li id="performance-submenu" class="has-submenu">
+                    <a href="client-performance.php">
                         <i class='bx bxs-book-content'></i>
                         <span class="text">Performance</span>
-                        <i class='bx bx-chevron-down arrow' style="margin-left: auto;"></i>
+                        <i class='bx bx-chevron-down arrow'></i>
                     </a>
+                    <ul id="sub-menu" class="sub-menu active">
+                        <li>
+                            <a href="client-skilldevelopment.php">
+                                <div class="underline">
+                                    <i class='bx bx-check-shield'></i>
+                                    <span>Skill Development</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="client-taskcompletion.php">
+                                <div class="non-underline">
+                                    <i class='bx bx-task'></i>
+                                    <span>Task Completion</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="client-behavioralconduct.php">
+                                <div class="non-underline">
+                                    <i class='bx bx-check-circle'></i>
+                                    <span>Behavioral Conduct</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="client-achievementranking.php">
+                                <div class="non-underline">
+                                    <i class='bx bx-check-square'></i>
+                                    <span>Achievement Ranking</span>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
-
+                
                 <li>
                     <a href="#">
                         <i class='bx bxs-cog'></i>
@@ -1040,7 +1051,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="student-logout.php" class="logout">
+                    <a href="client-logout.php" class="logout">
                         <i class='bx bxs-log-out-circle'></i>
                         <span class="text">Logout</span>
                     </a>
@@ -1086,14 +1097,14 @@
         <main>
             <div class="head-title">
                 <div class="left">
-                    <h1>Activities</h1>
+                    <h1>Performance</h1>
                     <ul class="breadcrumb">
                         <li>
-                            <a href="student-activities.php">Home</a>
+                            <a href="client-performance.php">Home</a>
                         </li>
                         <li><i class='bx bx-chevron-right' ></i></li>
                         <li>
-                            <a class="active">Feedbacks</a>
+                            <a class="active">Skill Development</a>
                         </li>
                     </ul>
                 </div>
@@ -1102,12 +1113,7 @@
 
             <div class="table-data">
 
-                <!-- Chat Container -->
-                <div class="chat-container">
-
-                    <iframe src="cha-login.php" width="980px" height="1300px" frameborder="0" style="overflow-x: hidden;"></iframe>
-
-                </div>
+                <!-- YOUR IFRAMES HERE -->
                 
             </div>
         </main>
@@ -1180,7 +1186,7 @@
                         submenu.style.display = 'block';
 
                         if (arrow) arrow.style.transform = 'rotate(180deg)';
-                        if (nextLi) nextLi.style.marginTop = '90px';
+                        if (nextLi) nextLi.style.marginTop = '185px';
                     }
                 });
 
@@ -1239,7 +1245,8 @@
                 }
             }
         });
-    </script>    
+    </script>
+
 
     <!-- SIDEBAR FUNCTIONALITIES -->
     <script>
@@ -1248,12 +1255,12 @@
         const path = window.location.pathname;
 
         if (
-            path.includes("student-activities.php") ||
-            path.includes("student-performance.php") ||
-            path.includes("student-feedbacks.php") // 👈 Add this line
+            path.includes("client-activities.php") ||
+            path.includes("client-performance.php") ||
+            path.includes("client-skilldevelopment.php") // 👈 Add this line
 
         ) {
-            const menuId = (path.includes("student-performance.php") || path.includes("student-feedbacks.php"))
+            const menuId = (path.includes("client-performance.php") || path.includes("client-skilldevelopment.php"))
                 ? '#performance-submenu'
                 : '#activities-submenu';
 
@@ -1269,7 +1276,7 @@
             submenu.style.display = 'block';
 
             // Push down the next item to avoid overlap
-            if (nextLi) nextLi.style.marginTop = '90px';
+            if (nextLi) nextLi.style.marginTop = '185px';
         }
 
         // ========== SUBMENU TOGGLE FUNCTIONALITY ==========
@@ -1294,13 +1301,13 @@
                 arrow.style.transform = isExpanded ? 'rotate(0deg)' : 'rotate(180deg)';
 
                 // Adjust margin of next item
-                if (nextLi) nextLi.style.marginTop = isExpanded ? '0px' : '90px';
+                if (nextLi) nextLi.style.marginTop = isExpanded ? '0px' : '185px';
             });
         });
 
         // ========== HIGHLIGHT ACTIVE SUBMENU ITEM ==========
-        if (path.includes("student-feedbacks.php")) {
-            const skillLink = document.querySelector('.sub-menu li a[href="student-feedbacks.php"]');
+        if (path.includes("client-skilldevelopment.php")) {
+            const skillLink = document.querySelector('.sub-menu li a[href="client-skilldevelopment.php"]');
             if (skillLink) {
                 const underlineDiv = skillLink.querySelector('.underline');
                 if (underlineDiv) {
@@ -1309,7 +1316,6 @@
             }
         }
     </script>
-
 
     <!-- NIGHT MODE -->
     <script>
@@ -1333,7 +1339,7 @@
                 localStorage.setItem('dark-mode', 'false'); // store preference
             }
         });
-    </script>   
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Load Chart.js -->
 </body>

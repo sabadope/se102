@@ -1,7 +1,8 @@
 <?php
-    
+
     require_once '../src/config.php'; // Include DB connection
 
+    
     // Use the same logic to construct the expected image filename
     $username = isset($_SESSION['username']) ? strtolower($_SESSION['username']) : 'default';
     $safeUsername = preg_replace('/[^a-zA-Z0-9_-]/', '_', $username);
@@ -11,7 +12,9 @@
     if (!file_exists($imagePath)) {
         $imagePath = "../uploads/default.png";
     }
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -19,28 +22,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    
     <!-- Boxicons -->
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/messages.css">
 
     <!-- My CSS -->
     <style>
-        
-        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Poppins:wght@400;500;600;700&display=swap');
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        a {
-            text-decoration: none;
-        }
-
-        li {
-            list-style: none;
-        }
 
         :root {
             --poppins: 'Poppins', sans-serif;
@@ -58,23 +47,7 @@
             --orange: #FD7238;
             --light-orange: #FFE0D3;
         }
-
-        html {
-            overflow-x: hidden;
-        }
-
-        body.dark {
-            --light: #0C0C1E;
-            --grey: #060714;
-            --dark: #FBFBFB;
-        }
-
-        body {
-            background: var(--grey);
-            overflow-x: hidden;
-        }
-
-
+        
         /* Target the entire page's scrollbar */
         ::-webkit-scrollbar {
             width: 6px; /* Set the width of the scrollbar */
@@ -98,6 +71,7 @@
             background: #555; /* Darker color when the user hovers over the thumb */
         }
 
+        
         /* ========== SIDEBAR BASE ========== */
         #sidebar {
             position: fixed;
@@ -612,145 +586,26 @@
         }
         /* NAVBAR */
 
-
-
-
-
-        /* MAIN */
-        #content main {
+        /* Chat Container - Layout Holder */
+        .chat-container {
+            display: flex;
             width: 100%;
-            padding: 36px 24px;
-            font-family: var(--poppins);
-            max-height: calc(100vh - 56px);
-            overflow-y: auto;
-        }
-        #content main .head-title {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            grid-gap: 16px;
-            flex-wrap: wrap;
-        }
-        #content main .head-title .left h1 {
-            font-size: 36px;
-            font-weight: 600;
-            margin-bottom: 10px;
-            color: var(--dark);
-        }
-        #content main .head-title .left .breadcrumb {
-            display: flex;
-            align-items: center;
-            grid-gap: 16px;
-        }
-        #content main .head-title .left .breadcrumb li {
-            color: var(--dark);
-        }
-        #content main .head-title .left .breadcrumb li a {
-            color: var(--dark-grey);
-            
-        }
-        #content main .head-title .left .breadcrumb li a.active {
-            color: var(--blue);
-            pointer-events: unset;
-        }
-        #content main .head-title .btn-download {
-            height: 36px;
-            padding: 0 16px;
-            border-radius: 36px;
-            background: var(--blue);
-            color: var(--light);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            grid-gap: 10px;
-            font-weight: 500;
-        }
-
-
-
-
-        #content main .box-info {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            grid-gap: 24px;
-            margin-top: 24px;
-        }
-
-        #content main .box-info li {
-            padding: 24px;
-            background: var(--light);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            grid-gap: 24px;
+            max-width: 100%;
+            overflow: hidden;
             position: relative;
-        }
-
-        #content main .box-info li:hover {
-            background: var(--blue);     /* Hover background color */
-            outline: 2px solid var(--dark); /* Solid outline outside the box */
-            border-radius: 20px;         /* Border radius for rounded corners */
-            cursor: pointer;            /* Pointer cursor on hover */
-            
-            /* Prevent any movement */
-            box-shadow: none;            /* No shadow to prevent layout change */
-            transform: none;             /* Ensure no transformation or movement */
-            
-            /* Change text color on hover */
-            color: var(--light);         /* Change text color to light when hovering */
-        }
-
-        #content main .box-info li .bx {
-            width: 80px;
-            height: 80px;
-            border-radius: 10px;
-            font-size: 36px;
-            display: flex;
+            transition: width 0.3s ease-in-out;
             justify-content: center;
-            align-items: center;
+            align-items: center; /* Centers vertically */
         }
-
-        #content main .box-info li:nth-child(1) .bx {
-            background: var(--light-blue);
-            color: var(--blue);
-        }
-        #content main .box-info li:nth-child(2) .bx {
-            background: var(--light-blue);
-            color: var(--blue);
-        }
-        
-        /* Text styles */
-        #content main .box-info li .text h3 {
-            font-size: 24px;
-            font-weight: 600;
-            color: var(--dark);  /* Default color */
-            
-        }
-
-        #content main .box-info li .text p {
-            color: var(--dark);  /* Default color */
-            
-        }
-
-        /* Hover effect on text */
-        #content main .box-info li:hover .text h3 {
-            color: var(--light);   /* Text color on hover */
-        }
-
-        #content main .box-info li:hover .text p {
-            color: var(--light);   /* Text color on hover */
-        }
-
-
-
 
 
         #content main .table-data {
             display: flex;
             flex-wrap: wrap;
-            grid-gap: 24px;
+            grid-gap: 0px;
             margin-top: 24px;
             width: 100%;
+            height: 100%;
             color: var(--dark);
         }
         #content main .table-data > div {
@@ -764,6 +619,8 @@
             align-items: center;
             grid-gap: 16px;
             margin-bottom: 24px;
+            flex-grow: 1;
+            flex-basis: 500px;
         }
         #content main .table-data .head h3 {
             margin-right: auto;
@@ -774,198 +631,12 @@
             cursor: pointer;
         }
 
-        #content main .table-data .order {
-            flex-grow: 1;
-            flex-basis: 500px;
-        }
-        #content main .table-data .order table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        #content main .table-data .order table th {
-            padding-bottom: 12px;
-            font-size: 13px;
-            text-align: left;
-            border-bottom: 1px solid var(--grey);
-        }
-        #content main .table-data .order table td {
-            padding: 16px 0;
-        }
-        #content main .table-data .order table tr td:first-child {
-            display: flex;
-            align-items: center;
-            grid-gap: 12px;
-            padding-left: 6px;
-        }
-        #content main .table-data .order table td img {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-        #content main .table-data .order table tbody tr:hover {
-            background: var(--grey);
-        }
-        #content main .table-data .order table tr td .status {
-            font-size: 10px;
-            padding: 6px 16px;
-            color: var(--light);
-            border-radius: 20px;
-            font-weight: 700;
-        }
-        #content main .table-data .order table tr td .status.completed {
-            background: var(--blue);
-        }
-        #content main .table-data .order table tr td .status.process {
-            background: var(--yellow);
-        }
-        #content main .table-data .order table tr td .status.pending {
-            background: var(--orange);
-        }
+        
 
-
-        #content main .table-data .todo {
-            flex-grow: 1;
-            flex-basis: 300px;
-        }
-        #content main .table-data .todo .todo-list {
-            width: 100%;
-        }
-        #content main .table-data .todo .todo-list li {
-            width: 100%;
-            margin-bottom: 16px;
-            background: var(--grey);
-            border-radius: 10px;
-            padding: 14px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        #content main .table-data .todo .todo-list li .bx {
-            cursor: pointer;
-        }
-        #content main .table-data .todo .todo-list li.completed {
-            border-left: 10px solid var(--blue);
-        }
-        #content main .table-data .todo .todo-list li.not-completed {
-            border-left: 10px solid var(--orange);
-        }
-        #content main .table-data .todo .todo-list li:last-child {
-            margin-bottom: 0;
-        }
-        /* MAIN */
-        /* CONTENT */
-
-
-
-
-
-
-
-
-
-        @media screen and (max-width: 768px) {
-            #sidebar {
-                width: 200px;
-            }
-
-            #content {
-                width: calc(100% - 60px);
-                left: 200px;
-            }
-
-            #content nav .nav-link {
-                display: none;
-            }
-        }
-
-
-
-
-
-
-        @media screen and (max-width: 576px) {
-            #content nav form .form-input input {
-                display: none;
-            }
-
-            #content nav form .form-input button {
-                width: auto;
-                height: auto;
-                background: transparent;
-                border-radius: none;
-                color: var(--dark);
-            }
-
-            #content nav form.show .form-input input {
-                display: block;
-                width: 100%;
-            }
-            #content nav form.show .form-input button {
-                width: 36px;
-                height: 100%;
-                border-radius: 0 36px 36px 0;
-                color: var(--light);
-                background: var(--red);
-            }
-
-            #content nav form.show ~ .notification,
-            #content nav form.show ~ .profile {
-                display: none;
-            }
-
-            #content main .box-info {
-                grid-template-columns: 1fr;
-            }
-
-            #content main .table-data .head {
-                min-width: 420px;
-            }
-            #content main .table-data .order table {
-                min-width: 420px;
-            }
-            #content main .table-data .todo .todo-list {
-                min-width: 420px;
-            }
-        }
-
-        /* Ensure the container remains fixed in size */
-        .recent-accounts {
-            width: 100%;
-            max-width: 100%;
-            height: 330px; /* Fixed height to prevent stretching */
-            overflow: hidden; /* Prevent content from overflowing */
-            position: relative;
-        }
-
-        /* Table and Chart Container */
-        .table-view, .chart-container {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: absolute;
-            top: 0;
-            left: 0;
-            
-        }
-
-        /* Hide Pie Chart Initially */
-        .chart-container {
-            display: none;
-            
-        }
-
-        /* Ensure the Pie Chart adjusts inside the container */
-        canvas {
-            max-width: 100% !important;
-            max-height: 100% !important;
-            
-        }
+        
     </style>
 
-    <title>Student Performance</title>
+    <title>client Message</title>
 </head>
 <body>
 
@@ -973,95 +644,52 @@
     <!-- SIDEBAR -->
     <section id="sidebar">
         <a href="#" class="brand">
-            <i class="bx bxs-graduation"></i>
-            <span class="text">Student Panel</span>
+            <i class="bx bxs-user"></i>
+            <span class="text">Client Panel</span>
         </a>
+        <ul class="side-menu top">
+            <li>
+                <a href="client-activities.php" style="display: flex; align-items: center;">
+                    <i class='bx bxs-folder-open'></i>
+                    <span class="text">Activities</span>
+                    <i class='bx bx-chevron-down arrow' style="margin-left: auto;"></i>
+                </a>
+            </li>            
+            <li>
+                <a href="client-attendance.php">
+                    <i class='bx bxs-calendar-check' ></i>
+                    <span class="text">Attendance</span>
+                </a>
+            </li>
+            <li class="active">
+                <a href="client-messages.php">
+                    <i class='bx bxs-message-dots' ></i>
+                    <span class="text">Message</span>
+                </a>
+            </li>
+            <li>
+                <a href="client-performance.php" style="display: flex; align-items: center;">
+                    <i class='bx bxs-book-content'></i>
+                    <span class="text">Performance</span>
+                    <i class='bx bx-chevron-down arrow' style="margin-left: auto;"></i>
+                </a>
+            </li>
 
-        <!-- NEW FLEX WRAPPER -->
-        <div class="sidebar-content">
-            <!-- TOP ITEMS -->
-            <ul class="side-menu top">
-                <li>
-                    <a href="student-activities.php" style="display: flex; align-items: center;">
-                        <i class='bx bxs-folder-open'></i>
-                        <span class="text">Activities</span>
-                        <i class='bx bx-chevron-down arrow' style="margin-left: auto;"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="student-attendance.php">
-                        <i class='bx bxs-calendar-check'></i>
-                        <span class="text">Attendance</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="student-messages.php">
-                        <i class='bx bxs-message-dots'></i>
-                        <span class="text">Message</span>
-                    </a>
-                </li>
-
-                <!-- Performance with Submenu -->
-                <li id="performance-submenu" class="has-submenu">
-                    <a href="student-performance.php">
-                        <i class='bx bxs-book-content'></i>
-                        <span class="text">Performance</span>
-                        <i class='bx bx-chevron-down arrow'></i>
-                    </a>
-                    <ul id="sub-menu" class="sub-menu active">
-                        <li>
-                            <a href="student-skilldevelopment.php">
-                                <div class="underline">
-                                    <i class='bx bx-check-shield'></i>
-                                    <span>Skill Development</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="student-taskcompletion.php">
-                                <div class="non-underline">
-                                    <i class='bx bx-task'></i>
-                                    <span>Task Completion</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="student-behavioralconduct.php">
-                                <div class="non-underline">
-                                    <i class='bx bx-check-circle'></i>
-                                    <span>Behavioral Conduct</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="student-achievementranking.php">
-                                <div class="non-underline">
-                                    <i class='bx bx-check-square'></i>
-                                    <span>Achievement Ranking</span>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                
-                <li>
-                    <a href="#">
-                        <i class='bx bxs-cog'></i>
-                        <span class="text">Settings</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="student-logout.php" class="logout">
-                        <i class='bx bxs-log-out-circle'></i>
-                        <span class="text">Logout</span>
-                    </a>
-                </li>
-            </ul>
-
-        </div>
+            <li>
+                <a href="#">
+                    <i class='bx bxs-cog' ></i>
+                    <span class="text">Settings</span>
+                </a>
+            </li>
+            <li>
+                <a href="client-logout.php" class="logout">
+                    <i class='bx bxs-log-out-circle' ></i>
+                    <span class="text">Logout</span>
+                </a>
+            </li>
+        </ul>
     </section>
-
-
+    <!-- SIDEBAR -->
 
 
 
@@ -1097,30 +725,120 @@
         <main>
             <div class="head-title">
                 <div class="left">
-                    <h1>Performance</h1>
+                    <h1>Message</h1>
                     <ul class="breadcrumb">
                         <li>
-                            <a href="student-performance.php">Home</a>
+                            <a href="client-messages.php">Home</a>
                         </li>
                         <li><i class='bx bx-chevron-right' ></i></li>
                         <li>
-                            <a class="active">Skill Development</a>
+                            <a class="active">Message</a>
                         </li>
+                        
                     </ul>
                 </div>
                 
             </div>
 
+
             <div class="table-data">
 
-                <!-- YOUR IFRAMES HERE -->
+                <!-- Chat Container -->
+                <div class="chat-container">
+
+                    <iframe src="index.php" width="100%" height="590px" frameborder="0"></iframe>
+
+                </div>
                 
             </div>
+
+
+            
         </main>
         <!-- MAIN -->
     </section>
     <!-- CONTENT -->
+    
 
+
+    <!-- IFRAME -->
+    <script>
+        
+        // Function to adjust iframe height
+        function adjustIframeHeight() {
+            var iframe = document.getElementById('chatIframe');
+            var iframeContent = iframe.contentDocument || iframe.contentWindow.document;
+
+            if (iframeContent) {
+                var iframeHeight = iframeContent.body.scrollHeight; // Get the content height
+                iframe.style.height = iframeHeight + 'px'; // Adjust iframe height based on content
+            }
+        }
+
+        // Adjust iframe height on load and on window resize
+        window.addEventListener('load', adjustIframeHeight);
+        window.addEventListener('resize', adjustIframeHeight);
+
+    </script>
+
+
+
+    <!-- NAV BAR W/ TOGGLE HIDE -->
+    <script>        
+        // Select all sidebar menu items
+        const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
+
+        allSideMenu.forEach(item => {
+            const li = item.parentElement;
+
+            item.addEventListener('click', function () {
+                allSideMenu.forEach(i => {
+                    i.parentElement.classList.remove('active');
+                });
+                li.classList.add('active');
+            });
+        });
+
+        // TOGGLE SIDEBAR
+        const menuBar = document.querySelector('#content nav .bx.bx-chevron-left'); // Updated selector
+        const sidebar = document.getElementById('sidebar');
+
+        menuBar.addEventListener('click', function () {
+            sidebar.classList.toggle('hide');
+
+            // Toggle the icon between left and right chevron + add rotation animation
+            if (sidebar.classList.contains('hide')) {
+                menuBar.classList.replace('bx-chevron-left', 'bx-chevron-right');
+            } else {
+                menuBar.classList.replace('bx-chevron-right', 'bx-chevron-left');
+            }
+
+            // Add rotation animation
+            menuBar.classList.add('rotate-icon');
+            setTimeout(() => {
+                menuBar.classList.remove('rotate-icon'); // Remove class after animation completes
+            }, 300); // Matches the CSS transition time
+        });
+
+        // SEARCH TOGGLE (For small screens)
+        const searchButton = document.querySelector('#content nav form .form-input button');
+        const searchButtonIcon = document.querySelector('#content nav form .form-input button .bx');
+        const searchForm = document.querySelector('#content nav form');
+
+        searchButton.addEventListener('click', function (e) {
+            if (window.innerWidth < 576) {
+                e.preventDefault();
+                searchForm.classList.toggle('show');
+                if (searchForm.classList.contains('show')) {
+                    searchButtonIcon.classList.replace('bx-search', 'bx-x');
+                } else {
+                    searchButtonIcon.classList.replace('bx-x', 'bx-search');
+                }
+            }
+        });
+    </script>
+
+    
 
     <!-- NAV BAR W/ TOGGLE HIDE -->
     <script>
@@ -1186,7 +904,7 @@
                         submenu.style.display = 'block';
 
                         if (arrow) arrow.style.transform = 'rotate(180deg)';
-                        if (nextLi) nextLi.style.marginTop = '185px';
+                        if (nextLi) nextLi.style.marginTop = '90px';
                     }
                 });
 
@@ -1247,7 +965,6 @@
         });
     </script>
 
-
     <!-- SIDEBAR FUNCTIONALITIES -->
     <script>
         // ========== DEFAULT ACTIVATION RULES FOR ACTIVITIES & PERFORMANCE ==========
@@ -1255,12 +972,12 @@
         const path = window.location.pathname;
 
         if (
-            path.includes("student-activities.php") ||
-            path.includes("student-performance.php") ||
-            path.includes("student-skilldevelopment.php") // 👈 Add this line
+            path.includes("client-activities.php") ||
+            path.includes("client-performance.php") ||
+            path.includes("client-dailylogs.php") // 👈 Add this line
 
         ) {
-            const menuId = (path.includes("student-performance.php") || path.includes("student-skilldevelopment.php"))
+            const menuId = (path.includes("client-performance.php") || path.includes("client-dailylogs.php"))
                 ? '#performance-submenu'
                 : '#activities-submenu';
 
@@ -1276,7 +993,7 @@
             submenu.style.display = 'block';
 
             // Push down the next item to avoid overlap
-            if (nextLi) nextLi.style.marginTop = '185px';
+            if (nextLi) nextLi.style.marginTop = '90px';
         }
 
         // ========== SUBMENU TOGGLE FUNCTIONALITY ==========
@@ -1301,13 +1018,13 @@
                 arrow.style.transform = isExpanded ? 'rotate(0deg)' : 'rotate(180deg)';
 
                 // Adjust margin of next item
-                if (nextLi) nextLi.style.marginTop = isExpanded ? '0px' : '185px';
+                if (nextLi) nextLi.style.marginTop = isExpanded ? '0px' : '90px';
             });
         });
 
         // ========== HIGHLIGHT ACTIVE SUBMENU ITEM ==========
-        if (path.includes("student-skilldevelopment.php")) {
-            const skillLink = document.querySelector('.sub-menu li a[href="student-skilldevelopment.php"]');
+        if (path.includes("client-dailylogs.php")) {
+            const skillLink = document.querySelector('.sub-menu li a[href="client-dailylogs.php"]');
             if (skillLink) {
                 const underlineDiv = skillLink.querySelector('.underline');
                 if (underlineDiv) {
@@ -1339,7 +1056,7 @@
                 localStorage.setItem('dark-mode', 'false'); // store preference
             }
         });
-    </script>
+    </script>   
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Load Chart.js -->
 </body>

@@ -11,6 +11,7 @@
     if (!file_exists($imagePath)) {
         $imagePath = "../uploads/default.png";
     }
+
 ?>
 
 <!DOCTYPE html>
@@ -610,7 +611,6 @@
             cursor: pointer;
             transition: transform 0.3s ease, color 0.3s ease;
         }
-
         /* NAVBAR */
 
 
@@ -966,7 +966,7 @@
         }
     </style>
 
-    <title>Student Performance</title>
+    <title>Client Performance</title>
 </head>
 <body>
 
@@ -974,8 +974,8 @@
     <!-- SIDEBAR -->
     <section id="sidebar">
         <a href="#" class="brand">
-            <i class="bx bxs-graduation"></i>
-            <span class="text">Student Panel</span>
+            <i class="bx bxs-user"></i>
+            <span class="text">Client Panel</span>
         </a>
 
         <!-- NEW FLEX WRAPPER -->
@@ -983,20 +983,20 @@
             <!-- TOP ITEMS -->
             <ul class="side-menu top">
                 <li>
-                    <a href="student-activities.php" style="display: flex; align-items: center;">
+                    <a href="Client-activities.php" style="display: flex; align-items: center;">
                         <i class='bx bxs-folder-open'></i>
                         <span class="text">Activities</span>
                         <i class='bx bx-chevron-down arrow' style="margin-left: auto;"></i>
                     </a>
                 </li>
                 <li>
-                    <a href="student-attendance.php">
+                    <a href="Client-attendance.php">
                         <i class='bx bxs-calendar-check'></i>
                         <span class="text">Attendance</span>
                     </a>
                 </li>
                 <li>
-                    <a href="student-messages.php">
+                    <a href="Client-messages.php">
                         <i class='bx bxs-message-dots'></i>
                         <span class="text">Message</span>
                     </a>
@@ -1004,14 +1004,14 @@
 
                 <!-- Performance with Submenu -->
                 <li id="performance-submenu" class="has-submenu">
-                    <a href="student-performance.php">
+                    <a href="Client-performance.php">
                         <i class='bx bxs-book-content'></i>
                         <span class="text">Performance</span>
                         <i class='bx bx-chevron-down arrow'></i>
                     </a>
                     <ul id="sub-menu" class="sub-menu active">
                         <li>
-                            <a href="student-skilldevelopment.php">
+                            <a href="Client-skilldevelopment.php">
                                 <div class="non-underline">
                                     <i class='bx bx-check-shield'></i>
                                     <span>Skill Development</span>
@@ -1019,15 +1019,15 @@
                             </a>
                         </li>
                         <li>
-                            <a href="student-taskcompletion.php">
-                                <div class="non-underline">
+                            <a href="Client-taskcompletion.php">
+                                <div class="underline">
                                     <i class='bx bx-task'></i>
                                     <span>Task Completion</span>
                                 </div>
                             </a>
                         </li>
                         <li>
-                            <a href="student-behavioralconduct.php">
+                            <a href="Client-behavioralconduct.php">
                                 <div class="non-underline">
                                     <i class='bx bx-check-circle'></i>
                                     <span>Behavioral Conduct</span>
@@ -1035,8 +1035,8 @@
                             </a>
                         </li>
                         <li>
-                            <a href="student-achievementranking.php">
-                                <div class="underline">
+                            <a href="Client-achievementranking.php">
+                                <div class="non-underline">
                                     <i class='bx bx-check-square'></i>
                                     <span>Achievement Ranking</span>
                                 </div>
@@ -1052,7 +1052,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="student-logout.php" class="logout">
+                    <a href="Client-logout.php" class="logout">
                         <i class='bx bxs-log-out-circle'></i>
                         <span class="text">Logout</span>
                     </a>
@@ -1101,11 +1101,11 @@
                     <h1>Performance</h1>
                     <ul class="breadcrumb">
                         <li>
-                            <a href="student-performance.php">Home</a>
+                            <a href="Client-performance.php">Home</a>
                         </li>
                         <li><i class='bx bx-chevron-right' ></i></li>
                         <li>
-                            <a class="active">Achievement Ranking</a>
+                            <a class="active">Task Completion</a>
                         </li>
                     </ul>
                 </div>
@@ -1248,6 +1248,7 @@
         });
     </script>
 
+
     <!-- SIDEBAR FUNCTIONALITIES -->
     <script>
         // ========== DEFAULT ACTIVATION RULES FOR ACTIVITIES & PERFORMANCE ==========
@@ -1255,12 +1256,12 @@
         const path = window.location.pathname;
 
         if (
-            path.includes("student-activities.php") ||
-            path.includes("student-performance.php") ||
-            path.includes("student-achievementranking.php") // 👈 Add this line
+            path.includes("Client-activities.php") ||
+            path.includes("Client-performance.php") ||
+            path.includes("Client-taskcompletion.php") // 👈 Add this line
             
         ) {
-            const menuId = (path.includes("student-performance.php") || path.includes("student-achievementranking.php"))
+            const menuId = (path.includes("Client-performance.php") || path.includes("Client-taskcompletion.php"))
                 ? '#performance-submenu'
                 : '#activities-submenu';
 
@@ -1306,8 +1307,8 @@
         });
 
         // ========== HIGHLIGHT ACTIVE SUBMENU ITEM ==========
-        if (path.includes("student-skilldevelopment.php")) {
-            const skillLink = document.querySelector('.sub-menu li a[href="student-achievementranking.php"]');
+        if (path.includes("Client-skilldevelopment.php")) {
+            const skillLink = document.querySelector('.sub-menu li a[href="Client-taskcompletion.php"]');
             if (skillLink) {
                 const underlineDiv = skillLink.querySelector('.underline');
                 if (underlineDiv) {
@@ -1339,7 +1340,8 @@
                 localStorage.setItem('dark-mode', 'false'); // store preference
             }
         });
-    </script>   
+    </script>
+
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Load Chart.js -->
 </body>
