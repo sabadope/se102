@@ -970,7 +970,7 @@
         }
     </style>
 
-    <title>Student Feedbacks</title>
+    <title>Admin Feedbacks</title>
 </head>
 <body>
 
@@ -978,8 +978,8 @@
     <!-- SIDEBAR -->
     <section id="sidebar">
         <a href="#" class="brand">
-            <i class="bx bxs-graduation"></i>
-            <span class="text">Student Panel</span>
+            <i class="bx bx-slider-alt'"></i>
+            <span class="text">Admin Panel</span>
         </a>
 
         <!-- NEW FLEX WRAPPER -->
@@ -988,14 +988,14 @@
             <ul class="side-menu top">
                 <!-- Activities with Submenu -->
                 <li id="performance-submenu" class="has-submenu">
-                    <a href="student-activities.php">
+                    <a href="admin-activities.php">
                         <i class='bx bxs-folder-open'></i>
                         <span class="text">Activities</span>
                         <i class='bx bx-chevron-down arrow'></i>
                     </a>
                     <ul id="sub-menu" class="sub-menu active">
                         <li>
-                            <a href="student-dailylogs.php">
+                            <a href="admin-dailylogs.php">
                                 <div class="non-underline">
                                     <i class='bx bx-calendar-check'></i>
                                     <span>Daily Logs</span>
@@ -1003,7 +1003,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="student-feedbacks.php">
+                            <a href="admin-feedbacks.php">
                                 <div class="underline">
                                     <i class='bx bx-comment-detail'></i>
                                     <span>Feedbacks</span>
@@ -1013,20 +1013,20 @@
                     </ul>
                 </li>        
                 <li>
-                    <a href="student-attendance.php">
+                    <a href="admin-attendance.php">
                         <i class='bx bxs-calendar-check'></i>
                         <span class="text">Attendance</span>
                     </a>
                 </li>
                 <li>
-                    <a href="student-messages.php">
+                    <a href="admin-messages.php">
                         <i class='bx bxs-message-dots'></i>
                         <span class="text">Message</span>
                     </a>
                 </li>
 
                 <li>
-                    <a href="student-performance.php" style="display: flex; align-items: center;">
+                    <a href="admin-performance.php" style="display: flex; align-items: center;">
                         <i class='bx bxs-book-content'></i>
                         <span class="text">Performance</span>
                         <i class='bx bx-chevron-down arrow' style="margin-left: auto;"></i>
@@ -1040,7 +1040,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="student-logout.php" class="logout">
+                    <a href="admin-logout.php" class="logout">
                         <i class='bx bxs-log-out-circle'></i>
                         <span class="text">Logout</span>
                     </a>
@@ -1089,7 +1089,7 @@
                     <h1>Activities</h1>
                     <ul class="breadcrumb">
                         <li>
-                            <a href="student-activities.php">Home</a>
+                            <a href="admin-activities.php">Home</a>
                         </li>
                         <li><i class='bx bx-chevron-right' ></i></li>
                         <li>
@@ -1248,12 +1248,12 @@
         const path = window.location.pathname;
 
         if (
-            path.includes("student-activities.php") ||
-            path.includes("student-performance.php") ||
-            path.includes("student-feedbacks.php") // 👈 Add this line
+            path.includes("admin-activities.php") ||
+            path.includes("admin-performance.php") ||
+            path.includes("admin-feedbacks.php") // 👈 Add this line
 
         ) {
-            const menuId = (path.includes("student-performance.php") || path.includes("student-feedbacks.php"))
+            const menuId = (path.includes("admin-performance.php") || path.includes("admin-feedbacks.php"))
                 ? '#performance-submenu'
                 : '#activities-submenu';
 
@@ -1299,8 +1299,8 @@
         });
 
         // ========== HIGHLIGHT ACTIVE SUBMENU ITEM ==========
-        if (path.includes("student-feedbacks.php")) {
-            const skillLink = document.querySelector('.sub-menu li a[href="student-feedbacks.php"]');
+        if (path.includes("admin-feedbacks.php")) {
+            const skillLink = document.querySelector('.sub-menu li a[href="admin-feedbacks.php"]');
             if (skillLink) {
                 const underlineDiv = skillLink.querySelector('.underline');
                 if (underlineDiv) {

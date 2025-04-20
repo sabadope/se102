@@ -4,21 +4,21 @@
 	// Fetch the count of each role
 	$stmt = $pdo->prepare("
 	    SELECT role, COUNT(*) as count FROM users 
-	    WHERE role IN ('Student', 'Supervisor', 'Client') 
+	    WHERE role IN ('admin', 'Supervisor', 'Client') 
 	    GROUP BY role
 	");
 	$stmt->execute();
 	$roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 	// Initialize counts
-	$students_count = 0;
+	$admins_count = 0;
 	$supervisors_count = 0;
 	$clients_count = 0;
 
 	// Assign counts based on role
 	foreach ($roles as $role) {
-	    if ($role['role'] === 'Student') {
-	        $students_count = $role['count'];
+	    if ($role['role'] === 'admin') {
+	        $admins_count = $role['count'];
 	    } elseif ($role['role'] === 'Supervisor') {
 	        $supervisors_count = $role['count'];
 	    } elseif ($role['role'] === 'Client') {
@@ -1014,8 +1014,8 @@
 			    <li>
 			        <i class='bx bxs-group'></i>
 			        <span class="text">
-			            <h3><?php echo $students_count; ?></h3>
-			            <p>Students</p>
+			            <h3><?php echo $admin_count; ?></h3>
+			            <p>admin</p>
 			        </span>
 			    </li>
 			    <li>
@@ -1231,8 +1231,8 @@
 
         const path = window.location.pathname;
 
-        if (path.includes("student-activities.php") || path.includes("student-performance.php")) {
-            const menuId = path.includes("student-performance.php") ? '#performance-submenu' : '#activities-submenu';
+        if (path.includes("admin-activities.php") || path.includes("admin-performance.php")) {
+            const menuId = path.includes("admin-performance.php") ? '#performance-submenu' : '#activities-submenu';
             const menuElement = document.querySelector(menuId);
             const submenu = menuElement.querySelector('.sub-menu');
             const nextLi = menuElement.nextElementSibling;

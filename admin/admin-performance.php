@@ -903,7 +903,7 @@
         }
     </style>
 
-    <title>Student Performance</title>
+    <title>Admin Performance</title>
 </head>
 <body>
 
@@ -911,8 +911,8 @@
     <!-- SIDEBAR -->
     <section id="sidebar">
         <a href="#" class="brand">
-            <i class="bx bxs-graduation"></i>
-            <span class="text">Student Panel</span>
+            <i class="bx bx-slider-alt'"></i>
+            <span class="text">Admin Panel</span>
         </a>
 
         <!-- NEW FLEX WRAPPER -->
@@ -920,20 +920,20 @@
             <!-- TOP ITEMS -->
             <ul class="side-menu top">
                 <li>
-                    <a href="student-activities.php" style="display: flex; align-items: center;">
+                    <a href="admin-activities.php" style="display: flex; align-items: center;">
                         <i class='bx bxs-folder-open'></i>
                         <span class="text">Activities</span>
                         <i class='bx bx-chevron-down arrow' style="margin-left: auto;"></i>
                     </a>
                 </li>
                 <li>
-                    <a href="student-attendance.php">
+                    <a href="admin-attendance.php">
                         <i class='bx bxs-calendar-check'></i>
                         <span class="text">Attendance</span>
                     </a>
                 </li>
                 <li>
-                    <a href="student-messages.php">
+                    <a href="admin-messages.php">
                         <i class='bx bxs-message-dots'></i>
                         <span class="text">Message</span>
                     </a>
@@ -941,32 +941,32 @@
 
                 <!-- Performance with Submenu -->
                 <li id="performance-submenu" class="has-submenu">
-                    <a href="student-performance.php">
+                    <a href="admin-performance.php">
                         <i class='bx bxs-book-content'></i>
                         <span class="text">Performance</span>
                         <i class='bx bx-chevron-down arrow'></i>
                     </a>
                     <ul id="sub-menu" class="sub-menu active">
                         <li>
-                            <a href="student-skilldevelopment.php">
+                            <a href="admin-skilldevelopment.php">
                                 <i class='bx bx-check-shield'></i>
                                 Skill Development
                             </a>
                         </li>
                         <li>
-                            <a href="student-taskcompletion.php">
+                            <a href="admin-taskcompletion.php">
                                 <i class='bx bx-task'></i>
                                 Task Completion
                             </a>
                         </li>
                         <li>
-                            <a href="student-behavioralconduct.php">
+                            <a href="admin-behavioralconduct.php">
                                 <i class='bx bx-check-circle'></i>
                                 Behavioral Conduct
                             </a>
                         </li>
                         <li>
-                            <a href="student-achievementranking.php">
+                            <a href="admin-achievementranking.php">
                                 <i class='bx bx-check-square'></i>
                                 Achievement Ranking
                             </a>
@@ -981,7 +981,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="student-logout.php" class="logout">
+                    <a href="admin-logout.php" class="logout">
                         <i class='bx bxs-log-out-circle'></i>
                         <span class="text">Logout</span>
                     </a>
@@ -1030,7 +1030,7 @@
                     <h1>Performance</h1>
                     <ul class="breadcrumb">
                         <li>
-                            <a href="student-performance.php">Home</a>
+                            <a href="admin-performance.php">Home</a>
                         </li>
                         <li><i class='bx bx-chevron-right' ></i></li>
                         
@@ -1040,7 +1040,7 @@
             </div>
 
             <ul class="box-info">
-                <a href="student-skilldevelopment.php">
+                <a href="admin-skilldevelopment.php">
                     <li>
                         <i class='bx bx-check-shield' ></i>
                         <span class="text">
@@ -1049,7 +1049,7 @@
                         </span>
                     </li>
                 </a>
-                <a href="student-behavioralconduct.php">
+                <a href="admin-behavioralconduct.php">
                     <li>
                         <i class='bx bx-check-circle' ></i>
                         <span class="text">
@@ -1060,7 +1060,7 @@
                 </a>
             </ul>
             <ul class="box-info">
-                <a href="student-taskcompletion.php">
+                <a href="admin-taskcompletion.php">
                     <li>
                         <i class='bx bx-task' ></i>
                         <span class="text">
@@ -1069,7 +1069,7 @@
                         </span>
                     </li>
                 </a>
-                <a href="student-achievementranking.php">
+                <a href="admin-achievementranking.php">
                     <li>
                         <i class='bx bx-check-square' ></i>
                         <span class="text">
@@ -1185,8 +1185,8 @@
 
         const path = window.location.pathname;
 
-        if (path.includes("student-activities.php") || path.includes("student-performance.php")) {
-            const menuId = path.includes("student-performance.php") ? '#performance-submenu' : '#activities-submenu';
+        if (path.includes("admin-activities.php") || path.includes("admin-performance.php")) {
+            const menuId = path.includes("admin-performance.php") ? '#performance-submenu' : '#activities-submenu';
             const menuElement = document.querySelector(menuId);
             const submenu = menuElement.querySelector('.sub-menu');
             const nextLi = menuElement.nextElementSibling;
