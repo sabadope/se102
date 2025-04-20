@@ -1,13 +1,11 @@
 <?php
-$host = "localhost";
-$user = "root";
-$pass = ""; // Default XAMPP MySQL password is empty
-$dbname = "intern_eval";
+$host = '127.0.0.1:3307'; // not 'localhost' if using custom port
+$user = 'root';
+$pass = ''; // default XAMPP password
+$db = 'intern_eval';
 
-// Create connection
-$conn = new mysqli($host, $user, $pass, $dbname);
+$conn = new mysqli($host, $user, $pass, $db);
 
-// Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
