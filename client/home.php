@@ -29,22 +29,16 @@
 	<link rel="icon" href="img/logo.png">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
-<body class="d-flex justify-content-center align-items-center" style="background: #F9F9F9; height: 100%; padding: 0;">
-    <div class="p-2 w-400
-                rounded shadow">
+<body class="d-flex" style="background: #F9F9F9; height: 100%; padding: 0; justify-content: center; align-items: center;">
+    <div class="p-2 w-400 rounded shadow" style="background: #F9F9F9; width: 100%; height: 100%; padding: 0; justify-content: center; align-items: center;">
     	<div>
-    		<div class="d-flex
-    		            mb-3 p-3 bg-light
-			            justify-content-between
-			            align-items-center">
+    		<div class="d-flex mb-3 bg-light justify-content-between align-items-center" style="margin-left: 2%;">
     			<div class="d-flex
     			            align-items-center">
-    			    <img src="uploads/<?=$user['p_p']?>"
-    			         class="w-25 rounded-circle">
+    			    <img src="uploads/<?=$user['p_p']?>" class="rounded-circle" style="width: 11%; height: 11%; margin-right: 5px;">
                     <h3 class="fs-xs m-2"><?=$user['name']?></h3> 
     			</div>
-    			<a href="logout.php"
-    			   class="btn btn-dark">Logout</a>
+    			<a href="logout.php" class="btn btn-danger">Logout</a>
     		</div>
 
     		<div class="input-group mb-3">
@@ -70,8 +64,7 @@
 	    				          align-items-center p-2">
 	    					<div class="d-flex
 	    					            align-items-center">
-	    					    <img src="uploads/<?=$conversation['p_p']?>"
-	    					         class="w-10 rounded-circle">
+	    					    <img src="uploads/<?=$conversation['p_p']?>" class="w-10 rounded-circle" style="margin-right: 5px;">
 	    					    <h3 class="fs-xs m-2">
 	    					    	<?=$conversation['name']?><br>
                       <small>

@@ -59,18 +59,6 @@
 	    $counts[] = $user['count'];
 	}
 
-	
-
-    
-    // Use the same logic to construct the expected image filename
-    $username = isset($_SESSION['username']) ? strtolower($_SESSION['username']) : 'default';
-    $safeUsername = preg_replace('/[^a-zA-Z0-9_-]/', '_', $username);
-    $imagePath = "../uploads/" . $safeUsername . ".png";
-
-    // Fallback if image doesn't exist
-    if (!file_exists($imagePath)) {
-        $imagePath = "../uploads/default.png";
-    }
 ?>
 
 <!DOCTYPE html>
@@ -134,7 +122,30 @@
 			overflow-x: hidden;
 		}
 
-		/* ========== SIDEBAR BASE ========== */
+		/* Target the entire page's scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px; /* Set the width of the scrollbar */
+            height: 6px; /* Set the height of the horizontal scrollbar (if needed) */
+        }
+
+        /* Style the track (the background of the scrollbar) */
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1; /* Light background for the track */
+            border-radius: 10px;
+        }
+
+        /* Style the thumb (the draggable part of the scrollbar) */
+        ::-webkit-scrollbar-thumb {
+            background: #888; /* Set the color of the thumb */
+            border-radius: 10px; /* Round corners for the thumb */
+        }
+
+        /* Hover effect for the thumb */
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555; /* Darker color when the user hovers over the thumb */
+        }
+
+        /* ========== SIDEBAR BASE ========== */
         #sidebar {
             position: fixed;
             top: 0;
@@ -552,6 +563,13 @@
             border-radius: 50%;
             object-fit: cover;
         }
+
+        .chevron-toggle {
+            font-size: 25px;
+            color: var(--blue);
+            cursor: pointer;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
         /* NAVBAR */
 
 
@@ -887,55 +905,56 @@
 	<!-- SIDEBAR -->
 	<section id="sidebar">
 		<a href="#" class="brand">
-			<i class='bx bxs-user'></i>
+			<i class='bx bx-slider-alt'></i>
 			<span class="text">Admin Panel</span>
 		</a>
 		<ul class="side-menu top">
-			<li class="active">
-				<a href="admin-dashboard.php">
-					<i class='bx bxs-dashboard' ></i>
-					<span class="text">Dashboard</span>
-				</a>
-			</li>
-			<li>
-				<a href="#">
-					<i class='bx bxs-check-circle' ></i>
-					<span class="text">Task</span>
-				</a>
-			</li>
-			<li>
-				<a href="#">
-					<i class='bx bxs-doughnut-chart' ></i>
-					<span class="text">Analytics</span>
-				</a>
-			</li>
-			<li>
-			    <a href="admin-messages.php">
-			        <i class='bx bxs-message-dots'></i>
-			        <span class="text">Messages</span>
-			    </a>
-			</li>
-			<li>
-				<a href="#">
-					<i class='bx bxs-group' ></i>
-					<span class="text">Team</span>
-				</a>
-			</li>
-		</ul>
-		<ul class="side-menu">
-			<li>
-				<a href="#">
-					<i class='bx bxs-cog' ></i>
-					<span class="text">Settings</span>
-				</a>
-			</li>
-			<li>
-				<a href="admin-logout.php" class="logout">
-					<i class='bx bxs-log-out-circle' ></i>
-					<span class="text">Logout</span>
-				</a>
-			</li>
-		</ul>
+            <li class="active">
+                <a href="admin-dashboard.php">
+                    <i class='bx bxs-dashboard'></i>
+                    <span class="text">Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="admin-attendance.php">
+                    <i class='bx bxs-calendar-check'></i>
+                    <span class="text">Attendance</span>
+                </a>
+            </li>
+            <li>
+                <a href="admin-messages.php">
+                    <i class='bx bxs-message-dots'></i>
+                    <span class="text">Message</span>
+                </a>
+            </li>
+            <li>
+                <a href="admin-performance.php" style="display: flex; align-items: center;">
+                    <i class='bx bxs-book-content'></i>
+                    <span class="text">Performance</span>
+                    <i class='bx bx-chevron-down arrow' style="margin-left: auto;"></i>
+                </a>
+            </li>
+
+            <li>
+                <a href="admin-activities.php" style="display: flex; align-items: center;">
+                    <i class='bx bxs-folder-open'></i>
+                    <span class="text">Activities</span>
+                    <i class='bx bx-chevron-down arrow' style="margin-left: auto;"></i>
+                </a>
+            </li>
+            <li>
+                <a href="admin-settings.php">
+                    <i class='bx bxs-cog'></i>
+                    <span class="text">Settings</span>
+                </a>
+            </li>
+            <li>
+                <a href="admin-logout.php" class="logout">
+                    <i class='bx bxs-log-out-circle'></i>
+                    <span class="text">Logout</span>
+                </a>
+            </li>
+        </ul>
 	</section>
 	<!-- SIDEBAR -->
 
@@ -945,8 +964,7 @@
 	<section id="content">
 		<!-- NAVBAR -->
         <nav class="navbar">
-            <i class="bx bx-chevron-left" style="font-size: 25px;"></i> <!-- Sidebar toggle button -->
-            <!-- Left Spacer -->
+            <i class="bx bx-chevron-left chevron-toggle"></i> <!-- Sidebar toggle button -->
             <div class="nav-left"></div>
 
             <!-- Center: Search Form -->
@@ -964,7 +982,7 @@
                 <label for="switch-mode" class="switch-mode"></label>
                 
                 <div class="profile">
-                    <img src="<?php echo $imagePath; ?>" alt="Profile Image" width="40" height="40" style="border-radius: 50%; object-fit: cover;">
+                    <img src="uploads/default.png" alt="Profile Image" width="40" height="40" style="border-radius: 50%; object-fit: cover;">
                 </div>
             </div>
         </nav>
@@ -1041,7 +1059,7 @@
 			                        <?php foreach ($recent_users as $user): ?>
 			                            <tr>
 			                                <td>
-			                                    <img src="img/people.png">
+			                                    
 			                                    <p><?= htmlspecialchars($user['username']) ?></p>
 			                                </td>
 			                                <td><?= htmlspecialchars($user['role']) ?></td>
@@ -1059,96 +1077,13 @@
 			        </div>
 			    </div>
 				
-				<div class="todo">
-					<div class="head">
-						<h3>Todos</h3>
-						<i class='bx bx-plus' ></i>
-						<i class='bx bx-filter' ></i>
-					</div>
-					<ul class="todo-list">
-						<li class="completed">
-							<p>Todo List</p>
-							<i class='bx bx-dots-vertical-rounded' ></i>
-						</li>
-						<li class="completed">
-							<p>Todo List</p>
-							<i class='bx bx-dots-vertical-rounded' ></i>
-						</li>
-						<li class="not-completed">
-							<p>Todo List</p>
-							<i class='bx bx-dots-vertical-rounded' ></i>
-						</li>
-						<li class="completed">
-							<p>Todo List</p>
-							<i class='bx bx-dots-vertical-rounded' ></i>
-						</li>
-						<li class="not-completed">
-							<p>Todo List</p>
-							<i class='bx bx-dots-vertical-rounded' ></i>
-						</li>
-					</ul>
-				</div>
+				
 			</div>
 		</main>
 		<!-- MAIN -->
 	</section>
 	<!-- CONTENT -->
 	
-
-	<script>
-		
-		// Select all sidebar menu items
-		const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
-
-		allSideMenu.forEach(item => {
-		    const li = item.parentElement;
-
-		    item.addEventListener('click', function () {
-		        allSideMenu.forEach(i => {
-		            i.parentElement.classList.remove('active');
-		        });
-		        li.classList.add('active');
-		    });
-		});
-
-		// TOGGLE SIDEBAR
-		const menuBar = document.querySelector('#content nav .bx.bx-chevron-left'); // Updated selector
-		const sidebar = document.getElementById('sidebar');
-
-		menuBar.addEventListener('click', function () {
-		    sidebar.classList.toggle('hide');
-
-		    // Toggle the icon between left and right chevron + add rotation animation
-		    if (sidebar.classList.contains('hide')) {
-		        menuBar.classList.replace('bx-chevron-left', 'bx-chevron-right');
-		    } else {
-		        menuBar.classList.replace('bx-chevron-right', 'bx-chevron-left');
-		    }
-
-		    // Add rotation animation
-		    menuBar.classList.add('rotate-icon');
-		    setTimeout(() => {
-		        menuBar.classList.remove('rotate-icon'); // Remove class after animation completes
-		    }, 300); // Matches the CSS transition time
-		});
-
-		// SEARCH TOGGLE (For small screens)
-		const searchButton = document.querySelector('#content nav form .form-input button');
-		const searchButtonIcon = document.querySelector('#content nav form .form-input button .bx');
-		const searchForm = document.querySelector('#content nav form');
-
-		searchButton.addEventListener('click', function (e) {
-		    if (window.innerWidth < 576) {
-		        e.preventDefault();
-		        searchForm.classList.toggle('show');
-		        if (searchForm.classList.contains('show')) {
-		            searchButtonIcon.classList.replace('bx-search', 'bx-x');
-		        } else {
-		            searchButtonIcon.classList.replace('bx-x', 'bx-search');
-		        }
-		    }
-		});
-	</script>
 
 	<!-- JavaScript for Toggle, Title Update & Pie Chart -->
 	<script>
@@ -1234,19 +1169,144 @@
 	</script>
 
 
+    <!-- NAV BAR W/ TOGGLE HIDE -->
+    <script>        
+        // Select all sidebar menu items
+        const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
+
+        allSideMenu.forEach(item => {
+            const li = item.parentElement;
+
+            item.addEventListener('click', function () {
+                allSideMenu.forEach(i => {
+                    i.parentElement.classList.remove('active');
+                });
+                li.classList.add('active');
+            });
+        });
+
+        // TOGGLE SIDEBAR
+        const menuBar = document.querySelector('#content nav .bx.bx-chevron-left'); // Updated selector
+        const sidebar = document.getElementById('sidebar');
+
+        menuBar.addEventListener('click', function () {
+            sidebar.classList.toggle('hide');
+
+            // Toggle the icon between left and right chevron + add rotation animation
+            if (sidebar.classList.contains('hide')) {
+                menuBar.classList.replace('bx-chevron-left', 'bx-chevron-right');
+            } else {
+                menuBar.classList.replace('bx-chevron-right', 'bx-chevron-left');
+            }
+
+            // Add rotation animation
+            menuBar.classList.add('rotate-icon');
+            setTimeout(() => {
+                menuBar.classList.remove('rotate-icon'); // Remove class after animation completes
+            }, 300); // Matches the CSS transition time
+        });
+
+        // SEARCH TOGGLE (For small screens)
+        const searchButton = document.querySelector('#content nav form .form-input button');
+        const searchButtonIcon = document.querySelector('#content nav form .form-input button .bx');
+        const searchForm = document.querySelector('#content nav form');
+
+        searchButton.addEventListener('click', function (e) {
+            if (window.innerWidth < 576) {
+                e.preventDefault();
+                searchForm.classList.toggle('show');
+                if (searchForm.classList.contains('show')) {
+                    searchButtonIcon.classList.replace('bx-search', 'bx-x');
+                } else {
+                    searchButtonIcon.classList.replace('bx-x', 'bx-search');
+                }
+            }
+        });
+    </script>
+
+
+    <!-- SIDE BAR SCRIPT -->
+    <script>
+        // ========== DEFAULT ACTIVATION RULES FOR ACTIVITIES & PERFORMANCE ==========
+
+        const path = window.location.pathname;
+
+        if (path.includes("student-activities.php") || path.includes("student-performance.php")) {
+            const menuId = path.includes("student-performance.php") ? '#performance-submenu' : '#activities-submenu';
+            const menuElement = document.querySelector(menuId);
+            const submenu = menuElement.querySelector('.sub-menu');
+            const nextLi = menuElement.nextElementSibling;
+
+            // Keep the tab styled as active
+            menuElement.classList.add('active');
+
+            // Keep the submenu expanded
+            submenu.classList.add('active');
+            submenu.style.display = 'block';
+
+            // Push down the next item to avoid overlap
+            if (nextLi) nextLi.style.marginTop = '90px';
+        }
+
+        // ========== SUBMENU TOGGLE FUNCTIONALITY ==========
+
+        const submenuLinks = document.querySelectorAll('.has-submenu > a');
+
+        submenuLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault(); // Prevent redirect
+
+                const parentLi = link.parentElement;
+                const submenu = parentLi.querySelector('.sub-menu');
+                const arrow = link.querySelector('.arrow'); // Get the arrow element
+                const nextLi = parentLi.nextElementSibling;
+
+                // Toggle submenu visibility
+                const isExpanded = submenu.classList.contains('active');
+                submenu.classList.toggle('active');
+                submenu.style.display = isExpanded ? 'none' : 'block';
+
+                // Rotate arrow based on expanded/collapsed state
+                arrow.style.transform = isExpanded ? 'rotate(0deg)' : 'rotate(180deg)';
+
+                // Adjust margin of next item
+                if (nextLi) nextLi.style.marginTop = isExpanded ? '0px' : '180px';
+            });
+        });
+
+        // ========== HIGHLIGHT ACTIVE SUBMENU ITEM ==========
+        const subLinks = document.querySelectorAll('.sub-menu li a');
+        subLinks.forEach(link => {
+            if (window.location.href.includes(link.getAttribute('href'))) {
+                link.classList.add('active');
+            }
+        });
+    </script>
+
+
     <!-- NIGHT MODE -->
     <script>
-        
         const switchMode = document.getElementById('switch-mode');
 
+        // On page load, check localStorage and apply mode
+        window.addEventListener('DOMContentLoaded', () => {
+            const darkModeEnabled = localStorage.getItem('dark-mode') === 'true';
+
+            switchMode.checked = darkModeEnabled; // update the toggle position
+            document.body.classList.toggle('dark', darkModeEnabled); // apply dark mode if enabled
+        });
+
+        // When user toggles the switch
         switchMode.addEventListener('change', function () {
-            if(this.checked) {
+            if (this.checked) {
                 document.body.classList.add('dark');
+                localStorage.setItem('dark-mode', 'true'); // store preference
             } else {
                 document.body.classList.remove('dark');
+                localStorage.setItem('dark-mode', 'false'); // store preference
             }
-        })
-    </script>
+        });
+    </script>   
 
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Load Chart.js -->
 </body>

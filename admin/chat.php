@@ -39,47 +39,52 @@
 	      href="css/style.css">
 	<link rel="icon" href="img/logo.png">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <style>
+        
+        .chat-box {
+            overflow-y: auto;
+            overflow-x: hidden;
+            max-height: 67vh;
+        }
+    </style>
 </head>
 <body class="d-flex justify-content-center align-items-center" style="background: #F9F9F9; height: 100%;">
-    <div class="w-400 shadow p-4 rounded">
-    	<a href="home.php"
-    	   class="fs-4 link-dark">&#8592;</a>
+    <div class="p-2 w-400 rounded shadow" style="background: #F9F9F9; width: 100%; height: 100%; padding: 0; justify-content: center; align-items: center;">
 
-    	   <div class="d-flex align-items-center">
-    	   	  <img src="uploads/<?=$chatWith['p_p']?>"
-    	   	       class="w-15 rounded-circle">
+            <div class="d-flex mb-3 bg-light justify-content-between align-items-center" style="margin-left: 2%;">
+                <div class="d-flex align-items-center">
+                    <img src="uploads/<?=$chatWith['p_p']?>" class="rounded-circle" style="width: 11%; height: 11%; margin-right: 8px; margin-bottom: 8px;">                    
+                    
+                    <h3 class="display-4 fs-sm m-2">
 
-               <h3 class="display-4 fs-sm m-2">
-               	  <?=$chatWith['name']?> <br>
-               	  <div class="d-flex
-               	              align-items-center"
-               	        title="online">
-               	    <?php
-                        if (last_seen($chatWith['last_seen']) == "Active") {
-               	    ?>
-               	        <div class="online"></div>
-               	        <small class="d-block p-1">Online</small>
-               	  	<?php }else{ ?>
-               	         <small class="d-block p-1">
-               	         	Last seen:
-               	         	<?=last_seen($chatWith['last_seen'])?>
-               	         </small>
-               	  	<?php } ?>
-               	  </div>
-               </h3>
-    	   </div>
+                      <?=$chatWith['name']?>
+                      <div class="d-flex align-items-center" title="online">
+                        <?php
+                            if (last_seen($chatWith['last_seen']) == "Active") {
+                        ?>
+                            <div class="online"></div>
+                            <small class="d-block">Online</small>
+                        <?php }else{ ?>
+                             <small class="d-block">
+                                Last seen:
+                                <?=last_seen($chatWith['last_seen'])?>
+                             </small>
+                        <?php } ?>
+                      </div>
+                   </h3>
+                </div>
+                <a href="home.php" class="btn btn-danger" style="padding-left: 2%; padding-right: 2%;">Home</a>
+            </div>
 
-    	   <div class="shadow p-4 rounded
-    	               d-flex flex-column
-    	               mt-2 chat-box"
-    	        id="chatBox">
+    	   <div class="shadow p-4 rounded d-flex flex-column mt-2 chat-box" id="chatBox" style="margin-bottom: 2.5%; height: 100vh;">
     	        <?php 
                      if (!empty($chats)) {
                      foreach($chats as $chat){
                      	if($chat['from_id'] == $_SESSION['user_id'])
                      	{ ?>
 						<p class="rtext align-self-end
-						        border rounded p-2 mb-1">
+						        border rounded p-2 mb-4">
 						    <?=$chat['message']?> 
 						    <small class="d-block">
 						    	<?=$chat['created_at']?>
@@ -87,7 +92,7 @@
 						</p>
                     <?php }else{ ?>
 					<p class="ltext border 
-					         rounded p-2 mb-1">
+					         rounded p-2 mb-4">
 					    <?=$chat['message']?> 
 					    <small class="d-block">
 					    	<?=$chat['created_at']?>
@@ -103,7 +108,7 @@
 			   </div>
     	   	<?php } ?>
     	   </div>
-    	   <div class="input-group mb-3">
+    	   <div class="input-group">
     	   	   <textarea cols="3"
     	   	             id="message"
     	   	             class="form-control"></textarea>

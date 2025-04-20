@@ -955,7 +955,7 @@
                 <!-- Chat Container -->
                 <div class="chat-container">
 
-                    <iframe src="jv-login.php" width="984px" height="700px" frameborder="0"></iframe>
+                    <iframe src="jv-login.php" width="984px" height="500px" frameborder="0"></iframe>
 
                 </div>
                 

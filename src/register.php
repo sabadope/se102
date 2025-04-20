@@ -2,79 +2,66 @@
 session_start();
 require_once '../src/config.php'; // uses $pdo
 
-$_SESSION['profile_image'] = $profileImageName;
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = trim($_POST['username']);
     $email = trim($_POST['email']);
     $password = trim($_POST['password']);
-    $confirm_password = trim($_POST['confirm_password']);
     $role = $_POST['role'];
 
-    if (empty($username) || empty($email) || empty($password) || empty($confirm_password) || empty($role)) {
-        die("All fields are required!");
-    }
-
-    if ($password !== $confirm_password) {
-        die("Passwords do not match!");
-    }
-
-    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
-    // Image upload – simplified rule: allow any uploaded file
-    if (isset($_FILES['profile_image']) && $_FILES['profile_image']['error'] === 0) {
-        $allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-        $fileType = mime_content_type($_FILES['profile_image']['tmp_name']);
-
-        if (in_array($fileType, $allowedTypes)) {
-            $uploadDir = '../uploads/';
-            $fileExtension = pathinfo($_FILES['profile_image']['name'], PATHINFO_EXTENSION);
-
-            // Sanitize username for filename
-            $safeUsername = preg_replace('/[^a-zA-Z0-9_-]/', '_', strtolower($username));
-
-            $profileImageName = $safeUsername . '.png'; // Force to .png (or change extension if needed)
-            $uploadPath = $uploadDir . $profileImageName;
-
-            if (move_uploaded_file($_FILES['profile_image']['tmp_name'], $uploadPath)) {
-                // Image uploaded successfully
-            } else {
-                $profileImageName = 'default.png';
-            }
-        } else {
-            $profileImageName = 'default.png';
-        }
+    // Validate required fields
+    if (empty($username) || empty($email) || empty($password) || empty($role)) {
+        $error = "All fields are required!";
     } else {
-        $profileImageName = 'default.png';
-    }
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
+        // Handle profile image upload
+        $profileImageName = 'default.png'; // default fallback
 
-    try {
-        $stmt = $pdo->prepare("INSERT INTO users (username, email, password, role, profile_image) VALUES (?, ?, ?, ?, ?)");
-        $stmt->execute([$username, $email, $hashed_password, $role, $profileImageName]);
+        if (isset($_FILES['profile_image']) && $_FILES['profile_image']['error'] === 0) {
+            $allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+            $fileType = mime_content_type($_FILES['profile_image']['tmp_name']);
 
-        if ($stmt->rowCount() > 0) {
-            $_SESSION['user_id'] = $pdo->lastInsertId();
-            $_SESSION['username'] = $username;
-            $_SESSION['email'] = $email;
-            $_SESSION['role'] = $role;
-            $_SESSION['profile_image'] = $profileImageName;
+            if (in_array($fileType, $allowedTypes)) {
+                $uploadDir = '../uploads/';
+                $fileExtension = pathinfo($_FILES['profile_image']['name'], PATHINFO_EXTENSION);
+                $safeUsername = preg_replace('/[^a-zA-Z0-9_-]/', '_', strtolower($username));
+                $profileImageName = $safeUsername . '.' . $fileExtension;
+                $uploadPath = $uploadDir . $profileImageName;
 
-            // Redirect based on role
-            if ($role === 'Student') {
-                header("Location: ../student/student-activities.php");
-            } elseif ($role === 'Client') {
-                header("Location: ../client/client-activities.php");
+                if (!move_uploaded_file($_FILES['profile_image']['tmp_name'], $uploadPath)) {
+                    $profileImageName = 'default.png';
+                }
             }
-            exit();
-        } else {
-            die("Error: Unable to register user.");
         }
-    } catch (PDOException $e) {
-        die("Database Error: " . $e->getMessage());
+
+        try {
+            $stmt = $pdo->prepare("INSERT INTO users (username, email, password, role, profile_image) VALUES (?, ?, ?, ?, ?)");
+            $stmt->execute([$username, $email, $hashed_password, $role, $profileImageName]);
+
+            if ($stmt->rowCount() > 0) {
+                $_SESSION['user_id'] = $pdo->lastInsertId();
+                $_SESSION['username'] = $username;
+                $_SESSION['email'] = $email;
+                $_SESSION['role'] = $role;
+                $_SESSION['profile_image'] = $profileImageName;
+
+                // Redirect based on role
+                if ($role === 'Student') {
+                    header("Location: ../student/student-activities.php");
+                } elseif ($role === 'Client') {
+                    header("Location: ../client/client-activities.php");
+                }
+                exit();
+            } else {
+                $error = "Error: Unable to register user.";
+            }
+        } catch (PDOException $e) {
+            $error = "Database Error: " . $e->getMessage();
+        }
     }
 }
 ?>
+
 
 
 
@@ -220,10 +207,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" required>
             </div>
-            <div class="input-group">
-                <label for="confirm_password">Confirm Password</label>
-                <input type="password" id="confirm_password" name="confirm_password" required>
-            </div>
+            
             <div class="input-group">
                 <label for="role">Role</label>
                 <select id="role" name="role" required>

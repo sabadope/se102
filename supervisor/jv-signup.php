@@ -14,14 +14,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $user = $stmt->fetch();
 
     if ($user) {
-        
+        echo "<div class='error-message'>Username already exists. Please choose another one.</div>";
     } else {
         // Insert the user into the database
         $sql = "INSERT INTO users (username, password, role) VALUES (?, ?, ?)";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$username, $password, $role]);
 
-        
+        echo "<div class='success-message'>User registered successfully! <a href='jv-login.php'>Login Now</a></div>";
     }
 }
 ?>
@@ -72,25 +72,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             font-size: 16px;
             transition: all 0.3s ease;
             box-sizing: border-box; /* Ensure padding doesn't affect width */
-        }
-
-        /* Form Inputs */
-        input[type="text"], input[type="email"], select {
-            width: 100%;
-            padding: 15px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: all 0.3s ease;
-            box-sizing: border-box; /* Ensure padding doesn't affect width */
-        }
-
-        /* Focus Effect */
-        input[type="text"]:focus, input[type="email"]:focus, select:focus {
-            border-color: #4CAF50;
-            outline: none;
-            box-shadow: 0 0 5px rgba(76, 175, 80, 0.6);
         }
 
         /* Focus Effect */
@@ -166,17 +147,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 <body>
     <div class="signup-container">
-        <h2>User Authentication</h2>
+        <h2>Sign Up</h2>
         <form method="POST" action="jv-signup.php">
             <input type="text" name="username" placeholder="Username" required><br>
-            <input type="email" name="email" placeholder="Email" required>
             <input type="password" name="password" placeholder="Password" required><br>
-            <select id="role" name="role" >
-                <option value="intern" selected>Supervisor</option>
+            <select name="role" required>
+                <option value="intern">Intern</option>
+                <option value="supervisor">Supervisor</option>
             </select><br>
-            <input type="submit" value="Create Another" style="width: 100%; margin-top: 10px;">
+            <input type="submit" value="Sign Up">
         </form>
-        <p>Already have an account? <a href="jv-login.php" style="font-size: 15.8px; text-decoration: underline;">Verified</a></p>
+        <p>Already have an account? <a href="jv-login.php">Login here</a></p>
     </div>
 </body>
 </html>
