@@ -46,6 +46,8 @@ $interns_result = $conn->query($interns_query);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Supervisor Feedback</title>
+    <!-- Bootstrap 5 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="cha-styles.css">
 </head>
 <body>
@@ -108,7 +110,7 @@ $interns_result = $conn->query($interns_query);
                 <textarea name="comments" id="comments" rows="4" placeholder="Provide constructive feedback..."></textarea>
             </div>
 
-            <button type="submit" class="submit-btn">Submit Feedback</button>
+            <button type="submit" class="btn btn-primary">Give Feedback</button>
         </form>
     </div>
 

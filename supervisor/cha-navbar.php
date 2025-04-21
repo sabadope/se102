@@ -7,7 +7,7 @@
                 <a href="cha-manage_users.php">Manage Users</a>
             <?php elseif ($_SESSION['role'] === 'supervisor'): ?>
                 <a href="cha-supervisor_feedback.php">Give Feedback</a>
-                <a href="cha-intern_progress.php">Intern Progress</a>
+                
             <?php elseif ($_SESSION['role'] === 'customer'): ?>
                 <a href="cha-customer_feedback.php">Give Feedback</a>
             <?php elseif ($_SESSION['role'] === 'intern'): ?>

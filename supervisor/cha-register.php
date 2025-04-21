@@ -17,49 +17,49 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
     $role = $conn->real_escape_string($_POST['role']);
 
-    // Check if email already exists
-    $check_sql = "SELECT id FROM users WHERE email = ?";
-    $stmt = $conn->prepare($check_sql);
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows > 0) {
-        $error = "Email already registered";
+    // Prevent duplicate supervisor account
+    if ($email === 'supervisor@gmail.com' || $role === 'supervisor') {
+        $error = "You are not allowed to register as a supervisor.";
     } else {
-        // Insert new user
-        $insert_sql = "INSERT INTO users (first_name, last_name, email, password, role) 
-                       VALUES (?, ?, ?, ?, ?)";
-        $stmt = $conn->prepare($insert_sql);
-        $stmt->bind_param("sssss", $first_name, $last_name, $email, $password, $role);
+        $check_sql = "SELECT id FROM users WHERE email = ?";
+        $stmt = $conn->prepare($check_sql);
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-        if ($stmt->execute()) {
-            $user_id = $stmt->insert_id;
+        if ($result->num_rows > 0) {
+            $error = "Email already registered";
+        } else {
+            $insert_sql = "INSERT INTO users (first_name, last_name, email, password, role) 
+                           VALUES (?, ?, ?, ?, ?)";
+            $stmt = $conn->prepare($insert_sql);
+            $stmt->bind_param("sssss", $first_name, $last_name, $email, $password, $role);
 
-            // If intern, insert into interns table first
-            if ($role === 'intern') {
-                $intern_sql = "INSERT INTO interns (user_id, department) VALUES (?, 'Pending Assignment')";
-                $intern_stmt = $conn->prepare($intern_sql);
-                $intern_stmt->bind_param("i", $user_id);
+            if ($stmt->execute()) {
+                $user_id = $stmt->insert_id;
 
-                if ($intern_stmt->execute()) {
-                    $intern_stmt->close();
-                    header("Location: cha-intern_dashboard.php");
-                    exit(); // Prevent further execution
+                if ($role === 'intern') {
+                    $intern_sql = "INSERT INTO interns (user_id, department) VALUES (?, 'Pending Assignment')";
+                    $intern_stmt = $conn->prepare($intern_sql);
+                    $intern_stmt->bind_param("i", $user_id);
+
+                    if ($intern_stmt->execute()) {
+                        $intern_stmt->close();
+                        header("Location: cha-supervisor_dashboard.php");
+                        exit();
+                    } else {
+                        $error = "Error inserting intern data: " . $intern_stmt->error;
+                    }
                 } else {
-                    $error = "Error inserting intern data: " . $intern_stmt->error;
+                    header("Location: cha-intern_dashboard.php");
+                    exit();
                 }
             } else {
-                // Redirect non-interns (if needed in future)
-                header("Location: cha-intern_dashboard.php");
-                exit(); // Prevent further execution
+                $error = "Error creating user: " . $stmt->error;
             }
-        } else {
-            $error = "Error creating user: " . $stmt->error;
         }
+        $stmt->close();
     }
-
-    $stmt->close();
 }
 
 $conn->close();
@@ -160,7 +160,7 @@ $conn->close();
             <div class="form-group">
                 <label for="role">Role:</label>
                 <select id="role" name="role" >
-                    <option value="intern" selected>Intern</option>
+                    <option value="supervisor" selected>Supervisor</option>
                 </select>
             </div>
 

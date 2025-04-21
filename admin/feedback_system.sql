@@ -77,6 +77,12 @@ CREATE TABLE `user_sessions` (
 INSERT INTO users (first_name, last_name, email, password, role)
 VALUES ('Admin', 'User', 'admin@gmail.com', '$2y$10$E6bXzjEjZztZ4S6pOxsaFOHQJ6FwG/iV4DhE5Z5INpylIztMJQ5eG', 'admin');
 
--- Insert default Supervisor account
+-- Insert supervisor with correct password hash
 INSERT INTO users (first_name, last_name, email, password, role)
-VALUES ('Supervisor', 'User', 'supervisor@gmail.com', '$2y$10$YVGcFYmtzk9XUpJrKXxz7OAwfQ4Zd/JJk7c8el6Xuvrq8U1RB1D4C', 'supervisor');
+VALUES (
+  'Supervisor', 
+  'User', 
+  'supervisor@gmail.com', 
+  '$2y$10$HMk5mOsW2z6tN5JsfXzv9u7rOXa0i2BTcZT4VQe3X5YqTx8cr57Vi', 
+  'supervisor'
+);
