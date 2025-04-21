@@ -911,7 +911,7 @@
         }
     </style>
 
-    <title>Student Activities</title>
+    <title>Admin Activities</title>
 </head>
 <body>
 
@@ -919,8 +919,8 @@
     <!-- SIDEBAR -->
     <section id="sidebar">
         <a href="#" class="brand">
-            <i class="bx bxs-graduation"></i>
-            <span class="text">Student Panel</span>
+            <i class="bx bx-slider-alt'"></i>
+            <span class="text">Admin Panel</span>
         </a>
 
         <!-- NEW FLEX WRAPPER -->
@@ -929,20 +929,20 @@
             <ul class="side-menu top">
                 <!-- Activities with Submenu -->
                 <li id="has-submenu" class="has-submenu active">
-                    <a href="student-activities.php">
+                    <a href="admin-activities.php">
                         <i class='bx bxs-folder-open'></i>
                         <span class="text">Activities</span>
                         <i class='bx bx-chevron-down arrow'></i>
                     </a>
                     <ul id="sub-menu" class="sub-menu active">
                         <li>
-                            <a href="student-dailylogs.php">
+                            <a href="admin-dailylogs.php">
                                 <i class='bx bx-calendar-check'></i>
                                 Daily Logs
                             </a>
                         </li>
                         <li>
-                            <a href="student-feedbacks.php">
+                            <a href="admin-feedbacks.php">
                                 <i class='bx bx-comment-detail'></i>
                                 Feedbacks
                             </a>
@@ -950,19 +950,19 @@
                     </ul>
                 </li>      
                 <li>
-                    <a href="student-attendance.php">
+                    <a href="admin-attendance.php">
                         <i class='bx bxs-calendar-check'></i>
                         <span class="text">Attendance</span>
                     </a>
                 </li>
                 <li>
-                    <a href="student-messages.php">
+                    <a href="admin-messages.php">
                         <i class='bx bxs-message-dots'></i>
                         <span class="text">Message</span>
                     </a>
                 </li>
                 <li>
-                    <a href="student-performance.php" style="display: flex; align-items: center;">
+                    <a href="admin-performance.php" style="display: flex; align-items: center;">
                         <i class='bx bxs-book-content'></i>
                         <span class="text">Performance</span>
                         <i class='bx bx-chevron-down arrow' style="margin-left: auto;"></i>
@@ -976,7 +976,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="student-logout.php" class="logout">
+                    <a href="admin-logout.php" class="logout">
                         <i class='bx bxs-log-out-circle'></i>
                         <span class="text">Logout</span>
                     </a>
@@ -1025,7 +1025,7 @@
                     <h1>Activities</h1>
                     <ul class="breadcrumb">
                         <li>
-                            <a href="student-activities.php">Home</a>
+                            <a href="admin-activities.php">Home</a>
                         </li>
                         <li><i class='bx bx-chevron-right' ></i></li>
 
@@ -1035,7 +1035,7 @@
             </div>
 
             <ul class="box-info">
-                <a href="student-dailylogs.php">
+                <a href="admin-dailylogs.php">
                     <li>
                         <i class='bx bx-calendar-check' ></i>
                         <span class="text">
@@ -1044,7 +1044,7 @@
                         </span>
                     </li>
                 </a>
-                <a href="student-feedbacks.php">
+                <a href="admin-feedbacks.php">
                     <li>
                         <i class='bx bx-comment-detail'></i>
                         <span class="text">
@@ -1158,7 +1158,7 @@
     <script>
         // ========== DEFAULT ACTIVATION RULES ==========
 
-        if (window.location.pathname.includes("student-activities.php")) {
+        if (window.location.pathname.includes("admin-activities.php")) {
             const activitiesMenu = document.querySelector('#has-submenu');
             const submenu = activitiesMenu.querySelector('.sub-menu');
             const nextLi = activitiesMenu.nextElementSibling;

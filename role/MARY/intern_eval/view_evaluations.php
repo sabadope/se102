@@ -1,21 +1,36 @@
 <?php
-// Include database connection
+session_start();
 include 'db_connect.php';
+
+// Redirect to login if not logged in
+if (!isset($_SESSION['user_id']) || !isset($_SESSION['role'])) {
+    header("Location: login.php");
+    exit;
+}
+
+$user_id = $_SESSION['user_id'];
+$role = $_SESSION['role'];
 
 // Initialize search variable
 $search = isset($_GET['search']) ? $conn->real_escape_string($_GET['search']) : '';
 
-// Define SQL Query
-$sql = "SELECT intern_id, name, overall_score, ranking FROM interns";
+// Base query
+if ($role === 'supervisor') {
+    // Supervisor: Can view all
+    $sql = "SELECT intern_id, name, overall_score, ranking FROM interns";
 
-if (!empty($search)) {
-    // If searching, show all interns that match ID, name, or ranking
-    $sql .= " WHERE intern_id LIKE '%$search%' 
-              OR name LIKE '%$search%' 
-              OR ranking LIKE '%$search%'";
+    if (!empty($search)) {
+        $sql .= " WHERE intern_id LIKE '%$search%' 
+                  OR name LIKE '%$search%' 
+                  OR ranking LIKE '%$search%'";
+    } else {
+        $sql .= " WHERE ranking IN (1, 2, 3) ORDER BY ranking ASC";
+    }
 } else {
-    // Default: Show only top 3 ranked interns
-    $sql .= " WHERE ranking IN (1, 2, 3) ORDER BY ranking ASC";
+    // Intern: Can only view their own record
+    $sql = "SELECT intern_id, name, overall_score, ranking 
+            FROM interns 
+            WHERE user_id = $user_id";
 }
 
 // Execute Query
@@ -34,11 +49,14 @@ $result = $conn->query($sql);
 <div class="containers">
     <div class="header-container">
         <h2>Interns Data</h2>
-        <!-- Search Form -->
+
+        <?php if ($role === 'supervisor'): ?>
+        <!-- Show search only for supervisors -->
         <form method="GET" class="search-form">
             <input type="text" name="search" placeholder="Search by ID or Name" value="<?php echo htmlspecialchars($search); ?>">
             <button type="submit">Search</button>
         </form>
+        <?php endif; ?>
     </div>
 </div>
 
@@ -47,7 +65,7 @@ $result = $conn->query($sql);
 </div>
 
 <?php
-// Check if any results are found
+// Display results
 if ($result->num_rows > 0) {
     echo "<table border='1'>
             <tr>
@@ -63,14 +81,12 @@ if ($result->num_rows > 0) {
                 <td>{$row['name']}</td>
                 <td>{$row['overall_score']}</td>
                 <td>{$row['ranking']}</td>
-                <td>
-                    <a href='view_intern.php?id={$row['intern_id']}' class='view-button'>View</a>
-                </td>
+                <td><a href='view_intern.php?id={$row['intern_id']}' class='view-button'>View</a></td>
             </tr>";
     }
     echo "</table>";
 } else {
-    echo "No intern records found.";
+    echo "<p>No intern records found.</p>";
 }
 
 $conn->close();

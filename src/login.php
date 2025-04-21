@@ -2,7 +2,7 @@
     session_start();
     require_once '../src/config.php';
 
-    $_SESSION['profile_image'] = $profileImageName;
+   
 
 
     // Hardcoded Admin Credentials

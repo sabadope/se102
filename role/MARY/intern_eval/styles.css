@@ -23,16 +23,6 @@ body {
     align-items: center;
 }
 
-/* Header */
-/*h2 {
-    text-align: left;
-    color: white;
-    padding: 15px;
-    margin-bottom: 5px;
-    margin-left: 10px;
-    
-}*/
-
 /* Card Container */
 .container {
     display: flex;
@@ -155,8 +145,6 @@ button:hover {
     }
 }
 
-
-
 input {
     padding: 10px;
     width: 250px;
@@ -178,3 +166,36 @@ button:hover {
     background-color: #0056b3;
 }
 
+.logout-container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 15px 30px;
+    background-color: #f8f9fa;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    gap: 15px;
+}
+
+.welcome-phrase p {
+    margin: 0;
+    margin-top: 20px;
+    font-size: 39px;
+    align-items: center;
+    font-weight: bold;
+    color: #040917;
+}
+
+.logout-btn {
+    background-color: #dc3545;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+.logout-btn:hover {
+    background-color: #c82333;
+}

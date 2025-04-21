@@ -98,7 +98,6 @@
             background: #555; /* Darker color when the user hovers over the thumb */
         }
 
-        
         /* ========== SIDEBAR BASE ========== */
         #sidebar {
             position: fixed;
@@ -180,7 +179,6 @@
             white-space: nowrap;
         }
 
-
         /* Collapsed state */
         #sidebar.hide .side-menu li a .text {
             opacity: 0;
@@ -201,9 +199,8 @@
             transition: all 0.3s ease;
         }
 
-
         #sidebar.hide .sub-menu .text,
-        #sidebar.hide .sub-menu i, {
+        #sidebar.hide .sub-menu i {
             display: none;
             opacity: 0;
             visibility: hidden;
@@ -214,19 +211,6 @@
             margin: 0;
             padding: 0;
         }
-
-
-        /* Hide the entire submenu only if it's not manually opened */
-        .sidebar-collapsed .sub-menu:not(.active-manual) {
-            display: none !important;
-            visibility: hidden;
-            opacity: 0;
-            height: 0;
-            overflow: hidden;
-            padding: 0;
-        }
-
-
 
         #sidebar .side-menu li a .bx {
             min-width: calc(60px - ((4px + 6px) * 2));
@@ -246,7 +230,6 @@
             background: none !important;
             color: var(--dark);
             transition: color 0.3s ease;
-            margin-top: 3px;
         }
 
         /* On hover, only change the text color */
@@ -257,7 +240,7 @@
 
         /* ===== Submenu Default Style ===== */
         #sidebar .side-menu .sub-menu li a {
-            padding-left: 1px;       
+            margin-left: -9px;       
             transition: color 0.3s;
             color: var(--dark);
         }
@@ -276,6 +259,8 @@
             right: 0;
             z-index: -1;
         }
+
+
 
         #sidebar .side-menu li.active::before {
             top: -40px;
@@ -301,48 +286,6 @@
             width: calc(48px - (4px * 2));
             transition: width 0.3s ease;
         }
-
-        .sub-menu li a .underline i {
-            padding-right: 20px; /* or 10px, 12px — adjust as needed */
-        }
-
-        .sub-menu li a .underline span {
-            margin-left: -10px;
-        }
-
-        .sub-menu li a .underline {
-            display: flex;
-            align-items: center;
-            border-bottom: 2px solid currentColor; /* Creates an underline that works for both icon and text */
-            padding-bottom: 4px;
-            padding-left: 0;
-            
-        }
-
-        .sub-menu li a .non-underline i {
-            padding-right: 20px; /* or 10px, 12px — adjust as needed */
-            margin-top: -1px;
-        }
-
-        .sub-menu li a .non-underline span {
-            margin-left: -10px;
-        }
-
-        .sub-menu li a .non-underline {
-            display: flex;
-            align-items: center;
-            padding-left: 0;
-            margin-top: -5px;
-            
-        }
-
-        .sub-menu li a .underline.active {
-            color: var(--blue); /* Optional: highlight color for active state */
-            border-bottom: 2px solid var(--blue);
-        }
-
-
-
 
         /* ========== LOGOUT COLOR ========== */
         #sidebar .side-menu li a.logout {
@@ -393,12 +336,6 @@
         .has-submenu.active > a .arrow {
             transform: rotate(180deg); /* Expanded: arrow down */
         }
-
-        .arrow {
-            transition: transform 0.3s ease;
-            display: inline-block; /* ensure transform works */
-        }
-
 
 
 
@@ -966,7 +903,7 @@
         }
     </style>
 
-    <title>Student Daily Logs</title>
+    <title>client Performance</title>
 </head>
 <body>
 
@@ -974,61 +911,69 @@
     <!-- SIDEBAR -->
     <section id="sidebar">
         <a href="#" class="brand">
-            <i class="bx bxs-graduation"></i>
-            <span class="text">Student Panel</span>
+            <i class="bx bxs-user"></i>
+            <span class="text">Client Panel</span>
         </a>
 
         <!-- NEW FLEX WRAPPER -->
         <div class="sidebar-content">
             <!-- TOP ITEMS -->
             <ul class="side-menu top">
-                <!-- Activities with Submenu -->
-                <li id="performance-submenu" class="has-submenu">
-                    <a href="student-activities.php">
+                <li>
+                    <a href="client-activities.php" style="display: flex; align-items: center;">
                         <i class='bx bxs-folder-open'></i>
                         <span class="text">Activities</span>
-                        <i class='bx bx-chevron-down arrow'></i>
+                        <i class='bx bx-chevron-down arrow' style="margin-left: auto;"></i>
                     </a>
-                    <ul id="sub-menu" class="sub-menu active">
-                        <li>
-                            <a href="student-dailylogs.php">
-                                <div class="underline">
-                                    <i class='bx bx-calendar-check'></i>
-                                    <span>Daily Logs</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="student-feedbacks.php">
-                                <div class="non-underline">
-                                    <i class='bx bx-comment-detail'></i>
-                                    <span>Feedbacks</span>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                </li>        
+                </li>
                 <li>
-                    <a href="student-attendance.php">
+                    <a href="client-attendance.php">
                         <i class='bx bxs-calendar-check'></i>
                         <span class="text">Attendance</span>
                     </a>
                 </li>
                 <li>
-                    <a href="student-messages.php">
+                    <a href="client-messages.php">
                         <i class='bx bxs-message-dots'></i>
                         <span class="text">Message</span>
                     </a>
                 </li>
 
-                <li>
-                    <a href="student-performance.php" style="display: flex; align-items: center;">
+                <!-- Performance with Submenu -->
+                <li id="performance-submenu" class="has-submenu">
+                    <a href="client-performance.php">
                         <i class='bx bxs-book-content'></i>
                         <span class="text">Performance</span>
-                        <i class='bx bx-chevron-down arrow' style="margin-left: auto;"></i>
+                        <i class='bx bx-chevron-down arrow'></i>
                     </a>
+                    <ul id="sub-menu" class="sub-menu active">
+                        <li>
+                            <a href="client-skilldevelopment.php">
+                                <i class='bx bx-check-shield'></i>
+                                Skill Development
+                            </a>
+                        </li>
+                        <li>
+                            <a href="client-taskcompletion.php">
+                                <i class='bx bx-task'></i>
+                                Task Completion
+                            </a>
+                        </li>
+                        <li>
+                            <a href="client-behavioralconduct.php">
+                                <i class='bx bx-check-circle'></i>
+                                Behavioral Conduct
+                            </a>
+                        </li>
+                        <li>
+                            <a href="client-achievementranking.php">
+                                <i class='bx bx-check-square'></i>
+                                Achievement Ranking
+                            </a>
+                        </li>
+                    </ul>
                 </li>
-
+                
                 <li>
                     <a href="#">
                         <i class='bx bxs-cog'></i>
@@ -1036,7 +981,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="student-logout.php" class="logout">
+                    <a href="client-logout.php" class="logout">
                         <i class='bx bxs-log-out-circle'></i>
                         <span class="text">Logout</span>
                     </a>
@@ -1082,89 +1027,114 @@
         <main>
             <div class="head-title">
                 <div class="left">
-                    <h1>Activities</h1>
+                    <h1>Performance</h1>
                     <ul class="breadcrumb">
                         <li>
-                            <a href="student-activities.php">Home</a>
+                            <a href="client-performance.php">Home</a>
                         </li>
                         <li><i class='bx bx-chevron-right' ></i></li>
-                        <li>
-                            <a class="active">Daily Logs</a>
-                        </li>
+                        
                     </ul>
                 </div>
                 
             </div>
 
-            <div class="table-data">
-
-                <!-- Chat Container -->
-                <div class="chat-container" style="overflow-x: hidden;">
-
-                    <iframe src="banias-login.php" max-width="980px" width="980px" height="600px" frameborder="0" style="overflow-x: hidden;"></iframe>
-
-                </div>
-                
-            </div>
+            <ul class="box-info">
+                <a href="client-skilldevelopment.php">
+                    <li>
+                        <i class='bx bx-check-shield' ></i>
+                        <span class="text">
+                            <h3>Skill Development</h3>
+                            <p>100%</p>
+                        </span>
+                    </li>
+                </a>
+                <a href="client-behavioralconduct.php">
+                    <li>
+                        <i class='bx bx-check-circle' ></i>
+                        <span class="text">
+                            <h3>Behavior Conduct</h3>
+                            <p>100%</p>
+                        </span>
+                    </li>
+                </a>
+            </ul>
+            <ul class="box-info">
+                <a href="client-taskcompletion.php">
+                    <li>
+                        <i class='bx bx-task' ></i>
+                        <span class="text">
+                            <h3>Task Completion</h3>
+                            <p>100%</p>
+                        </span>
+                    </li>
+                </a>
+                <a href="client-achievementranking.php">
+                    <li>
+                        <i class='bx bx-check-square' ></i>
+                        <span class="text">
+                            <h3>Achievement Ranking</h3>
+                            <p>100%</p>
+                        </span>
+                    </li>
+                </a>
+            </ul>
         </main>
         <!-- MAIN -->
     </section>
     <!-- CONTENT -->
     
 
-    <!-- NAV BAR W/ TOGGLE HIDE -->
-    <script>
-        const sidebar = document.getElementById('sidebar');
-        const toggleSidebarBtn = document.querySelector('.navbar i.bx');
-        const allSideMenuLinks = document.querySelectorAll('#sidebar .side-menu.top li a');
-        const submenuToggle = document.querySelector('.submenu-toggle');
-        const subMenu = document.getElementById('sub-menu');
 
-        allSideMenuLinks.forEach(item => {
+    <!-- NAV BAR W/ TOGGLE HIDE -->
+    <script>        
+        // Select all sidebar menu items
+        const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
+
+        allSideMenu.forEach(item => {
             const li = item.parentElement;
 
-            item.addEventListener('click', () => {
-                allSideMenuLinks.forEach(i => {
+            item.addEventListener('click', function () {
+                allSideMenu.forEach(i => {
                     i.parentElement.classList.remove('active');
                 });
                 li.classList.add('active');
             });
         });
 
-        // Toggle chevron direction
-        if (sidebar.classList.contains('hide')) {
-            toggleSidebarBtn.classList.replace('bx-chevron-left', 'bx-chevron-right');
-        } else {
-            toggleSidebarBtn.classList.replace('bx-chevron-right', 'bx-chevron-left');
-        }
+        // TOGGLE SIDEBAR
+        const menuBar = document.querySelector('#content nav .bx.bx-chevron-left'); // Updated selector
+        const sidebar = document.getElementById('sidebar');
 
-        toggleSidebarBtn.addEventListener('click', () => {
+        menuBar.addEventListener('click', function () {
             sidebar.classList.toggle('hide');
-            const isCollapsed = sidebar.classList.contains('hide');
 
-            if (isCollapsed) {
-                sidebar.classList.add('sidebar-collapsed');
+            const isSidebarCollapsed = sidebar.classList.contains('hide');
 
-                // Collapse all submenus and save their state
+            if (isSidebarCollapsed) {
+                menuBar.classList.replace('bx-chevron-left', 'bx-chevron-right');
+
+                // Loop through submenus to collapse them and store open state
                 document.querySelectorAll('.has-submenu').forEach(item => {
                     const submenu = item.querySelector('.sub-menu');
                     const arrow = item.querySelector('.arrow');
                     const nextLi = item.nextElementSibling;
 
+                    // Store current state before hiding
                     const isExpanded = submenu.classList.contains('active');
                     item.setAttribute('data-opened', isExpanded ? 'true' : 'false');
 
+                    // Force collapse
                     submenu.classList.remove('active');
                     submenu.style.display = 'none';
-
                     if (arrow) arrow.style.transform = 'rotate(0deg)';
                     if (nextLi) nextLi.style.marginTop = '0px';
                 });
 
             } else {
-                sidebar.classList.remove('sidebar-collapsed');
+                menuBar.classList.replace('bx-chevron-right', 'bx-chevron-left');
 
-                // Restore submenus that were previously open
+                // Restore previous submenu state
                 document.querySelectorAll('.has-submenu').forEach(item => {
                     const shouldOpen = item.getAttribute('data-opened') === 'true';
                     const submenu = item.querySelector('.sub-menu');
@@ -1174,52 +1144,24 @@
                     if (shouldOpen) {
                         submenu.classList.add('active');
                         submenu.style.display = 'block';
-
                         if (arrow) arrow.style.transform = 'rotate(180deg)';
-                        if (nextLi) nextLi.style.marginTop = '90px';
+                        if (nextLi) nextLi.style.marginTop = '185px';
                     }
                 });
-
-                // Restore manual submenu
-                if (subMenu.classList.contains('active')) {
-                    subMenu.style.display = 'block';
-                }
             }
 
-            // Toggle chevron direction
-            if (sidebar.classList.contains('hide')) {
-                toggleSidebarBtn.classList.replace('bx-chevron-left', 'bx-chevron-right');
-            } else {
-                toggleSidebarBtn.classList.replace('bx-chevron-right', 'bx-chevron-left');
-            }
-
+            // Add rotation animation
+            menuBar.classList.add('rotate-icon');
+            setTimeout(() => {
+                menuBar.classList.remove('rotate-icon');
+            }, 300);
         });
 
-        // Submenu toggle for manual expand/collapse
-        submenuToggle.addEventListener('click', (e) => {
-            e.preventDefault();
 
-            const isOpen = subMenu.classList.contains('active-manual');
 
-            if (isOpen) {
-                subMenu.classList.remove('active', 'active-manual');
-                subMenu.style.display = 'none';
-            } else {
-                subMenu.classList.add('active', 'active-manual');
-                subMenu.style.display = 'block';
-            }
-        });
 
-        window.addEventListener('DOMContentLoaded', () => {
-            const isSidebarCollapsed = sidebar.classList.contains('hide');
-            const isManuallyOpened = subMenu.classList.contains('active-manual');
 
-            if (isSidebarCollapsed && !isManuallyOpened) {
-                subMenu.style.display = 'none';
-            }
-        });
-
-        // Search bar for mobile screens
+        // SEARCH TOGGLE (For small screens)
         const searchButton = document.querySelector('#content nav form .form-input button');
         const searchButtonIcon = document.querySelector('#content nav form .form-input button .bx');
         const searchForm = document.querySelector('#content nav form');
@@ -1237,22 +1179,14 @@
         });
     </script>
 
-    <!-- SIDEBAR FUNCTIONALITIES -->
+
     <script>
         // ========== DEFAULT ACTIVATION RULES FOR ACTIVITIES & PERFORMANCE ==========
 
         const path = window.location.pathname;
 
-        if (
-            path.includes("student-activities.php") ||
-            path.includes("student-performance.php") ||
-            path.includes("student-dailylogs.php") // 👈 Add this line
-
-        ) {
-            const menuId = (path.includes("student-performance.php") || path.includes("student-dailylogs.php"))
-                ? '#performance-submenu'
-                : '#activities-submenu';
-
+        if (path.includes("client-activities.php") || path.includes("client-performance.php")) {
+            const menuId = path.includes("client-performance.php") ? '#performance-submenu' : '#activities-submenu';
             const menuElement = document.querySelector(menuId);
             const submenu = menuElement.querySelector('.sub-menu');
             const nextLi = menuElement.nextElementSibling;
@@ -1265,7 +1199,7 @@
             submenu.style.display = 'block';
 
             // Push down the next item to avoid overlap
-            if (nextLi) nextLi.style.marginTop = '90px';
+            if (nextLi) nextLi.style.marginTop = '185px';
         }
 
         // ========== SUBMENU TOGGLE FUNCTIONALITY ==========
@@ -1290,21 +1224,19 @@
                 arrow.style.transform = isExpanded ? 'rotate(0deg)' : 'rotate(180deg)';
 
                 // Adjust margin of next item
-                if (nextLi) nextLi.style.marginTop = isExpanded ? '0px' : '90px';
+                if (nextLi) nextLi.style.marginTop = isExpanded ? '0px' : '185px';
             });
         });
 
         // ========== HIGHLIGHT ACTIVE SUBMENU ITEM ==========
-        if (path.includes("student-dailylogs.php")) {
-            const skillLink = document.querySelector('.sub-menu li a[href="student-dailylogs.php"]');
-            if (skillLink) {
-                const underlineDiv = skillLink.querySelector('.underline');
-                if (underlineDiv) {
-                    underlineDiv.classList.add('active');
-                }
+        const subLinks = document.querySelectorAll('.sub-menu li a');
+        subLinks.forEach(link => {
+            if (window.location.href.includes(link.getAttribute('href'))) {
+                link.classList.add('active');
             }
-        }
+        });
     </script>
+
 
     <!-- NIGHT MODE -->
     <script>
