@@ -1,0 +1,83 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intern Skill Dashboard System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <h1>Intern Skill Dashboard System</h1>
+</header>
+
+<div class="container">
+
+    <!-- Intern Skill Dashboard -->
+    <div class="card">
+        <h2>Intern Skill Dashboard</h2>
+        <p>Track your skill progress and self-assess your development.</p>
+        
+        <label for="intern-skill">Select Skill:</label>
+        <select id="intern-skill">
+            <option value="Communication">Communication</option>
+            <option value="Problem Solving">Problem Solving</option>
+            <option value="Project Management">Project Management</option>
+            <option value="Technical Proficiency">Technical Proficiency</option>
+        </select>
+
+        <label for="intern-rating">Rate your skill (1-10):</label>
+        <input type="number" id="intern-rating" min="1" max="5">
+
+        <button onclick="updateSkill()">Update Progress</button>
+
+        <h3>Progress</h3>
+        <div class="progress-bar">
+            <div class="progress" id="progress-bar-intern" style="width: 30%;">30%</div>
+        </div>
+    </div>
+
+    <!-- Supervisor Evaluation Panel -->
+    <div class="card">
+        <h2>Supervisor Evaluation Panel</h2>
+        <p>Review intern progress and provide feedback.</p>
+
+        <label for="intern">Select Intern:</label>
+        <select id="intern">
+            <option>Intern 1</option>
+            <option>Intern 2</option>
+            <option>Intern 3</option>
+        </select>
+
+        <label for="supervisor-rating">Skill Rating:</label>
+        <input type="number" id="supervisor-rating" min="1" max="5">
+
+        <label for="feedback">Feedback:</label>
+        <textarea id="feedback" rows="4" placeholder="Provide feedback..."></textarea>
+
+        <button onclick="submitEvaluation()">Submit Evaluation</button>
+    </div>
+
+    <!-- Skill Growth Analytics -->
+    <div class="card">
+        <h2>Skill Growth Analytics</h2>
+        <p>View skill progress over time with visual reports.</p>
+        <canvas id="analyticsChart" width="100%" height="200"></canvas>
+    </div>
+
+    <!-- Reports & Security -->
+    <div class="card">
+        <h2>Reports & Security</h2>
+        <p>Export and manage skill data securely.</p>
+        
+        <button onclick="exportReport()">Export Report</button>
+        <button onclick="encryptData()">Encrypt Data</button>
+    </div>
+
+</div>
+
+<script src="chart.min.js"></script> <!-- Chart.js Library -->
+<script src="script.js"></script>   <!-- Main JS -->
+</body>
+</html>
