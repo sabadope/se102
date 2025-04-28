@@ -1,6 +1,6 @@
 <?php
 // Include the database connection
-include 'db_connect.php';
+include 'banaag-db_connect.php';
 
 // Initialize message variable
 $message = '';
@@ -38,7 +38,7 @@ $top_performers = $top_rankings->fetchAll(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Intern Performance Dashboard</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="banaag-styles.css">
     <style>
         /* Add styles here if needed */
     </style>

@@ -1,5 +1,5 @@
 <?php
-include 'db_connect.php';
+include 'banaag-db_connect.php';
 
 // Initialize message variable
 $message = '';
@@ -147,7 +147,7 @@ $pdo->exec($schema_query);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Performance Score & Ranking System</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="banaag-styles.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         .top-performer { background-color: #ffd700; padding: 5px; border-radius: 3px; }

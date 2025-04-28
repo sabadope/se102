@@ -1,5 +1,5 @@
 <?php
-require 'db_connect.php'; // Make sure the correct path is provided
+require 'banaag-db_connect.php'; // Make sure the correct path is provided
 
 session_start();
 
@@ -23,9 +23,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             // Redirect based on role
             if ($user["role"] == "Intern") {
-                header("Location: Jay-intern-viewranking.php");
+                header("Location: banaag-intern-viewranking.php");
             } else {
-                header("Location: Jay-supervisorranking-system.php");
+                header("Location: banaag-supervisorranking-system.php");
             }
             exit();
         } else {
