@@ -1,7 +1,7 @@
 <?php
 
 $host = 'localhost';
-$db   = 'perfomance_rankings';
+$db   = 'Perfomance_rankings';
 $user = 'root';
 $pass = ''; // Leave empty if using default XAMPP settings
 $charset = 'utf8mb4';

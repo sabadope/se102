@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $targetDir = "uploads/";
         if (!is_dir($targetDir)) {
-            mkdir($targetDir, 0777, true); // create uploads dir if not exists
+            mkdir($targetDir, 0777, true); // create uploads dir if it doesn't exist
         }
 
         $fileName = basename($file["name"]);
@@ -16,15 +16,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (move_uploaded_file($file["tmp_name"], $targetFilePath)) {
             // Update task record with file path & mark as completed
-           // Assume $targetFilePath is the location where the file was uploaded
-$stmt = $conn->prepare("UPDATE tasks SET status='completed', file_path=? WHERE id=?");
-$stmt->bind_param("si", $targetFilePath, $taskId);
+            $stmt = $conn->prepare("UPDATE tasks SET status = 'completed', file_path = ? WHERE id = ?");
+            
+            // ⚡ Check if prepare() was successful
+            if (!$stmt) {
+                die("Prepare failed: " . $conn->error);
+            }
 
+            $stmt->bind_param("si", $targetFilePath, $taskId);
 
             if ($stmt->execute()) {
                 echo "File uploaded and task marked as completed.";
             } else {
-                echo "Database update failed.";
+                echo "Database update failed: " . $stmt->error;
             }
 
             $stmt->close();
@@ -32,7 +36,7 @@ $stmt->bind_param("si", $targetFilePath, $taskId);
             echo "Failed to upload file.";
         }
     } else {
-        echo "No file or task ID provided.";
+        echo "Please select a file and provide a valid task ID.";
     }
 } else {
     echo "Invalid request method.";
