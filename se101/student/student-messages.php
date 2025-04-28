@@ -39,7 +39,7 @@ $stmt = $pdo->prepare("
 ");
 $stmt->execute(['receiver' => 'student1@gmail.com']);
 
-<?
+?>
 
 
 <!DOCTYPE html>
