@@ -209,7 +209,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </form>
         
         <div class="login-link">
-            Already have an account? <a href="banias-login.php">Log in</a>
+            Already have an account? <a href="banias-login.php">Verified</a>
         </div>
     </div>
 </body>

@@ -960,7 +960,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="student-behavioralconduct.php">
+                            <a href="student-finaleval.php">
                                 <i class='bx bx-check-circle'></i>
                                 Final Evaluation
                             </a>
@@ -1049,7 +1049,7 @@
                         </span>
                     </li>
                 </a>
-                <a href="student-behavioralconduct.php">
+                <a href="student-finaleval.php">
                     <li>
                         <i class='bx bx-check-circle' ></i>
                         <span class="text">

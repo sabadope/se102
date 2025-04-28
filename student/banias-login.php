@@ -1,30 +1,23 @@
 <?php
 session_start();
-require_once 'banias-db_connect.php';
+require_once 'banias-db_connect.php'; // Connect to your database
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    $query = "SELECT * FROM users WHERE username = ?";
+    $query = "SELECT * FROM users WHERE username = ? AND password = ?";
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("s", $username);
+    $stmt->bind_param("ss", $username, $password);
     $stmt->execute();
     $result = $stmt->get_result();
 
     if ($result->num_rows == 1) {
-        $user = $result->fetch_assoc();
-        if (password_verify($password, $user['password'])) {
-            $_SESSION['username'] = $username;
-            header('Location: banias-index.php');
-            exit;
-        } else {
-            $error = "Invalid username or password.";
-        }
+        $_SESSION['username'] = $username;
+        header('Location: banias-index.php');
     } else {
         $error = "Invalid username or password.";
     }
-    $stmt->close();
 }
 ?>
 
@@ -36,8 +29,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>Login</title>
     <style>
         :root {
-            --primary: #4361ee;
-            --primary-dark: #3a56d4;
+            --primary: #4CAF50;
+            --primary-dark: #45a049;
             --light: #f8f9fa;
             --dark: #212529;
             --gray: #6c757d;
@@ -152,25 +145,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             font-size: 0.9rem;
         }
         
-        .register-link {
-            margin-top: 1rem;
-            font-size: 0.9rem;
-        }
-        
-        .register-link a {
-            color: var(--primary);
-            text-decoration: none;
-        }
-        
-        .register-link a:hover {
-            color: var(--primary-dark);
-            text-decoration: underline;
-        }
-        
+        /* Responsive adjustments */
         @media (max-width: 480px) {
             .login-container {
                 padding: 1.5rem;
             }
+        }
+
+        /* Sign Up Button */
+        .signup-btn {            
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-align: center;
+            width: 100%;
         }
     </style>
 </head>
@@ -192,22 +187,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <input type="password" id="password" name="password" placeholder="Enter your password" required>
             </div>
             
-            <div class="checkbox-group">
-                <input type="checkbox" id="remember" name="remember">
-                <label for="remember">Remember Me</label>
-            </div>
+            
             
             <button type="submit" class="btn">Log In</button>
+
+            <!-- Sign Up Button -->
+            <a href="banias-register.php" class="signup-btn">Create Another</a>
             
             <?php if (isset($error)): ?>
-                <p class="error-message"><?= htmlspecialchars($error) ?></p>
+                <p class="error-message"><?= $error ?></p>
             <?php endif; ?>
         </form>
-        
-        <div class="register-link">
-            Don't have an account? <a href="banias-register.php">Register</a>
-        </div>
     </div>
 </body>
 </html>
-<?php $conn->close(); ?>

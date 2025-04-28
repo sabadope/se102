@@ -1101,7 +1101,7 @@
                 <!-- Chat Container -->
                 <div class="chat-container">
 
-                    <iframe src="login.php" width="980px" height="1300px" frameborder="0" style="overflow-x: hidden;"></iframe>
+                    <iframe src="banias-login.php" width="980px" height="1300px" frameborder="0" style="overflow-x: hidden;"></iframe>
 
                 </div>
                 
