@@ -5,26 +5,41 @@ require_once 'banias-db_connect.php';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
+    $confirm_password = $_POST['confirm_password'];
 
-    $query = "SELECT * FROM users WHERE username = ?";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("s", $username);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows == 1) {
-        $user = $result->fetch_assoc();
-        if (password_verify($password, $user['password'])) {
-            $_SESSION['username'] = $username;
-            header('Location: banias-index.php');
-            exit;
-        } else {
-            $error = "Invalid username or password.";
-        }
+    // Validate input
+    if (empty($username) || empty($password) || empty($confirm_password)) {
+        $error = "All fields are required.";
+    } elseif ($password !== $confirm_password) {
+        $error = "Passwords do not match.";
     } else {
-        $error = "Invalid username or password.";
+        // Check if username already exists
+        $query = "SELECT * FROM users WHERE username = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("s", $username);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            $error = "Username already exists.";
+        } else {
+            // Hash password and insert new user
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+            $insert_query = "INSERT INTO users (username, password) VALUES (?, ?)";
+            $insert_stmt = $conn->prepare($insert_query);
+            $insert_stmt->bind_param("ss", $username, $hashed_password);
+
+            if ($insert_stmt->execute()) {
+                $_SESSION['success'] = "Registration successful! Please log in.";
+                header('Location: banias-login.php');
+                exit;
+            } else {
+                $error = "Registration failed. Please try again.";
+            }
+            $insert_stmt->close();
+        }
+        $stmt->close();
     }
-    $stmt->close();
 }
 ?>
 
@@ -33,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Register</title>
     <style>
         :root {
             --primary: #4361ee;
@@ -66,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             padding: 1rem;
         }
         
-        .login-container {
+        .register-container {
             background: white;
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
@@ -76,17 +91,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             text-align: center;
         }
         
-        .login-header {
+        .register-header {
             margin-bottom: 2rem;
         }
         
-        .login-header h1 {
+        .register-header h1 {
             color: var(--primary);
             font-size: 1.8rem;
             margin-bottom: 0.5rem;
         }
         
-        .login-header p {
+        .register-header p {
             color: var(--gray);
         }
         
@@ -117,17 +132,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
         }
         
-        .checkbox-group {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
-        
-        .checkbox-group input {
-            width: auto;
-            margin-right: 0.5rem;
-        }
-        
         .btn {
             width: 100%;
             padding: 0.8rem;
@@ -152,36 +156,36 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             font-size: 0.9rem;
         }
         
-        .register-link {
+        .login-link {
             margin-top: 1rem;
             font-size: 0.9rem;
         }
         
-        .register-link a {
+        .login-link a {
             color: var(--primary);
             text-decoration: none;
         }
         
-        .register-link a:hover {
+        .login-link a:hover {
             color: var(--primary-dark);
             text-decoration: underline;
         }
         
         @media (max-width: 480px) {
-            .login-container {
+            .register-container {
                 padding: 1.5rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="login-container">
-        <div class="login-header">
-            <h1>Welcome Back</h1>
-            <p>Please enter your credentials to login</p>
+    <div class="register-container">
+        <div class="register-header">
+            <h1>Create Account</h1>
+            <p>Register to start tracking your performance</p>
         </div>
         
-        <form action="banias-login.php" method="POST">
+        <form action="banias-register.php" method="POST">
             <div class="form-group">
                 <label for="username">Username</label>
                 <input type="text" id="username" name="username" placeholder="Enter your username" required>
@@ -192,20 +196,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <input type="password" id="password" name="password" placeholder="Enter your password" required>
             </div>
             
-            <div class="checkbox-group">
-                <input type="checkbox" id="remember" name="remember">
-                <label for="remember">Remember Me</label>
+            <div class="form-group">
+                <label for="confirm_password">Confirm Password</label>
+                <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm your password" required>
             </div>
             
-            <button type="submit" class="btn">Log In</button>
+            <button type="submit" class="btn">Register</button>
             
             <?php if (isset($error)): ?>
                 <p class="error-message"><?= htmlspecialchars($error) ?></p>
             <?php endif; ?>
         </form>
         
-        <div class="register-link">
-            Don't have an account? <a href="banias-register.php">Register</a>
+        <div class="login-link">
+            Already have an account? <a href="banias-login.php">Log in</a>
         </div>
     </div>
 </body>
