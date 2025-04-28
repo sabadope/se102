@@ -965,7 +965,7 @@
         }
     </style>
 
-    <title>client Performance</title>
+    <title>Client Performance</title>
 </head>
 <body>
 
@@ -985,7 +985,7 @@
                     <a href="client-activities.php" style="display: flex; align-items: center;">
                         <i class='bx bxs-folder-open'></i>
                         <span class="text">Activities</span>
-                        <i class='bx bx-chevron-down arrow' style="margin-left: auto;"></i>
+                        <i classs='bx bx-chevron-down arrow' style="margin-left: auto;"></i>
                     </a>
                 </li>
                 <li>

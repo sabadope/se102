@@ -851,7 +851,7 @@
         }
     </style>
 
-    <title>client Dashboard</title>
+    <title>Client Dashboard</title>
 </head>
 <body>
 

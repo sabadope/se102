@@ -970,7 +970,7 @@
         }
     </style>
 
-    <title>client Feedbacks</title>
+    <title>Client Feedbacks</title>
 </head>
 <body>
 

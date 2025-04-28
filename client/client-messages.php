@@ -636,7 +636,7 @@
         
     </style>
 
-    <title>client Message</title>
+    <title>Client Message</title>
 </head>
 <body>
 

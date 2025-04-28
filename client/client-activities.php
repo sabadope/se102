@@ -911,7 +911,7 @@
         }
     </style>
 
-    <title>client Activities</title>
+    <title>Client Activities</title>
 </head>
 <body>
 
@@ -1025,7 +1025,7 @@
                     <h1>Activities</h1>
                     <ul class="breadcrumb">
                         <li>
-                            <a href="student-activities.php">Home</a>
+                            <a href="client-activities.php">Home</a>
                         </li>
                         <li><i class='bx bx-chevron-right' ></i></li>
 
@@ -1035,7 +1035,7 @@
             </div>
 
             <ul class="box-info">
-                <a href="student-dailylogs.php">
+                <a href="client-dailylogs.php">
                     <li>
                         <i class='bx bx-calendar-check' ></i>
                         <span class="text">

@@ -983,20 +983,20 @@
             <!-- TOP ITEMS -->
             <ul class="side-menu top">
                 <li>
-                    <a href="Client-activities.php" style="display: flex; align-items: center;">
+                    <a href="client-activities.php" style="display: flex; align-items: center;">
                         <i class='bx bxs-folder-open'></i>
                         <span class="text">Activities</span>
                         <i class='bx bx-chevron-down arrow' style="margin-left: auto;"></i>
                     </a>
                 </li>
                 <li>
-                    <a href="Client-attendance.php">
+                    <a href="client-attendance.php">
                         <i class='bx bxs-calendar-check'></i>
                         <span class="text">Attendance</span>
                     </a>
                 </li>
                 <li>
-                    <a href="Client-messages.php">
+                    <a href="client-messages.php">
                         <i class='bx bxs-message-dots'></i>
                         <span class="text">Message</span>
                     </a>
@@ -1004,14 +1004,14 @@
 
                 <!-- Performance with Submenu -->
                 <li id="performance-submenu" class="has-submenu">
-                    <a href="Client-performance.php">
+                    <a href="client-performance.php">
                         <i class='bx bxs-book-content'></i>
                         <span class="text">Performance</span>
                         <i class='bx bx-chevron-down arrow'></i>
                     </a>
                     <ul id="sub-menu" class="sub-menu active">
                         <li>
-                            <a href="Client-skilldevelopment.php">
+                            <a href="client-skilldevelopment.php">
                                 <div class="non-underline">
                                     <i class='bx bx-check-shield'></i>
                                     <span>Skill Development</span>
@@ -1019,7 +1019,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="Client-taskcompletion.php">
+                            <a href="client-taskcompletion.php">
                                 <div class="underline">
                                     <i class='bx bx-task'></i>
                                     <span>Task Completion</span>
@@ -1027,7 +1027,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="Client-behavioralconduct.php">
+                            <a href="client-behavioralconduct.php">
                                 <div class="non-underline">
                                     <i class='bx bx-check-circle'></i>
                                     <span>Behavioral Conduct</span>
@@ -1035,7 +1035,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="Client-achievementranking.php">
+                            <a href="client-achievementranking.php">
                                 <div class="non-underline">
                                     <i class='bx bx-check-square'></i>
                                     <span>Achievement Ranking</span>
@@ -1052,7 +1052,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="Client-logout.php" class="logout">
+                    <a href="client-logout.php" class="logout">
                         <i class='bx bxs-log-out-circle'></i>
                         <span class="text">Logout</span>
                     </a>
@@ -1101,7 +1101,7 @@
                     <h1>Performance</h1>
                     <ul class="breadcrumb">
                         <li>
-                            <a href="Client-performance.php">Home</a>
+                            <a href="client-performance.php">Home</a>
                         </li>
                         <li><i class='bx bx-chevron-right' ></i></li>
                         <li>
@@ -1114,7 +1114,12 @@
 
             <div class="table-data">
 
-                <!-- YOUR IFRAMES HERE -->
+                <!-- Chat Container -->
+                <div class="chat-container">
+
+                    <iframe src="jay-login.php" width="980px" height="500px" frameborder="0" style="overflow-x: hidden;"></iframe>
+
+                </div>
                 
             </div>
         </main>
@@ -1256,12 +1261,12 @@
         const path = window.location.pathname;
 
         if (
-            path.includes("Client-activities.php") ||
-            path.includes("Client-performance.php") ||
-            path.includes("Client-taskcompletion.php") // 👈 Add this line
+            path.includes("client-activities.php") ||
+            path.includes("client-performance.php") ||
+            path.includes("client-taskcompletion.php") // 👈 Add this line
             
         ) {
-            const menuId = (path.includes("Client-performance.php") || path.includes("Client-taskcompletion.php"))
+            const menuId = (path.includes("client-performance.php") || path.includes("client-taskcompletion.php"))
                 ? '#performance-submenu'
                 : '#activities-submenu';
 
@@ -1307,8 +1312,8 @@
         });
 
         // ========== HIGHLIGHT ACTIVE SUBMENU ITEM ==========
-        if (path.includes("Client-skilldevelopment.php")) {
-            const skillLink = document.querySelector('.sub-menu li a[href="Client-taskcompletion.php"]');
+        if (path.includes("client-skilldevelopment.php")) {
+            const skillLink = document.querySelector('.sub-menu li a[href="client-taskcompletion.php"]');
             if (skillLink) {
                 const underlineDiv = skillLink.querySelector('.underline');
                 if (underlineDiv) {

@@ -38,6 +38,7 @@
     			    <img src="uploads/<?=$user['p_p']?>" class="rounded-circle" style="width: 11%; height: 11%; margin-right: 5px;">
                     <h3 class="fs-xs m-2"><?=$user['name']?></h3> 
     			</div>
+				<a href="logout.php" class="btn btn-danger">Logout</a>
     			
     		</div>
 

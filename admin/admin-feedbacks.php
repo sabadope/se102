@@ -978,7 +978,7 @@
     <!-- SIDEBAR -->
     <section id="sidebar">
         <a href="#" class="brand">
-            <i class="bx bx-slider-alt'"></i>
+            <i class="bx bxs-graduation"></i>
             <span class="text">Admin Panel</span>
         </a>
 
@@ -994,14 +994,7 @@
                         <i class='bx bx-chevron-down arrow'></i>
                     </a>
                     <ul id="sub-menu" class="sub-menu active">
-                        <li>
-                            <a href="admin-dailylogs.php">
-                                <div class="non-underline">
-                                    <i class='bx bx-calendar-check'></i>
-                                    <span>Daily Logs</span>
-                                </div>
-                            </a>
-                        </li>
+                        
                         <li>
                             <a href="admin-feedbacks.php">
                                 <div class="underline">
@@ -1076,7 +1069,7 @@
                 <label for="switch-mode" class="switch-mode"></label>
                 
                 <div class="profile">
-                    <img src="<?php echo $imagePath; ?>" alt="Profile Image" width="40" height="40" style="border-radius: 50%; object-fit: cover;">
+                    <img src="uploads/default.png" alt="Profile Image" width="40" height="40" style="border-radius: 50%; object-fit: cover;">
                 </div>
             </div>
         </nav>
@@ -1180,7 +1173,7 @@
                         submenu.style.display = 'block';
 
                         if (arrow) arrow.style.transform = 'rotate(180deg)';
-                        if (nextLi) nextLi.style.marginTop = '90px';
+                        if (nextLi) nextLi.style.marginTop = '40px';
                     }
                 });
 
@@ -1269,7 +1262,7 @@
             submenu.style.display = 'block';
 
             // Push down the next item to avoid overlap
-            if (nextLi) nextLi.style.marginTop = '90px';
+            if (nextLi) nextLi.style.marginTop = '40px';
         }
 
         // ========== SUBMENU TOGGLE FUNCTIONALITY ==========
@@ -1294,12 +1287,12 @@
                 arrow.style.transform = isExpanded ? 'rotate(0deg)' : 'rotate(180deg)';
 
                 // Adjust margin of next item
-                if (nextLi) nextLi.style.marginTop = isExpanded ? '0px' : '90px';
+                if (nextLi) nextLi.style.marginTop = isExpanded ? '0px' : '40px';
             });
         });
 
         // ========== HIGHLIGHT ACTIVE SUBMENU ITEM ==========
-        if (path.includes("admin-feedbacks.php")) {
+        if (path.includes("student-feedbacks.php")) {
             const skillLink = document.querySelector('.sub-menu li a[href="admin-feedbacks.php"]');
             if (skillLink) {
                 const underlineDiv = skillLink.querySelector('.underline');
