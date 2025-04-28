@@ -911,7 +911,7 @@
     <!-- SIDEBAR -->
     <section id="sidebar">
         <a href="#" class="brand">
-            <i class="bx bx-slider-alt'"></i>
+            <i class="bx bxs-graduation"></i>
             <span class="text">Admin Panel</span>
         </a>
 
@@ -1017,7 +1017,7 @@
                 <label for="switch-mode" class="switch-mode"></label>
                 
                 <div class="profile">
-                    <img src="<?php echo $imagePath; ?>" alt="Profile Image" width="40" height="40" style="border-radius: 50%; object-fit: cover;">
+                    <img src="uploads/default.png" alt="Profile Image" width="40" height="40" style="border-radius: 50%; object-fit: cover;">
                 </div>
             </div>
         </nav>
@@ -1186,7 +1186,7 @@
         const path = window.location.pathname;
 
         if (path.includes("admin-activities.php") || path.includes("admin-performance.php")) {
-            const menuId = path.includes("admin-performance.php") ? '#performance-submenu' : '#activities-submenu';
+            const menuId = path.includes("student-performance.php") ? '#performance-submenu' : '#activities-submenu';
             const menuElement = document.querySelector(menuId);
             const submenu = menuElement.querySelector('.sub-menu');
             const nextLi = menuElement.nextElementSibling;

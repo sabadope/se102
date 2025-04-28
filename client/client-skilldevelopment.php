@@ -965,7 +965,7 @@
         }
     </style>
 
-    <title>client Performance</title>
+    <title>Client Performance</title>
 </head>
 <body>
 

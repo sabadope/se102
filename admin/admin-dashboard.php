@@ -905,7 +905,7 @@
 	<!-- SIDEBAR -->
 	<section id="sidebar">
 		<a href="#" class="brand">
-			<i class='bx bx-slider-alt'></i>
+			<i class='bx bx-graduation'></i>
 			<span class="text">Admin Panel</span>
 		</a>
 		<ul class="side-menu top">

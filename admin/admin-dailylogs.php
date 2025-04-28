@@ -974,7 +974,7 @@
     <!-- SIDEBAR -->
     <section id="sidebar">
         <a href="#" class="brand">
-            <i class="bx bx-slider-alt'"></i>
+            <i class="bx bxs-graduation"></i>
             <span class="text">Admin Panel</span>
         </a>
 
@@ -1072,7 +1072,7 @@
                 <label for="switch-mode" class="switch-mode"></label>
                 
                 <div class="profile">
-                    <img src="<?php echo $imagePath; ?>" alt="Profile Image" width="40" height="40" style="border-radius: 50%; object-fit: cover;">
+                    <img src="uploads/default.png" alt="Profile Image" width="40" height="40" style="border-radius: 50%; object-fit: cover;">
                 </div>
             </div>
         </nav>
@@ -1099,9 +1099,9 @@
             <div class="table-data">
 
                 <!-- Chat Container -->
-                <div class="chat-container" style="overflow-x: hidden;">
+                <div class="chat-container">
 
-                    <iframe src="banias-login.php" max-width="980px" width="980px" height="600px" frameborder="0" style="overflow-x: hidden;"></iframe>
+                    <iframe src="login.php" width="980px" height="1300px" frameborder="0" style="overflow-x: hidden;"></iframe>
 
                 </div>
                 

@@ -2,15 +2,7 @@
 
     require_once '../src/config.php'; // Include DB connection
 
-    // Use the same logic to construct the expected image filename
-    $username = isset($_SESSION['username']) ? strtolower($_SESSION['username']) : 'default';
-    $safeUsername = preg_replace('/[^a-zA-Z0-9_-]/', '_', $username);
-    $imagePath = "../uploads/" . $safeUsername . ".png";
-
-    // Fallback if image doesn't exist
-    if (!file_exists($imagePath)) {
-        $imagePath = "../uploads/default.png";
-    }
+    
 ?>
 
 
@@ -858,7 +850,7 @@
     <!-- SIDEBAR -->
     <section id="sidebar">
         <a href="#" class="brand">
-            <i class="bx bx-slider-alt'"></i>
+            <i class="bx bxs-graduation"></i>
             <span class="text">Admin Panel</span>
         </a>
 
@@ -894,7 +886,7 @@
                 </li>
 
                 <li>
-                    <a href="admin-settings.php">
+                    <a href="#">
                         <i class='bx bxs-cog'></i>
                         <span class="text">Settings</span>
                     </a>
@@ -934,7 +926,7 @@
                 <label for="switch-mode" class="switch-mode"></label>
                 
                 <div class="profile">
-                    <img src="<?php echo $imagePath; ?>" alt="Profile Image" width="40" height="40" style="border-radius: 50%; object-fit: cover;">
+                    <img src="uploads/default.png" alt="Profile Image" width="40" height="40" style="border-radius: 50%; object-fit: cover;">
                 </div>
             </div>
         </nav>
@@ -961,9 +953,9 @@
             <div class="table-data">
 
                 <!-- Chat Container -->
-                <div class="chat-container" style="overflow-x: hidden;">
+                <div class="chat-container">
 
-                    <iframe src="jv-login.php" max-width="984px" width="984px" height="500px" frameborder="0"></iframe>
+                    <iframe src="jv-login.php" width="984px" height="500px" frameborder="0"></iframe>
 
                 </div>
                 

@@ -966,7 +966,7 @@
         }
     </style>
 
-    <title>client Daily Logs</title>
+    <title>Client Daily Logs</title>
 </head>
 <body>
 
