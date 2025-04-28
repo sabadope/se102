@@ -106,6 +106,7 @@
                                             <select class="form-select task-status" data-task-id="${task.id}">
                                                 <option value="Pending" ${task.status === 'Pending' ? 'selected' : ''}>Pending</option>
                                                 <option value="in-progress" ${task.status === 'in-progress' ? 'selected' : ''}>In-progress</option>
+                                                <option value="in-progress" ${task.status === 'completed' ? 'selected' : ''}>completed</option>
                                             </select>
                                         </td>
                                         <td>${task.deadline}</td>
@@ -114,7 +115,7 @@
                                             <span>${task.rating !== null ? task.rating : 'No Rating Yet'}</span>
                                         </td>
                                         <td>
-                                            <input type="file" class="form-control file-input" data-task-id="${task.id}">
+                                            <input type="file" class="form-control file-input" name="file" data-task-id="${task.id}">
                                         </td>
                                         <td>
                                             <button class="btn btn-primary submit-task" data-task-id="${task.id}">Submit</button>
@@ -165,12 +166,13 @@
         // Handle single task submission
         $(document).on('click', '.submit-task', function() {
             let taskId = $(this).data('task-id');
-            let fileInput = $(`input[data-task-id="${taskId}"]`)[0];
+let fileInput = $(`input[data-task-id="${taskId}"]`)[0];
 
-            if (fileInput.files.length === 0) {
-                alert('Please select a file before submitting.');
-                return;
-            }
+if (fileInput.files.length === 0) {
+    alert('Please select a file before submitting.');
+    return;
+}
+
 
             let formData = new FormData();
             formData.append('task_id', taskId);

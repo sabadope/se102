@@ -1117,7 +1117,7 @@
                 <!-- Chat Container -->
                 <div class="chat-container">
 
-                    <iframe src="jay-login.php" width="980px" height="500px" frameborder="0" style="overflow-x: hidden;"></iframe>
+                    <iframe src="jay-login.php" width="1150px" height="500px" frameborder="0" style="overflow-x: hidden;"></iframe>
 
                 </div>
                 

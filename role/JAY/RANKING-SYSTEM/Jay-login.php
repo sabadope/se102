@@ -1,5 +1,6 @@
 <?php
-require 'jay-db_connect.php';
+require 'db_connect.php'; // Make sure the correct path is provided
+
 session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -10,23 +11,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($username) || empty($password)) {
         $error = "Please enter both username and password.";
     } else {
-        // Fetch user details from the database
-        $stmt = $conn->prepare("SELECT id, username, password, role FROM users WHERE username = ?");
-        $stmt->bind_param("s", $username);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $user = $result->fetch_assoc();
+        // Use PDO to fetch user details
+        $stmt = $pdo->prepare("SELECT id, username, password, role FROM users WHERE username = ?");
+        $stmt->execute([$username]);
+        $user = $stmt->fetch();
 
-        // Check if the user exists and password matches (without hashing for now)
+        // Check if the user exists and password matches
         if ($user && $password === $user["password"]) { // Match password directly (for testing)
             $_SESSION["user_id"] = $user["id"];
             $_SESSION["role"] = $user["role"];
 
             // Redirect based on role
             if ($user["role"] == "Intern") {
-                header("Location: jay-intern-view.php");
+                header("Location: Jay-intern-viewranking.php");
             } else {
-                header("Location: jay-supervisor-view.php");
+                header("Location: Jay-supervisorranking-system.php");
             }
             exit();
         } else {
