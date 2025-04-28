@@ -966,7 +966,7 @@
         }
     </style>
 
-    <title>Student Daily Logs</title>
+    <title>Supervisor Daily Logs</title>
 </head>
 <body>
 
@@ -974,8 +974,8 @@
     <!-- SIDEBAR -->
     <section id="sidebar">
         <a href="#" class="brand">
-            <i class="bx bxs-graduation"></i>
-            <span class="text">Student Panel</span>
+            <i class="bx bxs-user"></i>
+            <span class="text">Supervisor Panel</span>
         </a>
 
         <!-- NEW FLEX WRAPPER -->
@@ -984,14 +984,14 @@
             <ul class="side-menu top">
                 <!-- Activities with Submenu -->
                 <li id="performance-submenu" class="has-submenu">
-                    <a href="student-activities.php">
+                    <a href="supervisor-activities.php">
                         <i class='bx bxs-folder-open'></i>
                         <span class="text">Activities</span>
                         <i class='bx bx-chevron-down arrow'></i>
                     </a>
                     <ul id="sub-menu" class="sub-menu active">
                         <li>
-                            <a href="student-dailylogs.php">
+                            <a href="supervisor-dailylogs.php">
                                 <div class="underline">
                                     <i class='bx bx-calendar-check'></i>
                                     <span>Daily Logs</span>
@@ -999,7 +999,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="student-feedbacks.php">
+                            <a href="supervisor-feedbacks.php">
                                 <div class="non-underline">
                                     <i class='bx bx-comment-detail'></i>
                                     <span>Feedbacks</span>
@@ -1009,20 +1009,20 @@
                     </ul>
                 </li>        
                 <li>
-                    <a href="student-attendance.php">
+                    <a href="supervisor-attendance.php">
                         <i class='bx bxs-calendar-check'></i>
                         <span class="text">Attendance</span>
                     </a>
                 </li>
                 <li>
-                    <a href="student-messages.php">
+                    <a href="supervisor-messages.php">
                         <i class='bx bxs-message-dots'></i>
                         <span class="text">Message</span>
                     </a>
                 </li>
 
                 <li>
-                    <a href="student-performance.php" style="display: flex; align-items: center;">
+                    <a href="supervisor-performance.php" style="display: flex; align-items: center;">
                         <i class='bx bxs-book-content'></i>
                         <span class="text">Performance</span>
                         <i class='bx bx-chevron-down arrow' style="margin-left: auto;"></i>
@@ -1036,7 +1036,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="student-logout.php" class="logout">
+                    <a href="supervisor-logout.php" class="logout">
                         <i class='bx bxs-log-out-circle'></i>
                         <span class="text">Logout</span>
                     </a>
@@ -1072,7 +1072,7 @@
                 <label for="switch-mode" class="switch-mode"></label>
                 
                 <div class="profile">
-                    <img src="<?php echo $imagePath; ?>" alt="Profile Image" width="40" height="40" style="border-radius: 50%; object-fit: cover;">
+                    <img src="uploads/default.png" alt="Profile Image" width="40" height="40" style="border-radius: 50%; object-fit: cover;">
                 </div>
             </div>
         </nav>
@@ -1085,7 +1085,7 @@
                     <h1>Activities</h1>
                     <ul class="breadcrumb">
                         <li>
-                            <a href="student-activities.php">Home</a>
+                            <a href="supervisor-activities.php">Home</a>
                         </li>
                         <li><i class='bx bx-chevron-right' ></i></li>
                         <li>
@@ -1244,12 +1244,12 @@
         const path = window.location.pathname;
 
         if (
-            path.includes("student-activities.php") ||
-            path.includes("student-performance.php") ||
-            path.includes("student-dailylogs.php") // 👈 Add this line
+            path.includes("supervisor-activities.php") ||
+            path.includes("supervisor-performance.php") ||
+            path.includes("supervisor-dailylogs.php") // 👈 Add this line
 
         ) {
-            const menuId = (path.includes("student-performance.php") || path.includes("student-dailylogs.php"))
+            const menuId = (path.includes("supervisor-performance.php") || path.includes("supervisor-dailylogs.php"))
                 ? '#performance-submenu'
                 : '#activities-submenu';
 
@@ -1295,8 +1295,8 @@
         });
 
         // ========== HIGHLIGHT ACTIVE SUBMENU ITEM ==========
-        if (path.includes("student-dailylogs.php")) {
-            const skillLink = document.querySelector('.sub-menu li a[href="student-dailylogs.php"]');
+        if (path.includes("supervisor-dailylogs.php")) {
+            const skillLink = document.querySelector('.sub-menu li a[href="supervisor-dailylogs.php"]');
             if (skillLink) {
                 const underlineDiv = skillLink.querySelector('.underline');
                 if (underlineDiv) {

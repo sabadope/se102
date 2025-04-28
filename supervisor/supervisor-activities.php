@@ -935,12 +935,7 @@
                         <i class='bx bx-chevron-down arrow'></i>
                     </a>
                     <ul id="sub-menu" class="sub-menu active">
-                        <li>
-                            <a href="supervisor-dailylogs.php">
-                                <i class='bx bx-calendar-check'></i>
-                                Daily Logs
-                            </a>
-                        </li>
+                        
                         <li>
                             <a href="supervisor-feedbacks.php">
                                 <i class='bx bx-comment-detail'></i>
@@ -1012,7 +1007,7 @@
                 <label for="switch-mode" class="switch-mode"></label>
                 
                 <div class="profile">
-                    <img src="<?php echo $imagePath; ?>" alt="Profile Image" width="40" height="40" style="border-radius: 50%; object-fit: cover;">
+                    <img src="uploads/default.png" alt="Profile Image" width="40" height="40" style="border-radius: 50%; object-fit: cover;">
                 </div>
             </div>
         </nav>
@@ -1035,16 +1030,8 @@
             </div>
 
             <ul class="box-info">
-                <a href="student-dailylogs.php">
-                    <li>
-                        <i class='bx bx-calendar-check' ></i>
-                        <span class="text">
-                            <h3>Daily Logs</h3>
-                            <p>Record of their work activities</p>
-                        </span>
-                    </li>
-                </a>
-                <a href="student-feedbacks.php">
+                
+                <a href="supervisor-feedbacks.php">
                     <li>
                         <i class='bx bx-comment-detail'></i>
                         <span class="text">
@@ -1119,7 +1106,7 @@
                         submenu.classList.add('active');
                         submenu.style.display = 'block';
                         if (arrow) arrow.style.transform = 'rotate(180deg)';
-                        if (nextLi) nextLi.style.marginTop = '90px';
+                        if (nextLi) nextLi.style.marginTop = '40px';
                     }
                 });
             }
@@ -1171,7 +1158,7 @@
             submenu.style.display = 'block';
 
             // Push down the next item to avoid overlap
-            if (nextLi) nextLi.style.marginTop = '90px';
+            if (nextLi) nextLi.style.marginTop = '40px';
         }
 
         // ========== SUBMENU TOGGLE FUNCTIONALITY ==========
@@ -1201,7 +1188,7 @@
 
                 // Adjust margin of next item to avoid overlapping
                 if (!isExpanded) {
-                    if (nextLi) nextLi.style.marginTop = '90px';
+                    if (nextLi) nextLi.style.marginTop = '40px';
                 } else {
                     if (nextLi) nextLi.style.marginTop = '0px';
                 }

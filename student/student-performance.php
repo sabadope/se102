@@ -962,7 +962,7 @@
                         <li>
                             <a href="student-behavioralconduct.php">
                                 <i class='bx bx-check-circle'></i>
-                                Behavioral Conduct
+                                Final Evaluation
                             </a>
                         </li>
                         <li>
@@ -1053,7 +1053,7 @@
                     <li>
                         <i class='bx bx-check-circle' ></i>
                         <span class="text">
-                            <h3>Behavior Conduct</h3>
+                            <h3>Final Evaluation</h3>
                             <p>100%</p>
                         </span>
                     </li>

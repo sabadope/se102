@@ -994,14 +994,7 @@
                         <i class='bx bx-chevron-down arrow'></i>
                     </a>
                     <ul id="sub-menu" class="sub-menu active">
-                        <li>
-                            <a href="supervisor-dailylogs.php">
-                                <div class="non-underline">
-                                    <i class='bx bx-calendar-check'></i>
-                                    <span>Daily Logs</span>
-                                </div>
-                            </a>
-                        </li>
+                        
                         <li>
                             <a href="supervisor-feedbacks.php">
                                 <div class="underline">
@@ -1076,7 +1069,7 @@
                 <label for="switch-mode" class="switch-mode"></label>
                 
                 <div class="profile">
-                    <img src="<?php echo $imagePath; ?>" alt="Profile Image" width="40" height="40" style="border-radius: 50%; object-fit: cover;">
+                    <img src="uploads/default.png" alt="Profile Image" width="40" height="40" style="border-radius: 50%; object-fit: cover;">
                 </div>
             </div>
         </nav>
@@ -1089,7 +1082,7 @@
                     <h1>Activities</h1>
                     <ul class="breadcrumb">
                         <li>
-                            <a href="student-activities.php">Home</a>
+                            <a href="supervisor-activities.php">Home</a>
                         </li>
                         <li><i class='bx bx-chevron-right' ></i></li>
                         <li>
@@ -1180,7 +1173,7 @@
                         submenu.style.display = 'block';
 
                         if (arrow) arrow.style.transform = 'rotate(180deg)';
-                        if (nextLi) nextLi.style.marginTop = '90px';
+                        if (nextLi) nextLi.style.marginTop = '40px';
                     }
                 });
 
@@ -1248,12 +1241,12 @@
         const path = window.location.pathname;
 
         if (
-            path.includes("student-activities.php") ||
-            path.includes("student-performance.php") ||
+            path.includes("supervisor-activities.php") ||
+            path.includes("supervisor-performance.php") ||
             path.includes("supervisor-feedbacks.php") // 👈 Add this line
 
         ) {
-            const menuId = (path.includes("student-performance.php") || path.includes("supervisor-feedbacks.php"))
+            const menuId = (path.includes("supervisor-performance.php") || path.includes("supervisor-feedbacks.php"))
                 ? '#performance-submenu'
                 : '#activities-submenu';
 
@@ -1269,7 +1262,7 @@
             submenu.style.display = 'block';
 
             // Push down the next item to avoid overlap
-            if (nextLi) nextLi.style.marginTop = '90px';
+            if (nextLi) nextLi.style.marginTop = '40px';
         }
 
         // ========== SUBMENU TOGGLE FUNCTIONALITY ==========
@@ -1294,7 +1287,7 @@
                 arrow.style.transform = isExpanded ? 'rotate(0deg)' : 'rotate(180deg)';
 
                 // Adjust margin of next item
-                if (nextLi) nextLi.style.marginTop = isExpanded ? '0px' : '90px';
+                if (nextLi) nextLi.style.marginTop = isExpanded ? '0px' : '40px';
             });
         });
 

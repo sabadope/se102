@@ -1031,8 +1031,8 @@
 
         const path = window.location.pathname;
 
-        if (path.includes("student-activities.php") || path.includes("student-performance.php")) {
-            const menuId = path.includes("student-performance.php") ? '#performance-submenu' : '#activities-submenu';
+        if (path.includes("supervisor-activities.php") || path.includes("supervisor-performance.php")) {
+            const menuId = path.includes("supervisor-performance.php") ? '#performance-submenu' : '#activities-submenu';
             const menuElement = document.querySelector(menuId);
             const submenu = menuElement.querySelector('.sub-menu');
             const nextLi = menuElement.nextElementSibling;

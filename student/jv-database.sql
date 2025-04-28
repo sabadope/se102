@@ -115,6 +115,11 @@ ALTER TABLE `attendance`
   ADD CONSTRAINT `attendance_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 COMMIT;
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+-- Insert default Supervisor account (username: supervisor, password: supervisor1230)
+INSERT INTO `users` (`username`, `password`, `role`) 
+VALUES (
+  'supervisor',
+  '$2y$10$mEk5qZbiDn08pOMq91uq/OyMEU2dLEFX1aKmZt.tl1FUXwC5ZIgIS',
+  'supervisor'
+);

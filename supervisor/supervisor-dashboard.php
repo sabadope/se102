@@ -851,7 +851,7 @@
         }
     </style>
 
-    <title>Student Dashboard</title>
+    <title>Supervisor Dashboard</title>
 </head>
 <body>
 
@@ -859,8 +859,8 @@
     <!-- SIDEBAR -->
     <section id="sidebar">
         <a href="#" class="brand">
-            <i class="bx bxs-graduation"></i>
-            <span class="text">Student Panel</span>
+            <i class="bx bxs-user"></i>
+            <span class="text">Supervisor Panel</span>
         </a>
 
         <!-- NEW FLEX WRAPPER -->
@@ -868,25 +868,25 @@
             <!-- TOP ITEMS -->
             <ul class="side-menu top">
                 <li class="active">
-                    <a href="student-dashboard.php">
+                    <a href="supervisor-dashboard.php">
                         <i class='bx bxs-dashboard'></i>
                         <span class="text">Dashboard</span>
                     </a>
                 </li>
                 <li>
-                    <a href="student-attendance.php">
+                    <a href="supervisor-attendance.php">
                         <i class='bx bxs-calendar-check'></i>
                         <span class="text">Attendance</span>
                     </a>
                 </li>
                 <li>
-                    <a href="student-messages.php">
+                    <a href="supervisor-messages.php">
                         <i class='bx bxs-message-dots'></i>
                         <span class="text">Message</span>
                     </a>
                 </li>
                 <li>
-                    <a href="student-performance.php" style="display: flex; align-items: center;">
+                    <a href="supervisor-performance.php" style="display: flex; align-items: center;">
                         <i class='bx bxs-book-content'></i>
                         <span class="text">Performance</span>
                         <i class='bx bx-chevron-down arrow' style="margin-left: auto;"></i>
@@ -894,20 +894,20 @@
                 </li>
 
                 <li>
-                    <a href="student-activities.php" style="display: flex; align-items: center;">
+                    <a href="supervisor-activities.php" style="display: flex; align-items: center;">
                         <i class='bx bxs-folder-open'></i>
                         <span class="text">Activities</span>
                         <i class='bx bx-chevron-down arrow' style="margin-left: auto;"></i>
                     </a>
                 </li>
                 <li>
-                    <a href="student-settings.php">
+                    <a href="#">
                         <i class='bx bxs-cog'></i>
                         <span class="text">Settings</span>
                     </a>
                 </li>
                 <li>
-                    <a href="student-logout.php" class="logout">
+                    <a href="supervisor-logout.php" class="logout">
                         <i class='bx bxs-log-out-circle'></i>
                         <span class="text">Logout</span>
                     </a>
@@ -941,7 +941,7 @@
                 <label for="switch-mode" class="switch-mode"></label>
                 
                 <div class="profile">
-                    <img src="<?php echo $imagePath; ?>" alt="Profile Image" width="40" height="40" style="border-radius: 50%; object-fit: cover;">
+                    <img src="uploads/default.png" alt="Profile Image" width="40" height="40" style="border-radius: 50%; object-fit: cover;">
                 </div>
             </div>
         </nav>
@@ -954,7 +954,7 @@
                     <h1>Dashboard</h1>
                     <ul class="breadcrumb">
                         <li>
-                            <a href="student-dashboard.php">Home</a>
+                            <a href="supervisor-dashboard.php">Home</a>
                         </li>
                         <li><i class='bx bx-chevron-right' ></i></li>
                         <li>
@@ -1056,8 +1056,8 @@
 
         const path = window.location.pathname;
 
-        if (path.includes("student-activities.php") || path.includes("student-performance.php")) {
-            const menuId = path.includes("student-performance.php") ? '#performance-submenu' : '#activities-submenu';
+        if (path.includes("supervisor-activities.php") || path.includes("supervisor-performance.php")) {
+            const menuId = path.includes("supervisor-performance.php") ? '#performance-submenu' : '#activities-submenu';
             const menuElement = document.querySelector(menuId);
             const submenu = menuElement.querySelector('.sub-menu');
             const nextLi = menuElement.nextElementSibling;
