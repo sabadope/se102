@@ -16,21 +16,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->execute([$username]);
         $user = $stmt->fetch();
 
-        // Check if the user exists and password matches
-        if ($user && $password === $user["password"]) { // Match password directly (for testing)
-            $_SESSION["user_id"] = $user["id"];
-            $_SESSION["role"] = $user["role"];
+   // Check if the user exists and password matches
+if ($user && $password === $user["password"]) { // Match password directly (for testing)
+    if ($user["role"] === "Intern") {
+        // Only allow Interns
+        $_SESSION["user_id"] = $user["id"];
+        $_SESSION["role"] = $user["role"];
+        header("Location: banaag-intern-viewranking.php");
+        exit();
+    } else {
+        // Reject users who are not Interns
+        $error = "Access restricted to Intern accounts only.";
+    }
+} else {
+    $error = "Invalid username or password.";
+}
 
-            // Redirect based on role
-            if ($user["role"] == "Intern") {
-                header("Location: banaag-intern-viewranking.php");
-            } else {
-                header("Location: banaag-supervisorranking-system.php");
-            }
-            exit();
-        } else {
-            $error = "Invalid username or password.";
-        }
     }
 }
 ?>
