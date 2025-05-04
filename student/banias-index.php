@@ -1,7 +1,7 @@
 <?php
 include 'banias-db_connect.php';
 
-// Fetch saved logs (both daily and weekly)
+// Fetch saved logs (combined)
 $recent_logs = $conn->query("SELECT * FROM logs ORDER BY timestamp DESC LIMIT 5");
 ?>
 
@@ -64,51 +64,6 @@ $recent_logs = $conn->query("SELECT * FROM logs ORDER BY timestamp DESC LIMIT 5"
             color: var(--gray);
             font-size: 1rem;
             margin-bottom: 2rem;
-        }
-        
-        .tabs {
-            display: flex;
-            border-bottom: 1px solid var(--light-gray);
-            margin-bottom: 2rem;
-        }
-        
-        .tab {
-            padding: 1rem 2rem;
-            cursor: pointer;
-            font-weight: 500;
-            color: var(--gray);
-            border-bottom: 3px solid transparent;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .tab.active {
-            color: var(--primary);
-            border-bottom-color: var(--primary);
-        }
-        
-        .tab:hover:not(.active) {
-            color: var(--dark);
-        }
-        
-        .tab i {
-            font-size: 1rem;
-        }
-        
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.3s ease;
-        }
-        
-        .tab-content.active {
-            display: block;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
         }
         
         .card {
@@ -287,16 +242,6 @@ $recent_logs = $conn->query("SELECT * FROM logs ORDER BY timestamp DESC LIMIT 5"
                 padding: 1rem;
             }
             
-            .tabs {
-                overflow-x: auto;
-                padding-bottom: 0.5rem;
-            }
-            
-            .tab {
-                white-space: nowrap;
-                padding: 0.75rem 1rem;
-            }
-            
             .time-fields {
                 flex-direction: column;
                 gap: 1rem;
@@ -317,104 +262,82 @@ $recent_logs = $conn->query("SELECT * FROM logs ORDER BY timestamp DESC LIMIT 5"
     <div class="container">
         <div class="header">
             <h1>Intern Performance Logs</h1>
-            <p class="subtitle">Track and manage your daily and weekly activities</p>
+            <p class="subtitle">Track and manage your activities</p>
         </div>
         
+        <!-- Combined Log Form -->
         <div class="card">
-            <div class="tabs">
-                <div class="tab active" onclick="openTab('daily')">
-                    <i class="fas fa-calendar-day"></i> Daily Log
+            <form action="banias-save_log.php" method="POST">
+                <input type="hidden" name="type" value="Combined Log">
+                
+                <h2><i class="fas fa-tasks"></i> Daily Activity</h2>
+                <div class="form-group">
+                    <label>Task Name:</label>
+                    <input type="text" name="task_name" placeholder="What did you work on today?" required>
                 </div>
-                <div class="tab" onclick="openTab('weekly')">
-                    <i class="fas fa-calendar-week"></i> Weekly Log
+                
+                <div class="form-group">
+                    <label>Task Description:</label>
+                    <textarea name="task_desc" placeholder="Describe your daily work in detail" required></textarea>
                 </div>
-            </div>
-            
-            <!-- Daily Log Content -->
-            <div id="daily" class="tab-content active">
-                <form action="banias-save_log.php" method="POST">
-                    <input type="hidden" name="type" value="Daily Log">
-                    
-                    <div class="form-group">
-                        <label>Task Name:</label>
-                        <input type="text" name="task_name" placeholder="Enter task name" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Task Description:</label>
-                        <textarea name="task_desc" placeholder="Describe the task in detail" required></textarea>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Time:</label>
-                        <div class="time-fields">
-                            <div>
-                                <label>Start Time</label>
-                                <input type="time" name="start_time" required>
-                            </div>
-                            <div>
-                                <label>End Time</label>
-                                <input type="time" name="end_time" required>
-                            </div>
+                
+                <div class="form-group">
+                    <label>Time:</label>
+                    <div class="time-fields">
+                        <div>
+                            <label>Start Time</label>
+                            <input type="time" name="start_time" required>
+                        </div>
+                        <div>
+                            <label>End Time</label>
+                            <input type="time" name="end_time" required>
                         </div>
                     </div>
-                    
-                    <div class="form-group">
-                        <label>Status:</label>
-                        <select name="status" required>
-                            <option value="">Select status</option>
-                            <option value="Completed">Completed</option>
-                            <option value="In Progress">In Progress</option>
-                            <option value="Pending">Pending</option>
-                        </select>
-                    </div>
-                    
-                    <div class="btn-group">
-                        <button type="submit" class="btn btn-primary" onclick="window.location.href='banias-index.php'">
-                            <i class="fas fa-save"></i> Save Daily Log
-                        </button>
-                        <button type="button" class="btn btn-outline" onclick="window.location.href='banias-weekly_summary.php'">
-                            <i class="fas fa-chart-bar"></i> View Weekly Summary
-                        </button>
-                    </div>
-                </form>
-            </div>
-            
-            <!-- Weekly Log Content -->
-            <div id="weekly" class="tab-content">
-                <form action="banias-save_log.php" method="POST">
-                    <input type="hidden" name="type" value="Weekly Log">
-                    
-                    <div class="form-group">
-                        <h3>Weekly Goals:</h3>
-                        <textarea name="weekly_goals" placeholder="What were your goals for this week?" required></textarea>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Achievements:</label>
-                        <textarea name="achievements" placeholder="What did you accomplish this week?" required></textarea>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Challenges:</label>
-                        <textarea name="challenges" placeholder="What challenges did you encounter?" required></textarea>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Lessons Learned:</label>
-                        <textarea name="lessons" placeholder="What did you learn this week?" required></textarea>
-                    </div>
-                    
-                    <div class="btn-group">
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-save"></i> Save Weekly Log
-                        </button>
-                    </div>
-                </form>
-            </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Status:</label>
+                    <select name="status" required>
+                        <option value="">Select status</option>
+                        <option value="Completed">Completed</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Pending">Pending</option>
+                    </select>
+                </div>
+                
+                <h2><i class="fas fa-calendar-week"></i> Weekly Reflection</h2>
+                <div class="form-group">
+                    <label>Weekly Goals:</label>
+                    <textarea name="weekly_goals" placeholder="What were your goals for this week?"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>Achievements:</label>
+                    <textarea name="achievements" placeholder="What did you accomplish this week?"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>Challenges:</label>
+                    <textarea name="challenges" placeholder="What challenges did you encounter?"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>Lessons Learned:</label>
+                    <textarea name="lessons" placeholder="What did you learn this week?"></textarea>
+                </div>
+                
+                <div class="btn-group">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Save All Logs
+                    </button>
+                    <button type="button" class="btn btn-outline" onclick="window.location.href='banias-weekly_summary.php'">
+                        <i class="fas fa-chart-bar"></i> View Weekly Summary
+                    </button>
+                </div>
+            </form>
         </div>
         
-        <!-- Saved Logs Section -->
+        <!-- Combined Saved Logs Section -->
         <div class="saved-logs">
             <h2><i class="fas fa-history"></i> Recent Logs</h2>
             
@@ -422,22 +345,11 @@ $recent_logs = $conn->query("SELECT * FROM logs ORDER BY timestamp DESC LIMIT 5"
                 <?php while ($row = $recent_logs->fetch_assoc()): ?>
                     <div class="log-entry">
                         <h3>
-                            <?php if ($row['type'] === 'Weekly Log'): ?>
-                                <i class="fas fa-calendar-week"></i>
-                            <?php else: ?>
-                                <i class="fas fa-calendar-day"></i>
-                            <?php endif; ?>
-                            <?= $row['type'] ?> - <?= date('M j, Y', strtotime($row['timestamp'])) ?>
+                            <i class="fas fa-calendar-day"></i>
+                            <?= date('M j, Y', strtotime($row['timestamp'])) ?>
                         </h3>
                         
-                        <?php if ($row['type'] === 'Weekly Log'): ?>
-                            <div class="weekly-log-details">
-                                <p><strong>Goals:</strong> <?= htmlspecialchars($row['weekly_goals']) ?></p>
-                                <p><strong>Achievements:</strong> <?= htmlspecialchars($row['achievements']) ?></p>
-                                <p><strong>Challenges:</strong> <?= htmlspecialchars($row['challenges']) ?></p>
-                                <p><strong>Lessons Learned:</strong> <?= htmlspecialchars($row['lessons']) ?></p>
-                            </div>
-                        <?php else: ?>
+                        <?php if (!empty($row['task_name'])): ?>
                             <p><strong>Task:</strong> <?= htmlspecialchars($row['task_name']) ?></p>
                             <p><strong>Description:</strong> <?= htmlspecialchars($row['task_desc']) ?></p>
                             <p><strong>Time:</strong> <?= date('g:i A', strtotime($row['start_time'])) ?> - <?= date('g:i A', strtotime($row['end_time'])) ?></p>
@@ -449,6 +361,13 @@ $recent_logs = $conn->query("SELECT * FROM logs ORDER BY timestamp DESC LIMIT 5"
                                     <?= htmlspecialchars($row['status']) ?>
                                 </span>
                             </p>
+                        <?php endif; ?>
+                        
+                        <?php if (!empty($row['weekly_goals'])): ?>
+                            <p><strong>Weekly Goals:</strong> <?= htmlspecialchars($row['weekly_goals']) ?></p>
+                            <p><strong>Achievements:</strong> <?= htmlspecialchars($row['achievements']) ?></p>
+                            <p><strong>Challenges:</strong> <?= htmlspecialchars($row['challenges']) ?></p>
+                            <p><strong>Lessons Learned:</strong> <?= htmlspecialchars($row['lessons']) ?></p>
                         <?php endif; ?>
                         
                         <div class="action-buttons">
@@ -475,22 +394,6 @@ $recent_logs = $conn->query("SELECT * FROM logs ORDER BY timestamp DESC LIMIT 5"
     </div>
     
     <script>
-        function openTab(tabName) {
-            // Hide all tab contents
-            document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            
-            // Deactivate all tabs
-            document.querySelectorAll('.tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            
-            // Activate selected tab
-            document.getElementById(tabName).classList.add('active');
-            event.currentTarget.classList.add('active');
-        }
-        
         function deleteLog(id) {
             if (confirm("Are you sure you want to delete this log?\nThis action cannot be undone.")) {
                 window.location.href = `banias-delete_log.php?id=${id}`;

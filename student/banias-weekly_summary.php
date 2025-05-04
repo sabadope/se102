@@ -7,14 +7,12 @@ $sunday = date('Y-m-d', strtotime('sunday this week'));
 $start_date = date('M j', strtotime($monday));
 $end_date = date('M j, Y', strtotime($sunday));
 
-// Query to get weekly logs
+// Query to get weekly logs (simplified without challenges and improvements)
 $query = "SELECT 
             id,
             DATE(timestamp) as date,
             task_name as task,
             CONCAT(TIME_FORMAT(start_time, '%h:%i%p'), ' - ', TIME_FORMAT(end_time, '%h:%i%p')) as time_spent,
-            challenges,
-            lessons as improvements,
             status
           FROM logs 
           WHERE DATE(timestamp) BETWEEN ? AND ?
@@ -550,8 +548,6 @@ if ($result === false) die('Execute failed: ' . htmlspecialchars($stmt->error));
                                         <th>Task</th>
                                         <th>Time Spent</th>
                                         <th>Status</th>
-                                        <th>Challenges</th>
-                                        <th>Improvements</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -569,8 +565,6 @@ if ($result === false) die('Execute failed: ' . htmlspecialchars($stmt->error));
                                                     <?= htmlspecialchars($row['status'] ?? 'Pending') ?>
                                                 </span>
                                             </td>
-                                            <td><?= htmlspecialchars($row['challenges'] ?? 'None') ?></td>
-                                            <td><?= htmlspecialchars($row['improvements'] ?? 'None') ?></td>
                                             <td>
                                                 <button onclick="confirmDelete(<?= $row['id'] ?>)" class="btn-icon danger" title="Delete Entry">
                                                     <i class="fas fa-trash"></i>
