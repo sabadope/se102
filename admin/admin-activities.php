@@ -919,7 +919,7 @@
     <!-- SIDEBAR -->
     <section id="sidebar">
         <a href="#" class="brand">
-            <i class="bx bxs-graduation"></i>
+            <i class="bx bx-slider-alt"></i>
             <span class="text">Admin Panel</span>
         </a>
 
@@ -928,12 +928,27 @@
             <!-- TOP ITEMS -->
             <ul class="side-menu top">
                 <!-- Activities with Submenu -->
+                <li>
+                    <a href="admin-dashboard.php">
+                        <i class='bx bxs-dashboard'></i>
+                        <span class="text">Dashboard</span>
+                    </a>
+                </li>
                 <li id="has-submenu" class="has-submenu active">
                     <a href="admin-activities.php">
                         <i class='bx bxs-folder-open'></i>
                         <span class="text">Activities</span>
                         <i class='bx bx-chevron-down arrow'></i>
                     </a>
+                    <ul id="sub-menu" class="sub-menu active">
+                        
+                        <li>
+                            <a href="admin-dailylogs.php">
+                                <i class='bx bx-calendar-check'></i>
+                                Daily Logs
+                            </a>
+                        </li>
+                    </ul>
                     <ul id="sub-menu" class="sub-menu active">
                         
                         <li>
@@ -944,18 +959,6 @@
                         </li>
                     </ul>
                 </li>      
-                <li>
-                    <a href="admin-attendance.php">
-                        <i class='bx bxs-calendar-check'></i>
-                        <span class="text">Attendance</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="admin-messages.php">
-                        <i class='bx bxs-message-dots'></i>
-                        <span class="text">Message</span>
-                    </a>
-                </li>
                 <li>
                     <a href="admin-performance.php" style="display: flex; align-items: center;">
                         <i class='bx bxs-book-content'></i>
@@ -1030,7 +1033,15 @@
             </div>
 
             <ul class="box-info">
-                
+                <a href="admin-dailylogs.php">
+                    <li>
+                        <i class='bx bx-calendar-check' ></i>
+                        <span class="text">
+                            <h3>Daily Logs</h3>
+                            <p>Record of their work activities</p>
+                        </span>
+                    </li>
+                </a>
                 <a href="admin-feedbacks.php">
                     <li>
                         <i class='bx bx-comment-detail'></i>
@@ -1158,7 +1169,7 @@
             submenu.style.display = 'block';
 
             // Push down the next item to avoid overlap
-            if (nextLi) nextLi.style.marginTop = '40px';
+            if (nextLi) nextLi.style.marginTop = '90px';
         }
 
         // ========== SUBMENU TOGGLE FUNCTIONALITY ==========
@@ -1188,7 +1199,7 @@
 
                 // Adjust margin of next item to avoid overlapping
                 if (!isExpanded) {
-                    if (nextLi) nextLi.style.marginTop = '40px';
+                    if (nextLi) nextLi.style.marginTop = '90px';
                 } else {
                     if (nextLi) nextLi.style.marginTop = '0px';
                 }

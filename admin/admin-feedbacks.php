@@ -978,15 +978,22 @@
     <!-- SIDEBAR -->
     <section id="sidebar">
         <a href="#" class="brand">
-            <i class="bx bxs-graduation"></i>
+            <i class="bx bx-slider-alt"></i>
             <span class="text">Admin Panel</span>
         </a>
 
         <!-- NEW FLEX WRAPPER -->
         <div class="sidebar-content">
             <!-- TOP ITEMS -->
+
             <ul class="side-menu top">
                 <!-- Activities with Submenu -->
+                <li>
+                    <a href="admin-dashboard.php">
+                        <i class='bx bxs-dashboard'></i>
+                        <span class="text">Dashboard</span>
+                    </a>
+                </li>
                 <li id="performance-submenu" class="has-submenu">
                     <a href="admin-activities.php">
                         <i class='bx bxs-folder-open'></i>
@@ -994,7 +1001,14 @@
                         <i class='bx bx-chevron-down arrow'></i>
                     </a>
                     <ul id="sub-menu" class="sub-menu active">
-                        
+                        <li>
+                            <a href="admin-dailylogs.php">
+                                <div class="non-underline">
+                                    <i class='bx bx-calendar-check'></i>
+                                    <span>Daily Logs</span>
+                                </div>
+                            </a>
+                        </li>
                         <li>
                             <a href="admin-feedbacks.php">
                                 <div class="underline">
@@ -1005,19 +1019,6 @@
                         </li>
                     </ul>
                 </li>        
-                <li>
-                    <a href="admin-attendance.php">
-                        <i class='bx bxs-calendar-check'></i>
-                        <span class="text">Attendance</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="admin-messages.php">
-                        <i class='bx bxs-message-dots'></i>
-                        <span class="text">Message</span>
-                    </a>
-                </li>
-
                 <li>
                     <a href="admin-performance.php" style="display: flex; align-items: center;">
                         <i class='bx bxs-book-content'></i>
@@ -1173,7 +1174,7 @@
                         submenu.style.display = 'block';
 
                         if (arrow) arrow.style.transform = 'rotate(180deg)';
-                        if (nextLi) nextLi.style.marginTop = '40px';
+                        if (nextLi) nextLi.style.marginTop = '90px';
                     }
                 });
 
@@ -1262,7 +1263,7 @@
             submenu.style.display = 'block';
 
             // Push down the next item to avoid overlap
-            if (nextLi) nextLi.style.marginTop = '40px';
+            if (nextLi) nextLi.style.marginTop = '90px';
         }
 
         // ========== SUBMENU TOGGLE FUNCTIONALITY ==========
@@ -1287,7 +1288,7 @@
                 arrow.style.transform = isExpanded ? 'rotate(0deg)' : 'rotate(180deg)';
 
                 // Adjust margin of next item
-                if (nextLi) nextLi.style.marginTop = isExpanded ? '0px' : '40px';
+                if (nextLi) nextLi.style.marginTop = isExpanded ? '0px' : '90px';
             });
         });
 

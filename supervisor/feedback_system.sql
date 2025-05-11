@@ -86,3 +86,4 @@ VALUES (
   '$2y$10$HMk5mOsW2z6tN5JsfXzv9u7rOXa0i2BTcZT4VQe3X5YqTx8cr57Vi', 
   'supervisor'
 );
+
