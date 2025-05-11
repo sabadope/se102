@@ -40,7 +40,7 @@
                 $_SESSION['email'] = $supervisor_email;
                 $_SESSION['role'] = 'Supervisor';
 
-                header("Location: ../supervisor/supervisor-attendance.php");
+                header("Location: ../supervisor/supervisor-activities.php");
                 exit();
             }
 

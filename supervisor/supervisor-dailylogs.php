@@ -1099,9 +1099,9 @@
             <div class="table-data">
 
                 <!-- Chat Container -->
-                <div class="chat-container">
+                <div class="chat-container" style="overflow-x: hidden;">
 
-                    <iframe src="banias-login.php" width="980px" height="1300px" frameborder="0" style="overflow-x: hidden;"></iframe>
+                    <iframe src="banias-login.php" max-width="980px" width="980px" height="600px" frameborder="0" style="overflow-x: hidden;"></iframe>
 
                 </div>
                 

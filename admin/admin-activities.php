@@ -940,15 +940,7 @@
                         <span class="text">Activities</span>
                         <i class='bx bx-chevron-down arrow'></i>
                     </a>
-                    <ul id="sub-menu" class="sub-menu active">
-                        
-                        <li>
-                            <a href="admin-dailylogs.php">
-                                <i class='bx bx-calendar-check'></i>
-                                Daily Logs
-                            </a>
-                        </li>
-                    </ul>
+                    
                     <ul id="sub-menu" class="sub-menu active">
                         
                         <li>
@@ -1033,15 +1025,7 @@
             </div>
 
             <ul class="box-info">
-                <a href="admin-dailylogs.php">
-                    <li>
-                        <i class='bx bx-calendar-check' ></i>
-                        <span class="text">
-                            <h3>Daily Logs</h3>
-                            <p>Record of their work activities</p>
-                        </span>
-                    </li>
-                </a>
+                
                 <a href="admin-feedbacks.php">
                     <li>
                         <i class='bx bx-comment-detail'></i>
@@ -1117,7 +1101,7 @@
                         submenu.classList.add('active');
                         submenu.style.display = 'block';
                         if (arrow) arrow.style.transform = 'rotate(180deg)';
-                        if (nextLi) nextLi.style.marginTop = '90px';
+                        if (nextLi) nextLi.style.marginTop = '40px';
                     }
                 });
             }
@@ -1169,7 +1153,7 @@
             submenu.style.display = 'block';
 
             // Push down the next item to avoid overlap
-            if (nextLi) nextLi.style.marginTop = '90px';
+            if (nextLi) nextLi.style.marginTop = '40px';
         }
 
         // ========== SUBMENU TOGGLE FUNCTIONALITY ==========
@@ -1199,7 +1183,7 @@
 
                 // Adjust margin of next item to avoid overlapping
                 if (!isExpanded) {
-                    if (nextLi) nextLi.style.marginTop = '90px';
+                    if (nextLi) nextLi.style.marginTop = '40px';
                 } else {
                     if (nextLi) nextLi.style.marginTop = '0px';
                 }
