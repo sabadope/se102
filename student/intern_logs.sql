@@ -1,40 +1,48 @@
--- Users Table
+-- Create the database if it doesn't exist
+CREATE DATABASE IF NOT EXISTS intern_logs;
+USE intern_logs;
+
+-- Drop existing tables if they exist
+DROP TABLE IF EXISTS logs;
+DROP TABLE IF EXISTS users;
+
+-- Create users table with role support
 CREATE TABLE users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(50) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL, -- Must store hashed passwords
-    role ENUM('Admin', 'Supervisor', 'User') NOT NULL DEFAULT 'User'
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    full_name VARCHAR(100) NOT NULL,
+    role ENUM('admin', 'user') DEFAULT 'user',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    last_login TIMESTAMP NULL,
+    status ENUM('active', 'inactive') DEFAULT 'active'
 );
 
--- Logs Table
+-- Create logs table with supervisor feedback support
 CREATE TABLE logs (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL, -- Link to user who made the log
-    type VARCHAR(50) NOT NULL,
-    task_name VARCHAR(255),
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    task_name VARCHAR(255) NOT NULL,
     task_desc TEXT,
-    start_time DATETIME, -- Changed from TIME to DATETIME
-    end_time DATETIME, -- Changed from TIME to DATETIME
-    status ENUM('Pending', 'In Progress', 'Completed') DEFAULT 'Pending',
+    start_time TIME NOT NULL,
+    end_time TIME NOT NULL,
+    status ENUM('Completed', 'In Progress', 'Pending') DEFAULT 'Pending',
     weekly_goals TEXT,
     achievements TEXT,
     challenges TEXT,
     lessons TEXT,
-    log_date DATE DEFAULT CURRENT_DATE, -- Moved from ALTER to here
-    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+    supervisor_feedback TEXT, -- For storing supervisor's feedback on the log
+    supervisor_rating INT,    -- For storing supervisor's rating (1-5 stars)
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
--- Supervisor Reviews Table
-CREATE TABLE supervisor_reviews (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    log_id INT NOT NULL, -- Links to a log entry
-    feedback TEXT NOT NULL,
-    rating ENUM('Poor', 'Fair', 'Good', 'Excellent') NOT NULL,
-    review_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (log_id) REFERENCES logs(id) ON DELETE CASCADE
-);
+-- Insert default admin user (password: admin123)
+INSERT INTO users (username, password, email, full_name, role) VALUES
+('admin', 'admin123', 'admin@example.com', 'System Administrator', 'admin');
 
+<<<<<<< HEAD
 -- Insert Admin User (password should be hashed)
 INSERT INTO users (username, password, role) VALUES ('admin', 'admin123', 'Admin');
 
@@ -43,3 +51,13 @@ INSERT INTO users (username, password, role) VALUES ('banias', 'banias', 'User')
 
 -- Insert Supervisor (password should be hashed)
 INSERT INTO users (username, password, role) VALUES ('supervisor', 'supervisor', 'Supervisor');
+=======
+-- Insert sample regular user (password: user123)
+INSERT INTO users (username, password, email, full_name, role) VALUES
+('user', 'user123', 'user@example.com', 'Regular User', 'user');
+
+-- Insert sample logs
+INSERT INTO logs (user_id, task_name, task_desc, start_time, end_time, status, weekly_goals, achievements, challenges, lessons) VALUES
+(2, 'Website Development', 'Worked on frontend development', '09:00:00', '17:00:00', 'Completed', 'Complete website layout', 'Finished homepage design', 'Responsive design issues', 'Learned new CSS techniques'),
+(2, 'Database Design', 'Created database schema', '09:00:00', '12:00:00', 'In Progress', 'Design database structure', 'Created tables', 'Complex relationships', 'Better understanding of normalization');
+>>>>>>> 9aa493811615b904167cb50f02b097c540c04b05
