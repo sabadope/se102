@@ -233,10 +233,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <input type="password" id="password" name="password" placeholder="Enter your password" required>
             </div>
             
-            <button type="submit" class="btn">Log In</button>
+            <button type="submit" class="btn">Verified</button>
 
-            <!-- Sign Up Button -->
-            <a href="banias-register.php" class="signup-btn">Create Another</a>
+            
             
             <?php if (isset($error)): ?>
                 <p class="error-message"><?= htmlspecialchars($error) ?></p>

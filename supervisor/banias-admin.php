@@ -310,8 +310,8 @@ $recent_users = $conn->query($query);
         <!-- Sidebar -->
         <div class="sidebar">
             <div class="sidebar-header">
-                <h2>Admin Panel</h2>
-                <p>Welcome, <?= htmlspecialchars($_SESSION['username']) ?></p>
+                <h2 style="text-align: center;">Supervisor Panel</h2>
+                
             </div>
             <ul class="nav-menu">
                 <li class="nav-item">
@@ -351,12 +351,7 @@ $recent_users = $conn->query($query);
         <div class="main-content">
             <div class="header">
                 <h1>Dashboard Overview</h1>
-                <div class="user-menu">
-                    <a href="banias-admin_settings.php" class="btn btn-primary">
-                        <i class="fas fa-cog"></i>
-                        Settings
-                    </a>
-                </div>
+                
             </div>
 
             <!-- Stats Grid -->
