@@ -1,7 +1,7 @@
 <?php
 include 'banias-db_connect.php';
 
-// Fetch saved logs (both daily and weekly)
+// Fetch saved logs (combined)
 $recent_logs = $conn->query("SELECT * FROM logs ORDER BY timestamp DESC LIMIT 5");
 ?>
 
@@ -14,18 +14,18 @@ $recent_logs = $conn->query("SELECT * FROM logs ORDER BY timestamp DESC LIMIT 5"
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --primary: #4361ee;
-            --primary-dark: #3a56d4;
-            --secondary: #3f37c9;
-            --light: #f8f9fa;
-            --dark: #212529;
-            --gray: #6c757d;
-            --light-gray: #e9ecef;
-            --danger: #f72585;
-            --success: #4cc9f0;
-            --border-radius: 8px;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            --transition: all 0.3s ease;
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #4f46e5;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --gray: #64748b;
+            --light-gray: #e2e8f0;
+            --danger: #ef4444;
+            --success: #22c55e;
+            --border-radius: 12px;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
         * {
@@ -35,114 +35,101 @@ $recent_logs = $conn->query("SELECT * FROM logs ORDER BY timestamp DESC LIMIT 5"
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
             line-height: 1.6;
             color: var(--dark);
-            background-color: #f5f7fa;
+            background-color: #f1f5f9;
             padding: 0;
         }
         
         .container {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 2rem;
         }
         
         .header {
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
             text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: var(--border-radius);
+            color: white;
+            box-shadow: var(--shadow);
+        }
+        
+        .header-actions {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .header-actions .btn-outline {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+        
+        .header-actions .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.2);
         }
         
         h1 {
-            color: var(--primary);
-            font-size: 2.2rem;
+            color: white;
+            font-size: 2.5rem;
             margin-bottom: 0.5rem;
-            font-weight: 600;
+            font-weight: 700;
+            letter-spacing: -0.025em;
         }
         
         .subtitle {
-            color: var(--gray);
-            font-size: 1rem;
-            margin-bottom: 2rem;
-        }
-        
-        .tabs {
-            display: flex;
-            border-bottom: 1px solid var(--light-gray);
-            margin-bottom: 2rem;
-        }
-        
-        .tab {
-            padding: 1rem 2rem;
-            cursor: pointer;
-            font-weight: 500;
-            color: var(--gray);
-            border-bottom: 3px solid transparent;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .tab.active {
-            color: var(--primary);
-            border-bottom-color: var(--primary);
-        }
-        
-        .tab:hover:not(.active) {
-            color: var(--dark);
-        }
-        
-        .tab i {
-            font-size: 1rem;
-        }
-        
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.3s ease;
-        }
-        
-        .tab-content.active {
-            display: block;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.1rem;
+            margin-bottom: 0;
         }
         
         .card {
             background: white;
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
-            padding: 2rem;
+            padding: 2.5rem;
             margin-bottom: 2rem;
+            transition: var(--transition);
+        }
+        
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
         
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
         }
         
         label {
             display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
             color: var(--dark);
+            font-size: 0.95rem;
         }
         
         input, select, textarea {
             width: 100%;
-            padding: 0.8rem 1rem;
-            border: 1px solid var(--light-gray);
+            padding: 0.875rem 1rem;
+            border: 2px solid var(--light-gray);
             border-radius: var(--border-radius);
             font-size: 1rem;
             transition: var(--transition);
+            background-color: var(--light);
         }
         
         input:focus, select:focus, textarea:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
         
         textarea {
@@ -151,24 +138,21 @@ $recent_logs = $conn->query("SELECT * FROM logs ORDER BY timestamp DESC LIMIT 5"
         }
         
         .time-fields {
-            display: flex;
-            gap: 1rem;
-        }
-        
-        .time-fields > div {
-            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
         }
         
         .btn {
-            padding: 0.8rem 1.5rem;
+            padding: 0.875rem 1.75rem;
             border-radius: var(--border-radius);
-            font-weight: 500;
+            font-weight: 600;
             font-size: 1rem;
             cursor: pointer;
             transition: var(--transition);
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.75rem;
             border: none;
         }
         
@@ -184,43 +168,49 @@ $recent_logs = $conn->query("SELECT * FROM logs ORDER BY timestamp DESC LIMIT 5"
         
         .btn-outline {
             background: white;
-            border: 1px solid var(--light-gray);
+            border: 2px solid var(--light-gray);
             color: var(--dark);
         }
         
         .btn-outline:hover {
             background: var(--light);
             border-color: var(--gray);
+            transform: translateY(-2px);
         }
         
         .btn-group {
             display: flex;
             gap: 1rem;
-            margin-top: 1.5rem;
+            margin-top: 2rem;
         }
         
         .saved-logs {
-            margin-top: 3rem;
+            margin-top: 4rem;
         }
         
         .saved-logs h2 {
-            color: var(--primary);
-            margin-bottom: 1.5rem;
-            font-size: 1.5rem;
+            color: var(--dark);
+            margin-bottom: 2rem;
+            font-size: 1.75rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
         }
         
         .log-entry {
             background: white;
             border-radius: var(--border-radius);
-            padding: 1.5rem;
+            padding: 2rem;
             margin-bottom: 1.5rem;
             box-shadow: var(--shadow);
             transition: var(--transition);
+            border: 1px solid var(--light-gray);
         }
         
         .log-entry:hover {
             transform: translateY(-3px);
-            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
         
         .log-entry h3 {
@@ -228,57 +218,69 @@ $recent_logs = $conn->query("SELECT * FROM logs ORDER BY timestamp DESC LIMIT 5"
             color: var(--primary);
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.25rem;
         }
         
         .log-entry p {
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
+            line-height: 1.7;
         }
         
         .log-entry strong {
             color: var(--dark);
+            font-weight: 600;
         }
         
         .action-buttons {
             display: flex;
             gap: 1rem;
-            margin-top: 1.5rem;
+            margin-top: 2rem;
         }
         
         .badge {
             display: inline-block;
-            padding: 0.35rem 0.75rem;
+            padding: 0.5rem 1rem;
             border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: 500;
+            font-size: 0.875rem;
+            font-weight: 600;
         }
         
         .badge-success {
-            background-color: #d4edda;
-            color: #155724;
+            background-color: #dcfce7;
+            color: #166534;
         }
         
         .badge-warning {
-            background-color: #fff3cd;
-            color: #856404;
+            background-color: #fef3c7;
+            color: #92400e;
         }
         
         .badge-danger {
-            background-color: #f8d7da;
-            color: #721c24;
+            background-color: #fee2e2;
+            color: #991b1b;
         }
         
         .empty-state {
             text-align: center;
-            padding: 2rem;
+            padding: 4rem 2rem;
             color: var(--gray);
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
         }
         
         .empty-state i {
-            font-size: 3rem;
-            margin-bottom: 1rem;
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
             color: var(--light-gray);
+        }
+        
+        .empty-state h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
         }
         
         /* Responsive adjustments */
@@ -287,18 +289,17 @@ $recent_logs = $conn->query("SELECT * FROM logs ORDER BY timestamp DESC LIMIT 5"
                 padding: 1rem;
             }
             
-            .tabs {
-                overflow-x: auto;
-                padding-bottom: 0.5rem;
+            .header {
+                padding: 1.5rem;
+                margin-bottom: 2rem;
             }
             
-            .tab {
-                white-space: nowrap;
-                padding: 0.75rem 1rem;
+            h1 {
+                font-size: 2rem;
             }
             
             .time-fields {
-                flex-direction: column;
+                grid-template-columns: 1fr;
                 gap: 1rem;
             }
             
@@ -310,6 +311,14 @@ $recent_logs = $conn->query("SELECT * FROM logs ORDER BY timestamp DESC LIMIT 5"
                 width: 100%;
                 justify-content: center;
             }
+            
+            .card {
+                padding: 1.5rem;
+            }
+            
+            .log-entry {
+                padding: 1.5rem;
+            }
         }
     </style>
 </head>
@@ -317,104 +326,88 @@ $recent_logs = $conn->query("SELECT * FROM logs ORDER BY timestamp DESC LIMIT 5"
     <div class="container">
         <div class="header">
             <h1>Intern Performance Logs</h1>
-            <p class="subtitle">Track and manage your daily and weekly activities</p>
+            <div class="header-actions">
+                <p class="subtitle">Track and manage your activities</p>
+                <a href="banias-logout.php" class="btn btn-outline">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </a>
+            </div>
         </div>
         
+        <!-- Combined Log Form -->
         <div class="card">
-            <div class="tabs">
-                <div class="tab active" onclick="openTab('daily')">
-                    <i class="fas fa-calendar-day"></i> Daily Log
+            <form action="banias-save_log.php" method="POST">
+                <input type="hidden" name="type" value="Combined Log">
+                
+                <h2><i class="fas fa-tasks"></i> Daily Activity</h2>
+                <div class="form-group">
+                    <label>Task Name:</label>
+                    <input type="text" name="task_name" placeholder="What did you work on today?" required>
                 </div>
-                <div class="tab" onclick="openTab('weekly')">
-                    <i class="fas fa-calendar-week"></i> Weekly Log
+                
+                <div class="form-group">
+                    <label>Task Description:</label>
+                    <textarea name="task_desc" placeholder="Describe your daily work in detail" required></textarea>
                 </div>
-            </div>
-            
-            <!-- Daily Log Content -->
-            <div id="daily" class="tab-content active">
-                <form action="banias-save_log.php" method="POST">
-                    <input type="hidden" name="type" value="Daily Log">
-                    
-                    <div class="form-group">
-                        <label>Task Name:</label>
-                        <input type="text" name="task_name" placeholder="Enter task name" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Task Description:</label>
-                        <textarea name="task_desc" placeholder="Describe the task in detail" required></textarea>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Time:</label>
-                        <div class="time-fields">
-                            <div>
-                                <label>Start Time</label>
-                                <input type="time" name="start_time" required>
-                            </div>
-                            <div>
-                                <label>End Time</label>
-                                <input type="time" name="end_time" required>
-                            </div>
+                
+                <div class="form-group">
+                    <label>Time:</label>
+                    <div class="time-fields">
+                        <div>
+                            <label>Start Time</label>
+                            <input type="time" name="start_time" required>
+                        </div>
+                        <div>
+                            <label>End Time</label>
+                            <input type="time" name="end_time" required>
                         </div>
                     </div>
-                    
-                    <div class="form-group">
-                        <label>Status:</label>
-                        <select name="status" required>
-                            <option value="">Select status</option>
-                            <option value="Completed">Completed</option>
-                            <option value="In Progress">In Progress</option>
-                            <option value="Pending">Pending</option>
-                        </select>
-                    </div>
-                    
-                    <div class="btn-group">
-                        <button type="submit" class="btn btn-primary" onclick="window.location.href='banias-index.php'">
-                            <i class="fas fa-save"></i> Save Daily Log
-                        </button>
-                        <button type="button" class="btn btn-outline" onclick="window.location.href='banias-weekly_summary.php'">
-                            <i class="fas fa-chart-bar"></i> View Weekly Summary
-                        </button>
-                    </div>
-                </form>
-            </div>
-            
-            <!-- Weekly Log Content -->
-            <div id="weekly" class="tab-content">
-                <form action="banias-save_log.php" method="POST">
-                    <input type="hidden" name="type" value="Weekly Log">
-                    
-                    <div class="form-group">
-                        <h3>Weekly Goals:</h3>
-                        <textarea name="weekly_goals" placeholder="What were your goals for this week?" required></textarea>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Achievements:</label>
-                        <textarea name="achievements" placeholder="What did you accomplish this week?" required></textarea>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Challenges:</label>
-                        <textarea name="challenges" placeholder="What challenges did you encounter?" required></textarea>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Lessons Learned:</label>
-                        <textarea name="lessons" placeholder="What did you learn this week?" required></textarea>
-                    </div>
-                    
-                    <div class="btn-group">
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-save"></i> Save Weekly Log
-                        </button>
-                    </div>
-                </form>
-            </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Status:</label>
+                    <select name="status" required>
+                        <option value="">Select status</option>
+                        <option value="Completed">Completed</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Pending">Pending</option>
+                    </select>
+                </div>
+                
+                <h2><i class="fas fa-calendar-week"></i> Weekly Reflection</h2>
+                <div class="form-group">
+                    <label>Weekly Goals:</label>
+                    <textarea name="weekly_goals" placeholder="What were your goals for this week?"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>Achievements:</label>
+                    <textarea name="achievements" placeholder="What did you accomplish this week?"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>Challenges:</label>
+                    <textarea name="challenges" placeholder="What challenges did you encounter?"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>Lessons Learned:</label>
+                    <textarea name="lessons" placeholder="What did you learn this week?"></textarea>
+                </div>
+                
+                <div class="btn-group">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Save All Logs
+                    </button>
+                    <button type="button" class="btn btn-outline" onclick="window.location.href='banias-weekly_summary.php'">
+                        <i class="fas fa-chart-bar"></i> View Weekly Summary
+                    </button>
+                </div>
+            </form>
         </div>
         
-        <!-- Saved Logs Section -->
+        <!-- Combined Saved Logs Section -->
         <div class="saved-logs">
             <h2><i class="fas fa-history"></i> Recent Logs</h2>
             
@@ -422,22 +415,11 @@ $recent_logs = $conn->query("SELECT * FROM logs ORDER BY timestamp DESC LIMIT 5"
                 <?php while ($row = $recent_logs->fetch_assoc()): ?>
                     <div class="log-entry">
                         <h3>
-                            <?php if ($row['type'] === 'Weekly Log'): ?>
-                                <i class="fas fa-calendar-week"></i>
-                            <?php else: ?>
-                                <i class="fas fa-calendar-day"></i>
-                            <?php endif; ?>
-                            <?= $row['type'] ?> - <?= date('M j, Y', strtotime($row['timestamp'])) ?>
+                            <i class="fas fa-calendar-day"></i>
+                            <?= date('M j, Y', strtotime($row['timestamp'])) ?>
                         </h3>
                         
-                        <?php if ($row['type'] === 'Weekly Log'): ?>
-                            <div class="weekly-log-details">
-                                <p><strong>Goals:</strong> <?= htmlspecialchars($row['weekly_goals']) ?></p>
-                                <p><strong>Achievements:</strong> <?= htmlspecialchars($row['achievements']) ?></p>
-                                <p><strong>Challenges:</strong> <?= htmlspecialchars($row['challenges']) ?></p>
-                                <p><strong>Lessons Learned:</strong> <?= htmlspecialchars($row['lessons']) ?></p>
-                            </div>
-                        <?php else: ?>
+                        <?php if (!empty($row['task_name'])): ?>
                             <p><strong>Task:</strong> <?= htmlspecialchars($row['task_name']) ?></p>
                             <p><strong>Description:</strong> <?= htmlspecialchars($row['task_desc']) ?></p>
                             <p><strong>Time:</strong> <?= date('g:i A', strtotime($row['start_time'])) ?> - <?= date('g:i A', strtotime($row['end_time'])) ?></p>
@@ -449,6 +431,13 @@ $recent_logs = $conn->query("SELECT * FROM logs ORDER BY timestamp DESC LIMIT 5"
                                     <?= htmlspecialchars($row['status']) ?>
                                 </span>
                             </p>
+                        <?php endif; ?>
+                        
+                        <?php if (!empty($row['weekly_goals'])): ?>
+                            <p><strong>Weekly Goals:</strong> <?= htmlspecialchars($row['weekly_goals']) ?></p>
+                            <p><strong>Achievements:</strong> <?= htmlspecialchars($row['achievements']) ?></p>
+                            <p><strong>Challenges:</strong> <?= htmlspecialchars($row['challenges']) ?></p>
+                            <p><strong>Lessons Learned:</strong> <?= htmlspecialchars($row['lessons']) ?></p>
                         <?php endif; ?>
                         
                         <div class="action-buttons">
@@ -475,22 +464,6 @@ $recent_logs = $conn->query("SELECT * FROM logs ORDER BY timestamp DESC LIMIT 5"
     </div>
     
     <script>
-        function openTab(tabName) {
-            // Hide all tab contents
-            document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            
-            // Deactivate all tabs
-            document.querySelectorAll('.tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            
-            // Activate selected tab
-            document.getElementById(tabName).classList.add('active');
-            event.currentTarget.classList.add('active');
-        }
-        
         function deleteLog(id) {
             if (confirm("Are you sure you want to delete this log?\nThis action cannot be undone.")) {
                 window.location.href = `banias-delete_log.php?id=${id}`;

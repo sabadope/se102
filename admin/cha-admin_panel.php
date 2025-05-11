@@ -39,7 +39,7 @@ $customer_result = $conn->query($customer_query);
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <?php include 'cha-navbar.php'; ?>
+    
     
     <div class="admin-container">
         <div class="admin-header">
@@ -47,9 +47,6 @@ $customer_result = $conn->query($customer_query);
             <div class="admin-actions">
                 <a href="cha-export_reports.php" class="admin-btn primary">
                     <i class="icon">📊</i> Export All Reports
-                </a>
-                <a href="cha-manage_users.php" class="admin-btn secondary">
-                    <i class="icon">👥</i> Manage Users
                 </a>
             </div>
         </div>
