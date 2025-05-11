@@ -3,9 +3,21 @@ session_start();
 require_once 'banias-db_connect.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Get form data
     $username = $_POST['username'];
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
+    $email = $_POST['email'] ?? ''; // Make email optional for now
+    $full_name = $_POST['full_name'] ?? ''; // Make full name optional for now
+    
+    // If email or full_name aren't provided, create default values
+    if (empty($email)) {
+        $email = $username . '@example.com';
+    }
+    
+    if (empty($full_name)) {
+        $full_name = ucfirst($username);
+    }
 
     // Validate input
     if (empty($username) || empty($password) || empty($confirm_password)) {
@@ -25,16 +37,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
             // Hash password and insert new user
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-            $insert_query = "INSERT INTO users (username, password) VALUES (?, ?)";
+            $insert_query = "INSERT INTO users (username, password, email, full_name) VALUES (?, ?, ?, ?)";
             $insert_stmt = $conn->prepare($insert_query);
-            $insert_stmt->bind_param("ss", $username, $hashed_password);
+            $insert_stmt->bind_param("ssss", $username, $hashed_password, $email, $full_name);
 
             if ($insert_stmt->execute()) {
                 $_SESSION['success'] = "Registration successful! Please log in.";
                 header('Location: banias-login.php');
                 exit;
             } else {
-                $error = "Registration failed. Please try again.";
+                $error = "Registration failed. Please try again. Error: " . $conn->error;
             }
             $insert_stmt->close();
         }
@@ -189,6 +201,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="form-group">
                 <label for="username">Username</label>
                 <input type="text" id="username" name="username" placeholder="Enter your username" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email">
+            </div>
+            
+            <div class="form-group">
+                <label for="full_name">Full Name</label>
+                <input type="text" id="full_name" name="full_name" placeholder="Enter your full name">
             </div>
             
             <div class="form-group">
