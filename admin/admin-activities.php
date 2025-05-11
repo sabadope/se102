@@ -1117,7 +1117,7 @@
                         submenu.classList.add('active');
                         submenu.style.display = 'block';
                         if (arrow) arrow.style.transform = 'rotate(180deg)';
-                        if (nextLi) nextLi.style.marginTop = '40px';
+                        if (nextLi) nextLi.style.marginTop = '90px';
                     }
                 });
             }
