@@ -37,3 +37,9 @@ CREATE TABLE supervisor_reviews (
 
 -- Insert Admin User (password should be hashed)
 INSERT INTO users (username, password, role) VALUES ('admin', 'admin123', 'Admin');
+
+-- Insert User (password should be hashed)
+INSERT INTO users (username, password, role) VALUES ('banias', 'banias', 'User');
+
+-- Insert Supervisor (password should be hashed)
+INSERT INTO users (username, password, role) VALUES ('supervisor', 'supervisor', 'Supervisor');
