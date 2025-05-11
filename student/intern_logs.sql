@@ -32,14 +32,15 @@ CREATE TABLE logs (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
+
 -- Insert default admin user (password: admin123)
 INSERT INTO users (username, password, email, full_name, role) VALUES
-('admin', 'admin123', 'admin@example.com', 'System Administrator', 'admin');
+('admin', 'supervisor1230', 'supervisor@gmail.com', 'System Administrator', 'admin');
 
 
 -- Insert sample regular user (password: user123)
 INSERT INTO users (username, password, email, full_name, role) VALUES
-('user', 'user123', 'user@example.com', 'Regular User', 'user');
+('user', 'user1230', 'user@gmail.com', 'Regular User', 'user');
 
 -- Insert sample logs
 INSERT INTO logs (user_id, task_name, task_desc, start_time, end_time, status, weekly_goals, achievements, challenges, lessons) VALUES

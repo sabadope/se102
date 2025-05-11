@@ -1,53 +1,56 @@
 <?php
 session_start();
-require_once 'banias-db_connect.php'; // Connect to your database
+require_once 'banias-db_connect.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Get form data
     $username = $_POST['username'];
     $password = $_POST['password'];
+    $confirm_password = $_POST['confirm_password'];
+    $email = $_POST['email'] ?? ''; // Make email optional for now
+    $full_name = $_POST['full_name'] ?? ''; // Make full name optional for now
+    
+    // If email or full_name aren't provided, create default values
+    if (empty($email)) {
+        $email = $username . '@example.com';
+    }
+    
+    if (empty($full_name)) {
+        $full_name = ucfirst($username);
+    }
 
-    $query = "SELECT * FROM users WHERE username = ?";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("s", $username);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows == 1) {
-        $user = $result->fetch_assoc();
-        
-        // Support both hashed passwords and plain text passwords
-        if (password_verify($password, $user['password']) || $password === $user['password']) {
-            $_SESSION['username'] = $username;
-            $_SESSION['user_id'] = $user['id'];  // Store user ID in session
-            $_SESSION['role'] = $user['role'] ?? 'user';
-            
-            // If using plain text password, update to hashed version
-            if ($password === $user['password']) {
-                $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-                $update_pwd_query = "UPDATE users SET password = ? WHERE id = ?";
-                $update_pwd_stmt = $conn->prepare($update_pwd_query);
-                $update_pwd_stmt->bind_param("si", $hashed_password, $user['id']);
-                $update_pwd_stmt->execute();
-            }
-            
-            // Update last login time
-            $update_query = "UPDATE users SET last_login = CURRENT_TIMESTAMP WHERE id = ?";
-            $update_stmt = $conn->prepare($update_query);
-            $update_stmt->bind_param("i", $user['id']);
-            $update_stmt->execute();
-            
-            // Redirect based on role
-            if ($_SESSION['role'] === 'admin') {
-                header('Location: banias-admin.php');
-            } else {
-                header('Location: banias-index.php');
-            }
-            exit();
-        } else {
-            $error = "Invalid username or password.";
-        }
+    // Validate input
+    if (empty($username) || empty($password) || empty($confirm_password)) {
+        $error = "All fields are required.";
+    } elseif ($password !== $confirm_password) {
+        $error = "Passwords do not match.";
     } else {
-        $error = "Invalid username or password.";
+        // Check if username already exists
+        $query = "SELECT * FROM users WHERE username = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("s", $username);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            $error = "Username already exists.";
+        } else {
+            // Hash password and insert new user
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+            $insert_query = "INSERT INTO users (username, password, email, full_name) VALUES (?, ?, ?, ?)";
+            $insert_stmt = $conn->prepare($insert_query);
+            $insert_stmt->bind_param("ssss", $username, $hashed_password, $email, $full_name);
+
+            if ($insert_stmt->execute()) {
+                $_SESSION['success'] = "Registration successful! Please log in.";
+                header('Location: banias-login.php');
+                exit;
+            } else {
+                $error = "Registration failed. Please try again. Error: " . $conn->error;
+            }
+            $insert_stmt->close();
+        }
+        $stmt->close();
     }
 }
 ?>
@@ -57,11 +60,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Register</title>
     <style>
         :root {
-            --primary: #4CAF50;
-            --primary-dark: #45a049;
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
             --light: #f8f9fa;
             --dark: #212529;
             --gray: #6c757d;
@@ -90,7 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             padding: 1rem;
         }
         
-        .login-container {
+        .register-container {
             background: white;
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
@@ -100,17 +103,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             text-align: center;
         }
         
-        .login-header {
+        .register-header {
             margin-bottom: 2rem;
         }
         
-        .login-header h1 {
+        .register-header h1 {
             color: var(--primary);
             font-size: 1.8rem;
             margin-bottom: 0.5rem;
         }
         
-        .login-header p {
+        .register-header p {
             color: var(--gray);
         }
         
@@ -141,17 +144,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
         }
         
-        .checkbox-group {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
-        
-        .checkbox-group input {
-            width: auto;
-            margin-right: 0.5rem;
-        }
-        
         .btn {
             width: 100%;
             padding: 0.8rem;
@@ -176,56 +168,49 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             font-size: 0.9rem;
         }
         
-        /* Responsive adjustments */
-        @media (max-width: 480px) {
-            .login-container {
-                padding: 1.5rem;
-            }
-        }
-
-        /* Sign Up Button */
-        .signup-btn {            
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #007BFF;
-            color: white;
-            border-radius: 8px;
-            text-decoration: none;
-            font-size: 16px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            text-align: center;
-            width: 100%;
-        }
-        
-        /* Add success message styling */
-        .success-message {
-            color: var(--primary);
+        .login-link {
             margin-top: 1rem;
             font-size: 0.9rem;
-            background-color: rgba(76, 175, 80, 0.1);
-            padding: 10px;
-            border-radius: var(--border-radius);
+        }
+        
+        .login-link a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .login-link a:hover {
+            color: var(--primary-dark);
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 480px) {
+            .register-container {
+                padding: 1.5rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="login-container">
-        <div class="login-header">
-            <h1>User Authentication</h1>
-            
+    <div class="register-container">
+        <div class="register-header">
+            <h1>Create Account</h1>
+            <p>Register to start tracking your performance</p>
         </div>
         
-        <?php if (isset($_SESSION['success'])): ?>
-            <p class="success-message"><?= htmlspecialchars($_SESSION['success']) ?></p>
-            <?php unset($_SESSION['success']); ?>
-        <?php endif; ?>
-        
-        <form action="banias-login.php" method="POST">
+        <form action="banias-register.php" method="POST">
             <div class="form-group">
                 <label for="username">Username</label>
                 <input type="text" id="username" name="username" placeholder="Enter your username" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email">
+            </div>
+            
+            <div class="form-group">
+                <label for="full_name">Full Name</label>
+                <input type="text" id="full_name" name="full_name" placeholder="Enter your full name">
             </div>
             
             <div class="form-group">
@@ -233,15 +218,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <input type="password" id="password" name="password" placeholder="Enter your password" required>
             </div>
             
-            <button type="submit" class="btn">Log In</button>
-
-            <!-- Sign Up Button -->
-            <a href="banias-register.php" class="signup-btn">Create Another</a>
+            <div class="form-group">
+                <label for="confirm_password">Confirm Password</label>
+                <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm your password" required>
+            </div>
+            
+            <button type="submit" class="btn">Register</button>
             
             <?php if (isset($error)): ?>
                 <p class="error-message"><?= htmlspecialchars($error) ?></p>
             <?php endif; ?>
         </form>
+        
+        <div class="login-link">
+            Already have an account? <a href="banias-login.php">Verified</a>
+        </div>
     </div>
 </body>
 </html>
+<?php $conn->close(); ?>

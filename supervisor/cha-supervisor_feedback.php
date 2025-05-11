@@ -51,7 +51,7 @@ $interns_result = $conn->query($interns_query);
     <link rel="stylesheet" href="cha-styles.css">
 </head>
 <body>
-    <?php include 'cha-navbar.php'; ?>
+    
     
     <div class="container">
         <h1>Supervisor Feedback Form</h1>
