@@ -1,10 +1,4 @@
--- Create the database if it doesn't exist
-CREATE DATABASE IF NOT EXISTS intern_logs;
-USE intern_logs;
 
--- Drop existing tables if they exist
-DROP TABLE IF EXISTS logs;
-DROP TABLE IF EXISTS users;
 
 -- Create users table with role support
 CREATE TABLE users (
@@ -42,16 +36,7 @@ CREATE TABLE logs (
 INSERT INTO users (username, password, email, full_name, role) VALUES
 ('admin', 'admin123', 'admin@example.com', 'System Administrator', 'admin');
 
-<<<<<<< HEAD
--- Insert Admin User (password should be hashed)
-INSERT INTO users (username, password, role) VALUES ('admin', 'admin123', 'Admin');
 
--- Insert User (password should be hashed)
-INSERT INTO users (username, password, role) VALUES ('banias', 'banias', 'User');
-
--- Insert Supervisor (password should be hashed)
-INSERT INTO users (username, password, role) VALUES ('supervisor', 'supervisor', 'Supervisor');
-=======
 -- Insert sample regular user (password: user123)
 INSERT INTO users (username, password, email, full_name, role) VALUES
 ('user', 'user123', 'user@example.com', 'Regular User', 'user');
@@ -60,4 +45,4 @@ INSERT INTO users (username, password, email, full_name, role) VALUES
 INSERT INTO logs (user_id, task_name, task_desc, start_time, end_time, status, weekly_goals, achievements, challenges, lessons) VALUES
 (2, 'Website Development', 'Worked on frontend development', '09:00:00', '17:00:00', 'Completed', 'Complete website layout', 'Finished homepage design', 'Responsive design issues', 'Learned new CSS techniques'),
 (2, 'Database Design', 'Created database schema', '09:00:00', '12:00:00', 'In Progress', 'Design database structure', 'Created tables', 'Complex relationships', 'Better understanding of normalization');
->>>>>>> 9aa493811615b904167cb50f02b097c540c04b05
+

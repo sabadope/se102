@@ -20,7 +20,9 @@ VALUES ('Client', 'client@gmail.com', '$2y$10$w5Wz2vEykEp7Gr4UI8XF9./aEAPrg6E/x8
 
 -- Insert default Student account
 INSERT INTO users (username, email, password, role) 
-VALUES ('Student', 'student@gmail.com', '$2y$10$w5Wz2vEykEp7Gr4UI8XF9./aEAPrg6E/x86IqpyOXGyY0/ZjUeyu6', 'Client');
+VALUES ('Student', 'student@gmail.com', '$2y$10$w5Wz2vEykEp7Gr4UI8XF9./aEAPrg6E/x86IqpyOXGyY0/ZjUeyu6', 'Student');
+
+-- LAHAT YAN MGA YAN PASSWORD IS [ROLE] + 1230
 
 
 
