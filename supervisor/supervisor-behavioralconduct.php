@@ -973,7 +973,7 @@
     <!-- SIDEBAR -->
     <section id="sidebar">
         <a href="#" class="brand">
-            <i class="bx bxs-graduation"></i>
+            <i class="bx bxs-user"></i>
             <span class="text">Supervisor Panel</span>
         </a>
 
