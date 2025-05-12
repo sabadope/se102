@@ -1,27 +1,65 @@
 <?php
+session_start();
 include 'banias-db_connect.php';
+
+// Check if user is logged in
+if (!isset($_SESSION['username']) || !isset($_SESSION['user_id'])) {
+    header("Location: banias-login.php");
+    exit();
+}
 
 // Initialize variables
 $monday = date('Y-m-d', strtotime('monday this week'));
 $sunday = date('Y-m-d', strtotime('sunday this week'));
 $start_date = date('M j', strtotime($monday));
 $end_date = date('M j, Y', strtotime($sunday));
+$user_id = (int)$_SESSION['user_id'];
 
-// Query to get weekly logs (simplified without challenges and improvements)
+// Handle delete action
+if (isset($_GET['delete']) && isset($_GET['id'])) {
+    $id = (int)$_GET['id'];
+    // Add user_id check to prevent unauthorized deletion
+    $delete_query = "DELETE FROM logs WHERE id = ? AND user_id = ?";
+    $delete_stmt = $conn->prepare($delete_query);
+    $delete_stmt->bind_param("ii", $id, $user_id);
+    if ($delete_stmt->execute()) {
+        header("Location: banias-weekly_summary.php");
+        exit();
+    }
+}
+
+// Handle supervisor review submission
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['review_submit'])) {
+    $log_id = (int)$_POST['log_id'];
+    $feedback = $conn->real_escape_string($_POST['feedback']);
+    $rating = (int)$_POST['rating'];
+    
+    // Add user_id check to prevent unauthorized updates
+    $review_query = "UPDATE logs SET supervisor_feedback = ?, supervisor_rating = ? WHERE id = ? AND user_id = ?";
+    $review_stmt = $conn->prepare($review_query);
+    $review_stmt->bind_param("siii", $feedback, $rating, $log_id, $user_id);
+    $review_stmt->execute();
+}
+
+// Query to get weekly logs for the current user
 $query = "SELECT 
             id,
             DATE(timestamp) as date,
             task_name as task,
             CONCAT(TIME_FORMAT(start_time, '%h:%i%p'), ' - ', TIME_FORMAT(end_time, '%h:%i%p')) as time_spent,
-            status
+            challenges,
+            lessons as improvements,
+            status,
+            supervisor_feedback,
+            supervisor_rating
           FROM logs 
-          WHERE DATE(timestamp) BETWEEN ? AND ?
+          WHERE user_id = ?
           ORDER BY timestamp DESC";
 
 $stmt = $conn->prepare($query);
 if ($stmt === false) die('Prepare failed: ' . htmlspecialchars($conn->error));
 
-$stmt->bind_param("ss", $monday, $sunday);
+$stmt->bind_param("i", $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
 
@@ -99,20 +137,13 @@ if ($result === false) die('Execute failed: ' . htmlspecialchars($stmt->error));
         
         .card-header {
             padding: 1.5rem;
-            background: var(--secondary);
-            color: white;
+            border-bottom: 1px solid var(--light-gray);
         }
         
         .card-title {
-            font-size: 1.5rem;
+            font-size: 1.25rem;
             font-weight: 600;
-            margin: 0;
-        }
-        
-        .card-subtitle {
-            font-size: 0.9rem;
-            opacity: 0.9;
-            margin-top: 0.5rem;
+            color: var(--dark);
         }
         
         .card-body {
@@ -121,57 +152,47 @@ if ($result === false) die('Execute failed: ' . htmlspecialchars($stmt->error));
         
         .tabs {
             display: flex;
-            border-bottom: 1px solid var(--light-gray);
+            gap: 1rem;
             margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--light-gray);
+            padding-bottom: 1rem;
         }
         
         .tab {
             padding: 0.75rem 1.5rem;
             cursor: pointer;
-            font-weight: 500;
-            color: var(--gray);
-            border-bottom: 3px solid transparent;
+            border-radius: var(--border-radius);
             transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            color: var(--gray);
+            font-weight: 500;
+        }
+        
+        .tab:hover {
+            background: var(--light);
+            color: var(--dark);
         }
         
         .tab.active {
-            color: var(--primary);
-            border-bottom-color: var(--primary);
-        }
-        
-        .tab:hover:not(.active) {
-            color: var(--dark);
+            background: var(--primary);
+            color: white;
         }
         
         .tab-content {
             display: none;
-            animation: fadeIn 0.3s ease;
         }
         
         .tab-content.active {
             display: block;
         }
         
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        /* Intern View Styles */
         .table-container {
             overflow-x: auto;
             margin-bottom: 1.5rem;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
         }
         
         table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.9rem;
         }
         
         th, td {
@@ -181,60 +202,55 @@ if ($result === false) die('Execute failed: ' . htmlspecialchars($stmt->error));
         }
         
         th {
-            background-color: var(--light);
-            color: var(--dark);
+            background: var(--light);
             font-weight: 600;
-            text-transform: uppercase;
-            font-size: 0.8rem;
+            color: var(--dark);
         }
         
         tr:hover {
-            background-color: rgba(52, 152, 219, 0.05);
+            background: var(--light);
         }
         
-        .badge {
-            display: inline-block;
-            padding: 0.35rem 0.75rem;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: 500;
-        }
-        
-        .badge-success {
-            background-color: #d4edda;
-            color: #155724;
-        }
-        
-        .badge-warning {
-            background-color: #fff3cd;
-            color: #856404;
-        }
-        
-        .badge-danger {
-            background-color: #f8d7da;
-            color: #721c24;
-        }
-        
-        .btn-icon {
-            padding: 0.5rem;
-            border-radius: 50%;
-            width: 2rem;
-            height: 2rem;
+        .btn {
             display: inline-flex;
             align-items: center;
-            justify-content: center;
-            transition: var(--transition);
-            background: transparent;
-            border: none;
+            gap: 0.5rem;
+            padding: 0.75rem 1.25rem;
+            border-radius: var(--border-radius);
+            font-weight: 500;
             cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            text-decoration: none;
         }
         
-        .btn-icon.danger {
-            color: #dc3545;
+        .btn-primary {
+            background: var(--primary);
+            color: white;
         }
         
-        .btn-icon.danger:hover {
-            background: #f8d7da;
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+        
+        .btn-outline {
+            background: white;
+            border: 1px solid var(--light-gray);
+            color: var(--gray);
+        }
+        
+        .btn-outline:hover {
+            background: var(--light);
+            color: var(--dark);
+        }
+        
+        .btn-danger {
+            background: #e74c3c;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: #c0392b;
         }
         
         .action-buttons {
@@ -243,270 +259,74 @@ if ($result === false) die('Execute failed: ' . htmlspecialchars($stmt->error));
             margin-top: 1.5rem;
         }
         
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1.5rem;
-            border-radius: var(--border-radius);
-            font-weight: 500;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: var(--transition);
-            border: 1px solid transparent;
-        }
-        
-        .btn-primary {
-            background: var(--primary);
-            color: white;
-            border: none;
-        }
-        
-        .btn-primary:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-        }
-        
-        .btn-outline {
-            background: white;
-            border-color: var(--light-gray);
-            color: var(--dark);
-        }
-        
-        .btn-outline:hover {
-            background: var(--light);
-            border-color: var(--gray);
-        }
-        
         .empty-state {
             text-align: center;
-            padding: 2rem;
+            padding: 3rem;
             color: var(--gray);
         }
         
         .empty-state i {
             font-size: 3rem;
             margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+        
+        .review-form {
+            background: var(--light);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            margin-top: 1rem;
+        }
+        
+        .review-form textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--light-gray);
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
+            resize: vertical;
+        }
+        
+        .rating {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .rating input[type="radio"] {
+            display: none;
+        }
+        
+        .rating label {
+            cursor: pointer;
+            font-size: 1.5rem;
             color: var(--light-gray);
         }
         
-        /* Supervisor Review Styles */
-        .review-container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 1.5rem;
-            background: white;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
+        .rating input[type="radio"]:checked + label {
+            color: #f1c40f;
         }
         
-        .section-title {
-            color: var(--secondary);
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
+        /* Added hover effect for the rating stars */
+        .rating label:hover,
+        .rating label:hover ~ label {
+            color: #f1c40f !important;
         }
         
-        .section-subtitle {
-            color: var(--gray);
-            margin-bottom: 1.5rem;
-            font-size: 1rem;
-        }
-        
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-        
-        .form-label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: var(--dark);
-            font-weight: 500;
-            font-size: 0.95rem;
-        }
-        
-        .form-textarea {
-            width: 100%;
-            padding: 1rem;
-            border: 1px solid var(--light-gray);
-            border-radius: var(--border-radius);
-            min-height: 150px;
-            font-family: inherit;
-            font-size: 0.95rem;
-            transition: var(--transition);
-        }
-        
-        .form-textarea:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
-        }
-        
-        .rating-select {
-            position: relative;
-        }
-        
-        .form-select {
-            width: 100%;
-            padding: 0.8rem 1rem;
-            border: 1px solid var(--light-gray);
-            border-radius: var(--border-radius);
-            appearance: none;
-            font-size: 0.95rem;
-            background-color: white;
-            cursor: pointer;
-        }
-        
-        .select-icon {
-            position: absolute;
-            right: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--gray);
-            pointer-events: none;
-        }
-        
-        .form-actions {
-            display: flex;
-            gap: 1rem;
-            margin-top: 2rem;
-            justify-content: flex-end;
-        }
-        
-        .btn-reset {
-            background: white;
-            border: 1px solid var(--light-gray);
-            color: var(--gray);
-        }
-        
-        .btn-reset:hover {
+        .supervisor-feedback {
             background: var(--light);
-        }
-        
-        .btn-submit {
-            background: var(--primary);
-            color: white;
-            border: none;
-        }
-        
-        .btn-submit:hover {
-            background: var(--primary-dark);
-        }
-        
-        /* Previous Reviews Section */
-        .past-reviews {
-            margin-top: 3rem;
-            padding-top: 2rem;
-            border-top: 1px solid var(--light-gray);
-        }
-        
-        .review-card {
-            background: white;
+            padding: 1rem;
             border-radius: var(--border-radius);
-            padding: 1.25rem;
-            margin-bottom: 1rem;
-            box-shadow: var(--shadow-sm);
-            transition: var(--transition);
+            margin-top: 0.5rem;
         }
         
-        .review-card:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow);
+        .supervisor-feedback p {
+            margin-bottom: 0.5rem;
         }
         
-        .review-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.75rem;
-            align-items: center;
-        }
-        
-        .review-date {
-            color: var(--gray);
-            font-size: 0.875rem;
-        }
-        
-        .review-actions {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .rating-badge {
-            padding: 0.25rem 0.75rem;
-            border-radius: 50px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-        
-        .rating-badge.excellent {
-            background: #d4edda;
-            color: #155724;
-        }
-        
-        .rating-badge.good {
-            background: #d1ecf1;
-            color: #0c5460;
-        }
-        
-        .rating-badge.average {
-            background: #fff3cd;
-            color: #856404;
-        }
-        
-        .rating-badge.needs-improvement {
-            background: #f8d7da;
-            color: #721c24;
-        }
-        
-        .no-reviews {
-            color: var(--gray);
-            font-style: italic;
-            text-align: center;
-            padding: 2rem;
-        }
-        
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .container {
-                padding: 1rem;
-            }
-            
-            .card-header {
-                padding: 1rem;
-            }
-            
-            .card-body {
-                padding: 1rem;
-            }
-            
-            .tabs {
-                overflow-x: auto;
-                padding-bottom: 0.5rem;
-            }
-            
-            .tab {
-                white-space: nowrap;
-                padding: 0.75rem 1rem;
-            }
-            
-            th, td {
-                padding: 0.75rem;
-            }
-            
-            .action-buttons,
-            .form-actions {
-                flex-direction: column;
-            }
-            
-            .btn {
-                width: 100%;
-                justify-content: center;
-            }
-            
-            .review-container {
-                padding: 1rem;
-            }
+        .rating-display {
+            color: #f1c40f;
+            font-size: 1.25rem;
         }
     </style>
 </head>
@@ -548,25 +368,27 @@ if ($result === false) die('Execute failed: ' . htmlspecialchars($stmt->error));
                                         <th>Task</th>
                                         <th>Time Spent</th>
                                         <th>Status</th>
+                                        <th>Challenges</th>
+                                        <th>Improvements</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php while ($row = $result->fetch_assoc()): ?>
                                         <tr>
-                                            <td><?= date('D, M j', strtotime($row['date'])) ?></td>
-                                            <td><?= htmlspecialchars($row['task'] ?? 'No task') ?></td>
-                                            <td><?= htmlspecialchars($row['time_spent'] ?? 'N/A') ?></td>
+                                            <td><?= date('M j, Y', strtotime($row['date'])) ?></td>
+                                            <td><?= htmlspecialchars($row['task']) ?></td>
+                                            <td><?= htmlspecialchars($row['time_spent']) ?></td>
                                             <td>
-                                                <span class="badge <?= 
-                                                    $row['status'] === 'Completed' ? 'badge-success' : 
-                                                    ($row['status'] === 'In Progress' ? 'badge-warning' : 'badge-danger') 
-                                                ?>">
-                                                    <?= htmlspecialchars($row['status'] ?? 'Pending') ?>
+                                                <span class="status-badge <?= strtolower($row['status']) ?>">
+                                                    <?= htmlspecialchars($row['status']) ?>
                                                 </span>
                                             </td>
+                                            <td><?= htmlspecialchars($row['challenges']) ?></td>
+                                            <td><?= htmlspecialchars($row['improvements']) ?></td>
                                             <td>
-                                                <button onclick="confirmDelete(<?= $row['id'] ?>)" class="btn-icon danger" title="Delete Entry">
+                                                <button onclick="if(confirm('Are you sure you want to delete this log?')) window.location.href='?delete=1&id=<?= $row['id'] ?>'" 
+                                                        class="btn btn-danger btn-sm">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
                                             </td>
@@ -596,73 +418,66 @@ if ($result === false) die('Execute failed: ' . htmlspecialchars($stmt->error));
                 
                 <!-- Supervisor Review -->
                 <div id="supervisor" class="tab-content">
-                    <div class="review-container">
-                        <h2 class="section-title">Supervisor Review</h2>
-                        <p class="section-subtitle">Provide feedback on the intern's performance for this week.</p>
-                        
-                        <form action="banias-save_supervisor_review.php" method="POST" class="review-form">
-                            <div class="form-group">
-                                <label class="form-label">Feedback</label>
-                                <textarea name="feedback" class="form-textarea" placeholder="Provide constructive feedback on the intern's performance..." required></textarea>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label class="form-label">Performance Rating</label>
-                                <div class="rating-select">
-                                    <select name="rating" class="form-select" required>
-                                        <option value="">Select a rating</option>
-                                        <option value="Excellent">Excellent</option>
-                                        <option value="Good">Good</option>
-                                        <option value="Average">Average</option>
-                                        <option value="Needs Improvement">Needs Improvement</option>
-                                    </select>
-                                    <i class="fas fa-chevron-down select-icon"></i>
-                                </div>
-                            </div>
-                            
-                            <div class="form-actions">
-                                <button type="reset" class="btn btn-reset">
-                                    <i class="fas fa-undo"></i> Reset
-                                </button>
-                                <button type="submit" class="btn btn-submit">
-                                    <i class="fas fa-check"></i> Submit Review
-                                </button>
-                            </div>
-                        </form>
-                    </div>
+                    <h2>Supervisor Review</h2>
                     
-                    <!-- Previous Supervisor Reviews Section -->
-                    <div class="past-reviews">
-                        <h3>Previous Supervisor Reviews</h3>
-                        <?php
-                        $review_query = "SELECT id, review_date, rating, feedback FROM supervisor_reviews ORDER BY review_date DESC";
-                        $review_result = $conn->query($review_query);
-                        
-                        if ($review_result && $review_result->num_rows > 0): ?>
-                            <div class="review-list">
-                                <?php while ($review = $review_result->fetch_assoc()): ?>
-                                    <div class="review-card">
-                                        <div class="review-header">
-                                            <span class="review-date"><?= date('M j, Y', strtotime($review['review_date'])) ?></span>
-                                            <div class="review-actions">
-                                                <span class="rating-badge <?= strtolower(str_replace(' ', '-', $review['rating'])) ?>">
-                                                    <?= $review['rating'] ?>
-                                                </span>
-                                                <button onclick="confirmDeleteReview(<?= $review['id'] ?>)" class="btn-icon danger" title="Delete Review">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div class="review-content">
-                                            <p><?= nl2br(htmlspecialchars($review['feedback'])) ?></p>
+                    <?php 
+                    // Reset the result pointer
+                    $result->data_seek(0);
+                    
+                    if ($result && $result->num_rows > 0): 
+                        while ($row = $result->fetch_assoc()): 
+                    ?>
+                        <div class="card" style="margin-bottom: 1rem;">
+                            <div class="card-body">
+                                <h3><?= htmlspecialchars($row['task']) ?></h3>
+                                <p><strong>Date:</strong> <?= date('M j, Y', strtotime($row['date'])) ?></p>
+                                <p><strong>Time Spent:</strong> <?= htmlspecialchars($row['time_spent']) ?></p>
+                                <p><strong>Status:</strong> <?= htmlspecialchars($row['status']) ?></p>
+                                
+                                <?php if ($row['supervisor_feedback']): ?>
+                                    <div class="supervisor-feedback">
+                                        <h4>Previous Feedback</h4>
+                                        <p><?= htmlspecialchars($row['supervisor_feedback']) ?></p>
+                                        <div class="rating-display">
+                                            <?php for ($i = 0; $i < $row['supervisor_rating']; $i++): ?>
+                                                <i class="fas fa-star"></i>
+                                            <?php endfor; ?>
                                         </div>
                                     </div>
-                                <?php endwhile; ?>
+                                <?php endif; ?>
+                                
+                                <form action="" method="POST" class="review-form">
+                                    <input type="hidden" name="log_id" value="<?= $row['id'] ?>">
+                                    <div class="form-group">
+                                        <label>Rating:</label>
+                                        <div class="rating" id="rating-container-<?= $row['id'] ?>">
+                                            <?php for ($i = 1; $i <= 5; $i++): ?>
+                                                <input type="radio" name="rating" id="rating<?= $row['id'] ?>_<?= $i ?>" value="<?= $i ?>" 
+                                                       <?= ($row['supervisor_rating'] == $i) ? 'checked' : '' ?>>
+                                                <label for="rating<?= $row['id'] ?>_<?= $i ?>"><i class="fas fa-star"></i></label>
+                                            <?php endfor; ?>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Feedback:</label>
+                                        <textarea name="feedback" rows="3" placeholder="Enter your feedback..."><?= htmlspecialchars($row['supervisor_feedback'] ?? '') ?></textarea>
+                                    </div>
+                                    <button type="submit" name="review_submit" class="btn btn-primary">
+                                        <i class="fas fa-save"></i> Save Review
+                                    </button>
+                                </form>
                             </div>
-                        <?php else: ?>
-                            <p class="no-reviews">No reviews submitted yet.</p>
+                        </div>
+                    <?php 
+                        endwhile;
+                    else: 
+                    ?>
+                        <div class="empty-state">
+                            <i class="fas fa-clipboard-check"></i>
+                            <h3>No logs to review</h3>
+                            <p>There are no logs available for review this week</p>
+                        </div>
                         <?php endif; ?>
-                    </div>
                 </div>
             </div>
         </div>
@@ -675,31 +490,96 @@ if ($result === false) die('Execute failed: ' . htmlspecialchars($stmt->error));
                 tab.classList.remove('active');
             });
             
-            // Deactivate all tabs
+            // Remove active class from all tabs
             document.querySelectorAll('.tab').forEach(tab => {
                 tab.classList.remove('active');
             });
             
-            // Activate selected tab
+            // Show the selected tab content
             document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to the clicked tab
             event.currentTarget.classList.add('active');
-        }
-        
-        function confirmDelete(logId) {
-            if (confirm("Are you sure you want to delete this log entry?\nThis action cannot be undone.")) {
-                window.location.href = `banias-delete_log.php?id=${logId}&redirect=banias-weekly_summary.php`;
+            
+            // Initialize star ratings when supervisor tab is opened
+            if (tabName === 'supervisor') {
+                initStarRating();
             }
         }
         
-        function confirmDeleteReview(reviewId) {
-            if (confirm("Are you sure you want to delete this supervisor review?\nThis action cannot be undone.")) {
-                window.location.href = `banias-delete_review.php?id=${reviewId}&redirect=banias-weekly_summary.php`;
-            }
+        function initStarRating() {
+            // Get all star rating containers
+            const ratingContainers = document.querySelectorAll('.rating');
+            
+            ratingContainers.forEach(container => {
+                const stars = container.querySelectorAll('label');
+                const inputs = container.querySelectorAll('input');
+                
+                // Add hover effect
+                stars.forEach((star, index) => {
+                    star.addEventListener('mouseover', () => {
+                        // Highlight current star and all previous stars
+                        for (let i = 0; i <= index; i++) {
+                            stars[i].style.color = '#f1c40f';
+                        }
+                        // Remove highlight from following stars
+                        for (let i = index + 1; i < stars.length; i++) {
+                            stars[i].style.color = '#e0e0e0';
+                        }
+                    });
+                    
+                    // Add click handler
+                    star.addEventListener('click', () => {
+                        inputs[index].checked = true;
+                        
+                        // Update star colors
+                        for (let i = 0; i <= index; i++) {
+                            stars[i].style.color = '#f1c40f';
+                        }
+                        for (let i = index + 1; i < stars.length; i++) {
+                            stars[i].style.color = '#e0e0e0';
+                        }
+                    });
+                });
+                
+                // Reset stars on mouse leave if no rating is selected
+                container.addEventListener('mouseleave', () => {
+                    const checkedInput = Array.from(inputs).findIndex(input => input.checked);
+                    
+                    if (checkedInput >= 0) {
+                        // A rating is selected, highlight up to that star
+                        for (let i = 0; i <= checkedInput; i++) {
+                            stars[i].style.color = '#f1c40f';
+                        }
+                        for (let i = checkedInput + 1; i < stars.length; i++) {
+                            stars[i].style.color = '#e0e0e0';
+                        }
+                    } else {
+                        // No rating selected, reset all stars
+                        stars.forEach(star => {
+                            star.style.color = '#e0e0e0';
+                        });
+                    }
+                });
+                
+                // Initialize the star colors based on current value
+                const checkedInput = Array.from(inputs).findIndex(input => input.checked);
+                if (checkedInput >= 0) {
+                    for (let i = 0; i <= checkedInput; i++) {
+                        stars[i].style.color = '#f1c40f';
+                    }
+                }
+            });
         }
+        
+        // Call the function when the page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize star ratings if supervisor tab is active on page load
+            if (document.getElementById('supervisor').classList.contains('active')) {
+                initStarRating();
+            }
+        });
     </script>
 </body>
 </html>
-<?php 
-$stmt->close();
-$conn->close();
-?>
+<?php $conn->close(); ?>

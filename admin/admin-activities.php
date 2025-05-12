@@ -919,7 +919,7 @@
     <!-- SIDEBAR -->
     <section id="sidebar">
         <a href="#" class="brand">
-            <i class="bx bxs-graduation"></i>
+            <i class="bx bx-slider-alt"></i>
             <span class="text">Admin Panel</span>
         </a>
 
@@ -928,12 +928,19 @@
             <!-- TOP ITEMS -->
             <ul class="side-menu top">
                 <!-- Activities with Submenu -->
+                <li>
+                    <a href="admin-dashboard.php">
+                        <i class='bx bxs-dashboard'></i>
+                        <span class="text">Dashboard</span>
+                    </a>
+                </li>
                 <li id="has-submenu" class="has-submenu active">
                     <a href="admin-activities.php">
                         <i class='bx bxs-folder-open'></i>
                         <span class="text">Activities</span>
                         <i class='bx bx-chevron-down arrow'></i>
                     </a>
+                    
                     <ul id="sub-menu" class="sub-menu active">
                         
                         <li>
@@ -944,18 +951,6 @@
                         </li>
                     </ul>
                 </li>      
-                <li>
-                    <a href="admin-attendance.php">
-                        <i class='bx bxs-calendar-check'></i>
-                        <span class="text">Attendance</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="admin-messages.php">
-                        <i class='bx bxs-message-dots'></i>
-                        <span class="text">Message</span>
-                    </a>
-                </li>
                 <li>
                     <a href="admin-performance.php" style="display: flex; align-items: center;">
                         <i class='bx bxs-book-content'></i>

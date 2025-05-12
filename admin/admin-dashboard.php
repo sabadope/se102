@@ -4,21 +4,21 @@
 	// Fetch the count of each role
 	$stmt = $pdo->prepare("
 	    SELECT role, COUNT(*) as count FROM users 
-	    WHERE role IN ('admin', 'Supervisor', 'Client') 
+	    WHERE role IN ('Student', 'Supervisor', 'Client') 
 	    GROUP BY role
 	");
 	$stmt->execute();
 	$roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 	// Initialize counts
-	$admins_count = 0;
+	$students_count = 0;
 	$supervisors_count = 0;
 	$clients_count = 0;
 
 	// Assign counts based on role
 	foreach ($roles as $role) {
-	    if ($role['role'] === 'admin') {
-	        $admins_count = $role['count'];
+	    if ($role['role'] === 'Student') {
+	        $students_count = $role['count'];
 	    } elseif ($role['role'] === 'Supervisor') {
 	        $supervisors_count = $role['count'];
 	    } elseif ($role['role'] === 'Client') {
@@ -905,7 +905,7 @@
 	<!-- SIDEBAR -->
 	<section id="sidebar">
 		<a href="#" class="brand">
-			<i class='bx bx-graduation'></i>
+			<i class="bx bx-slider-alt"></i>
 			<span class="text">Admin Panel</span>
 		</a>
 		<ul class="side-menu top">
@@ -916,15 +916,10 @@
                 </a>
             </li>
             <li>
-                <a href="admin-attendance.php">
-                    <i class='bx bxs-calendar-check'></i>
-                    <span class="text">Attendance</span>
-                </a>
-            </li>
-            <li>
-                <a href="admin-messages.php">
-                    <i class='bx bxs-message-dots'></i>
-                    <span class="text">Message</span>
+                <a href="admin-activities.php" style="display: flex; align-items: center;">
+                    <i class='bx bxs-folder-open'></i>
+                    <span class="text">Activities</span>
+                    <i class='bx bx-chevron-down arrow' style="margin-left: auto;"></i>
                 </a>
             </li>
             <li>
@@ -934,16 +929,8 @@
                     <i class='bx bx-chevron-down arrow' style="margin-left: auto;"></i>
                 </a>
             </li>
-
             <li>
-                <a href="admin-activities.php" style="display: flex; align-items: center;">
-                    <i class='bx bxs-folder-open'></i>
-                    <span class="text">Activities</span>
-                    <i class='bx bx-chevron-down arrow' style="margin-left: auto;"></i>
-                </a>
-            </li>
-            <li>
-                <a href="admin-settings.php">
+                <a href="#">
                     <i class='bx bxs-cog'></i>
                     <span class="text">Settings</span>
                 </a>
@@ -998,24 +985,19 @@
 							<a href="admin-dashboard.php">Home</a>
 						</li>
 						<li><i class='bx bx-chevron-right' ></i></li>
-						<li>
-							<a class="active">Dashboard</a>
-						</li>
+						
 						
 					</ul>
 				</div>
-				<a href="#" class="btn-download">
-					<i class='bx bxs-cloud-download' ></i>
-					<span class="text">Download PDF</span>
-				</a>
+				
 			</div>
 
 			<ul class="box-info">
 			    <li>
 			        <i class='bx bxs-group'></i>
 			        <span class="text">
-			            <h3><?php echo $admin_count; ?></h3>
-			            <p>admin</p>
+			            <h3><?php echo $students_count; ?></h3>
+			            <p>Students</p>
 			        </span>
 			    </li>
 			    <li>
@@ -1131,7 +1113,7 @@
 			        labels: <?php echo json_encode($roles); ?>,
 			        datasets: [{
 			            data: <?php echo json_encode($counts); ?>,
-			            backgroundColor: ['#ff6384', '#36a2eb', '#ffcd56', '#4bc0c0']
+			            backgroundColor: ['#3c91e6', '#ffce26', '#fd7238', '#4bc0c0'] 
 			        }]
 			    },
 			    options: {

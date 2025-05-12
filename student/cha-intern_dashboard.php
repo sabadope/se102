@@ -60,7 +60,7 @@ $stmt->close();
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <?php include 'cha-navbar.php'; ?>
+    
     
     <div class="container">
         <div class="profile-header">

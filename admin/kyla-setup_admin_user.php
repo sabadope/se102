@@ -5,8 +5,13 @@
 ob_start();
 
 // Include necessary files
+<<<<<<< HEAD
 require_once "config/kyla-database.php";
 require_once "includes/kyla-functions.php";
+=======
+require_once "config/database.php";
+require_once "includes/functions.php";
+>>>>>>> 2968422a81397f35ab70259736958ea77141521b
 
 // Create database connection
 $database = new Database();

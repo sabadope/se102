@@ -1,13 +1,23 @@
 <?php
 // User registration page (for admin use)
+<<<<<<< HEAD
 require_once "config/kyla-database.php";
 require_once "includes/kyla-auth.php";
 require_once "includes/kyla-functions.php";
+=======
+require_once "config/database.php";
+require_once "includes/auth.php";
+require_once "includes/functions.php";
+>>>>>>> 2968422a81397f35ab70259736958ea77141521b
 
 // Check if user is logged in and is an admin
 if (!is_logged_in() || !has_role('admin')) {
     $_SESSION['error'] = "You do not have permission to access this page.";
+<<<<<<< HEAD
     header("Location: kyla-login.php");
+=======
+    header("Location: login.php");
+>>>>>>> 2968422a81397f35ab70259736958ea77141521b
     exit;
 }
 
@@ -73,7 +83,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($errors)) {
         if (register_user($conn, $username, $password, $email, $first_name, $last_name, $role, $department)) {
             $_SESSION['success'] = "User registered successfully";
+<<<<<<< HEAD
             header("Location: dashboards/kyla-admin_dashboard.php");
+=======
+            header("Location: dashboards/admin_dashboard.php");
+>>>>>>> 2968422a81397f35ab70259736958ea77141521b
             exit;
         } else {
             $errors[] = "Registration failed. Please try again.";
@@ -82,7 +96,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 // Include header
+<<<<<<< HEAD
 require_once "includes/kyla-header.php";
+=======
+require_once "includes/header.php";
+>>>>>>> 2968422a81397f35ab70259736958ea77141521b
 ?>
 
 <div class="flex justify-center">
@@ -191,7 +209,11 @@ require_once "includes/kyla-header.php";
                             type="submit">
                         Register User
                     </button>
+<<<<<<< HEAD
                     <a class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="dashboards/kyla-admin_dashboard.php">
+=======
+                    <a class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="dashboards/admin_dashboard.php">
+>>>>>>> 2968422a81397f35ab70259736958ea77141521b
                         Cancel
                     </a>
                 </div>
@@ -201,5 +223,9 @@ require_once "includes/kyla-header.php";
 </div>
 
 <?php
+<<<<<<< HEAD
 require_once "includes/kyla-footer.php";
+=======
+require_once "includes/footer.php";
+>>>>>>> 2968422a81397f35ab70259736958ea77141521b
 ?>

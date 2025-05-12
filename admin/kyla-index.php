@@ -1,9 +1,16 @@
 <?php
 // Main entry point for the application
+<<<<<<< HEAD
 require_once "config/kyla-constants.php";
 require_once "includes/kyla-header.php";
 require_once "config/kyla-database.php";
 require_once "includes/kyla-auth.php";
+=======
+require_once "config/constants.php";
+require_once "includes/header.php";
+require_once "config/database.php";
+require_once "includes/auth.php";
+>>>>>>> 2968422a81397f35ab70259736958ea77141521b
 
 // Redirect to appropriate dashboard if already logged in
 if (is_logged_in()) {
@@ -117,7 +124,11 @@ if (is_logged_in()) {
         </div>
         
         <div class="mt-8">
+<<<<<<< HEAD
             <a href="kyla-login.php" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg text-lg transition duration-300 inline-block">
+=======
+            <a href="login.php" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg text-lg transition duration-300 inline-block">
+>>>>>>> 2968422a81397f35ab70259736958ea77141521b
                 Login to Get Started
             </a>
         </div>
@@ -125,5 +136,9 @@ if (is_logged_in()) {
 </div>
 
 <?php
+<<<<<<< HEAD
 require_once "includes/kyla-footer.php";
+=======
+require_once "includes/footer.php";
+>>>>>>> 2968422a81397f35ab70259736958ea77141521b
 ?>

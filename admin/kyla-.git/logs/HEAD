@@ -1,0 +1,6 @@
+0000000000000000000000000000000000000000 3cee62d39f1a959e5b8ea3fe66a678bf8788dc1d louisse2603 <42437816-louisse2603@users.noreply.replit.com> 1746708877 +0000	commit (initial): Initial commit
+3cee62d39f1a959e5b8ea3fe66a678bf8788dc1d 5db41b5ccc6fea59aa78f0d5bc304232908eeb8e louisse2603 <42437816-louisse2603@users.noreply.replit.com> 1746708877 +0000	commit: Initial checkpoint
+5db41b5ccc6fea59aa78f0d5bc304232908eeb8e c31afd5204fba3b5336daf1b10b30f2211176b59 louisse2603 <42437816-louisse2603@users.noreply.replit.com> 1746709853 +0000	commit: Implement core features and dashboards for skill tracking application
+c31afd5204fba3b5336daf1b10b30f2211176b59 1415a05dffd2492699a7ab58850560100e30e227 louisse2603 <42437816-louisse2603@users.noreply.replit.com> 1746710649 +0000	commit: Enable easy demo setup with a local database and default admin credentials
+1415a05dffd2492699a7ab58850560100e30e227 11ff4568cb3b30dc2196dfed654bdb6e49e488b3 louisse2603 <42437816-louisse2603@users.noreply.replit.com> 1746710775 +0000	commit: Set up the database for tracking user skills and mentoring within the system
+11ff4568cb3b30dc2196dfed654bdb6e49e488b3 62710601baea8ac5018cffccd745654d0c37617f louisse2603 <42437816-louisse2603@users.noreply.replit.com> 1746712087 +0000	commit: Prevent the admin dashboard from automatically reloading its content

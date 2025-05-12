@@ -14,6 +14,18 @@ VALUES ('Admin', 'admin@gmail.com', '$2y$10$E6bXzjEjZztZ4S6pOxsaFOHQJ6FwG/iV4DhE
 INSERT INTO users (username, email, password, role) 
 VALUES ('Supervisor', 'supervisor@gmail.com', '$2y$10$YVGcFYmtzk9XUpJrKXxz7OAwfQ4Zd/JJk7c8el6Xuvrq8U1RB1D4C', 'Supervisor');
 
+-- Insert default Client account
+INSERT INTO users (username, email, password, role) 
+VALUES ('Client', 'client@gmail.com', '$2y$10$w5Wz2vEykEp7Gr4UI8XF9./aEAPrg6E/x86IqpyOXGyY0/ZjUeyu6', 'Client');
+
+-- Insert default Student account
+INSERT INTO users (username, email, password, role) 
+VALUES ('Student', 'student@gmail.com', '$2y$10$w5Wz2vEykEp7Gr4UI8XF9./aEAPrg6E/x86IqpyOXGyY0/ZjUeyu6', 'Student');
+
+-- LAHAT YAN MGA YAN PASSWORD IS [ROLE] + 1230
+
+
+
 ALTER TABLE users ADD COLUMN created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
 
 CREATE TABLE messages (

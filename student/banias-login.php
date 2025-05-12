@@ -6,15 +6,46 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    $query = "SELECT * FROM users WHERE username = ? AND password = ?";
+    $query = "SELECT * FROM users WHERE username = ?";
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("ss", $username, $password);
+    $stmt->bind_param("s", $username);
     $stmt->execute();
     $result = $stmt->get_result();
 
     if ($result->num_rows == 1) {
-        $_SESSION['username'] = $username;
-        header('Location: banias-index.php');
+        $user = $result->fetch_assoc();
+        
+        // Support both hashed passwords and plain text passwords
+        if (password_verify($password, $user['password']) || $password === $user['password']) {
+            $_SESSION['username'] = $username;
+            $_SESSION['user_id'] = $user['id'];  // Store user ID in session
+            $_SESSION['role'] = $user['role'] ?? 'user';
+            
+            // If using plain text password, update to hashed version
+            if ($password === $user['password']) {
+                $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+                $update_pwd_query = "UPDATE users SET password = ? WHERE id = ?";
+                $update_pwd_stmt = $conn->prepare($update_pwd_query);
+                $update_pwd_stmt->bind_param("si", $hashed_password, $user['id']);
+                $update_pwd_stmt->execute();
+            }
+            
+            // Update last login time
+            $update_query = "UPDATE users SET last_login = CURRENT_TIMESTAMP WHERE id = ?";
+            $update_stmt = $conn->prepare($update_query);
+            $update_stmt->bind_param("i", $user['id']);
+            $update_stmt->execute();
+            
+            // Redirect based on role
+            if ($_SESSION['role'] === 'admin') {
+                header('Location: banias-admin.php');
+            } else {
+                header('Location: banias-index.php');
+            }
+            exit();
+        } else {
+            $error = "Invalid username or password.";
+        }
     } else {
         $error = "Invalid username or password.";
     }
@@ -167,14 +198,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             text-align: center;
             width: 100%;
         }
+        
+        /* Add success message styling */
+        .success-message {
+            color: var(--primary);
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            background-color: rgba(76, 175, 80, 0.1);
+            padding: 10px;
+            border-radius: var(--border-radius);
+        }
     </style>
 </head>
 <body>
     <div class="login-container">
         <div class="login-header">
-            <h1>Welcome Back</h1>
-            <p>Please enter your credentials to login</p>
+            <h1>User Authentication</h1>
+            
         </div>
+        
+        <?php if (isset($_SESSION['success'])): ?>
+            <p class="success-message"><?= htmlspecialchars($_SESSION['success']) ?></p>
+            <?php unset($_SESSION['success']); ?>
+        <?php endif; ?>
         
         <form action="banias-login.php" method="POST">
             <div class="form-group">
@@ -187,15 +233,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <input type="password" id="password" name="password" placeholder="Enter your password" required>
             </div>
             
-            
-            
             <button type="submit" class="btn">Log In</button>
 
             <!-- Sign Up Button -->
             <a href="banias-register.php" class="signup-btn">Create Another</a>
             
             <?php if (isset($error)): ?>
-                <p class="error-message"><?= $error ?></p>
+                <p class="error-message"><?= htmlspecialchars($error) ?></p>
             <?php endif; ?>
         </form>
     </div>

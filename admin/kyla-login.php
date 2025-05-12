@@ -1,8 +1,14 @@
 <?php
 // login.php
+<<<<<<< HEAD
 require_once "config/kyla-constants.php";
 require_once "config/kyla-database.php";
 require_once "includes/kyla-auth.php";
+=======
+require_once "config/constants.php";
+require_once "config/database.php";
+require_once "includes/auth.php";
+>>>>>>> 2968422a81397f35ab70259736958ea77141521b
 
 // Start the session if not already started
 if (session_status() == PHP_SESSION_NONE) {
@@ -47,7 +53,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 // Include header
+<<<<<<< HEAD
 require_once "includes/kyla-header.php";
+=======
+require_once "includes/header.php";
+>>>>>>> 2968422a81397f35ab70259736958ea77141521b
 
 // Function to sanitize input
 function sanitize_input($data) {
@@ -107,5 +117,9 @@ function sanitize_input($data) {
 </div>
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <?php
+<<<<<<< HEAD
 require_once "includes/kyla-footer.php";
+=======
+require_once "includes/footer.php";
+>>>>>>> 2968422a81397f35ab70259736958ea77141521b
 ?>
