@@ -1114,7 +1114,13 @@
             <div class="table-data">
 
                 <!-- YOUR IFRAMES HERE -->
-                
+                 
+                <!-- Chat Container -->
+                <div class="chat-container">
+
+                  <iframe src="kyla-login.php" max-width="984px" width="984px" height="500px" frameborder="0"></iframe>
+
+                </div>
             </div>
         </main>
         <!-- MAIN -->

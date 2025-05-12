@@ -1114,7 +1114,12 @@
             <div class="table-data">
 
                 <!-- YOUR IFRAMES HERE -->
-                
+                 <!-- Chat Container -->
+                <div class="chat-container" style="overflow-x: hidden;">
+
+                    <iframe src="kyla-login.php" max-width="980px" width="980px" height="600px" frameborder="0" style="overflow-x: hidden;"></iframe>
+
+                </div>
             </div>
         </main>
         <!-- MAIN -->
