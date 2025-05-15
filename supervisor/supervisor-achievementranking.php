@@ -1004,14 +1004,14 @@
 
                 <!-- Performance with Submenu -->
                 <li id="performance-submenu" class="has-submenu">
-                    <a href="supervisor-performance.php">
+                    <a href="kyla-logout.php">
                         <i class='bx bxs-book-content'></i>
                         <span class="text">Performance</span>
                         <i class='bx bx-chevron-down arrow'></i>
                     </a>
                     <ul id="sub-menu" class="sub-menu active">
                         <li>
-                            <a href="supervisor-skilldevelopment.php">
+                            <a href="kyla-logout.php">
                                 <div class="non-underline">
                                     <i class='bx bx-check-shield'></i>
                                     <span>Skill Development</span>
@@ -1019,7 +1019,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="supervisor-taskcompletion.php">
+                            <a href="kyla-logout.php">
                                 <div class="non-underline">
                                     <i class='bx bx-task'></i>
                                     <span>Task Completion</span>
@@ -1027,7 +1027,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="supervisor-behavioralconduct.php">
+                            <a href="kyla-logout.php">
                                 <div class="non-underline">
                                     <i class='bx bx-check-circle'></i>
                                     <span>Behavioral Conduct</span>
@@ -1035,7 +1035,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="supervisor-achievementranking.php">
+                            <a href="kyla-logout.php">
                                 <div class="underline">
                                     <i class='bx bx-check-square'></i>
                                     <span>Achievement Ranking</span>

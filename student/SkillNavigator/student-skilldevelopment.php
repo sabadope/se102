@@ -1005,44 +1005,21 @@
 
                 <!-- Performance with Submenu -->
                 <li id="performance-submenu" class="has-submenu">
-                    <a href="../student-performance.php">
+                    <a href="student-skilldevelopment.php">
                         <i class='bx bxs-book-content'></i>
                         <span class="text">Performance</span>
                         <i class='bx bx-chevron-down arrow'></i>
                     </a>
                     <ul id="sub-menu" class="sub-menu active">
                         <li>
-                            <a href="../student-skilldevelopment.php">
+                            <a href="student-skilldevelopment.php">
                                 <div class="underline">
                                     <i class='bx bx-check-shield'></i>
                                     <span>Skill Development</span>
                                 </div>
                             </a>
                         </li>
-                        <li>
-                            <a href="../student-taskcompletion.php">
-                                <div class="non-underline">
-                                    <i class='bx bx-task'></i>
-                                    <span>Task Completion</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="../student-behavioralconduct.php">
-                                <div class="non-underline">
-                                    <i class='bx bx-check-circle'></i>
-                                    <span>Behavioral Conduct</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="../student-achievementranking.php">
-                                <div class="non-underline">
-                                    <i class='bx bx-check-square'></i>
-                                    <span>Achievement Ranking</span>
-                                </div>
-                            </a>
-                        </li>
+                        
                     </ul>
                 </li>
                 
@@ -1193,7 +1170,7 @@
                         submenu.style.display = 'block';
 
                         if (arrow) arrow.style.transform = 'rotate(180deg)';
-                        if (nextLi) nextLi.style.marginTop = '185px';
+                        if (nextLi) nextLi.style.marginTop = '45px';
                     }
                 });
 
@@ -1283,7 +1260,7 @@
             submenu.style.display = 'block';
 
             // Push down the next item to avoid overlap
-            if (nextLi) nextLi.style.marginTop = '185px';
+            if (nextLi) nextLi.style.marginTop = '45px';
         }
 
         // ========== SUBMENU TOGGLE FUNCTIONALITY ==========
@@ -1308,7 +1285,7 @@
                 arrow.style.transform = isExpanded ? 'rotate(0deg)' : 'rotate(180deg)';
 
                 // Adjust margin of next item
-                if (nextLi) nextLi.style.marginTop = isExpanded ? '0px' : '185px';
+                if (nextLi) nextLi.style.marginTop = isExpanded ? '0px' : '45px';
             });
         });
 

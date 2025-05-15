@@ -941,32 +941,32 @@
 
                 <!-- Performance with Submenu -->
                 <li id="performance-submenu" class="has-submenu">
-                    <a href="supervisor-performance.php">
+                    <a href="kyla-logout.php">
                         <i class='bx bxs-book-content'></i>
                         <span class="text">Performance</span>
                         <i class='bx bx-chevron-down arrow'></i>
                     </a>
                     <ul id="sub-menu" class="sub-menu active">
                         <li>
-                            <a href="supervisor-skilldevelopment.php">
+                            <a href="kyla-logout.php">
                                 <i class='bx bx-check-shield'></i>
                                 Skill Development
                             </a>
                         </li>
                         <li>
-                            <a href="supervisor-taskcompletion.php">
+                            <a href="kyla-logout.php">
                                 <i class='bx bx-task'></i>
                                 Task Completion
                             </a>
                         </li>
                         <li>
-                            <a href="supervisor-behavioralconduct.php">
+                            <a href="kyla-logout.php">
                                 <i class='bx bx-check-circle'></i>
                                 Behavioral Conduct
                             </a>
                         </li>
                         <li>
-                            <a href="supervisor-achievementranking.php">
+                            <a href="kyla-logout.php">
                                 <i class='bx bx-check-square'></i>
                                 Achievement Ranking
                             </a>
