@@ -967,7 +967,7 @@
         }
     </style>
 
-    <title>Student Performance</title>
+    <title>Supervisor Performance</title>
 </head>
 <body>
 
@@ -1079,7 +1079,7 @@
                     <h1>Performance</h1>
                     <ul class="breadcrumb">
                         <li>
-                            <a href="student-performance.php">Home</a>
+                            <a href="supervisor-performance.php">Home</a>
                         </li>
                         <li><i class='bx bx-chevron-right' ></i></li>
                         <li>
