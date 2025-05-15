@@ -878,7 +878,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="kyla-login.php" style="display: flex; align-items: center;">
+                    <a href="kyla-logout.php" style="display: flex; align-items: center;">
                         <i class='bx bxs-book-content'></i>
                         <span class="text">Performance</span>
                         <i class='bx bx-chevron-down arrow' style="margin-left: auto;"></i>
