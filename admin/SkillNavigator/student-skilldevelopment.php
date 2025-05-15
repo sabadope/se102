@@ -1,6 +1,8 @@
 <?php
     
-    require_once '../src/config.php'; // Include DB connection
+    require_once "config/constants.php";
+    require_once "config/database.php";
+    require_once "includes/auth.php";
 
     // Use the same logic to construct the expected image filename
     $username = isset($_SESSION['username']) ? strtolower($_SESSION['username']) : 'default';
@@ -610,7 +612,6 @@
             cursor: pointer;
             transition: transform 0.3s ease, color 0.3s ease;
         }
-
         /* NAVBAR */
 
 
@@ -966,7 +967,7 @@
         }
     </style>
 
-    <title>Admin Performance</title>
+    <title>Student Performance</title>
 </head>
 <body>
 
@@ -974,8 +975,8 @@
     <!-- SIDEBAR -->
     <section id="sidebar">
         <a href="#" class="brand">
-            <i class="bx bx-slider-alt"></i>
-            <span class="text">Admin Panel</span>
+            <i class="bx bxs-graduation"></i>
+            <span class="text">Student Panel</span>
         </a>
 
         <!-- NEW FLEX WRAPPER -->
@@ -983,58 +984,42 @@
             <!-- TOP ITEMS -->
             <ul class="side-menu top">
                 <li>
-                    <a href="admin-dashboard.php">
-                        <i class='bx bxs-dashboard'></i>
-                        <span class="text">Dashboard</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="admin-activities.php" style="display: flex; align-items: center;">
+                    <a href="../student-activities.php" style="display: flex; align-items: center;">
                         <i class='bx bxs-folder-open'></i>
                         <span class="text">Activities</span>
                         <i class='bx bx-chevron-down arrow' style="margin-left: auto;"></i>
                     </a>
                 </li>
+                <li>
+                    <a href="../student-attendance.php">
+                        <i class='bx bxs-calendar-check'></i>
+                        <span class="text">Attendance</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../student-messages.php">
+                        <i class='bx bxs-message-dots'></i>
+                        <span class="text">Message</span>
+                    </a>
+                </li>
+
                 <!-- Performance with Submenu -->
                 <li id="performance-submenu" class="has-submenu">
-                    <a href="kyla-login.php">
+                    <a href="student-skilldevelopment.php">
                         <i class='bx bxs-book-content'></i>
                         <span class="text">Performance</span>
                         <i class='bx bx-chevron-down arrow'></i>
                     </a>
                     <ul id="sub-menu" class="sub-menu active">
                         <li>
-                            <a href="kyla-login.php">
-                                <div class="non-underline">
+                            <a href="student-skilldevelopment.php">
+                                <div class="underline">
                                     <i class='bx bx-check-shield'></i>
                                     <span>Skill Development</span>
                                 </div>
                             </a>
                         </li>
-                        <li>
-                            <a href="kyla-login.php">
-                                <div class="non-underline">
-                                    <i class='bx bx-task'></i>
-                                    <span>Task Completion</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="kyla-login.php">
-                                <div class="non-underline">
-                                    <i class='bx bx-check-circle'></i>
-                                    <span>Behavioral Conduct</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="kyla-login.php">
-                                <div class="underline">
-                                    <i class='bx bx-check-square'></i>
-                                    <span>Achievement Ranking</span>
-                                </div>
-                            </a>
-                        </li>
+                        
                     </ul>
                 </li>
                 
@@ -1045,7 +1030,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="admin-logout.php" class="logout">
+                    <a href="../student-logout.php" class="logout">
                         <i class='bx bxs-log-out-circle'></i>
                         <span class="text">Logout</span>
                     </a>
@@ -1081,7 +1066,7 @@
                 <label for="switch-mode" class="switch-mode"></label>
                 
                 <div class="profile">
-                    <img src="uploads/default.png" alt="Profile Image" width="40" height="40" style="border-radius: 50%; object-fit: cover;">
+                    <img src="<?php echo $imagePath; ?>" alt="Profile Image" width="40" height="40" style="border-radius: 50%; object-fit: cover;">
                 </div>
             </div>
         </nav>
@@ -1094,11 +1079,11 @@
                     <h1>Performance</h1>
                     <ul class="breadcrumb">
                         <li>
-                            <a href="admin-performance.php">Home</a>
+                            <a href="student-performance.php">Home</a>
                         </li>
                         <li><i class='bx bx-chevron-right' ></i></li>
                         <li>
-                            <a class="active">Achievement Ranking</a>
+                            <a class="active">Skill Development</a>
                         </li>
                     </ul>
                 </div>
@@ -1108,13 +1093,18 @@
             <div class="table-data">
 
                 <!-- YOUR IFRAMES HERE -->
-                
+                 <!-- Chat Container -->
+                <div class="chat-container" style="overflow-x: hidden;">
+
+                    <iframe src="login.php" max-width="980px" width="980px" height="600px" frameborder="0" style="overflow-x: hidden;"></iframe>
+
+                </div>
             </div>
         </main>
         <!-- MAIN -->
     </section>
     <!-- CONTENT -->
-    
+
 
     <!-- NAV BAR W/ TOGGLE HIDE -->
     <script>
@@ -1180,7 +1170,7 @@
                         submenu.style.display = 'block';
 
                         if (arrow) arrow.style.transform = 'rotate(180deg)';
-                        if (nextLi) nextLi.style.marginTop = '185px';
+                        if (nextLi) nextLi.style.marginTop = '45px';
                     }
                 });
 
@@ -1241,6 +1231,7 @@
         });
     </script>
 
+
     <!-- SIDEBAR FUNCTIONALITIES -->
     <script>
         // ========== DEFAULT ACTIVATION RULES FOR ACTIVITIES & PERFORMANCE ==========
@@ -1248,12 +1239,12 @@
         const path = window.location.pathname;
 
         if (
-            path.includes("admin-activities.php") ||
-            path.includes("admin-performance.php") ||
-            path.includes("admin-achievementranking.php") // 👈 Add this line
-            
+            path.includes("student-activities.php") ||
+            path.includes("student-performance.php") ||
+            path.includes("student-skilldevelopment.php") // 👈 Add this line
+
         ) {
-            const menuId = (path.includes("admin-performance.php") || path.includes("admin-achievementranking.php"))
+            const menuId = (path.includes("student-performance.php") || path.includes("student-skilldevelopment.php"))
                 ? '#performance-submenu'
                 : '#activities-submenu';
 
@@ -1269,7 +1260,7 @@
             submenu.style.display = 'block';
 
             // Push down the next item to avoid overlap
-            if (nextLi) nextLi.style.marginTop = '185px';
+            if (nextLi) nextLi.style.marginTop = '45px';
         }
 
         // ========== SUBMENU TOGGLE FUNCTIONALITY ==========
@@ -1294,13 +1285,13 @@
                 arrow.style.transform = isExpanded ? 'rotate(0deg)' : 'rotate(180deg)';
 
                 // Adjust margin of next item
-                if (nextLi) nextLi.style.marginTop = isExpanded ? '0px' : '185px';
+                if (nextLi) nextLi.style.marginTop = isExpanded ? '0px' : '45px';
             });
         });
 
         // ========== HIGHLIGHT ACTIVE SUBMENU ITEM ==========
-        if (path.includes("admin-skilldevelopment.php")) {
-            const skillLink = document.querySelector('.sub-menu li a[href="admin-achievementranking.php"]');
+        if (path.includes("student-skilldevelopment.php")) {
+            const skillLink = document.querySelector('.sub-menu li a[href="student-skilldevelopment.php"]');
             if (skillLink) {
                 const underlineDiv = skillLink.querySelector('.underline');
                 if (underlineDiv) {
@@ -1332,7 +1323,7 @@
                 localStorage.setItem('dark-mode', 'false'); // store preference
             }
         });
-    </script>   
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Load Chart.js -->
 </body>
