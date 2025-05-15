@@ -935,7 +935,7 @@
                     </a>
                 </li>
                 <li id="has-submenu" class="has-submenu active">
-                    <a href="admin-activities.php">
+                    <a href="admin-feedbacks.php">
                         <i class='bx bxs-folder-open'></i>
                         <span class="text">Activities</span>
                         <i class='bx bx-chevron-down arrow'></i>

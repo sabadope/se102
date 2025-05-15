@@ -988,7 +988,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="admin-activities.php" style="display: flex; align-items: center;">
+                    <a href="admin-feedbacks.php" style="display: flex; align-items: center;">
                         <i class='bx bxs-folder-open'></i>
                         <span class="text">Activities</span>
                         <i class='bx bx-chevron-down arrow' style="margin-left: auto;"></i>
