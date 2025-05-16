@@ -72,12 +72,17 @@ To run the system locally or deploy it for testing, follow the steps below:
 3. Paste it inside your `xampp/htdocs/` directory.
 4. Open your browser and go to: [http://localhost/phpmyadmin/](http://localhost/phpmyadmin/)
 5. Click on the **Databases** tab.
-6. Create two databases:
+6. Create the following databases:
    - `se102`
    - `chat_app_db`
+   - `feedback_system`
+   - `intern_logs`
+   - `naattendance`
+   - `skill_tracker`
+
 7. Import the following SQL files:
-   - For `se102`, import the `se102.sql` file located in the `/database/` folder.
-   - For `chat_app_db`, import the `chat_app_db.sql` file located in `/chat/db/`.
+   - For those following databases, just click the **import** tab from the mysql server, after that locate each sql files inside of the `se102/database` folder.
+   
 8. Click the **Go** button to complete the import.
 9. Now open your browser and visit:  
    `http://localhost/se102/index.html`  
