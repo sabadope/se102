@@ -84,8 +84,7 @@ To run the system locally or deploy it for testing, follow the steps below:
    - For those following databases, just click the **import** tab from the mysql server, after that locate each sql files inside of the `se102/database` folder.
    
 8. Click the **Go** button to complete the import.
-9. Now open your browser and visit:  
-   [http://localhost/se102/index.html](http://localhost/se102/index.html)
+9. Now open your browser and visit: [http://localhost/se102/index.html](http://localhost/se102/index.html)
 
    > **To start running the program.**
 
