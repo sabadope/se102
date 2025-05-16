@@ -2,7 +2,7 @@
 // Process skill updates
 require_once "../config/database.php";
 require_once "../includes/auth.php";
-require_once "../includes/kylafunctions.php";
+require_once "../includes/functions.php";
 
 // Check if user is logged in and is an intern
 require_role('intern');

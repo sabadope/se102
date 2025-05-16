@@ -61,7 +61,7 @@ require_once "../includes/header.php";
             </a>
         </div>
     </div>
-
+    
     <div class="bg-white rounded-lg shadow-md p-6">
         <h2 class="text-xl font-semibold mb-4 text-gray-700">Users Overview</h2>
         <div class="flex justify-between items-center mb-4">
@@ -71,47 +71,83 @@ require_once "../includes/header.php";
         <canvas id="userDistributionChart" style="height: 200px; max-height: 250px;" width="400" height="150"></canvas>
     </div>
 
-
-
     <div class="bg-white rounded-lg shadow-md p-6">
-    <h2 class="text-xl font-semibold mb-4 text-gray-700">Users by Department</h2>
-    <div class="space-y-3">
-        <?php foreach (array_slice($departments, 0, 5) as $dept => $count): ?>
-            <div class="flex justify-between items-center">
-                <span class="text-sm font-medium text-gray-600"><?php echo htmlspecialchars($dept); ?></span>
-                <span class="text-sm font-semibold text-gray-800"><?php echo $count; ?></span>
-            </div>
-            <div class="w-full bg-gray-200 rounded-full h-2">
-                <div class="bg-blue-500 h-2 rounded-full" style="width: <?php echo ($count / $total_users) * 100; ?>%"></div>
-            </div>
-        <?php endforeach; ?>
+        <h2 class="text-xl font-semibold mb-4 text-gray-700">Quick Actions</h2>
+        <div class="space-y-2">
+            <a href="../register.php?role=intern" class="block p-3 bg-gray-100 hover:bg-gray-200 rounded transition duration-200">
+                <div class="font-medium text-gray-800">Add New Intern</div>
+                <div class="text-xs text-gray-500">Create intern account</div>
+            </a>
+            <a href="../register.php?role=supervisor" class="block p-3 bg-gray-100 hover:bg-gray-200 rounded transition duration-200">
+                <div class="font-medium text-gray-800">Add New Supervisor</div>
+                <div class="text-xs text-gray-500">Create supervisor account</div>
+            </a>
+            <a href="../reports/generate_report.php" class="block p-3 bg-gray-100 hover:bg-gray-200 rounded transition duration-200">
+                <div class="font-medium text-gray-800">Generate Reports</div>
+                <div class="text-xs text-gray-500">View skill analytics</div>
+            </a>
+            <a href="../reports/export_pdf.php" class="block p-3 bg-gray-100 hover:bg-gray-200 rounded transition duration-200">
+                <div class="font-medium text-gray-800">Export to PDF</div>
+                <div class="text-xs text-gray-500">Download reports</div>
+            </a>
+        </div>
     </div>
-    </div>
+
 </div>
 
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+
     <div class="bg-white rounded-lg shadow-md p-6">
-    <h2 class="text-xl font-semibold mb-4 text-gray-700">Quick Actions</h2>
-    <div class="space-y-2">
-        <a href="../register.php?role=intern" class="block p-3 bg-gray-100 hover:bg-gray-200 rounded transition duration-200">
-            <div class="font-medium text-gray-800">Add New Intern</div>
-            <div class="text-xs text-gray-500">Create intern account</div>
-        </a>
-        <a href="../register.php?role=supervisor" class="block p-3 bg-gray-100 hover:bg-gray-200 rounded transition duration-200">
-            <div class="font-medium text-gray-800">Add New Supervisor</div>
-            <div class="text-xs text-gray-500">Create supervisor account</div>
-        </a>
-        <a href="../reports/generate_report.php" class="block p-3 bg-gray-100 hover:bg-gray-200 rounded transition duration-200">
-            <div class="font-medium text-gray-800">Generate Reports</div>
-            <div class="text-xs text-gray-500">View skill analytics</div>
-        </a>
-        <a href="../reports/export_pdf.php" class="block p-3 bg-gray-100 hover:bg-gray-200 rounded transition duration-200">
-            <div class="font-medium text-gray-800">Export to PDF</div>
-            <div class="text-xs text-gray-500">Download reports</div>
-        </a>
-    </div>
+        <h2 class="text-xl font-semibold mb-4 text-gray-700">Users by Department</h2>
+        <div class="space-y-3">
+            <?php foreach (array_slice($departments, 0, 5) as $dept => $count): ?>
+                <div class="flex justify-between items-center">
+                    <span class="text-sm font-medium text-gray-600"><?php echo htmlspecialchars($dept); ?></span>
+                    <span class="text-sm font-semibold text-gray-800"><?php echo $count; ?></span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2">
+                    <div class="bg-blue-500 h-2 rounded-full" style="width: <?php echo ($count / $total_users) * 100; ?>%"></div>
+                </div>
+            <?php endforeach; ?>
+        </div>
     </div>
 
+    <!-- Skill Gaps -->
+    <div class="bg-white rounded-lg shadow-md p-6">
+        <h2 class="text-xl font-semibold mb-4 text-gray-700">Skills with Largest Gaps</h2>
+        
+        <?php if (empty($top_skill_gaps)): ?>
+            <p class="text-gray-600">No skill gap data available yet.</p>
+        <?php else: ?>
+            <div class="space-y-4">
+                <?php foreach ($top_skill_gaps as $skill): ?>
+                    <div>
+                        <div class="flex justify-between items-center mb-1">
+                            <div>
+                                <span class="font-medium text-gray-800"><?php echo htmlspecialchars($skill['name']); ?></span>
+                                <span class="text-xs text-gray-500 ml-1">(<?php echo ucfirst($skill['category']); ?>)</span>
+                            </div>
+                            <span class="text-sm font-medium text-gray-600">
+                                <?php echo $skill['beginners']; ?> beginners (<?php echo round($skill['beginner_percentage']); ?>%)
+                            </span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-red-500 h-2 rounded-full" style="width: <?php echo $skill['beginner_percentage']; ?>%"></div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+            <div class="mt-4 text-right">
+                <a href="../reports/generate_report.php" class="text-sm text-blue-600 hover:text-blue-800 font-medium">
+                    View Full Report →
+                </a>
+            </div>
+        <?php endif; ?>
+    </div>
+
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-1 gap-6 mb-8">
     <!-- Top Performing Interns -->
     <div class="bg-white rounded-lg shadow-md p-6">
         <h2 class="text-xl font-semibold mb-4 text-gray-700">Top Performing Interns</h2>
@@ -164,43 +200,8 @@ require_once "../includes/header.php";
             </div>
         <?php endif; ?>
     </div>
-
-</div>
-
-<div class="grid grid-cols-1 md:grid-cols-1 gap-6 mb-8">
     
-    <!-- Skill Gaps -->
-    <div class="bg-white rounded-lg shadow-md p-6">
-        <h2 class="text-xl font-semibold mb-4 text-gray-700">Skills with Largest Gaps</h2>
-        
-        <?php if (empty($top_skill_gaps)): ?>
-            <p class="text-gray-600">No skill gap data available yet.</p>
-        <?php else: ?>
-            <div class="space-y-4">
-                <?php foreach ($top_skill_gaps as $skill): ?>
-                    <div>
-                        <div class="flex justify-between items-center mb-1">
-                            <div>
-                                <span class="font-medium text-gray-800"><?php echo htmlspecialchars($skill['name']); ?></span>
-                                <span class="text-xs text-gray-500 ml-1">(<?php echo ucfirst($skill['category']); ?>)</span>
-                            </div>
-                            <span class="text-sm font-medium text-gray-600">
-                                <?php echo $skill['beginners']; ?> beginners (<?php echo round($skill['beginner_percentage']); ?>%)
-                            </span>
-                        </div>
-                        <div class="w-full bg-gray-200 rounded-full h-2">
-                            <div class="bg-red-500 h-2 rounded-full" style="width: <?php echo $skill['beginner_percentage']; ?>%"></div>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-            <div class="mt-4 text-right">
-                <a href="../reports/generate_report.php" class="text-sm text-blue-600 hover:text-blue-800 font-medium">
-                    View Full Report →
-                </a>
-            </div>
-        <?php endif; ?>
-    </div>
+    
 </div>
 
 <!-- User Management -->

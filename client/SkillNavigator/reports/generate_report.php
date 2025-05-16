@@ -306,44 +306,48 @@ require_once "../includes/header.php";
     // Prepare data for department comparison
     $department_data = [];
     
-    $dept_query = $conn->query("SELECT DISTINCT department FROM users WHERE role = 'intern' AND department IS NOT NULL");
-    $departments = $dept_query->fetchAll(PDO::FETCH_COLUMN);
-    
-    foreach ($departments as $dept_name) {
-        $query = "
-            SELECT 
-                COUNT(DISTINCT CASE WHEN sa.current_level IN ('Advanced', 'Expert') THEN sa.user_id END) as advanced_users,
-                COUNT(DISTINCT sa.user_id) as total_users,
-                (COUNT(DISTINCT CASE WHEN sa.current_level IN ('Advanced', 'Expert') THEN sa.user_id END) / 
-                COUNT(DISTINCT sa.user_id)) * 100 as proficiency
-            FROM users u
-            LEFT JOIN skill_assessments sa ON u.id = sa.user_id
-            WHERE u.department = :department AND u.role = 'intern'
-        ";
+    if (!empty($skill_growth_data)) {
+        $dept_query = $conn->query("SELECT id, department FROM users WHERE role = 'intern' GROUP BY department");
+        $departments = $dept_query->fetchAll(PDO::FETCH_ASSOC);
         
-        $stmt = $conn->prepare($query);
-        $stmt->bindParam(':department', $dept_name);
-        $stmt->execute();
-        
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        
-        if ($result) {
-            $department_data[] = [
-                'department' => $dept_name,
-                'proficiency' => round($result['proficiency'] ?? 0)
-            ];
-        } else {
-            $department_data[] = [
-                'department' => $dept_name,
-                'proficiency' => 0
-            ];
+        foreach ($departments as $dept) {
+            $dept_name = $dept['department'];
+            
+            $query = "
+                SELECT 
+                    COUNT(CASE WHEN sa.current_level IN ('Advanced', 'Expert') THEN 1 END) as advanced_count,
+                    COUNT(DISTINCT sa.skill_id) as total_skills,
+                    (COUNT(CASE WHEN sa.current_level IN ('Advanced', 'Expert') THEN 1 END) / COUNT(DISTINCT sa.skill_id)) * 100 as proficiency
+                FROM users u
+                JOIN skill_assessments sa ON u.id = sa.user_id
+                WHERE u.department = :department AND u.role = 'intern'
+                GROUP BY u.department
+            ";
+            
+            $stmt = $conn->prepare($query);
+            $stmt->bindParam(':department', $dept_name);
+            $stmt->execute();
+            
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+            if ($result) {
+                $department_data[] = [
+                    'department' => $dept_name,
+                    'proficiency' => round($result['proficiency'] ?? 0)
+                ];
+            } else {
+                $department_data[] = [
+                    'department' => $dept_name,
+                    'proficiency' => 0
+                ];
+            }
         }
+        
+        // Sort by proficiency (descending)
+        usort($department_data, function($a, $b) {
+            return $b['proficiency'] - $a['proficiency'];
+        });
     }
-    
-    // Sort by proficiency (descending)
-    usort($department_data, function($a, $b) {
-        return $b['proficiency'] - $a['proficiency'];
-    });
     ?>
     
     <?php if (empty($department_data)): ?>

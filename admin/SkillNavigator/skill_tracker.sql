@@ -159,7 +159,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `email`, `first_name`, `last_name`, `role`, `department`, `created_at`, `updated_at`) VALUES
-
+(1, 'admin', '$2y$10$gvQmWV8KcjpS.m8Extp.De4H9rFsRwemtpvSmnKnSRwPTZpQWEN8u', 'admin@example.com', 'Admin', 'User', 'admin', 'HR', '2025-05-08 13:29:44', '2025-05-08 13:29:44'),
 (6, 'jim', '$2y$10$czQARu26ToEnH7obzCEnauccfKBDE4NGSSPMfS1BoXoZyux39yZzC', 'mijsuofficial@gmail.com', 'Mar James', 'Delimios', 'supervisor', 'IT', '2025-05-08 14:32:43', '2025-05-08 14:32:43'),
 (7, 'gervin', '$2y$10$19fyQs.0sIIG6feXglrvn.GV9K5h2Zj13xoOmlKR4Ggtem0K7nXje', 'gervintubol@gmail.com', 'Gervin', 'Dela Cueva', 'intern', 'IT', '2025-05-08 14:33:18', '2025-05-08 14:33:18'),
 (8, 'jericho', '$2y$10$lMtORrNMUV4maOf70Ck9r.avLDNFnJKSQExKJhKt2AvzIPhF4KcXu', 'galacetubol@gmail.com', 'Jericho', 'Galace', 'intern', 'IT', '2025-05-08 14:33:54', '2025-05-08 14:33:54'),
@@ -260,7 +260,3 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
-
-INSERT INTO `users` (`id`, `username`, `password`, `email`, `first_name`, `last_name`, `role`, `department`, `created_at`, `updated_at`) VALUES 
-(1, 'admin', 'admin1230', 'admin@gmail.com', 'Admin', 'User', 'admin', 'IT', NOW(), NOW());

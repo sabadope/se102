@@ -35,7 +35,7 @@ CREATE TABLE logs (
 
 -- Insert default admin user (password: admin123)
 INSERT INTO users (username, password, email, full_name, role) VALUES
-('admin', 'supervisor1230', 'supervisor@gmail.com', 'System Administrator', 'admin');
+('supervisor', 'supervisor1230', 'supervisor@gmail.com', 'System Administrator', 'admin');
 
 
 -- Insert sample regular user (password: user123)
