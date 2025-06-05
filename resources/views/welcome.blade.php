@@ -544,8 +544,8 @@
                             <a class="nav-link" href="#contact">Contact</a>
                         </li>
                         <li class="nav-item">
-                            <a href="/login" class="btn btn-primary px-4">
-                                <i class="bi bi-box-arrow-in-right me-2"></i> Login
+                            <a href="{{ route('login') }}" class="btn btn-primary px-4">
+                                <i class="bi bi-box-arrow-in-right me-2"></i> Apply
                             </a>
                         </li>
                     </ul>
