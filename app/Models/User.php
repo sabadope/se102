@@ -21,7 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role_id',
+        'role',
     ];
 
     /**
@@ -39,13 +39,10 @@ class User extends Authenticatable
      *
      * @return array<string, string>
      */
-    protected function casts(): array
-    {
-        return [
+    protected $casts = [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
-    }
 
     public function role()
     {

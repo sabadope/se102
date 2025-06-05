@@ -1,50 +1,67 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Intern Performance Monitoring System</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-</head>
-<body class="bg-light">
-    <div class="container">
-        <div class="row justify-content-center mt-5">
-            <div class="col-md-6">
-                <div class="card shadow">
-                    <div class="card-header bg-primary text-white">
-                        <h3 class="text-center mb-0">Login</h3>
-                    </div>
-                    <div class="card-body p-4">
-                        <form method="POST" action="{{ route('login') }}">
-                            @csrf
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email address</label>
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="bi bi-envelope"></i></span>
-                                    <input type="email" class="form-control" id="email" name="email" required>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <label for="password" class="form-label">Password</label>
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="bi bi-lock"></i></span>
-                                    <input type="password" class="form-control" id="password" name="password" required>
-                                </div>
-                            </div>
-                            <div class="d-grid gap-2">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="bi bi-box-arrow-in-right me-2"></i>Login
-                                </button>
-                                <a href="/" class="btn btn-outline-secondary">
-                                    <i class="bi bi-arrow-left me-2"></i>Back to Home
-                                </a>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+<x-guest-layout>
+    <style>
+        /* Hide all scrollbars */
+        ::-webkit-scrollbar {
+            display: none;
+        }
+        
+        /* For Firefox */
+        * {
+            scrollbar-width: none;
+        }
+        
+        /* For IE and Edge */
+        * {
+            -ms-overflow-style: none;
+        }
+    </style>
+
+    <!-- Back Button Container -->
+    <div class="w-full" style="position: absolute; top: 25px; left: 25px;">
+        <a href="{{ url('/') }}" class="inline-flex items-center px-4 py-2 bg-white text-gray-600 hover:text-gray-800 transition duration-150 ease-in-out rounded-lg shadow-sm">
+            {{ __('Home') }}
+        </a>
     </div>
-</body>
-</html> 
+
+    <!-- Session Status -->
+    <x-auth-session-status class="mb-6" :status="session('status')" />
+
+    <form method="POST" action="{{ route('login') }}" class="space-y-6">
+        @csrf
+
+        <!-- Email Address -->
+        <div>
+            <x-input-label for="email" :value="__('Email')" />
+            <x-text-input id="email" class="block mt-2 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
+            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        </div>
+
+        <!-- Password -->
+        <div>
+            <x-input-label for="password" :value="__('Password')" />
+            <x-text-input id="password" class="block mt-2 w-full" type="password" name="password" required autocomplete="current-password" />
+            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        </div>
+
+        <!-- Remember Me and Forgot Password -->
+        <div class="flex items-center justify-between">
+            <label for="remember_me" class="inline-flex items-center">
+                <input id="remember_me" type="checkbox" class="rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800" name="remember">
+                <span class="ms-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Remember me') }}</span>
+            </label>
+
+            @if (Route::has('password.request'))
+                <a class="text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100" href="{{ route('password.request') }}">
+                    {{ __('Forgot your password?') }}
+                </a>
+            @endif
+        </div>
+
+        <!-- Login Button -->
+        <div>
+            <x-primary-button class="w-full justify-center py-3">
+                {{ __('Log in') }}
+            </x-primary-button>
+        </div>
+    </form>
+</x-guest-layout>

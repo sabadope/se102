@@ -8,7 +8,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
         <!-- Bootstrap Icons -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-        <style>
+            <style>
             .hero-section {
                 background-color: #f8f9fa;
                 padding: 100px 0 60px;
@@ -29,8 +29,8 @@
             }
             .feature-card:hover {
                 transform: translateY(-5px);
-                box-shadow: 0 8px 16px rgba(0,0,0,0.1);
                 border-color: #0d6efd;
+                box-shadow: 0 8px 16px rgba(0,0,0,0.1);
             }
             .feature-icon {
                 font-size: 3rem;
@@ -91,8 +91,8 @@
                 transition: all 0.3s ease;
             }
             .navbar .btn-primary:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 4px 6px rgba(13, 110, 253, 0.2);
+                background: #0b5ed7;
+                color: #fff;
             }
             .hero-content {
                 padding-right: 40px;
@@ -509,7 +509,7 @@
             .contact-form-wrap .section-title {
                 margin-bottom: 25px;
             }
-        </style>
+            </style>
     </head>
     
     <body>
@@ -526,7 +526,7 @@
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                     <ul class="navbar-nav align-items-center">
                         <li class="nav-item me-4">
-                            <a class="nav-link" href="#home">Home</a>
+                            <a class="nav-link" href="#home">Dashboard</a>
                         </li>
                         <li class="nav-item me-4">
                             <a class="nav-link" href="#features">Features</a>
@@ -561,7 +561,7 @@
                         <h1 class="display-4 fw-bold mb-4">Smart Intern Management</h1>
                         <p class="lead mb-5">Track performance, provide feedback, and faster growth - all in single platform.</p>
                         <div class="d-flex gap-3">
-                            <a href="/register" class="btn btn-primary btn-lg">Get Started</a>
+                            <a href="{{ route('login') }}" class="btn btn-primary btn-lg">Get Started</a>
                             <a href="#features" class="btn btn-outline-primary btn-lg">Learn More</a>
                         </div>
                     </div>
@@ -673,7 +673,7 @@
                     </div>
 
                     <div class="col-12 text-center mt-5">
-                        <a href="/register" class="btn btn-primary btn-lg">Get Started</a>
+                        <a href="{{ route('login') }}" class="btn btn-primary btn-lg">Get Started</a>
                     </div>
                 </div>
             </div>
@@ -807,7 +807,7 @@
                                         Yes, IPMS is fully responsive and works seamlessly on all devices. You can access all features through any web browser on your mobile device, tablet, or desktop computer.
                                     </div>
                                 </div>
-                            </div>
+        </div>
 
                             <div class="accordion-item">
                                 <h2 class="accordion-header">
@@ -879,7 +879,7 @@
                     <div class="col-lg-4 mb-4 mb-lg-0">
                         <h5 class="mb-3">Quick Links</h5>
                         <ul class="footer-links">
-                            <li><a href="#home">Home</a></li>
+                            <li><a href="#home">Dashboard</a></li>
                             <li><a href="#features">Features</a></li>
                             <li><a href="/login">Login</a></li>
                         </ul>
@@ -903,4 +903,4 @@
         <!-- Bootstrap JS -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     </body>
-</html> 
+</html>

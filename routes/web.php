@@ -1,39 +1,16 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\SupervisorDashboardController;
-use App\Http\Controllers\InternDashboardController;
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Auth\RegisterController;
-
-// Authentication Routes
-Route::get('/login', function () {
-    return view('auth.login');
-})->name('login');
-Route::post('/login', [LoginController::class, 'login']);
-Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-
-// Registration Routes
-Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
-Route::post('/register', [RegisterController::class, 'register']);
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
-    // Supervisor Routes
-    Route::middleware(['role:supervisor'])->group(function () {
-        Route::get('/supervisor/dashboard', [SupervisorDashboardController::class, 'index'])->name('supervisor.dashboard');
-        Route::get('/supervisor/intern/{id}', [SupervisorDashboardController::class, 'viewIntern'])->name('supervisor.intern.view');
-    });
-
-    // Intern Routes
-    Route::middleware(['role:intern'])->group(function () {
-        Route::get('/intern/dashboard', [InternDashboardController::class, 'index'])->name('intern.dashboard');
-        Route::get('/intern/profile', [InternDashboardController::class, 'profile'])->name('intern.profile');
-    });
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+require __DIR__.'/auth.php';
