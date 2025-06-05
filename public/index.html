@@ -1,0 +1,902 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>Landing Page</title>
+
+        <!-- CSS FILES -->        
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Open+Sans&display=swap" rel="stylesheet">
+                        
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+
+        <link href="css/bootstrap-icons.css" rel="stylesheet">
+
+        <link href="css/templatemo-topic-listing.css" rel="stylesheet">
+
+        <style>
+
+
+            .loader-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 9999;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Adjust the height as needed */
+            backdrop-filter: blur(5px);
+            transition: opacity 0.5s ease-out;
+            }
+
+            .loader {
+            --dot: #fff;
+            --duration: 3s;
+            width: 44px;
+            height: 44px;
+            position: relative;
+            }
+
+            .loader:before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            position: absolute;
+            display: block;
+            background: var(--dot);
+            top: 37px;
+            left: 19px;
+            transform: translate(-18px, -18px);
+            animation: dotRect var(--duration) cubic-bezier(0.785, 0.135, 0.15, 0.86) infinite;
+            }
+
+            .loader svg {
+            display: block;
+            width: 100%;
+            height: 100%;
+            }
+
+            .loader svg rect, .loader svg polygon, .loader svg circle {
+            fill: none;
+            stroke: var(--path);
+            stroke-width: 10px;
+            stroke-linejoin: round;
+            stroke-linecap: round;
+            }
+
+            .loader svg polygon {
+            stroke-dasharray: 145 76 145 76;
+            stroke-dashoffset: 0;
+            animation: pathTriangle var(--duration) cubic-bezier(0.785, 0.135, 0.15, 0.86) infinite;
+            stroke: #ffb741; /* Triangle color */
+            }
+
+            .loader svg rect {
+            stroke-dasharray: 192 64 192 64;
+            stroke-dashoffset: 0;
+            animation: pathRect 3s cubic-bezier(0.785, 0.135, 0.15, 0.86) infinite;
+            stroke: #ff3e75; /* Rectangle color */
+            }
+
+            .loader svg circle {
+            stroke-dasharray: 150 50 150 50;
+            stroke-dashoffset: 75;
+            animation: pathCircle var(--duration) cubic-bezier(0.785, 0.135, 0.15, 0.86) infinite;
+            stroke: #0099df; /* Circle color */
+            }
+
+            .loader.triangle {
+            width: 48px;
+            }
+
+            .loader.triangle:before {
+            left: 21px;
+            transform: translate(-10px, -18px);
+            animation: dotTriangle var(--duration) cubic-bezier(0.785, 0.135, 0.15, 0.86) infinite;
+            }
+
+            @keyframes pathTriangle {
+            33% {
+                stroke-dashoffset: 74;
+            }
+
+            66% {
+                stroke-dashoffset: 147;
+            }
+
+            100% {
+                stroke-dashoffset: 221;
+            }
+            }
+
+            @keyframes dotTriangle {
+            33% {
+                transform: translate(0, 0);
+            }
+
+            66% {
+                transform: translate(10px, -18px);
+            }
+
+            100% {
+                transform: translate(-10px, -18px);
+            }
+            }
+
+            @keyframes pathRect {
+            25% {
+                stroke-dashoffset: 64;
+            }
+
+            50% {
+                stroke-dashoffset: 128;
+            }
+
+            75% {
+                stroke-dashoffset: 192;
+            }
+
+            100% {
+                stroke-dashoffset: 256;
+            }
+            }
+
+            @keyframes dotRect {
+            25% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(18px, -18px);
+            }
+
+            75% {
+                transform: translate(0, -36px);
+            }
+
+            100% {
+                transform: translate(-18px, -18px);
+            }
+            }
+
+            @keyframes pathCircle {
+            25% {
+                stroke-dashoffset: 125;
+            }
+
+            50% {
+                stroke-dashoffset: 175;
+            }
+
+            75% {
+                stroke-dashoffset: 225;
+            }
+
+            100% {
+                stroke-dashoffset: 275;
+            }
+            }
+
+            .loader {
+            display: inline-block;
+            margin: 0 16px;
+            }
+            
+        </style>
+    </head>
+    
+    <body id="top">
+
+        <div class="loader-container">
+            <div class="loader">
+              <svg viewBox="0 0 80 80">
+                <circle id="test" cx="40" cy="40" r="32"></circle>
+              </svg>
+            </div>
+
+            <div class="loader triangle">
+              <svg viewBox="0 0 86 80">
+                <polygon points="43 8 79 72 7 72"></polygon>
+              </svg>
+            </div>
+
+            <div class="loader">
+              <svg viewBox="0 0 80 80">
+                <rect x="8" y="8" width="64" height="64"></rect>
+              </svg>
+            </div>
+        </div>
+
+        <main>
+
+            <nav class="navbar navbar-expand-lg">
+                <div class="container">
+                    <a class="navbar-brand" href="index.html">
+                        <img src="images/logo.png" alt="Logo" style="height: 65px; width: auto;">
+
+                        
+                        <span>TCU-Connect</span>
+                        
+                    </a>
+
+                    <div class="d-lg-none ms-auto me-4">
+                        <a href="../src/login.php" class="navbar-icon bi-person smoothscroll"></a>
+                    </div>
+    
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+    
+                    <div class="collapse navbar-collapse" id="navbarNav" style="padding-left: 5%;">
+                        <ul class="navbar-nav ms-lg-5 me-lg-auto">
+                            <li class="nav-item">
+                                <a class="nav-link click-scroll" href="#section_1">Home</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link click-scroll" href="#section_2">Features</a>
+                            </li>
+    
+                            <li class="nav-item">
+                                <a class="nav-link click-scroll" href="#section_3">How it works</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link click-scroll" href="#section_4">FAQs</a>
+                            </li>
+    
+                            <li class="nav-item">
+                                <a class="nav-link click-scroll" href="#section_5">Contact</a>
+                            </li>
+
+                            
+                        </ul>
+
+                        <div class="d-none d-lg-block">
+                            <a href="../src/login.php" class="navbar-icon bi-person smoothscroll"></a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            
+
+            <section class="hero-section d-flex justify-content-center align-items-center" id="section_1">
+                <div class="container">
+                    <div class="row">
+
+                        <div class="col-lg-10 col-md-10 col-sm-12 mx-auto">
+                            <p class="text-white text-center" style="font-weight: 1000; font-size: 36px; width: 100%; max-width: 100%; margin: 0 auto; padding: 0 5px;">Empowering TCU Interns Like Never Before!</p>
+
+                            <h6 class="text-center mt-3" style="max-width: 1100px; margin: 0 auto; font-weight: 600;">Track, Analyze & Optimize the Interns Performance in Real-Time!</h6>
+
+                            <!-- SEARCH BAR (TEMPORARY HIDE)
+                            <form method="get" class="custom-form mt-4 pt-2 mb-lg-0 mb-5" role="search">
+                                <div class="input-group input-group-lg">
+                                    <span class="input-group-text bi-search" id="basic-addon1">
+                                        
+                                    </span>
+
+                                    <input name="keyword" type="search" class="form-control" id="keyword" placeholder="Design, Code, Marketing, Finance ..." aria-label="Search">
+
+                                    <button type="submit" class="form-control">Search</button>
+                                </div>
+                            </form>
+                            -->
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+
+            <section class="featured-section">
+                <div class="container">
+                    <div class="row justify-content-center">
+
+                        <div class="col-lg-4 col-12 mb-4 mb-lg-0">
+                            <div class="custom-block bg-white shadow-lg">
+                                <a href="topics-detail.html">
+                                    <div class="d-flex">
+                                        <div>
+                                            <h5 class="mb-2">Data Driven</h5>
+
+                                            <p class="mb-0">Unlock real-time analytics, track performance trends, and make informed choices with precision.</p>
+                                        </div>
+
+                                        <span class="badge bg-design rounded-pill ms-auto">
+                                            <img src="icons/driven-data.png" alt="Icon" width="22.5" height="22.5">
+                                        </span>
+                                    </div>
+
+                                    <img src="images/topics/data-driven.jpg" class="custom-block-image img-fluid" alt="">
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-12">
+                            <div class="custom-block custom-block-overlay">
+                                <div class="d-flex flex-column h-100">
+                                    <img src="images/businesswoman-using-tablet-analysis.jpg" class="custom-block-image img-fluid" alt="">
+
+                                    <div class="custom-block-overlay-text d-flex">
+                                        <div>
+                                            <h5 class="text-white mb-2">Admin Dashboard</h5>
+
+                                            <p class="text-white">Effortlessly track intern performance, analyze behavioral metrics, and optimize evaluations in real-time. Stay ahead, stay informed, and make data-driven decisions—all in one powerful dashboard! </p>
+
+                                            <a href="topics-detail.html" class="btn custom-btn mt-2 mt-lg-3">Learn More</a>
+                                        </div>
+
+                                        <span class="badge bg-finance rounded-pill ms-auto">
+                                            <img src="icons/dashboard.png" alt="Icon" width="22.5" height="22.5">
+                                        </span>
+                                    </div>
+
+                                    <div class="social-share d-flex">
+                                        <p class="text-white me-4">Share:</p>
+
+                                        <ul class="social-icon">
+                                            <li class="social-icon-item">
+                                                <a href="#" class="social-icon-link bi-twitter"></a>
+                                            </li>
+
+                                            <li class="social-icon-item">
+                                                <a href="#" class="social-icon-link bi-facebook"></a>
+                                            </li>
+                                    </div>
+
+                                    <div class="section-overlay"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+
+            <section class="explore-section section-padding" id="section_2">
+                <div class="container">
+                    <div class="col-12 text-center">
+                        <h2 class="mb-4">Features</h2>
+                    </div>
+                </div>
+
+                <!-- Text-based Toggle Options -->
+                <div class="toggle-selection">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-md-12"> <!-- Adjust width as needed -->
+                                <div class="d-flex justify-content-between">
+                                    <button class="btn btn-outline-primary flex-fill" onclick="setToggleText('Admin')">Admin</button>
+                                    <button class="btn btn-outline-primary flex-fill" onclick="setToggleText('Company')">Company</button>
+                                    <button class="btn btn-outline-primary flex-fill" onclick="setToggleText('Student')">Intern</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation Tabs -->
+                <div class="container-fluid">
+                    <div class="row">
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="design-tab" data-bs-toggle="tab" data-bs-target="#design-tab-pane" type="button" role="tab" aria-controls="design-tab-pane" aria-selected="true">Dashboard</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="marketing-tab" data-bs-toggle="tab" data-bs-target="#marketing-tab-pane" type="button" role="tab" aria-controls="marketing-tab-pane" aria-selected="false">Feedbacks</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="finance-tab" data-bs-toggle="tab" data-bs-target="#finance-tab-pane" type="button" role="tab" aria-controls="finance-tab-pane" aria-selected="false">Activities</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="education-tab" data-bs-toggle="tab" data-bs-target="#education-tab-pane" type="button" role="tab" aria-controls="education-tab-pane" aria-selected="false">Performance</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Tab Content -->
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="tab-content" id="myTabContent">
+                                <!-- Design Tab -->
+                                <div class="tab-pane fade show active" id="design-tab-pane" role="tabpanel" aria-labelledby="design-tab" tabindex="0">
+                                    <div class="row">
+                                        <div class="col-lg-4 col-md-6 col-12 mb-4">
+                                            <div class="custom-block bg-white shadow-lg">
+                                                <a href="topics-detail.html">
+                                                    <div class="d-flex">
+                                                        <div>
+                                                            <h5 class="mb-2">Overall User</h5>
+                                                            <p class="mb-0">The total count of users using the app.</p>
+                                                        </div>
+                                                        <span class="badge bg-design rounded-pill ms-auto">1</span>
+                                                    </div>
+                                                    <img src="images/admin-dashboard.jpeg" class="custom-block-image img-fluid" alt="">
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4 col-md-6 col-12 mb-4">
+                                            <div class="custom-block bg-white shadow-lg">
+                                                <a href="topics-detail.html">
+                                                    <div class="d-flex">
+                                                        <div>
+                                                            <h5 class="mb-2">Data Graph</h5>
+                                                            <p class="mb-0">A visual chart showing info-treads over period of time.</p>
+                                                        </div>
+                                                        <span class="badge bg-design rounded-pill ms-auto">2</span>
+                                                    </div>
+                                                    <img src="images/admin-datavisual.jfif" class="custom-block-image img-fluid" alt="">
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4 col-md-6 col-12 mb-4">
+                                            <div class="custom-block bg-white shadow-lg">
+                                                <a href="topics-detail.html">
+                                                    <div class="d-flex">
+                                                        <div>
+                                                            <h5 class="mb-2">Generate Reports</h5>
+                                                            <p class="mb-0">Detailed summaries of Intern performance and progress.</p>
+                                                        </div>
+                                                        <span class="badge bg-design rounded-pill ms-auto">3</span>
+                                                    </div>
+                                                    <img src="images/admin-reports.jfif" class="custom-block-image img-fluid" alt="">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Marketing Tab -->
+                                <div class="tab-pane fade" id="marketing-tab-pane" role="tabpanel" aria-labelledby="marketing-tab" tabindex="0">
+                                    <div class="row">
+                                        <div class="col-lg-4 col-md-6 col-12 mb-4">
+                                            <div class="custom-block bg-white shadow-lg">
+                                                <a href="topics-detail.html">
+                                                    <div class="d-flex">
+                                                        <div>
+                                                            <h5 class="mb-2">Performance Ranking</h5>
+                                                            <p class="mb-0">Highlight Interns with the highest performance scores.</p>
+                                                        </div>
+                                                        <span class="badge bg-advertising rounded-pill ms-auto">4</span>
+                                                    </div>
+                                                    <img src="images/admin-performanceranking.jfif" class="custom-block-image img-fluid" alt="">
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4 col-md-6 col-12 mb-4">
+                                            <div class="custom-block bg-white shadow-lg">
+                                                <a href="topics-detail.html">
+                                                    <div class="d-flex">
+                                                        <div>
+                                                            <h5 class="mb-2">Comparison Gaps</h5>
+                                                            <p class="mb-0">Compare performance and skills across departments.</p>
+                                                        </div>
+                                                        <span class="badge bg-advertising rounded-pill ms-auto">5</span>
+                                                    </div>
+                                                    <img src="images/admin-comparisongaps.jfif" class="custom-block-image img-fluid" alt="">
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4 col-md-6 col-12 mb-4">
+                                            <div class="custom-block bg-white shadow-lg">
+                                                <a href="topics-detail.html">
+                                                    <div class="d-flex">
+                                                        <div>
+                                                            <h5 class="mb-2">Add Interns</h5>
+                                                            <p class="mb-0">Register new interns into the dashboard tracking system.</p>
+                                                        </div>
+                                                        <span class="badge bg-advertising rounded-pill ms-auto">6</span>
+                                                    </div>
+                                                    <img src="images/admin-addinterns.jfif" class="custom-block-image img-fluid" alt="">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <!-- Finance Tab -->
+                                <div class="tab-pane fade" id="finance-tab-pane" role="tabpanel" aria-labelledby="finance-tab" tabindex="0">
+                                    <div class="row">
+                                        <div class="col-lg-4 col-md-6 col-12 mb-4">
+                                            <div class="custom-block bg-white shadow-lg">
+                                                <a href="topics-detail.html">
+                                                    <div class="d-flex">
+                                                        <div>
+                                                            <h5 class="mb-2">Daily Logs</h5>
+                                                            <p class="mb-0">Record interns day-to-day tasks and activities.</p>
+                                                        </div>
+                                                        <span class="badge bg-advertising rounded-pill ms-auto">7</span>
+                                                    </div>
+                                                    <img src="images/company-dailylogs.jfif" class="custom-block-image img-fluid" alt="">
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4 col-md-6 col-12 mb-4">
+                                            <div class="custom-block bg-white shadow-lg">
+                                                <a href="topics-detail.html">
+                                                    <div class="d-flex">
+                                                        <div>
+                                                            <h5 class="mb-2">Feedbacks</h5>
+                                                            <p class="mb-0">Share rates and comments from clients or supervisors.</p>
+                                                        </div>
+                                                        <span class="badge bg-advertising rounded-pill ms-auto">8</span>
+                                                    </div>
+                                                    <img src="images/company-feedbacks.jfif" class="custom-block-image img-fluid" alt="">
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4 col-md-6 col-12 mb-4">
+                                            <div class="custom-block bg-white shadow-lg">
+                                                <a href="topics-detail.html">
+                                                    <div class="d-flex">
+                                                        <div>
+                                                            <h5 class="mb-2">Attendance</h5>
+                                                            <p class="mb-0">Track intern presence and punctuality automatically.</p>
+                                                        </div>
+                                                        <span class="badge bg-advertising rounded-pill ms-auto">9</span>
+                                                    </div>
+                                                    <img src="images/company-attendance.jfif" class="custom-block-image img-fluid" alt="">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Education Tab -->
+                                <div class="tab-pane fade" id="education-tab-pane" role="tabpanel" aria-labelledby="education-tab" tabindex="0">
+                                    <div class="row">
+                                        <div class="col-lg-4 col-md-6 col-12 mb-4">
+                                            <div class="custom-block bg-white shadow-lg">
+                                                <a href="topics-detail.html">
+                                                    <div class="d-flex">
+                                                        <div>
+                                                            <h5 class="mb-2">Skill Management</h5>
+                                                            <p class="mb-0">Organize interns acquired and required skills.</p>
+                                                        </div>
+                                                        <span class="badge bg-design rounded-pill ms-auto">10</span>
+                                                    </div>
+                                                    <img src="images/intern-skillmanagement.jfif" class="custom-block-image img-fluid" alt="">
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4 col-md-6 col-12 mb-4">
+                                            <div class="custom-block bg-white shadow-lg">
+                                                <a href="topics-detail.html">
+                                                    <div class="d-flex">
+                                                        <div>
+                                                            <h5 class="mb-2">Skill Evaluation</h5>
+                                                            <p class="mb-0">Assess intern skills based on set performance criteria.</p>
+                                                        </div>
+                                                        <span class="badge bg-design rounded-pill ms-auto">11</span>
+                                                    </div>
+                                                    <img src="images/intern-skillevaluate.jfif" class="custom-block-image img-fluid" alt="">
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-4 col-md-6 col-12 mb-4">
+                                            <div class="custom-block bg-white shadow-lg">
+                                                <a href="topics-detail.html">
+                                                    <div class="d-flex">
+                                                        <div>
+                                                            <h5 class="mb-2">Skill Development</h5>
+                                                            <p class="mb-0">Track improvement in targeted skill areas.</p>
+                                                        </div>
+                                                        <span class="badge bg-design rounded-pill ms-auto">12</span>
+                                                    </div>
+                                                    <img src="images/intern-skilldevelopment.jfif" class="custom-block-image img-fluid" alt="">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Add other tab panes here -->
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+
+            <section class="timeline-section section-padding" id="section_3">
+                <div class="section-overlay"></div>
+
+                <div class="container">
+                    <div class="row">
+
+                        <div class="col-12 text-center">
+                            <h2 class="text-white mb-4">How does it work?</h2>
+                        </div>
+
+                        <div class="col-lg-10 col-12 mx-auto">
+                            <div class="timeline-container">
+                                <ul class="vertical-scrollable-timeline" id="vertical-scrollable-timeline">
+                                    <div class="list-progress">
+                                        <div class="inner"></div>
+                                    </div>
+
+                                    <li>
+                                        <h4 class="text-white mb-3">Real-Time Internship Performance Tracking</h4>
+
+                                        <p class="text-white">Our platform continuously monitors and evaluates TCU student interns' progress by collecting performance data in real-time. Academic mentors and industry supervisors can track key performance indicators (KPIs) instantly, ensuring that interns receive timely feedback and necessary interventions.</p>
+
+                                        <div class="icon-holder">
+                                          <i class="bi-search"></i>
+                                        </div>
+                                    </li>
+                                    
+                                    <li>
+                                        <h4 class="text-white mb-3">Behavioral Metrics Assessment with Data-Driven Insights</h4>
+
+                                        <p class="text-white">Using predefined rules and optimization models, the system assesses behavioral attributes such as professionalism, adaptability, punctuality, and task efficiency. By automating evaluation criteria, the platform ensures unbiased and structured assessments, eliminating inconsistencies from traditional evaluation methods.</p>
+
+                                        <div class="icon-holder">
+                                          <i class="bi-bookmark"></i>
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <h4 class="text-white mb-3">Adaptive Performance Evaluation for Continuous Improvement</h4>
+
+                                        <p class="text-white">As interns progress, the system dynamically adjusts evaluation metrics to match their development. This personalized approach fosters continuous skill enhancement by providing tailored recommendations for improvement, ensuring students meet industry standards and expectations.</p>
+
+                                        <div class="icon-holder">
+                                          <i class="bi-book"></i>
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        <h4 class="text-white mb-3">Automated Reports & Data-Driven Decision Making</h4>
+
+                                        <p class="text-white">Supervisors and academic institutions receive comprehensive reports that highlight performance trends, strengths, and areas needing improvement. These reports streamline the evaluation process, reduce administrative burdens, and provide a structured basis for decision-making in internship programs.</p>
+
+                                        <div class="icon-holder">
+                                          <i class="bi-laptop"></i>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-12 text-center mt-5">
+                            <p class="text-white">
+                                Want to learn more?
+                                <a href="#" class="btn custom-btn custom-border-btn ms-3">Check out About Us</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <section class="faq-section section-padding" id="section_4">
+                <div class="container">
+                    <div class="row">
+
+                        <div class="col-12 text-center">
+                            <h2 class="mb-4">Frequently Asked Questions</h2>
+                        </div>
+
+                        <div class="clearfix"></div>
+
+                        <div class="col-lg-5 col-12">
+                            <img src="images/faq_graphic.jpg" class="img-fluid" alt="FAQs">
+                        </div>
+
+                        <div class="col-lg-6 col-12 m-auto">
+                            <div class="accordion" id="accordionExample">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingOne">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        What is TCU-CONNECT?
+                                        </button>
+                                    </h2>
+
+                                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            TCU-CONNECT is a digital platform designed to track student interns’ performance in real time, helping mentors and departments monitor academic progress, skills, and behavior efficiently.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingTwo">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        How is intern performance monitored?
+                                    </button>
+                                    </h2>
+
+                                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            The system collects and displays real-time data such as daily logs, feedback, attendance, and skill assessments to give a complete view of each intern’s progress.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingThree">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                        How are performance trends displayed?
+                                    </button>
+                                    </h2>
+
+                                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            Performance trends are visualized using data graphs and trackers for quick and easy interpretation.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+
+            <section class="section-padding section-bg" id="section_5" style="margin-top: -50px; overflow-x: hidden;">
+                <div class="container-fluid" style="background-image: linear-gradient(15deg, #13547a 0%, #80d0c7 100%); padding: 40px 0; max-width: 100vw; overflow-x: hidden;">
+
+                    <div class="row justify-content-center">
+
+                        <div class="col-lg-8 col-md-10 col-12 subscribe-form-wrap d-flex justify-content-center align-items-center">
+                            <form class="custom-form subscribe-form text-center" action="#" method="post" role="form" style="width: 100%; max-width: 900px;">
+
+                                <h2 class="text-white mb-4" style="white-space: nowrap; width: 100%; padding-bottom: 10px;">Get in Touch</h2>
+
+                                <p class="text-white" style="text-align: justify; width: 100%; max-width: 100%; margin: 0 auto; font-size: 18px; line-height: 1.6; padding-bottom: 10px;">
+                                    Although the system is custom-built and still under development, your feedback is always welcome! While we’re not handling general inquiries at this time, feel free to submit a ticket if you encounter any issues or have suggestions. 
+                                    <br><br>Your input helps us improve—thank you for your support!
+                                </p>
+
+                                <!-- Email & Subscribe button in one row with perfect alignment -->
+                                <div class="input-group mt-3" style="display: flex; align-items: center;">
+                                    <input type="email" name="subscribe-email" id="subscribe-email" pattern="[^ @]*@[^ @]*" placeholder="Email Address" required=""
+                                        style="height: 50px; border-radius: 25px 0 0 25px; border: 2px solid #80d0c7; padding: 0 15px; outline: none; flex: 1;">
+                                    
+                                    <button type="submit" 
+                                        style="height: 50px; border-radius: 0 25px 25px 0; padding: 0 30px; display: flex; align-items: center; justify-content: center; 
+                                        background: transparent; border: 2px solid #80d0c7; color: #80d0c7; font-weight: bold; transition: 0.3s ease; cursor: pointer;"
+                                        onmouseover="this.style.backgroundColor='#13547a'; this.style.color='white'; this.style.borderColor='#13547a';"
+                                        onmouseout="this.style.backgroundColor='transparent'; this.style.color='#80d0c7'; this.style.borderColor='#80d0c7';">
+                                        Submit
+                                    </button>
+                                </div>
+
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+
+        </main>
+
+        <footer class="site-footer section-padding">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <p class="copyright-text mt-lg-5 mt-4">
+                            Built and Design by <strong>BSCS - C2022</strong>. Copyright © 2025. All rights reserved.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+
+
+        <!-- JAVASCRIPT FILES -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/bootstrap.bundle.min.js"></script>
+        <script src="js/jquery.sticky.js"></script>
+        <script src="js/click-scroll.js"></script>
+        <script src="js/custom.js"></script>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                setToggleText("Admin"); // Set "Admin" as default role on page load
+            });
+
+            function setToggleText(role) {
+                const allTabs = ["design-tab", "marketing-tab", "finance-tab", "music-tab", "education-tab"];
+                const allTabPanes = ["design-tab-pane", "marketing-tab-pane", "finance-tab-pane", "music-tab-pane", "education-tab-pane"];
+
+                // Define role-based visibility rules
+                const tabRules = {
+                    "Admin": ["design-tab", "marketing-tab"],
+                    "Company": ["finance-tab", "music-tab"],
+                    "Student": ["education-tab"]
+                };
+
+                let visibleTabs = tabRules[role] || [];
+
+                // Highlight the selected toggle button
+                document.querySelectorAll(".toggle-selection .btn").forEach(button => {
+                    if (button.innerText === role) {
+                        button.classList.add("active"); // Bootstrap active styling
+                    } else {
+                        button.classList.remove("active");
+                    }
+                });
+
+                // Reset and hide all tabs
+                allTabs.forEach(tab => {
+                    const tabElement = document.getElementById(tab);
+                    if (tabElement) {
+                        tabElement.style.display = visibleTabs.includes(tab) ? "block" : "none";
+                        tabElement.classList.remove("active");
+                    }
+                });
+
+                // Hide all tab panes
+                allTabPanes.forEach(pane => {
+                    const paneElement = document.getElementById(pane);
+                    if (paneElement) {
+                        paneElement.classList.remove("active", "show");
+                    }
+                });
+
+                // Ensure the first available tab for the selected role is active
+                if (visibleTabs.length > 0) {
+                    const firstTab = document.getElementById(visibleTabs[0]);
+                    const firstPane = document.getElementById(`${visibleTabs[0]}-pane`);
+
+                    if (firstTab) {
+                        firstTab.classList.add("active"); // Ensure UI reflects selection
+                        firstTab.click(); // Bootstrap tab activation
+                    }
+
+                    if (firstPane) {
+                        firstPane.classList.add("active", "show"); // Show content
+                    }
+                }
+            }
+
+
+
+        </script>
+
+        <script>
+            setTimeout(function () {
+                let loader = document.querySelector(".loader-container");
+                if (loader) {
+                    loader.style.opacity = "0";
+                    setTimeout(() => {
+                        loader.style.display = "none";
+                    }, 500); // Allow fade-out effect
+                }
+            }, 3000);
+        </script>
+
+    </body>
+</html>

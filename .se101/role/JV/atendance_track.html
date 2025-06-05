@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h2>Attendance System</h2>
+    <input type="text" id="name" placeholder="Enter your name">
+    <button class="btn checkin-btn" onclick="markAttendance('checkin')">Check In</button>
+    <button class="btn checkout-btn" onclick="markAttendance('checkout')">Check Out</button>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Check-In Time</th>
+                <th>Check-Out Time</th>
+            </tr>
+        </thead>
+        <tbody id="attendanceList">
+        </tbody>
+    </table>
+
+    <script>
+        let attendanceData = {};
+
+        function markAttendance(type) {
+            let name = document.getElementById("name").value;
+            if (name === "") {
+                alert("Please enter your name");
+                return;
+            }
+            let time = new Date().toLocaleTimeString();
+            
+            if (!attendanceData[name]) {
+                attendanceData[name] = { checkin: "", checkout: "" };
+            }
+            
+            if (type === 'checkin' && attendanceData[name].checkin === "") {
+                attendanceData[name].checkin = time;
+            } else if (type === 'checkout' && attendanceData[name].checkout === "") {
+                attendanceData[name].checkout = time;
+            } else {
+                alert("You have already checked in/out");
+                return;
+            }
+            
+            updateTable();
+            document.getElementById("name").value = "";
+        }
+
+        function updateTable() {
+            let table = document.getElementById("attendanceList");
+            table.innerHTML = "";
+            
+            for (let name in attendanceData) {
+                let row = table.insertRow();
+                let cell1 = row.insertCell(0);
+                let cell2 = row.insertCell(1);
+                let cell3 = row.insertCell(2);
+                cell1.innerHTML = name;
+                cell2.innerHTML = attendanceData[name].checkin;
+                cell3.innerHTML = attendanceData[name].checkout;
+            }
+        }
+    </script>
+</body>
+</html>

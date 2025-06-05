@@ -1,0 +1,71 @@
+// Backend: C# ASP.NET Core with Entity Framework and SQLite
+
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<ContactContext>(options => options.UseSqlite("Data Source=contacts.db"));
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+app.UseHttpsRedirection();
+
+// Model
+public class Contact
+{
+    public int Id { get; set; }
+    [Required]
+    public string Name { get; set; }
+    [Required, EmailAddress]
+    public string Email { get; set; }
+    [Required]
+    public string Message { get; set; }
+    public DateTime Date { get; set; } = DateTime.UtcNow;
+}
+
+// Database Context
+public class ContactContext : DbContext
+{
+    public ContactContext(DbContextOptions<ContactContext> options) : base(options) { }
+    public DbSet<Contact> Contacts { get; set; }
+}
+
+// API Endpoints
+app.MapPost("/api/contact", async (Contact contact, ContactContext db) =>
+{
+    db.Contacts.Add(contact);
+    await db.SaveChangesAsync();
+    return Results.Created($"/api/contact/{contact.Id}", contact);
+});
+
+app.MapGet("/api/contacts", async (ContactContext db) =>
+{
+    return await db.Contacts.ToListAsync();
+});
+
+app.MapDelete("/api/contact/{id}", async (int id, ContactContext db) =>
+{
+    var contact = await db.Contacts.FindAsync(id);
+    if (contact == null) return Results.NotFound();
+
+    db.Contacts.Remove(contact);
+    await db.SaveChangesAsync();
+    return Results.Ok();
+});
+
+app.Run();

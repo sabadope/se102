@@ -1,0 +1,154 @@
+
+        @font-face {
+            font-family: 'PoppinsReg';
+            src: url('fonts/PoppinsReg.ttf') format('truetype');
+        }
+        @font-face {
+            font-family: 'PoppinsSemi';
+            src: url('fonts/Poppins-SemiBold.ttf') format('truetype');
+            font-weight: bolder;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .containerr {
+            width: 80%;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px; 
+        }
+
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            
+        }
+        .details {
+            font-family: 'PoppinsReg';
+            width: 100%; /* Makes all inputs stretch equally */
+            box-sizing: border-box; /* Ensures padding doesn't affect width */
+            padding: 8px; /* Adjust padding for better appearance */
+            margin: 5px 0; /* Add spacing between inputs */
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .details input {
+            font-family: 'PoppinsReg';
+            width: 100%; /* Makes all inputs stretch equally */
+            box-sizing: border-box; /* Ensures padding doesn't affect width */
+            padding: 8px; /* Adjust padding for better appearance */
+            margin: 5px 0; /* Add spacing between inputs */
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        h1 {
+            font-family: 'PoppinsSemi';
+            font-size: 40px;
+            font-weight: bolder;
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #000000;
+            
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            
+        }
+        tbody {
+            font-family: 'PoppinsReg';
+            text-align: center;
+        }
+        th { /*table label text*/
+            text-align: center;
+            font-family: 'PoppinsReg';
+            background-color: #239ae4;
+            color: rgb(241, 241, 241); /*textcolor*/
+        }
+        button {
+            font-family: 'PoppinsReg';
+            font-size: 16px;
+            background: #4ea1f9;
+            color: white;
+            border-radius: 3px;
+            height: 40px;
+            width: 15cm;
+            display: block;
+            border-radius: 10px;
+            margin: 20px auto;     
+        }
+     
+        button:hover {
+            background-color: lightblue;
+            color: black;
+        }
+  
+        .recommendation {
+            font-family: 'PoppinsReg';
+            margin-top: 80px;
+            padding: 10px;
+            width: 80%;
+            margin: 20px auto;
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            border-radius: 5px;
+        }
+        .progress-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            padding: 10px;
+            margin-top: 20px;
+        }
+        .progress {
+            position: relative;
+            width: 120px;
+            height: 120px;
+        }
+        .progress svg {
+            transform: rotate(-90deg);
+            
+        }
+        .progress circle {
+            fill: none;
+            stroke-width: 10;
+            stroke-linecap: round;
+            transform: scale(1);
+        }
+        .progress .bg {
+            stroke: #e6e6e6;
+        }
+        .progress .fg {
+            stroke: #007BFF;
+            stroke-dasharray: 314;
+            stroke-dashoffset: var(--offset);
+            transition: stroke-dashoffset 1s ease;
+        }
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 18px;
+            font-weight: bold;
+        }
+

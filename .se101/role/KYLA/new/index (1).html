@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skill Development Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Skill Development Tracker</h1>
+        <nav>
+            <button onclick="showSection('intern-dashboard')">Intern Dashboard</button>
+            <button onclick="showSection('supervisor-panel')">Supervisor Panel</button>
+            <button onclick="showSection('analytics')">Analytics</button>
+        </nav>
+    </header>
+
+    <!-- Intern Skill Dashboard -->
+    <section id="intern-dashboard">
+        <h2>Intern Skill Dashboard</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Skill</th>
+                    <th>Initial Level</th>
+                    <th>Current Level</th>
+                    <th>Update Progress</th>
+                </tr>
+            </thead>
+            <tbody id="skillTable">
+                <!-- Skill Data Loaded Dynamically -->
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Supervisor Evaluation Panel -->
+    <section id="supervisor-panel" style="display: none;">
+        <h2>Supervisor Evaluation Panel</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Intern</th>
+                    <th>Skill</th>
+                    <th>Current Level</th>
+                    <th>Supervisor Rating</th>
+                </tr>
+            </thead>
+            <tbody id="supervisorTable">
+                <!-- Supervisor Data Loaded Dynamically -->
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Skill Growth Analytics -->
+    <section id="analytics" style="display: none;">
+        <h2>Skill Growth Analytics</h2>
+        <canvas id="skillChart"></canvas>
+    </section>
+
+    <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</body>
+</html>

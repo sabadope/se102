@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skills Development Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Skills Development Tracker</h1>
+
+        <!-- Skill Input Form -->
+        <div class="skill-form">
+            <input type="text" id="skill-name" placeholder="Enter skill name">
+            <select id="skill-category">
+                <option value="Technical">Technical</option>
+                <option value="Soft">Soft</option>
+            </select>
+            <input type="number" id="skill-level" placeholder="Skill level (1-10)" min="1" max="10">
+            <button onclick="addSkill()">Add Skill</button>
+        </div>
+
+        <!-- Skills Table -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Skill</th>
+                    <th>Category</th>
+                    <th>Level</th>
+                    <th>Update</th>
+                </tr>
+            </thead>
+            <tbody id="skills-list">
+                <!-- Skills will be added here dynamically -->
+            </tbody>
+        </table>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
