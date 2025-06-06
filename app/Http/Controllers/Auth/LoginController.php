@@ -23,4 +23,9 @@ class LoginController extends Controller
 
         return redirect('/dashboard');
     }
+
+    protected function loggedOut(Request $request)
+    {
+        return redirect('/');
+    }
 } 

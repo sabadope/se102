@@ -18,8 +18,9 @@ class DatabaseSeeder extends Seeder
         DB::table('users')->truncate();
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
-        $this->call(RolesTableSeeder::class);
-        $this->call(TestUsersSeeder::class);
+        $this->call([
+            TestUsersSeeder::class,
+        ]);
         // User::factory(10)->create();
 
         User::factory()->create([
